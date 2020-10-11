@@ -118,6 +118,13 @@
     ],
     "react/destructuring-assignment": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ],
     "react/prop-types": [
       "error",
       {
