@@ -1,0 +1,180 @@
+\chapter{Specifikacija programske potpore}
+
+\section{Funkcionalni zahtjevi}			
+
+\noindent \textbf{Dionici:}
+
+\begin{packed_enum}
+	
+	\item Ovlašteni zaposlenik tvrtke
+	\item Klijent
+	\item Administrator
+	\item Razvojni tim
+	
+\end{packed_enum}
+
+\noindent \textbf{Aktori i njihovi funkcionalni zahtjevi:}
+
+
+\begin{packed_enum}
+	\item  \underbar{Neregistrirani/neprijavljeni korisnik (inicijator) može:}
+	
+	\begin{packed_enum}
+		
+		\item vidjeti kartu s parkiralištima (adresa, broj ukupnih i slobodnih mjesta, cijena)
+		\item registrirati se i/ili prijaviti se (kao klijent ili tvrtka)
+		
+	\end{packed_enum}
+	
+	\item  \underbar{Klijent (inicijator) može:}
+	
+	\begin{packed_enum}
+		
+		\item vidjeti kartu s parkiralištima (adresa, broj ukupnih i slobodnih mjesta, cijena)
+		\item pregledavati, uređivati i izbrisati korisnički račun
+		\item pregledavati, uređivati i izbrisati vozila
+		\item pregledavati, uređivati i izbrisati kartice
+		\item rezervirati parkirališno mjesto
+		\item pregledavati, uređivati i izbrisati rezervacije
+		\item pisati i pregledavati  recenzije
+		\item tražiti upute do parkirališta
+		
+	\end{packed_enum}
+	
+	
+	\item  \underbar{Ovlašteni zaposlenik tvrtke (inicijator) može:}
+	
+	\begin{packed_enum}
+		
+		\item vidjeti kartu s parkiralištima
+		\item pregledavati, uređivati, dodavati i brisati svoja parkirališta
+		\item pregledavati, uređivati i izbrisati korisnički račun
+		\item pregledavati vlastite i tuđe recenzije
+		\item pregledavati rezervacije na vlastitim parkiralištima
+		\item odgovoriti na recenzije korisnika
+		
+	\end{packed_enum}
+	
+	\item \underbar{Administrator (inicijator) može:}
+	
+	\begin{packed_enum}
+		
+		\item vidjeti popis svih registriranih korisnika i osnovnih podataka
+		\item pregledavati rezervacije
+		\item brisati i mijenjati razinu pristupa aplikaciji drugim korisnicima
+		\item brisati recenzije
+		\item dodavati ili brisati parkirališta
+		
+	\end{packed_enum}
+	
+	\item \underbar{Baza podataka (sudionik) može:}
+	
+	\begin{packed_enum}
+		
+		\item pohranjivati podatke o korisnicima (osobni podatci, kartica, vozila)
+		\item pohranjivati podatke o parkiralištima (njihovim kapacitetima i ponudama)
+		\item pohranjivati podatke o rezervacijama
+		\item pohranjivati podatke o tvrtkama
+		
+	\end{packed_enum}
+\end{packed_enum}
+
+
+\eject 
+
+
+
+\subsection{Obrasci uporabe}
+
+\subsubsection{Opis obrazaca uporabe}
+
+\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }$<$sudionik$>$
+	\item  \textbf{Cilj:} $<$cilj$>$
+	\item  \textbf{Sudionici:} $<$sudionici$>$
+	\item  \textbf{Preduvjet:} $<$preduvjet$>$
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item $<$opis korak jedan$>$
+		\item $<$opis korak dva$>$
+		\item $<$opis korak tri$>$
+		\item $<$opis korak četiri$>$
+		\item $<$opis korak pet$>$
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[] \begin{packed_enum}
+			
+			\item $<$opis rješenja mogućeg scenarija korak 1$>$
+			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			
+		\end{packed_enum}
+		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+		
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }$<$sudionik$>$
+	\item  \textbf{Cilj:} $<$cilj$>$
+	\item  \textbf{Sudionici:} $<$sudionici$>$
+	\item  \textbf{Preduvjet:} $<$preduvjet$>$
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item $<$opis korak jedan$>$
+		\item $<$opis korak dva$>$
+		\item $<$opis korak tri$>$
+		\item $<$opis korak četiri$>$
+		\item $<$opis korak pet$>$
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[] \begin{packed_enum}
+			
+			\item $<$opis rješenja mogućeg scenarija korak 1$>$
+			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			
+		\end{packed_enum}
+		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+		
+	\end{packed_item}
+\end{packed_item}
+
+\subsubsection{Dijagrami obrazaca uporabe}
+
+\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
+\eject		
+
+\subsection{Sekvencijski dijagrami}
+
+\textbf{\textit{dio 1. revizije}}\\
+
+\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
+\eject
+
+\section{Ostali zahtjevi}
+
+\textbf{\textit{dio 1. revizije}}\\
+
+\textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
+
+
+
