@@ -665,6 +665,118 @@
 	\end{packed_enum}
 \end{packed_item}
 
+\noindent \underbar{\textbf{UC\showuccounter\ - Dodavanje kartice}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Dodati karticu
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik otvara podatke o korisničkom računu
+		\item Prikažu se podatci o korisničkom računu
+		\item Korisnik odabire gumb "Dodaj karticu"
+		\item Prikaže se forma za dodavanje podataka o kartici
+		\item Korisnik upisuje podatke i prikazuje mu se poruka da je kartica uspješno dodana
+		\item Korisnik je preusmjeren nazad na podatke o korisničkom računu
+	
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[6.a] Nevažeći podatci prilikom dodavanja kartice
+		\item[] \begin{packed_enum}
+			
+			\item Korisniku se prikazuje poruka o nevažećim podacima
+			\item Korisnik ispravlja podatke
+			\item Korisnik ponovno sprema podatke
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Pregled kartica}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Pregled podataka o kartici
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik otvara podatke o korisničkom računu
+		\item Prikažu se podatci o korisničkom računu
+		\item Korisnik odabire na karticu čije podatke želi pregledati
+		\item Prikažu se podatci o kartici
+		
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Brisanje kartice}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Brisanje podataka o kartici
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik otvara podatke o korisničkom računu
+		\item Prikažu se podatci o korisničkom računu
+		\item Korisnik odabire na karticu čije podatke želi obrisati
+		\item Prikažu se podatci o kartici
+		\item Korisnik odabire akciju uklanjanja kartice
+		\item Kartica je obrisana
+		
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Upute do parkirališta}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Navođenje do parkirališta
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik nije registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik na mapi odabire željeno parkiralište
+		\item Prikažu se podatci o parkiralištu
+		\item Korisnik odabire "Upute"
+		\item Otvara se google maps navigacija
+		
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Upute do sparkiranog automobila}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Klijent
+	\item  \textbf{Cilj:} Navođenje do parkirališta na kojem je korisnikov automobil
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Klijent je registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Klijent na početnom zaslonu aplikacije odabire opciju "Upute do automobila"
+		\item Otvara se google maps navigacija
+		
+	\end{packed_enum}
+\end{packed_item}
+
 \subsubsection{Dijagrami obrazaca uporabe}
 
 \textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
