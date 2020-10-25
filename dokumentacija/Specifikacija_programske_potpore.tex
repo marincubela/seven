@@ -88,7 +88,12 @@
 
 \subsubsection{Opis obrazaca uporabe}
 
-\noindent \underbar{\textbf{UC1 - Pregled karte}}
+
+\newcounter{uccounter}
+\newcommand\showuccounter{\stepcounter{uccounter}\theuccounter}
+
+
+\noindent \underbar{\textbf{UC\showuccounter - Pregled karte}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: } Korisnik
@@ -115,7 +120,7 @@
     \end{packed_item}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC12 - Pregled podataka o parkiralištu na karti}}
+\noindent \underbar{\textbf{UC\showuccounter - Pregled podataka o parkiralištu na karti}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Korisnik
@@ -132,7 +137,7 @@
 	\end{packed_enum}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC8 - Prijava korisnika}}
+\noindent \underbar{\textbf{UC\showuccounter - Prijava korisnika}}
 \begin{packed_item}
 
 	\item \textbf{Glavni sudionik:} Korisnik
@@ -176,7 +181,7 @@
 	\end{packed_item}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC7 - Registracija korisnika}}
+\noindent \underbar{\textbf{UC\showuccounter - Registracija korisnika}}
 \begin{packed_item}
 
 	\item \textbf{Glavni sudionik:} Korisnik
@@ -218,7 +223,61 @@
 	\end{packed_item}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC17 - Brisanje korisničkog računa}}
+\noindent \underbar{\textbf{UC\showuccounter - Pregled podataka o korisničkom računu}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item \textbf{Cilj:} Pregledati podatke o korisničkom računu
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Korisnik je prijavljena
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik otvara podatke o korisničkom računu
+		\item Prikažu se podatci o korisničkom računu
+	
+	\end{packed_enum}
+	
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Uređivanje podataka o korisničkom računu}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Administrator/Tvrtka
+	\item  \textbf{Cilj:} Urediti podatake o korisničkom računu
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Administrator/Tvrtka je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik otvara podatke o korisničkom računu
+		\item Prikažu se podatci o korisničkom računu
+		\item Korisnik odabire akciju za uređivanje
+		\item Prikaže se forma za uređivanje podataka o korisničkom računu
+		\item Korisnik uređuje podatke
+		\item Korisnik sprema promjene
+	
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[6.a] Nevažeći podatci prilikom spremanja promjena
+		\item[] \begin{packed_enum}
+			
+			\item Korisniku se prikazuje poruka o nevažećim podacima
+			\item Korisnik ispravlja podatke
+			\item Korisnik ponovno sprema podatke
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Brisanje korisničkog računa}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Korisnik
@@ -237,7 +296,7 @@
 	\end{packed_enum}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC1 - Neovlašteni pristup privatnim rutama}}
+\noindent \underbar{\textbf{UC\showuccounter - Neovlašteni pristup privatnim rutama}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Korisnik
@@ -277,61 +336,7 @@
 	\end{packed_item}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC13 - Pregled podataka o tvrtki}}
-\begin{packed_item}
-	
-	\item \textbf{Glavni sudionik: } Administrator/Tvrtka
-	\item  \textbf{Cilj:} Pregledati podatake o tvrtki
-	\item  \textbf{Sudionici:} Baza podataka
-	\item  \textbf{Preduvjet:} Administrator/Tvrtka je prijavljena
-	\item  \textbf{Opis osnovnog tijeka:}
-	
-	\item[] \begin{packed_enum}
-		
-		\item Administrator/Tvrtka otvara podatke o tvrtki
-		\item Prikažu se podatci o tvrtki
-	
-	\end{packed_enum}
-	
-\end{packed_item}
-
-\noindent \underbar{\textbf{UC14 - Uređivanje tvrtke}}
-\begin{packed_item}
-	
-	\item \textbf{Glavni sudionik:} Administrator/Tvrtka
-	\item  \textbf{Cilj:} Urediti podatke o tvrtki
-	\item  \textbf{Sudionici:} Baza podataka
-	\item  \textbf{Preduvjet:} Administrator/Tvrtka je prijavljen
-	\item  \textbf{Opis osnovnog tijeka:}
-	
-	\item[] \begin{packed_enum}
-		
-		\item Administrator/Tvrtka otvara podatke o tvrtki
-		\item Prikažu se podatci o tvrtki
-		\item Administrator/Tvrtka odabire akciju za uređivanje
-		\item Prikaže se forma za uređivanje podataka tvrtke
-		\item Administrator/Tvrtka uređuje podatke
-		\item Administrator/Tvrtka sprema promjene
-	
-	\end{packed_enum}
-	
-	\item  \textbf{Opis mogućih odstupanja:}
-	
-	\item[] \begin{packed_item}
-		
-		\item[6.a] Nevažeći podatci prilikom spremanja promjena
-		\item[] \begin{packed_enum}
-			
-			\item Administratoru/Tvrtki se prikazuje poruka o nevažećim podacima
-			\item Administrator/Tvrtka ispravlja podatke
-			\item Administrator/Tvrtka ponovno sprema podatke
-			
-		\end{packed_enum}
-		
-	\end{packed_item}
-\end{packed_item}
-
-\noindent \underbar{\textbf{UC12 - Pregled podataka o parkiralištu}}
+\noindent \underbar{\textbf{UC\showuccounter - Pregled podataka o parkiralištu}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: } Administrator, Tvrtka
@@ -349,7 +354,7 @@
 	\end{packed_enum}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC6 - Dodavanje parkirališta}}
+\noindent \underbar{\textbf{UC\showuccounter - Dodavanje parkirališta}}
 \begin{packed_item}
 
 	\item \textbf{Glavni sudionik:} Administrator, Tvrtka
@@ -383,7 +388,7 @@
 	\end{packed_item}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC11 - Uređivanje parkirališta}}
+\noindent \underbar{\textbf{UC\showuccounter - Uređivanje parkirališta}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Administrator, Tvrtka
@@ -419,7 +424,7 @@
 
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC5 - Uklanjanje parkirališta}}
+\noindent \underbar{\textbf{UC\showuccounter - Uklanjanje parkirališta}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Administrator, Tvrtka
@@ -438,7 +443,7 @@
 	\end{packed_enum}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC9 - Popis rezervacija}}
+\noindent \underbar{\textbf{UC\showuccounter - Popis rezervacija}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik: } Administrator/Klijent
@@ -455,7 +460,7 @@
 	\end{packed_enum}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC15 - Pregled recenzija}}
+\noindent \underbar{\textbf{UC\showuccounter - Pregled recenzija}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Pregled recenzija
@@ -475,7 +480,7 @@
 \end{packed_item}
 
 
-\noindent \underbar{\textbf{UC16 - Komentiranje recenzije}}
+\noindent \underbar{\textbf{UC\showuccounter - Komentiranje recenzije}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Korisnik
@@ -498,7 +503,7 @@
 	\end{packed_enum}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC2 - Pregled registriranih korisnika}}
+\noindent \underbar{\textbf{UC\showuccounter - Pregled registriranih korisnika}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Administrator
@@ -515,7 +520,7 @@
 	\end{packed_enum}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC3 - Pregled registriranog korisnika}}
+\noindent \underbar{\textbf{UC\showuccounter - Pregled registriranog korisnika}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Administrator
@@ -533,7 +538,7 @@
 	\end{packed_enum}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC4 - Uklanjanje registriranog korisnika}}
+\noindent \underbar{\textbf{UC\showuccounter - Uklanjanje registriranog korisnika}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Administrator
