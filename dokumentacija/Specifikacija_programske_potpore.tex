@@ -101,6 +101,7 @@
 		
 		\item Pristup privatnoj ruti se zabranjuje te se korisnik preusmjerava na formu za prijavu
 		\item Korisnik se prijavljuje te se preusmjerava na prethodnu zabranjenu rutu
+
 	\end{packed_enum}
 	
 	\item  \textbf{Opis mogućih odstupanja:}
@@ -117,38 +118,180 @@
 	\end{packed_item}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
+\noindent \underbar{\textbf{UC2 - Pregled registriranih korisnika}}
 \begin{packed_item}
 	
-	\item \textbf{Glavni sudionik: }$<$sudionik$>$
-	\item  \textbf{Cilj:} $<$cilj$>$
-	\item  \textbf{Sudionici:} $<$sudionici$>$
-	\item  \textbf{Preduvjet:} $<$preduvjet$>$
+	\item \textbf{Glavni sudionik:} Administrator
+	\item  \textbf{Cilj:} Pregled podataka o registriranim korisnicima
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Administrator je prijavljen
 	\item  \textbf{Opis osnovnog tijeka:}
 	
 	\item[] \begin{packed_enum}
 		
-		\item $<$opis korak jedan$>$
-		\item $<$opis korak dva$>$
-		\item $<$opis korak tri$>$
-		\item $<$opis korak četiri$>$
-		\item $<$opis korak pet$>$
+		\item Administrator na admin panelu odabire opciju pregledavanja svih registriranih korisnika 
+		\item Prikaže se popis svih korisnika koji su registrirani u aplikaciju i njihovi osnovni podatci (ime, prezime, email, vrijeme zadnje prijave, je li račun potvrđen, broj registriranih vozila)
+
 	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC3 - Pregled registriranog korisnika}}
+\begin{packed_item}
 	
+	\item \textbf{Glavni sudionik:} Administrator
+	\item  \textbf{Cilj:} Pregledati podatke o registriranom korisniku
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Administrator je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+
+		\item Administrator na admin panelu odabire opciju pregledavanja svih registriranih korisnika 
+		\item Na popisu registriranih korisnika odabire jednog korisnika
+		\item Prikaže se popis svih podataka o odabranom korisniku (ime, prezime, email adresa, vrijeme zadnje prijave, je li račun potvrđen, popis registriranih vozila, postoji li način plačanja)
+
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC4 - Uklanjanje registriranog korisnika}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Administrator
+	\item  \textbf{Cilj:} Ukloniti registriranog korisnika
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Administrator je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Administrator na admin panelu odabire opciju pregledavanja svih registriranih korisnika 
+		\item Prikaže se popis svih korisnika koji su registrirani u aplikaciju te odabire korisnika kojeg želi izbrisati
+		\item Administrator odabire akciju ”Ukoni korisnika i sve njegove podatke"
+		\item Korisnik se više ne može ulogirati te je potrebna nova registracija
+
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC5 - Uklanjanje parkirališta}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Administrator, Tvrtka
+	\item  \textbf{Cilj:} Ukloniti parkiralište
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Administrator/Tvrtka je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Administrator/Tvrtka otvara popis parkirališta te se odabire parkiralište koje se želi ukloniti
+		\item Prikažu se detalji parkirališta
+		\item Administrator/Tvrtka odabire akciju ”Ukoni parkiralište"
+		\item Parkiralište više nije vidljivo na karti niti na popisu parkirališta
+
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC6 - Dodavanje parkirališta}}
+\begin{packed_item}
+
+	\item \textbf{Glavni sudionik:} Administrator, Tvrtka
+	\item  \textbf{Cilj:} Dodati parkiralište
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Administrator/Tvrtka je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Administrator/Tvrtka otvara formu za dodavanje parkirališta
+		\item Unose se svi potrebni podaci
+		\item Administrator/Tvrtka odabire akciju ”Dodaj parkiralište"
+		\item Parkiralište postaje javno vidljivo na karti i u popisu parkirališta svim korisnicima aplikacije
+
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC7 - Registracija korisnika}}
+\begin{packed_item}
+
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Registrirati korisnika
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik nije prijavljen niti registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik odabire opciju za registraciju korisnika
+		\item Otvara se forma za popunjavanje korisničkih podataka
+		\item Korisnik otvara novi račun i prikazuje mu se poruka da je račun uspješno stvoren
+		\item Korisnik je automatski ulogiran u sustav i otvara mu se čarobnjak za popunjavanje preostalih podataka o računu
+		\item Kada je čarobnjak završen preusmjeren je na početni zaslon aplikacije
+
+	\end{packed_enum}
+
 	\item  \textbf{Opis mogućih odstupanja:}
 	
 	\item[] \begin{packed_item}
-		
-		\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+	
+		\item[3.a] Odabir već postojećeg emaila
 		\item[] \begin{packed_enum}
 			
-			\item $<$opis rješenja mogućeg scenarija korak 1$>$
-			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			\item Korisnik se obavještava o neuspjeloj registraciji
+			\item Korisnik koristi druge podatke te pokušava ponovno ili odustaje od registracije
 			
 		\end{packed_enum}
-		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
 		
+		\item[4.a] Odabir već postojećeg emaila
+		\item[] \begin{packed_enum}
+			
+			\item Prilikom prve sljedeće uspješne prijave, čarobnjak se opet prikazuje te se nastavlja na koraku koji nije završen
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC8 - Prijava korisnika}}
+\begin{packed_item}
+
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Prijaviti korisnika
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik nije prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik odabire opciju za prijavu korisnika
+		\item Otvara se forma za popunjavanje korisničkih podataka potrebnih za prijavu
+		\item Korisnik je prijavljen u aplikaciju i preusmjeren na početni zaslon aplikacije
+
+	\end{packed_enum}
+
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+	
+		\item[2.a] Pogrešni podaci prilikom prijave
+		\item[] \begin{packed_enum}
+			
+			\item Prikazuje se poruka o pogrešnim podacima za prijavu 
+			\item Korisnik pokušava ponovno unijeti ispravne podatke za prijavu ili odustaje od prijave
+			
+		\end{packed_enum}
+		
+		\item[2.b] Korisnik je zaboravio lozinku za prijavu
+		\item[] \begin{packed_enum}
+			
+			\item Prikazuje se poruka o pogrešnim podacima za prijavu 
+			\item Korisnik odabire akciju "Zaboravio sam lozinku"
+			\item Otvara se forma za unos emaila
+			\item Na email adresu mu se šalje poveznica koja ga vodi na formu za postavljanje nove lozinke te ju korisnik popunjava
+			\item Lozinka je promijenjena
+			\item Korisnik se preusmjerava na formu za prijavu
+			
+		\end{packed_enum}
+
 	\end{packed_item}
 \end{packed_item}
 
@@ -169,6 +312,3 @@
 \textbf{\textit{dio 1. revizije}}\\
 
 \textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
-
-
-
