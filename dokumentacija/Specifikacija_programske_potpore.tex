@@ -295,6 +295,304 @@
 	\end{packed_item}
 \end{packed_item}
 
+\noindent \underbar{\textbf{UC9 - Popis rezervacija}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: } Korisnik
+	\item  \textbf{Cilj:} Pregledati popis korisnikovih rezervacija
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Administrator/Tvrtka otvara formu za dodavanje parkirališta
+		\item Unose se svi potrebni podaci
+		\item Administrator/Tvrtka odabire akciju ”Dodaj parkiralište"
+		\item Parkiralište postaje javno vidljivo na karti i u popisu parkirališta svim korisnicima aplikacije
+		\item Korisnik odabire opciju pregleda vlastitih rezervacija
+		\item Prikaže se popis svih aktivnih i neaktivnih rezervacija s osnovnim informacijama
+
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[2.a] ????????????????
+		\item[] \begin{packed_enum}
+			
+			\item $<$opis rješenja mogućeg scenarija korak 1$>$
+			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			
+		\end{packed_enum}
+		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+		
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC10 - Pregled karte}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: } Korisnik
+	\item  \textbf{Cilj:} Pregled podataka o parkiralištima (slobodan/ukupan broj parkirnih mjesta)
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik nije prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik pritišće na oznaku pojedinog parkirališta na mapi
+		\item Otvaraju se osnovni podatci o parkiralištu i o tvrtki koja iznajmljuje
+
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC11 - Uređivanje parkirališta}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: } Administrator, Tvrtka
+	\item  \textbf{Cilj:} Pregled podataka o parkiralištu
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Tvrtka je prijavljena
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Otvara se popis vlastitih prijavljenih parkirališta te se odabire parkiralište koje se želi pregledati
+		\item Prikažu se detalji parkirališta
+	
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[2.a] ?????????????????'''
+		\item[] \begin{packed_enum}
+			
+			\item $<$opis rješenja mogućeg scenarija korak 1$>$
+			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			
+		\end{packed_enum}
+		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+		
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC12 - Pregled parkirališta}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: } Administrator, Tvrtka
+	\item  \textbf{Cilj:} Pregled podataka o parkiralištu
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Tvrtka je prijavljena
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Otvara se popis vlastitih prijavljenih parkirališta te se odabire parkiralište koje se želi pregledati
+		\item Prikažu se detalji parkirališta
+	
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[2.a] ?????????????
+		\item[] \begin{packed_enum}
+			
+			\item $<$opis rješenja mogućeg scenarija korak 1$>$
+			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			
+		\end{packed_enum}
+		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+		
+	\end{packed_item}
+\end{packed_item}
+
+
+\noindent \underbar{\textbf{UC13 - Pregled tvrtke}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: } Tvrtka
+	\item  \textbf{Cilj:} Pregled podataka o tvrtki
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Tvrtka je prijavljena
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Tvrtka pritisće gumb "Podatci o računu" 
+		\item Prikažu se podatci o tvrtci (OIB, ime, adresa sjedišta, adresa e-pošte)
+	
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[2.a] ????????????????'
+		\item[] \begin{packed_enum}
+			
+			\item $<$opis rješenja mogućeg scenarija korak 1$>$
+			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			
+		\end{packed_enum}
+		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+		
+	\end{packed_item}
+\end{packed_item}
+
+
+\noindent \underbar{\textbf{UC14 - Uređivanje tvrtke}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }Tvrtka
+	\item  \textbf{Cilj:} Ažuriranje podataka o tvrtki
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Tvrtka je prijavljena
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Tvrtka pritišće gumb "Podatci o računu" 
+		\item Prikažu se podatci o tvrtci (OIB, ime, adresa sjedišta, adresa e-pošte)
+		\item Tvrtka odabire akciju ”Ažuriraj korisničke podatke"
+		\item Nakon što su željeni podatci izmijenjeni tvrtka odabire opciju "Spremi promijene"
+	
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[2.a] ?????????????????''
+		\item[] \begin{packed_enum}
+			
+			\item $<$opis rješenja mogućeg scenarija korak 1$>$
+			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			
+		\end{packed_enum}
+		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+		
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC15 - Pregled recenzija}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }Pregled recenzija
+	\item  \textbf{Cilj:} Čitanje postojiećih recenzija
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik pritišće na oznaku pojedinog parkirališta na mapi
+		\item Otvaraju se osnovni podatci o parkiralištu i o tvrtki koja iznajmljuje
+		\item Korisnik pritišće gumb "Recenzije"
+		\item Otvara se popis ostavljenih recenzija o parkiralištu s datumom recenzije te imenom korisnika koji je autor
+	
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[2.a]??????????????????????''
+		\item[] \begin{packed_enum}
+			
+			\item $<$opis rješenja mogućeg scenarija korak 1$>$
+			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			
+		\end{packed_enum}
+		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+		
+	\end{packed_item}
+\end{packed_item}
+
+
+\noindent \underbar{\textbf{UC16 - Odgovaranje na recenzije}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }Korisnik
+	\item  \textbf{Cilj:} Odgovor na recenziju
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik pritišće na oznaku pojedinog parkirališta na mapi
+		\item Otvaraju se osnovni podatci o parkiralištu i o tvrtki koja iznajmljuje
+		\item Korisnik pritišće gumb "Recenzije"
+		\item Otvara se popis ostavljenih recenzija o parkiralištu s datumom recenzije te imenom korisnika koji je autor
+		\item Korisnik pritišće na recenziju na koju želi odgovoriti
+		\item Otvara se Textbox u koji korisnik upisuje željeni odgovor
+		\item Pritiskom na gumb "Odgovori" poruka ostaje zabilježena
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[2.a] ????????????????????
+		\item[] \begin{packed_enum}
+			
+			\item $<$opis rješenja mogućeg scenarija korak 1$>$
+			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			
+		\end{packed_enum}
+		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+		
+	\end{packed_item}
+\end{packed_item}
+
+
+\noindent \underbar{\textbf{UC17 - Brisanje tvrtke}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: }Korisnik
+	\item  \textbf{Cilj:} Brisanje računa tvrtke te svih njenih parkinga
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Tvrtka je registrirana
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Tvrtka pritisće gumb "Podatci o računu"
+		\item Prikažu se podatci o tvrtci (OIB, ime, adresa sjedišta, adresa e-pošte)
+		\item Tvrtka odabire opciju "Obriši račun"
+		\item Briše se račun tvrtke te sva njena prijavljena parkirališta
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[2.a] $?????????????????????$
+		\item[] \begin{packed_enum}
+			
+			\item $<$opis rješenja mogućeg scenarija korak 1$>$
+			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			
+		\end{packed_enum}
+		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+		
+	\end{packed_item}
+\end{packed_item}
+
 \subsubsection{Dijagrami obrazaca uporabe}
 
 \textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
