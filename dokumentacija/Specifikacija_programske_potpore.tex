@@ -336,6 +336,114 @@
 	\end{packed_item}
 \end{packed_item}
 
+\noindent \underbar{\textbf{UC\showuccounter - Pregled podataka o vozilu}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Klijent
+	\item \textbf{Cilj:} Pregledati podatke o vozilu
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Klijent je prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Klijent otvara popis vozila
+		\item Klijent odabire parkiralište koje želi pregledati
+		\item Prikažu se podataka o vozilu
+	
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Dodavanje vozila}}
+\begin{packed_item}
+
+	\item \textbf{Glavni sudionik:} Klijent
+	\item \textbf{Cilj:} Dodati vozilo
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Klijent je prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Klijent otvara formu za dodavanje vozila
+		\item Unose se svi potrebni podaci
+		\item Klijent odabire akciju za dodavanje vozila
+		\item Vozilo je dodano
+
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[6.a] Nevažeći podatci prilikom dodavanja vozila
+		\item[] \begin{packed_enum}
+			
+			\item Klijentu se prikazuje poruka o nevažećim podacima
+			\item Klijent ispravlja podatke
+			\item Klijent ponovno odabire akciju za dodavanje vozila
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Uređivanje vozila}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Klijent
+	\item \textbf{Cilj:} Urediti podatke o vozilu
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Klijent je prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Klijent otvara popis vozila
+		\item Klijent odabire vozilo koje želi urediti
+		\item Otvara se forma za uređivanje vozila popunjena sa podacima odabranoga vozila
+		\item Klijent uređuje podatke
+		\item Klijent sprema promjene
+	
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[6.a] Nevažeći podatci prilikom spremanja promjena
+		\item[] \begin{packed_enum}
+			
+			\item Klijent se prikazuje poruka o nevažećim podacima
+			\item Klijent ispravlja podatke
+			\item Klijent ponovno sprema podatke
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Uklanjanje vozila}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Klijent
+	\item \textbf{Cilj:} Ukloniti vozilo
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Klijent je prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Klijent otvara popis vozila
+		\item Klijent odabire vozilo koje želi ukloniti
+		\item Prikažu se detalji vozila
+		\item Klijent odabire akciju uklanjanja vozila
+		\item Klijent je preusmjeren na popis vozila
+
+	\end{packed_enum}
+\end{packed_item}
+
 \noindent \underbar{\textbf{UC\showuccounter - Pregled podataka o parkiralištu}}
 \begin{packed_item}
 	
