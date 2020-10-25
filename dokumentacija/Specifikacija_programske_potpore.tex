@@ -88,37 +88,31 @@
 
 \subsubsection{Opis obrazaca uporabe}
 
-\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
+\noindent \underbar{\textbf{UC1 - Pristup privatnim rutama}}
 \begin{packed_item}
 	
-	\item \textbf{Glavni sudionik: }$<$sudionik$>$
-	\item  \textbf{Cilj:} $<$cilj$>$
-	\item  \textbf{Sudionici:} $<$sudionici$>$
-	\item  \textbf{Preduvjet:} $<$preduvjet$>$
-	\item  \textbf{Opis osnovnog tijeka:}
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item \textbf{Cilj:} Zabraniti pristup privatnim rutama
+	\item \textbf{Sudionici:} -
+	\item \textbf{Preduvjet:} Korisnik nije prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
 	
 	\item[] \begin{packed_enum}
 		
-		\item $<$opis korak jedan$>$
-		\item $<$opis korak dva$>$
-		\item $<$opis korak tri$>$
-		\item $<$opis korak četiri$>$
-		\item $<$opis korak pet$>$
+		\item Pristup privatnoj ruti se zabranjuje te se korisnik preusmjerava na formu za prijavu
+		\item Korisnik se prijavljuje te se preusmjerava na prethodnu zabranjenu rutu
 	\end{packed_enum}
 	
 	\item  \textbf{Opis mogućih odstupanja:}
 	
 	\item[] \begin{packed_item}
 		
-		\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[2.a] Korisnik pokušava pristupiti rutama koje njemu nisu dostupne
 		\item[] \begin{packed_enum}
 			
-			\item $<$opis rješenja mogućeg scenarija korak 1$>$
-			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			\item Nakon prijave korisnik se preusmjerava na početni zaslon aplikacije
 			
 		\end{packed_enum}
-		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
 		
 	\end{packed_item}
 \end{packed_item}
