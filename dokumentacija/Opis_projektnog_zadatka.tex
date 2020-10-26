@@ -3,7 +3,7 @@
 Cilj projekta je razviti programsku podršku za stvaranje web aplikacije \textit {Parkiraj me}. Aplikacija će korisniku omogućiti praćenje stanja slobodnih parkirališnih mjesta na svim lokacijama diljem Zagreba u stvarnom vremenu te jednokratnu, ponavljajuću ili trajnu rezervaciju parkirališnog mjesta. Putem aplikacije sve zainteresirane tvrtke moći će ponuditi svoja parkirališta na kojima će korisnici kasnije moći rezervirati svoja mjesta.
 
 Pokretanjem aplikacije prikazuje se karta s prikazanim dostupnim parkiralištima i brojem slobodnih parkirališnih mjesta te opcija za registraciju ili prijavu u sustav.\newline 
-Neprijavljeni korisnik može se prijaviti na postojeći račun (mora upisati e-mail adresa i lozinku). Neregistrirani korisnik ima mogućnost registracije kao: \textit{Klijent} (rezervira parkirališna mjesta) ili \textit{Tvrtka} (ovlašteni zaposlenik tvrtke).
+Neprijavljeni korisnik može se prijaviti na postojeći račun (mora upisati e-mail adresu i lozinku). Neregistrirani korisnik ima mogućnost registracije kao: \textit{Klijent} (rezervira parkirališna mjesta) ili \textit{Tvrtka} (ovlašteni zaposlenik tvrtke).
 \newline
 Za klijenta potrebni podaci za registraciju su:
 \begin{itemize}
@@ -23,9 +23,11 @@ Za tvrtku potrebni podaci za registraciju su:
     \item Adresa sjedišta
 \end{itemize}
 
-\textit{\underbar{Klijent}} je registrirani korisnik stariji od 18 godina, koji ima pravo rezervirati parkirno mjesto. Klijent na karti odabire parkiralište na kojem želi rezervirati mjesto i dobiva informaciju o broju slobodnih mjesta. Druga mogućnost je da na temelju trenutne lokacije aplikacija daje prijedlog najbližih parkirališta sa slobodnim parkirnim mjestima (prednost imaju parkirališta s brojem slobodnih mjesta većim od 10). Ukoliko odabrano parkiralište ima slobodnih mjesta odabire mogućnost rezervacije. Nakon toga klijent bira tip rezervacije koju želi i odabire vozilo za koje želi izvršiti rezervaciju. rezervacija se naplaćuje izravnim terećenjem njegove kreditne kartice. Potvrdom plaćanja aktivira se rezervacija u sustavu. 
+\textit{\underbar{Klijent}} je registrirani korisnik stariji od 18 godina, koji ima pravo rezervirati parkirno mjesto. Klijent na karti odabire parkiralište na kojem želi rezervirati mjesto i dobiva informaciju o broju slobodnih mjesta. Druga mogućnost je da na temelju trenutne lokacije aplikacija daje prijedlog najbližih parkirališta sa slobodnim parkirnim mjestima (prednost imaju parkirališta s brojem slobodnih mjesta većim od 10). Ukoliko odabrano parkiralište ima slobodnih mjesta odabire mogućnost rezervacije. Nakon toga klijent bira tip rezervacije koju želi i odabire vozilo za koje želi izvršiti rezervaciju. Rezervacija se naplaćuje izravnim terećenjem njegove kreditne kartice. Potvrdom plaćanja aktivira se rezervacija u sustavu. 
 
 Klijent istovremeno može imati više različitih tipova rezervacija, na različitim parkiralištima s različitim vozilima.
+
+Klijent ima mogućnost ostavljanja recenzije za sva parkirališta.
 \newline
 
 \textit{\underbar{Tvrtka}} je korisnik kojeg prijavljuje ovlašteni zaposlenik tvrtke. Ovlašteni zaposlenik nakon registracije svoje tvrtke unosi podatke o parkiralištima koje nudi ta tvrtka. Odabirom opcije za dodavanje parkirališta unosi se:
@@ -37,12 +39,12 @@ Klijent istovremeno može imati više različitih tipova rezervacija, na različ
     \item broj invalidskih mjesta (potrebno za određivanje broja slobodnih mjesta)
     \item cijena parkinga
 \end{itemize}
- Preduvjet za prijavu parkirališta je opremljenost pametnim kamerama na svakom parkirnom mjestu kako bi se prepoznala zauzeta mjesta te kako bi se mogla očitati registracija vozila na parkirališnom mjestu. Nakon uspješne prijave parkirališta, to parkiralište postaje vidljivo svim korisnicima aplikacije na karti, te su na njemu moguće rezervacije.
+ Preduvjet za prijavu parkirališta je opremljenost pametnim kamerama na svakom parkirališnom mjestu kako bi se prepoznala zauzeta mjesta te kako bi se mogla očitati registracija vozila na parkirališnom mjestu. Nakon uspješne prijave parkirališta, to parkiralište postaje vidljivo svim korisnicima aplikacije na karti te su na njemu moguće rezervacije.
 \newline
 
 \textit{\underbar{Administrator}} sustava upravlja svim korisnicima aplikacije. On ima pristup popisu svih registriranih korisnika i njihovih osnovnih podataka (ime, prezime, e-mail adresa, popis vozila). Ima pristup popisu rezervacija,
 također može potvrditi dodavanje ili brisanje parkirališta.
-\newpage\textit{Upravljanje korisničkog računa}
+\newpage\textit{Upravljanje korisničkim računom}
 
 Korisnici imaju mogućnost upravljanja svojim računima, pregledavanjem, uređivanjem i brisanjem svojeg računa.
 
@@ -66,7 +68,6 @@ Parkirno mjesto se može rezervirati jednokratno, kao ponavljajuća rezervacija 
 \newline
 \textit{Dodatno:}
 
-Ukoliko se briše korisnički račun neke tvrtke brišu se sva njena parkirališta, a za sve korisnike ukida se rezervacija ako postoji na tim parkiralištima. Ukoliko ima preostalog neiskorištenog rezerviranog vremena korisniku se vraća novac.
+Ukoliko se briše korisnički račun neke tvrtke, brišu se sva njena parkirališta, a za sve korisnike ukida se rezervacija ako postoji na tim parkiralištima. Ukoliko ima preostalog neiskorištenog rezerviranog vremena korisniku se vraća novac.
 
 Sustav treba podržavati rad više korisnika u stvarnom vremenu.
-
