@@ -587,6 +587,44 @@
 	\end{packed_enum}
 \end{packed_item}
 
+\noindent \underbar{\textbf{UC\showuccounter\ - Uređivanje recenzije}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Urediti vlastitu recenziju
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik odabire oznaku parkirališta na karti
+		\item Otvaraju se osnovni podatci o parkiralištu i o tvrtki koja iznajmljuje
+		\item Korisnik odabire akciju za prikaz recenziju
+		\item Otvara se popis recenzija za odabrano parkiralište
+		\item Korisnik odabire akciju uređivanje vlastite recenzije
+		\item Otvara se forma za uređivanje recenzije
+		\item Korisnik ispunjava podatke recenzije
+		\item Korisnik odabire akciju za spremanje promjena recenzije
+		\item Korisnika se preusmjerava na popis recenzija
+		
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[7.a] Korisnik ostavlja praznu formu za recenziju
+		\item[] \begin{packed_enum}
+			
+			\item Korisniku se prikazuje poruka o nevažećim podacima
+			\item Korisnik ispravlja podatke
+			\item Korisnik ponovno sprema podatke o recenziji
+			
+		\end{packed_enum}
+		\end{packed_item}
+		
+	\end{packed_enum}
+\end{packed_item}
+
 
 \noindent \underbar{\textbf{UC\showuccounter\ - Komentiranje recenzije}}
 \begin{packed_item}
@@ -601,7 +639,7 @@
 		
 		\item Korisnik odabire oznaku parkirališta na karti
 		\item Otvaraju se osnovni podatci o parkiralištu i o tvrtki koja iznajmljuje
-		\item Korisnik odabire akciju za prikaz recenziju
+		\item Korisnik odabire akciju za prikaz recenzija
 		\item Otvara se popis recenzija za odabrano parkiralište
 		\item Korisnik odabire akciju za komentiranje željene recenzije
 		\item Otvara se forma za dodavanje komentara
@@ -775,6 +813,51 @@
 		\item Prikažu se podatci o kartici
 		\item Korisnik odabire akciju uklanjanja kartice
 		\item Kartica je obrisana
+		
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Rezervacija parkinga}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Rezervirati parkirno mjesto na parkiralištu
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik na mapi odabire željeno parkiralište
+		\item Prikažu se podatci o parkiralištu
+		\item Korisnik odabire opciju rezervacije parkirnog mjesta
+		\item Korisnika se preusmjerava na plaćanje
+		\item Korisnik unosi podatke o plaćanju
+		\item Korisnika se preusmjerava na kartu s uputama do parkirališta za koje je platio rezervaciju
+		
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[3.a] Nema slobodnih parkirnih mjesta
+		\item[] \begin{packed_enum}
+			
+			\item Korisnika se obavještava porukom o zauzetosti parkinga
+			\item Korisniku se osvježe stanja parkinga
+			\item Korisnika se vraća na kartu s parkiralištima
+			
+		\end{packed_enum}
+		
+		\item[4.a] Nevažeći podaci o plaćanju ili nedovoljno novca na kartici
+		\item[] \begin{packed_enum}
+			
+			\item Korisnika se obavještava porukom o neuspjelom plaćanju
+			\item Korisniku se ponovno pokazuje forma za plaćanje
+			\item Korisnik unosi nove podatke ili odabire drugu karticu
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
 		
 	\end{packed_enum}
 \end{packed_item}
