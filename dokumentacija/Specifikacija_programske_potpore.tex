@@ -88,74 +88,814 @@
 
 \subsubsection{Opis obrazaca uporabe}
 
-\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
+
+\newcounter{uccounter}
+\newcommand\showuccounter{\stepcounter{uccounter}\theuccounter}
+
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Pregled karte}}
 \begin{packed_item}
 	
-	\item \textbf{Glavni sudionik: }$<$sudionik$>$
-	\item  \textbf{Cilj:} $<$cilj$>$
-	\item  \textbf{Sudionici:} $<$sudionici$>$
-	\item  \textbf{Preduvjet:} $<$preduvjet$>$
-	\item  \textbf{Opis osnovnog tijeka:}
+	\item \textbf{Glavni sudionik: } Korisnik
+	\item \textbf{Cilj:} Pogledati kartu s označenim parkiralištima
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} -
+	\item \textbf{Opis osnovnog tijeka:}
 	
 	\item[] \begin{packed_enum}
 		
-		\item $<$opis korak jedan$>$
-		\item $<$opis korak dva$>$
-		\item $<$opis korak tri$>$
-		\item $<$opis korak četiri$>$
-		\item $<$opis korak pet$>$
+		\item Korisnik otvara aplikaciju
+		\item Prikazuje se karta s označenim parkiralištima
+
 	\end{packed_enum}
 	
+	\item[] \begin{packed_item}
+	
+		\item[1.a] Korisnik je već u aplikaciji
+		\item[] \begin{packed_enum}
+			
+			\item Korisnik odabire pregled karte
+			
+	    \end{packed_enum}
+    \end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Pregled podataka o parkiralištu na karti}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item \textbf{Cilj:} Pregleda podataka o parkiralištu
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Otvorena karta
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik pritišće na oznaku parkirališta na mapi
+		\item Prikazuju se osnovni podatci o parkiralištu i o tvrtki koja je nadležna za to parkiralište
+
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Prijava korisnika}}
+\begin{packed_item}
+
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item \textbf{Cilj:} Prijaviti korisnika
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Korisnik nije prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik odabire opciju za prijavu korisnika
+		\item Otvara se forma za popunjavanje korisničkih podataka potrebnih za prijavu
+		\item Korisnik je prijavljen u aplikaciju i preusmjeren na početni zaslon aplikacije
+
+	\end{packed_enum}
+
 	\item  \textbf{Opis mogućih odstupanja:}
 	
 	\item[] \begin{packed_item}
-		
-		\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+	
+		\item[2.a] Nevažeći podaci prilikom prijave korisnika
 		\item[] \begin{packed_enum}
 			
-			\item $<$opis rješenja mogućeg scenarija korak 1$>$
-			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			\item Korisniku se prikazuje poruka o nevažećim podacima
+			\item Korisnik ispravlja nevažeće podatke za prijavu ili odustaje od prijave
 			
 		\end{packed_enum}
-		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+		
+		\item[2.b] Korisnik je zaboravio lozinku za prijavu
+		\item[] \begin{packed_enum}
+			
+			\item Prikazuje se poruka o pogrešnim podacima za prijavu 
+			\item Korisnik odabire akciju za ponovno postavljanje lozinke
+			\item Otvara se forma za unos emaila
+			\item Na email adresu mu se šalje poveznica koja ga vodi na formu za postavljanje nove lozinke te ju korisnik popunjava
+			\item Lozinka je promijenjena
+			\item Korisnik se preusmjerava na formu za prijavu
+			
+		\end{packed_enum}
+
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Registracija korisnika}}
+\begin{packed_item}
+
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item \textbf{Cilj:} Registrirati korisnika
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Korisnik nije prijavljen niti registriran
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik odabire opciju za registraciju korisnika
+		\item Otvara se forma za popunjavanje korisničkih podataka
+		\item Korisnik otvara novi račun i prikazuje mu se poruka da je račun uspješno stvoren
+		\item Korisnik je automatski prijavljen u sustav
+		\item Otvara se čarobnjak za popunjavanje preostalih podataka o računu
+		\item Kada je čarobnjak završen, korisnik je preusmjeren na početni zaslon aplikacije
+
+	\end{packed_enum}
+
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+	
+		\item[3.a] Nevažeći podatci prilikom registracije korisnika
+		\item[] \begin{packed_enum}
+			
+			\item Korisnik se obavještava o neuspjeloj registraciji
+			\item Korisnik ispravlja nevažeće podatke te pokušava ponovno ili odustaje od registracije
+			
+		\end{packed_enum}
+		
+		\item[4.a] Korisnik ugasi aplikaciju prije završetka čarobnjaka
+		\item[] \begin{packed_enum}
+			
+			\item Prilikom prve sljedeće uspješne prijave, čarobnjak se opet prikazuje te se nastavlja na koraku koji nije završen
+			
+		\end{packed_enum}
 		
 	\end{packed_item}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
+\noindent \underbar{\textbf{UC\showuccounter\ - Pregled podataka o korisničkom računu}}
 \begin{packed_item}
 	
-	\item \textbf{Glavni sudionik: }$<$sudionik$>$
-	\item  \textbf{Cilj:} $<$cilj$>$
-	\item  \textbf{Sudionici:} $<$sudionici$>$
-	\item  \textbf{Preduvjet:} $<$preduvjet$>$
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item \textbf{Cilj:} Pregledati podatke o korisničkom računu
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Korisnik je prijavljena
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik otvara podatke o korisničkom računu
+		\item Prikažu se podatci o korisničkom računu
+	
+	\end{packed_enum}
+	
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Uređivanje podataka o korisničkom računu}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Administrator/Tvrtka
+	\item  \textbf{Cilj:} Urediti podatake o korisničkom računu
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Administrator/Tvrtka je prijavljen
 	\item  \textbf{Opis osnovnog tijeka:}
 	
 	\item[] \begin{packed_enum}
 		
-		\item $<$opis korak jedan$>$
-		\item $<$opis korak dva$>$
-		\item $<$opis korak tri$>$
-		\item $<$opis korak četiri$>$
-		\item $<$opis korak pet$>$
+		\item Korisnik otvara podatke o korisničkom računu
+		\item Prikažu se podatci o korisničkom računu
+		\item Korisnik odabire akciju za uređivanje
+		\item Prikaže se forma za uređivanje podataka o korisničkom računu
+		\item Korisnik uređuje podatke
+		\item Korisnik sprema promjene
+	
 	\end{packed_enum}
 	
 	\item  \textbf{Opis mogućih odstupanja:}
 	
 	\item[] \begin{packed_item}
 		
-		\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+		\item[6.a] Nevažeći podatci prilikom spremanja promjena
 		\item[] \begin{packed_enum}
 			
-			\item $<$opis rješenja mogućeg scenarija korak 1$>$
-			\item $<$opis rješenja mogućeg scenarija korak 2$>$
+			\item Korisniku se prikazuje poruka o nevažećim podacima
+			\item Korisnik ispravlja podatke
+			\item Korisnik ponovno sprema podatke
 			
 		\end{packed_enum}
-		\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-		\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
 		
 	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Brisanje korisničkog računa}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Izbrisati korisnički račun
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik otvara podatke o svom računu
+		\item Korisnik odabire akciju za brisanje računa
+		\item Briše se korisnikov račun
+		\item Korisnik se preusmjerava na početni zaslon
+		
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Neovlašteni pristup privatnim rutama}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item \textbf{Cilj:} Zabraniti pristup privatnim rutama
+	\item \textbf{Sudionici:} -
+	\item \textbf{Preduvjet:} Korisnik nije ovlašten za pristup
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Neovlašteni korisnik pokušava pristupiti privatnoj ruti
+		\item Pristup privatnoj ruti se zabranjuje
+		\item Korisnik preusmjerava na formu za prijavu
+		\item Korisnik se prijavljuje
+		\item Korisnik se preusmjerava na prethodnu rutu
+
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[3.a] Korisnik je prijavljen
+		\item[] \begin{packed_enum}
+			
+			\item Korisnik se preusmjerava na početni zaslon aplikacije 
+			
+		\end{packed_enum}
+		
+		\item[5.a] Korisnik je i dalje neovlašten za pristup
+		\item[] \begin{packed_enum}
+			
+			\item Nakon prijave korisnik se preusmjerava na početni zaslon aplikacije
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Pregled podataka o vozilu}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Klijent
+	\item \textbf{Cilj:} Pregledati podatke o vozilu
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Klijent je prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Klijent otvara popis vozila
+		\item Klijent odabire parkiralište koje želi pregledati
+		\item Prikažu se podataka o vozilu
+	
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Dodavanje vozila}}
+\begin{packed_item}
+
+	\item \textbf{Glavni sudionik:} Klijent
+	\item \textbf{Cilj:} Dodati vozilo
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Klijent je prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Klijent otvara formu za dodavanje vozila
+		\item Unose se svi potrebni podaci
+		\item Klijent odabire akciju za dodavanje vozila
+		\item Vozilo je dodano
+
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[6.a] Nevažeći podatci prilikom dodavanja vozila
+		\item[] \begin{packed_enum}
+			
+			\item Klijentu se prikazuje poruka o nevažećim podacima
+			\item Klijent ispravlja podatke
+			\item Klijent ponovno odabire akciju za dodavanje vozila
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Uređivanje vozila}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Klijent
+	\item \textbf{Cilj:} Urediti podatke o vozilu
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Klijent je prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Klijent otvara popis vozila
+		\item Klijent odabire vozilo koje želi urediti
+		\item Otvara se forma za uređivanje vozila popunjena sa podacima odabranoga vozila
+		\item Klijent uređuje podatke
+		\item Klijent sprema promjene
+	
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[6.a] Nevažeći podatci prilikom spremanja promjena
+		\item[] \begin{packed_enum}
+			
+			\item Klijent se prikazuje poruka o nevažećim podacima
+			\item Klijent ispravlja podatke
+			\item Klijent ponovno sprema podatke
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Uklanjanje vozila}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Klijent
+	\item \textbf{Cilj:} Ukloniti vozilo
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Klijent je prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Klijent otvara popis vozila
+		\item Klijent odabire vozilo koje želi ukloniti
+		\item Prikažu se detalji vozila
+		\item Klijent odabire akciju uklanjanja vozila
+		\item Klijent je preusmjeren na popis vozila
+
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Pregled podataka o parkiralištu}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: } Administrator, Tvrtka
+	\item \textbf{Cilj:} Pregledati podatke o parkiralištu
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Administrator/Tvrtka je prijavljena
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Administrator/Tvrtka otvara popis parkirališta
+		\item Administrator/Tvrtka odabire parkiralište koje želi pregledati
+		\item Prikažu se podataka o parkiralištu
+	
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Dodavanje parkirališta}}
+\begin{packed_item}
+
+	\item \textbf{Glavni sudionik:} Administrator, Tvrtka
+	\item \textbf{Cilj:} Dodati parkiralište
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Administrator/Tvrtka je prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Administrator/Tvrtka otvara formu za dodavanje parkirališta
+		\item Unose se svi potrebni podaci
+		\item Administrator/Tvrtka odabire akciju za dodavanje parkirališta
+		\item Parkiralište postaje javno vidljivo na karti i u popisu parkirališta svim korisnicima aplikacije
+
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[6.a] Nevažeći podatci prilikom dodavanja parkirališta
+		\item[] \begin{packed_enum}
+			
+			\item Administratoru/Tvrtki se prikazuje poruka o nevažećim podacima
+			\item Administrator/Tvrtka ispravlja podatke
+			\item Administrator/Tvrtka ponovno odabire akciju za dodavanje parkirališta
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Uređivanje parkirališta}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Administrator, Tvrtka
+	\item \textbf{Cilj:} Urediti podatke o parkiralištu
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Administrator/Tvrtka je prijavljena
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Administrator/Tvrtka otvara popis parkirališta
+		\item Administrator/Tvrtka odabire parkiralište koje želi urediti
+		\item Otvara se forma za uređivanje parkirališta popunjena sa podacima odabranoga parkirališta
+		\item Administrator/Tvrtka uređuje podatke
+		\item Administrator/Tvrtka sprema promjene
+	
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[6.a] Nevažeći podatci prilikom spremanja promjena
+		\item[] \begin{packed_enum}
+			
+			\item Administratoru/Tvrtki se prikazuje poruka o nevažećim podacima
+			\item Administrator/Tvrtka ispravlja podatke
+			\item Administrator/Tvrtka ponovno sprema podatke
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Uklanjanje parkirališta}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Administrator, Tvrtka
+	\item \textbf{Cilj:} Ukloniti parkiralište
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Administrator/Tvrtka je prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Administrator/Tvrtka otvara popis parkirališta te se odabire parkiralište koje se želi ukloniti
+		\item Prikažu se detalji parkirališta
+		\item Administrator/Tvrtka odabire akciju uklanjanja parkirališta
+		\item Parkiralište više nije vidljivo na karti niti na popisu parkirališta
+
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Popis rezervacija}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik: } Administrator/Klijent
+	\item \textbf{Cilj:} Pregledati popis korisnikovih rezervacija
+	\item \textbf{Sudionici:} Baza podataka
+	\item \textbf{Preduvjet:} Administrator/Klijent je prijavljen
+	\item \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Administrator/Klijent odabire opciju pregleda rezervacija
+		\item Prikaže se popis svih aktivnih i neaktivnih rezervacija s osnovnim informacijama
+
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Pregled recenzija}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Pregled recenzija
+	\item  \textbf{Cilj:} Pregledati postojećih recenzija
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik odabire oznaku parkirališta na karti
+		\item Otvaraju se osnovni podatci o parkiralištu i o tvrtki koja iznajmljuje
+		\item Korisnik odabire akciju za prikaz recenziju
+		\item Otvara se popis recenzija za odabrano parkiralište
+	
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Uređivanje recenzije}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Urediti vlastitu recenziju
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik odabire oznaku parkirališta na karti
+		\item Otvaraju se osnovni podatci o parkiralištu i o tvrtki koja iznajmljuje
+		\item Korisnik odabire akciju za prikaz recenziju
+		\item Otvara se popis recenzija za odabrano parkiralište
+		\item Korisnik odabire akciju uređivanje vlastite recenzije
+		\item Otvara se forma za uređivanje recenzije
+		\item Korisnik ispunjava podatke recenzije
+		\item Korisnik odabire akciju za spremanje promjena recenzije
+		\item Korisnika se preusmjerava na popis recenzija
+		
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[7.a] Korisnik ostavlja praznu formu za recenziju
+		\item[] \begin{packed_enum}
+			
+			\item Korisniku se prikazuje poruka o nevažećim podacima
+			\item Korisnik ispravlja podatke
+			\item Korisnik ponovno sprema podatke o recenziji
+			
+		\end{packed_enum}
+		\end{packed_item}
+		
+	\end{packed_enum}
+\end{packed_item}
+
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Komentiranje recenzije}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Komentar na recenziju
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik odabire oznaku parkirališta na karti
+		\item Otvaraju se osnovni podatci o parkiralištu i o tvrtki koja iznajmljuje
+		\item Korisnik odabire akciju za prikaz recenzija
+		\item Otvara se popis recenzija za odabrano parkiralište
+		\item Korisnik odabire akciju za komentiranje željene recenzije
+		\item Otvara se forma za dodavanje komentara
+		\item Korisnik upisuje komentar
+		\item Korisnik odabire akciju za dodavanje komentara
+		
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Pregled registriranih korisnika}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Administrator
+	\item  \textbf{Cilj:} Pregled podataka o registriranim korisnicima
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Administrator je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Administrator na administratorskoj ploči odabire opciju pregledavanja svih registriranih korisnika 
+		\item Prikaže se popis svih korisnika koji su registrirani u aplikaciju i njihovi osnovni podacima
+
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Pregled registriranog korisnika}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Administrator
+	\item  \textbf{Cilj:} Pregledati podatke o registriranom korisniku
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Administrator je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+
+		\item Administrator na administratorskoj ploči odabire opciju pregledavanja svih registriranih korisnika 
+		\item Na popisu registriranih korisnika odabire jednog korisnika
+		\item Prikaže se popis svih podataka o odabranom korisniku
+
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Uklanjanje registriranog korisnika}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Administrator
+	\item  \textbf{Cilj:} Izbrisati račun registriranog korisnika
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Administrator je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Administrator na administratorskoj ploči odabire opciju pregledavanja svih registriranih korisnika 
+		\item Prikaže se popis svih korisnika koji su registrirani u aplikaciju te odabire korisnika kojeg želi izbrisati
+		\item Administrator odabire akciju za uklanjanje korisnika
+		\item Korisnik se više ne može prijaviti te je potrebna nova registracija
+
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter\ - Dodavanje kartice}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Dodati karticu
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik otvara podatke o korisničkom računu
+		\item Prikažu se podatci o korisničkom računu
+		\item Korisnik odabire gumb "Dodaj karticu"
+		\item Prikaže se forma za dodavanje podataka o kartici
+		\item Korisnik upisuje podatke i prikazuje mu se poruka da je kartica uspješno dodana
+		\item Korisnik je preusmjeren nazad na podatke o korisničkom računu
+	
+	\end{packed_enum}
+	
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[6.a] Nevažeći podatci prilikom dodavanja kartice
+		\item[] \begin{packed_enum}
+			
+			\item Korisniku se prikazuje poruka o nevažećim podacima
+			\item Korisnik ispravlja podatke
+			\item Korisnik ponovno sprema podatke
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Pregled kartica}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Pregled podataka o kartici
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik otvara podatke o korisničkom računu
+		\item Prikažu se podatci o korisničkom računu
+		\item Korisnik odabire na karticu čije podatke želi pregledati
+		\item Prikažu se podatci o kartici
+		
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Uređivanje kartice}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Pregled podataka o kartici
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik otvara podatke o korisničkom računu
+		\item Prikažu se podatci o korisničkom računu
+		\item Korisnik odabire na karticu čije podatke želi urediti
+		\item Prikažu se podatci o kartici
+		\item Otvara se forma za uređivanje kartice popunjena sa podacima o kartici
+		\item Korisnik uređuje podatke
+		\item Korisnik sprema promjene
+		
+			\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[6.a] Nevažeći podatci prilikom spremanja promjena
+		\item[] \begin{packed_enum}
+			
+			\item Korisniku se prikazuje poruka o nevažećim podacima
+			\item Korisnik ispravlja podatke
+			\item Korisnik ponovno sprema podatke
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+		
+	\end{packed_enum}
+\end{packed_item}
+
+
+\noindent \underbar{\textbf{UC\showuccounter - Brisanje kartice}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Brisanje podataka o kartici
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik otvara podatke o korisničkom računu
+		\item Prikažu se podatci o korisničkom računu
+		\item Korisnik odabire na karticu čije podatke želi obrisati
+		\item Prikažu se podatci o kartici
+		\item Korisnik odabire akciju uklanjanja kartice
+		\item Kartica je obrisana
+		
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Rezervacija parkinga}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Rezervirati parkirno mjesto na parkiralištu
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik je prijavljen
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik na mapi odabire željeno parkiralište
+		\item Prikažu se podatci o parkiralištu
+		\item Korisnik odabire opciju rezervacije parkirnog mjesta
+		\item Korisnika se preusmjerava na plaćanje
+		\item Korisnik unosi podatke o plaćanju
+		\item Korisnika se preusmjerava na kartu s uputama do parkirališta za koje je platio rezervaciju
+		
+	\item  \textbf{Opis mogućih odstupanja:}
+	
+	\item[] \begin{packed_item}
+		
+		\item[3.a] Nema slobodnih parkirnih mjesta
+		\item[] \begin{packed_enum}
+			
+			\item Korisnika se obavještava porukom o zauzetosti parkinga
+			\item Korisniku se osvježe stanja parkinga
+			\item Korisnika se vraća na kartu s parkiralištima
+			
+		\end{packed_enum}
+		
+		\item[4.a] Nevažeći podaci o plaćanju ili nedovoljno novca na kartici
+		\item[] \begin{packed_enum}
+			
+			\item Korisnika se obavještava porukom o neuspjelom plaćanju
+			\item Korisniku se ponovno pokazuje forma za plaćanje
+			\item Korisnik unosi nove podatke ili odabire drugu karticu
+			
+		\end{packed_enum}
+		
+	\end{packed_item}
+		
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Upute do parkirališta}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Korisnik
+	\item  \textbf{Cilj:} Navođenje do parkirališta
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Korisnik nije registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Korisnik na mapi odabire željeno parkiralište
+		\item Prikažu se podatci o parkiralištu
+		\item Korisnik odabire "Upute"
+		\item Otvara se google maps navigacija
+		
+	\end{packed_enum}
+\end{packed_item}
+
+\noindent \underbar{\textbf{UC\showuccounter - Upute do sparkiranog automobila}}
+\begin{packed_item}
+	
+	\item \textbf{Glavni sudionik:} Klijent
+	\item  \textbf{Cilj:} Navođenje do parkirališta na kojem je korisnikov automobil
+	\item  \textbf{Sudionici:} Baza podataka
+	\item  \textbf{Preduvjet:} Klijent je registriran
+	\item  \textbf{Opis osnovnog tijeka:}
+	
+	\item[] \begin{packed_enum}
+		
+		\item Klijent na početnom zaslonu aplikacije odabire opciju "Upute do automobila"
+		\item Otvara se google maps navigacija
+		
+	\end{packed_enum}
 \end{packed_item}
 
 \subsubsection{Dijagrami obrazaca uporabe}
@@ -175,6 +915,3 @@
 \textbf{\textit{dio 1. revizije}}\\
 
 \textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
-
-
-
