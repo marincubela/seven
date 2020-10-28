@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "s3:sync": "aws s3 sync . s3://test-backend-kd240 --acl public-read --exclude \"node_modules/*\"",
+    "deploy": "cd ../ && git subtree push --prefix backend heroku-backend master && cd backend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
