@@ -913,6 +913,23 @@
 
 \section{Ostali zahtjevi}
 
-\textbf{\textit{dio 1. revizije}}\\
-
-\textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
+\begin{packed_item}
+	
+	\item Sustav treba imati programsku potporu za web platformu s javnim sučeljem te prikazom karte s parkiralištima
+	\item Sustav treba omogućavati istovremeni pristup za više korisnika 
+	\item Programsko sučelje treba podržavati hrvatski jezik i dijakritičke znakove njegove abecede
+	\item Sustav treba podržavati plaćanje u kunama
+	\item Dohvat podataka iz baza mora se obaviti unutar nekoliko sekundi
+	\item Sustav mora imati podršku za senzore koji očitavaju parkirna mjesta te komuniciraju s bazom podataka i redovito ju osvježavaju prilikom promjene stanja
+    \item Sustav treba podržavati 3 vrste registracija:
+        	\item[] \begin{packed_enum}
+		
+		\item Jednokratke rezervacije koje moraju biti napravljene barem 6 sati unaprijed te traju do 24 sata
+		\item Ponavljajuće registracije koje moraju trajati barem 1 sat tjedno u razdoblju od minimalno mjesec dana
+		\item Trajne rezervacije (0-24)
+		
+	\end{packed_enum}
+    \item Sustav mora imati implementiranu podršku za oporavak u slučaju neispravnog korištenja korisničkog sučelja
+    \item Korisničko sučelje mora biti user friendly i jednostavno za korištenje
+    \item Podaci koji se od korisnika prikupljaju i pohranjuju u bazu moraju biti zaštićeni i ograničenog pristupa
+\end{packed_item}
