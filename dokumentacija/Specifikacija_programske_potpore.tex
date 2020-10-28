@@ -131,7 +131,7 @@
 	
 	\item[] \begin{packed_enum}
 		
-		\item Korisnik pritišće na oznaku parkirališta na mapi
+		\item Korisnik pritišće na oznaku parkirališta na karti
 		\item Prikazuju se osnovni podatci o parkiralištu i o tvrtki koja je nadležna za to parkiralište
 
 	\end{packed_enum}
@@ -229,7 +229,7 @@
 	\item \textbf{Glavni sudionik:} Korisnik
 	\item \textbf{Cilj:} Pregledati podatke o korisničkom računu
 	\item \textbf{Sudionici:} Baza podataka
-	\item \textbf{Preduvjet:} Korisnik je prijavljena
+	\item \textbf{Preduvjet:} Korisnik je prijavljen
 	\item \textbf{Opis osnovnog tijeka:}
 	
 	\item[] \begin{packed_enum}
@@ -245,7 +245,7 @@
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Administrator/Tvrtka
-	\item  \textbf{Cilj:} Urediti podatake o korisničkom računu
+	\item  \textbf{Cilj:} Urediti podatke o korisničkom računu
 	\item  \textbf{Sudionici:} Baza podataka
 	\item  \textbf{Preduvjet:} Administrator/Tvrtka je prijavljen
 	\item  \textbf{Opis osnovnog tijeka:}
@@ -296,46 +296,6 @@
 	\end{packed_enum}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC\showuccounter\ - Neovlašteni pristup privatnim rutama}}
-\begin{packed_item}
-	
-	\item \textbf{Glavni sudionik:} Korisnik
-	\item \textbf{Cilj:} Zabraniti pristup privatnim rutama
-	\item \textbf{Sudionici:} -
-	\item \textbf{Preduvjet:} Korisnik nije ovlašten za pristup
-	\item \textbf{Opis osnovnog tijeka:}
-	
-	\item[] \begin{packed_enum}
-		
-		\item Neovlašteni korisnik pokušava pristupiti privatnoj ruti
-		\item Pristup privatnoj ruti se zabranjuje
-		\item Korisnik preusmjerava na formu za prijavu
-		\item Korisnik se prijavljuje
-		\item Korisnik se preusmjerava na prethodnu rutu
-
-	\end{packed_enum}
-	
-	\item  \textbf{Opis mogućih odstupanja:}
-	
-	\item[] \begin{packed_item}
-		
-		\item[3.a] Korisnik je prijavljen
-		\item[] \begin{packed_enum}
-			
-			\item Korisnik se preusmjerava na početni zaslon aplikacije 
-			
-		\end{packed_enum}
-		
-		\item[5.a] Korisnik je i dalje neovlašten za pristup
-		\item[] \begin{packed_enum}
-			
-			\item Nakon prijave korisnik se preusmjerava na početni zaslon aplikacije
-			
-		\end{packed_enum}
-		
-	\end{packed_item}
-\end{packed_item}
-
 \noindent \underbar{\textbf{UC\showuccounter\ - Pregled podataka o vozilu}}
 \begin{packed_item}
 	
@@ -349,7 +309,7 @@
 		
 		\item Klijent otvara popis vozila
 		\item Klijent odabire parkiralište koje želi pregledati
-		\item Prikažu se podataka o vozilu
+		\item Prikažu se podaci o vozilu
 	
 	\end{packed_enum}
 \end{packed_item}
@@ -414,7 +374,7 @@
 		\item[6.a] Nevažeći podatci prilikom spremanja promjena
 		\item[] \begin{packed_enum}
 			
-			\item Klijent se prikazuje poruka o nevažećim podacima
+			\item Klijentu se prikazuje poruka o nevažećim podacima
 			\item Klijent ispravlja podatke
 			\item Klijent ponovno sprema podatke
 			
@@ -457,7 +417,7 @@
 		
 		\item Administrator/Tvrtka otvara popis parkirališta
 		\item Administrator/Tvrtka odabire parkiralište koje želi pregledati
-		\item Prikažu se podataka o parkiralištu
+		\item Prikažu se podaci o parkiralištu
 	
 	\end{packed_enum}
 \end{packed_item}
@@ -484,7 +444,7 @@
 	
 	\item[] \begin{packed_item}
 		
-		\item[6.a] Nevažeći podatci prilikom dodavanja parkirališta
+		\item[6.a] Nevažeći podaci prilikom dodavanja parkirališta
 		\item[] \begin{packed_enum}
 			
 			\item Administratoru/Tvrtki se prikazuje poruka o nevažećim podacima
@@ -580,7 +540,7 @@
 	\item[] \begin{packed_enum}
 		
 		\item Korisnik odabire oznaku parkirališta na karti
-		\item Otvaraju se osnovni podatci o parkiralištu i o tvrtki koja iznajmljuje
+		\item Otvaraju se osnovni podaci o parkiralištu i o tvrtki koja iznajmljuje
 		\item Korisnik odabire akciju za prikaz recenziju
 		\item Otvara se popis recenzija za odabrano parkiralište
 	
@@ -599,7 +559,7 @@
 	\item[] \begin{packed_enum}
 		
 		\item Korisnik odabire oznaku parkirališta na karti
-		\item Otvaraju se osnovni podatci o parkiralištu i o tvrtki koja iznajmljuje
+		\item Otvaraju se osnovni podaci o parkiralištu i o tvrtki koja iznajmljuje
 		\item Korisnik odabire akciju za prikaz recenziju
 		\item Otvara se popis recenzija za odabrano parkiralište
 		\item Korisnik odabire akciju uređivanje vlastite recenzije
@@ -715,7 +675,7 @@
 	\item[] \begin{packed_enum}
 		
 		\item Klijent otvara podatke o korisničkom računu
-		\item Prikažu se podatci o korisničkom računu
+		\item Prikažu se podaci o korisničkom računu
 		\item Klijent odabire akciju za dodavanje kartice
 		\item Prikaže se forma za dodavanje podataka o kartici
 		\item Klijent upisuje podatke i prikazuje mu se poruka da je kartica uspješno dodana
@@ -727,7 +687,7 @@
 	
 	\item[] \begin{packed_item}
 		
-		\item[6.a] Nevažeći podatci prilikom dodavanja kartice
+		\item[6.a] Nevažeći podaci prilikom dodavanja kartice
 		\item[] \begin{packed_enum}
 			
 			\item Klijentu se prikazuje poruka o nevažećim podacima
@@ -751,9 +711,9 @@
 	\item[] \begin{packed_enum}
 		
 		\item Klijent otvara podatke o korisničkom računu
-		\item Prikažu se podatci o korisničkom računu
+		\item Prikažu se podaci o korisničkom računu
 		\item Klijent odabire na karticu čije podatke želi pregledati
-		\item Prikažu se podatci o kartici
+		\item Prikažu se podaci o kartici
 		
 	\end{packed_enum}
 \end{packed_item}
@@ -770,9 +730,9 @@
 	\item[] \begin{packed_enum}
 		
 		\item Klijent otvara podatke o korisničkom računu
-		\item Prikažu se podatci o korisničkom računu
+		\item Prikažu se podaci o korisničkom računu
 		\item Klijent odabire na karticu čije podatke želi urediti
-		\item Prikažu se podatci o kartici
+		\item Prikažu se podaci o kartici
 		\item Otvara se forma za uređivanje kartice popunjena sa podacima o kartici
 		\item Klijent uređuje podatke
 		\item Klijent sprema promjene
@@ -781,7 +741,7 @@
 	
 	\item[] \begin{packed_item}
 		
-		\item[6.a] Nevažeći podatci prilikom spremanja promjena
+		\item[6.a] Nevažeći podaci prilikom spremanja promjena
 		\item[] \begin{packed_enum}
 			
 			\item Klijentu se prikazuje poruka o nevažećim podacima
@@ -808,9 +768,9 @@
 	\item[] \begin{packed_enum}
 		
 		\item Klijent otvara podatke o korisničkom računu
-		\item Prikažu se podatci o korisničkom računu
+		\item Prikažu se podaci o korisničkom računu
 		\item Klijent odabire na karticu čije podatke želi obrisati
-		\item Prikažu se podatci o kartici
+		\item Prikažu se podaci o kartici
 		\item Klijent odabire akciju uklanjanja kartice
 		\item Kartica je obrisana
 		
@@ -829,7 +789,7 @@
 	\item[] \begin{packed_enum}
 		
 		\item Klijent na mapi odabire željeno parkiralište
-		\item Prikažu se podatci o parkiralištu
+		\item Prikažu se podaci o parkiralištu
 		\item Klijent odabire opciju rezervacije parkirnog mjesta
 		\item Klijenta se preusmjerava na plaćanje
 		\item Klijent unosi podatke o plaćanju
@@ -881,18 +841,18 @@
 	\end{packed_enum}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC\showuccounter - Upute do sparkiranog automobila}}
+\noindent \underbar{\textbf{UC\showuccounter - Upute do parkiranog automobila}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Klijent
-	\item  \textbf{Cilj:} Navođenje do parkirališta na kojem je Klijentov automobil
+	\item  \textbf{Cilj:} Navođenje do parkirališta na kojem je klijentov automobil
 	\item  \textbf{Sudionici:} Baza podataka
 	\item  \textbf{Preduvjet:} Klijent je registriran
 	\item  \textbf{Opis osnovnog tijeka:}
 	
 	\item[] \begin{packed_enum}
 		
-		\item Klijent na početnom zaslonu aplikacije odabire sparkirani automobil
+		\item Klijent na početnom zaslonu aplikacije odabire parkirani automobil
 		\item Klijent odabire opciju za navigaciju
 		\item Otvara se google maps navigacija
 		
@@ -924,12 +884,13 @@
     \item Sustav treba podržavati 3 vrste registracija:
         	\item[] \begin{packed_enum}
 		
-		\item Jednokratke rezervacije koje moraju biti napravljene barem 6 sati unaprijed te traju do 24 sata
+		\item Jednokratne rezervacije koje moraju biti napravljene barem 6 sati unaprijed te traju do 24 sata
 		\item Ponavljajuće registracije koje moraju trajati barem 1 sat tjedno u razdoblju od minimalno mjesec dana
 		\item Trajne rezervacije (0-24)
 		
 	\end{packed_enum}
     \item Sustav mora imati implementiranu podršku za oporavak u slučaju neispravnog korištenja korisničkog sučelja
+    \item Sustav mora zabraniti pristup privatnim rutama. Ako korisnik nije bio prijavljen, preusmjerava se na formu za prijavu i ako nakon prijave ima ovlasti za tu rutu preusmjerava ga se na nju. Ako korisnik i dalje nema ovlasti ili nije bio prijavljen, preusmjerava ga se na početni zaslon aplikacije.
     \item Korisničko sučelje mora biti user friendly i jednostavno za korištenje
     \item Podaci koji se od korisnika prikupljaju i pohranjuju u bazu moraju biti zaštićeni i ograničenog pristupa
 \end{packed_item}
