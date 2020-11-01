@@ -9,15 +9,15 @@ export function Navigation() {
     <Center color="green.700">
       <HStack>
         <ReactLink to="/">
-          <Link bgColor={pathname == '/' ? 'red.400' : undefined}>Početna</Link>
+          <Link bgColor={pathname === '/' ? 'red.400' : undefined}>Početna</Link>
         </ReactLink>
 
         <ReactLink to="/login">
-          <Link bgColor={pathname == '/login' ? 'red.400' : undefined}>Prijava</Link>
+          <Link bgColor={pathname === '/login' ? 'red.400' : undefined}>Prijava</Link>
         </ReactLink>
 
         <ReactLink to="/registration">
-          <Link bgColor={pathname == '/registration' ? 'red.400' : undefined}>Registracija</Link>
+          <Link bgColor={pathname === '/registration' ? 'red.400' : undefined}>Registracija</Link>
         </ReactLink>
       </HStack>
     </Center>
