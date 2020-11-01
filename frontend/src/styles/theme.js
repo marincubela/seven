@@ -1,4 +1,20 @@
 const theme = {
+  components: {
+    Input: {
+      defaultProps: {
+        variant: 'filled',
+      },
+    },
+    Link: {
+      variants: {
+        nav: {
+          '&[aria-current]': {
+            fontWeight: 'bold',
+          },
+        },
+      },
+    },
+  },
   color: {
     primary: {
       50: 'blue.50',
@@ -11,17 +27,6 @@ const theme = {
       700: 'blue.700',
       800: 'blue.800',
       900: 'blue.900',
-    },
-  },
-  components: {
-    Link: {
-      variants: {
-        nav: {
-          '&[aria-current]': {
-            fontWeight: 'bold',
-          },
-        },
-      },
     },
   },
 };
