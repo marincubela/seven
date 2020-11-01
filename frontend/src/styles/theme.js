@@ -15,7 +15,7 @@ const theme = {
   },
   components: {
     Link: {
-      variant: {
+      variants: {
         nav: {
           '&[aria-current]': {
             fontWeight: 'bold',
