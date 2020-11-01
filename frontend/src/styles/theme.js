@@ -15,9 +15,11 @@ const theme = {
   },
   components: {
     Link: {
-      baseStyle: {
-        '&[aria-current]': {
-          fontWeight: 'bold',
+      variant: {
+        nav: {
+          '&[aria-current]': {
+            fontWeight: 'bold',
+          },
         },
       },
     },
