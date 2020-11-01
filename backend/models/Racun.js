@@ -25,8 +25,12 @@ const Racun = db.define("racun", {
         allowNull: false,     
     }
 
+}, {
+    tableName: "Racun"
 })
+
 Racun.sync().then(() => {
     console.log("Napravljen racun");
 })
+
 module.exports = Racun;
