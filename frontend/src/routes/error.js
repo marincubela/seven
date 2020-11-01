@@ -3,11 +3,11 @@ import React from 'react';
 
 import { Navigation } from '../components/Navigation';
 
-export function Registration() {
+export function Error() {
   return (
     <Center w="100vw" h="100vh" bgColor="blue.100">
       <Box>
-        <Text fontSize="lg">Parkiraj me | Registracija</Text>
+        <Text fontSize="lg">Parkiraj me | 404</Text>
         <Navigation />
       </Box>
     </Center>

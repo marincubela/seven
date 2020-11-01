@@ -1,23 +1,15 @@
-import { Box, Text } from '@chakra-ui/core';
+import { Box, Center, Text } from '@chakra-ui/core';
 import React from 'react';
 
-import logo from '../icons/logo.svg';
+import { Navigation } from '../components/Navigation';
 
 export function Login() {
   return (
-    <div>
-      <Box bgColor="blue.100" py={3}>
-        <Text fontSize="lg">Parkiraj me | Login</Text>
+    <Center w="100vw" h="100vh" bgColor="blue.100">
+      <Box>
+        <Text fontSize="lg">Parkiraj me | Prijava</Text>
+        <Navigation />
       </Box>
-      <header>
-        <img src={logo} alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
+    </Center>
   );
 }

@@ -1,9 +1,12 @@
 import React from 'react';
 import { ChakraProvider, extendTheme } from '@chakra-ui/core';
-import { Route, Router, Switch } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import customTheme from './styles/theme';
 import { Home } from './routes/home';
+import { Registration } from './routes/registration';
+import { Login } from './routes/login';
+import { Error } from './routes/error';
 
 export function App() {
   return (
@@ -11,15 +14,19 @@ export function App() {
       <Router>
         <Switch>
           <Route path="/registration">
-            <Home />
+            <Registration />
           </Route>
 
           <Route path="/login">
+            <Login />
+          </Route>
+
+          <Route path="/" exact>
             <Home />
           </Route>
 
           <Route path="/">
-            <Home />
+            <Error />
           </Route>
         </Switch>
       </Router>
