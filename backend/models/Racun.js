@@ -26,3 +26,7 @@ const Racun = db.define("racun", {
     }
 
 })
+Racun.sync().then(() => {
+    console.log("Napravljen racun");
+})
+module.exports = Racun;
