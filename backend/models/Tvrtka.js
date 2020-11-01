@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db/connect.js');
 const Racun = require('./Racun.js');
-Tvrtka.belongsTo(Racun);
+
 const Tvrtka = db.define("tvrtka", {
     idTvrtka:{
         type:Sequelize.DataTypes.INTEGER,
@@ -17,11 +17,12 @@ const Tvrtka = db.define("tvrtka", {
     }
 
 }, {
-    tableName: "Klijent"
+    tableName: "Tvrtka"
 })
 
-Racun.sync().then(() => {
+Tvrtka.sync().then(() => {
     console.log("Napravljena tvrtka");
 })
 
+Tvrtka.belongsTo(Racun);
 module.exports = Tvrtka;
