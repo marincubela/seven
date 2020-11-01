@@ -8,17 +8,22 @@ export function Navigation() {
   return (
     <Center color="green.700">
       <HStack>
-        <ReactLink to="/">
-          <Link bgColor={pathname === '/' ? 'red.400' : undefined}>Početna</Link>
-        </ReactLink>
+        <Link as={ReactLink} to="/" varian="nav" aria-current={pathname === '/' ? '' : undefined}>
+          Početna
+        </Link>
 
-        <ReactLink to="/login">
-          <Link bgColor={pathname === '/login' ? 'red.400' : undefined}>Prijava</Link>
-        </ReactLink>
+        <Link as={ReactLink} to="/login" varian="nav" aria-current={pathname === '/login' ? '' : undefined}>
+          Prijava
+        </Link>
 
-        <ReactLink to="/registration">
-          <Link bgColor={pathname === '/registration' ? 'red.400' : undefined}>Registracija</Link>
-        </ReactLink>
+        <Link
+          as={ReactLink}
+          to="/registration"
+          varian="nav"
+          aria-current={pathname === '/registration' ? '' : undefined}
+        >
+          Registracija
+        </Link>
       </HStack>
     </Center>
   );
