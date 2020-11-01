@@ -1,15 +1,20 @@
-import { Box, Center, Text } from '@chakra-ui/core';
+import { Box, Text, HStack } from '@chakra-ui/core';
 import React from 'react';
 
 import { Navigation } from '../components/Navigation';
+import { LoginForm } from '../components/LoginForm';
 
 export function Login() {
   return (
-    <Center w="100vw" h="100vh" bgColor="blue.100">
-      <Box>
-        <Text fontSize="lg">Parkiraj me | Prijava</Text>
-        <Navigation />
+    <Box marginX="auto" maxWidth="800px" paddingX="2">
+      <Box as="header" paddingY="4">
+        <HStack spacing="16">
+          <Text>Parkiraj me - login</Text>
+          <Navigation />
+        </HStack>
       </Box>
-    </Center>
+
+      <LoginForm />
+    </Box>
   );
 }
