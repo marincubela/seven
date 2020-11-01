@@ -6,7 +6,7 @@ import { LoginForm } from '../components/LoginForm';
 
 export function Login() {
   return (
-    <Box marginX="auto" maxWidth="800px" paddingX="2">
+    <Box marginX="auto" maxWidth="500px" paddingX="2">
       <Box as="header" paddingY="4">
         <HStack spacing="16">
           <Text>Parkiraj me - login</Text>
