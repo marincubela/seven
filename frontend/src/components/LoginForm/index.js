@@ -4,7 +4,7 @@ import { Link as ReactLink } from 'react-router-dom';
 
 export function LoginForm() {
   return (
-    <Box bgColor="gray.200" marginY="8" padding="6" borderRadius="lg">
+    <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
       <Heading as="h2" size="xl" marginY="4">
         Prijavi se
       </Heading>
@@ -20,9 +20,7 @@ export function LoginForm() {
           <Input placeholder="Tvoja lozinka" type="password" />
         </VStack>
 
-        <Button colorScheme="teal" variant="solid">
-          Prijava
-        </Button>
+        <Button variant="solid">Prijava</Button>
 
         <HStack>
           <Text as="label">
