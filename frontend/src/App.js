@@ -1,28 +1,28 @@
 import React from 'react';
-import { ChakraProvider, extendTheme, Box, Text } from '@chakra-ui/core';
+import { ChakraProvider, extendTheme } from '@chakra-ui/core';
+import { Route, Router, Switch } from 'react-router-dom';
 
-import logo from './logo.svg';
 import customTheme from './styles/theme';
+import { Home } from './routes/home';
 
-function App() {
+export function App() {
   return (
     <ChakraProvider theme={extendTheme(customTheme)}>
-      <div className="App">
-        <Box bgColor="blue.100" py={3}>
-          <Text fontSize="lg">Parkiraj me</Text>
-        </Box>
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <Switch>
+          <Route path="/registration">
+            <Home />
+          </Route>
+
+          <Route path="/login">
+            <Home />
+          </Route>
+
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Router>
     </ChakraProvider>
   );
 }
-
-export default App;
