@@ -1,4 +1,4 @@
-import { Box, Heading, VStack, Text, Input, HStack, Button, Link, Checkbox } from '@chakra-ui/core';
+import { Box, Heading, VStack, Text, Input, HStack, Button, Link, Checkbox, Divider } from '@chakra-ui/core';
 import { PinInput, PinInputField } from '@chakra-ui/core';
 import React from 'react';
 import { Link as ReactLink } from 'react-router-dom';
@@ -49,16 +49,19 @@ export function RegistrationForm() {
                 <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
                 <PinInputField />
                 <PinInputField />
+                <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
+                <Divider orientation="vertical" width="80%" />
+                <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
                 <PinInputField />
                 <PinInputField />
+                <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
+                <Divider orientation="vertical" width="80%" />
+                <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
                 <PinInputField />
                 <PinInputField />
-                <PinInputField />
-                <PinInputField />
-                <PinInputField />
-                <PinInputField />
-                <PinInputField />
-                <PinInputField />
+                <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
+                <Divider orientation="vertical" width="80%" />
+                <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
                 <PinInputField />
                 <PinInputField />
                 <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
