@@ -18,7 +18,9 @@ const Trajna = db.define("trajna", {
     tableName: "Trajna"
 })
 
-Trajna.belongsTo(Rezervacija);
+Trajna.belongsTo(Rezervacija, {
+    foreignKey: 'rezervacijaId'
+});
 Trajna.sync().then(() => {
     console.log("Napravljena trajna rezervacija");
 })

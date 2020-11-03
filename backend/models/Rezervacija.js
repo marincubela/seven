@@ -13,9 +13,15 @@ const Rezervacija  = db.define("rezervacija", {
     tableName: "Rezervacija"
 })
 
-Rezervacija.belongsTo(Klijent);
-Rezervacija.belongsTo(Vozilo);
-Rezervacija.belongsTo(Parkiraliste);
+Rezervacija.belongsTo(Klijent, {
+    foreignKey: 'klijentId'
+});
+Rezervacija.belongsTo(Vozilo, {
+    foreignKey: 'voziloId'
+});
+Rezervacija.belongsTo(Parkiraliste, {
+    foreignKey: 'parkiralisteId'
+});
 Rezervacija.sync().then(() => {
     console.log("Napravljena rezervacija");
 })

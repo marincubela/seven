@@ -23,8 +23,8 @@ const Klijent  = db.define("klijent", {
     tableName: "Klijent"
 })
 
-Racun.hasOne(Klijent);
 Klijent.belongsTo(Racun);
+
 Klijent.sync().then(() => {
     console.log("Napravljen Klijent");
 })

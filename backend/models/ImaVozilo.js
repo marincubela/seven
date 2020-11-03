@@ -4,6 +4,10 @@ const Klijent = require('./Klijent.js');
 const Vozilo = require('./Vozilo.js');
 
 const ImaVozilo  = db.define("ImaVozilo", {
+    nazivVozila:{
+        type: Sequelize.DataTypes.STRING, 
+        allowNull: false
+    }
 }, {
     tableName: "ImaVozilo"
 })

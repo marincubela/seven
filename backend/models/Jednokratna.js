@@ -18,7 +18,9 @@ const Jednokratna = db.define("jednokratna", {
     tableName: "Jednokratna"
 })
 
-Jednokratna.belongsTo(Rezervacija);
+Jednokratna.belongsTo(Rezervacija, {
+    foreignKey: 'rezervacijaId'
+});
 Jednokratna.sync().then(() => {
     console.log("Napravljena jednokratna rezervacija");
 })
