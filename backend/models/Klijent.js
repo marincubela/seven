@@ -2,20 +2,20 @@ const Sequelize = require('sequelize');
 const db = require('../db/connect.js');
 const Racun = require('./Racun.js');
 
-const Klijent  = db.define("tvrtka", {
+const Klijent  = db.define("klijent", {
     idKlijent:{
         type:Sequelize.DataTypes.INTEGER,
         primaryKey: true
     },
-    Prezime: {
+    prezime: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
     },
-    Ime: {
+    ime: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,     
     },
-    BrojKartice:{
+    brojKartice:{
         type:Sequelize.DataTypes.INTEGER,
         unique: true
     }
