@@ -2,8 +2,8 @@ const Sequelize = require('sequelize');
 const db = require('../db/connect.js');
 const Rezervacija = require('./Rezervacija.js');
 
-const Jednokratna = db.define("jednokratna", {
-    idJednokratna:{
+const Trajna = db.define("trajna", {
+    idTrajna:{
         type:Sequelize.DataTypes.INTEGER,
         primaryKey: true
     },
@@ -15,12 +15,12 @@ const Jednokratna = db.define("jednokratna", {
     }
 
 }, {
-    tableName: "Jednokratna"
+    tableName: "Trajna"
 })
 
-Jednokratna.belongsTo(Rezervacija);
-Jednokratna.sync().then(() => {
-    console.log("Napravljena jednokratna rezervacija");
+Trajna.belongsTo(Rezervacija);
+Trajna.sync().then(() => {
+    console.log("Napravljena trajna rezervacija");
 })
 
-module.exports = Jednokratna;
+module.exports = Trajna;
