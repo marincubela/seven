@@ -7,11 +7,14 @@ const homeRouter = require('./routes/home.router');
 const port = process.env.PORT || 3000;
 
 //middleware - dekodiranje parametara
-app.use(express.urlencoded({
-  extended: true
-}));
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
-app.use('/', homeRouter)
+app.use('/', homeRouter);
+app.use('/accounts', homeRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
