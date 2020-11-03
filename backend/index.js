@@ -3,6 +3,7 @@ const app = express();
 
 // Uvoz routera
 const homeRouter = require('./routes/home.router');
+const accountRouter = require('./routes/account.router');
 
 const port = process.env.PORT || 3000;
 
@@ -13,8 +14,8 @@ app.use(
   })
 );
 
+app.use('/accounts', accountRouter);
 app.use('/', homeRouter);
-app.use('/accounts', homeRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
