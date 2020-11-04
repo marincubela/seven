@@ -1,5 +1,17 @@
-import { Box, Heading, VStack, Text, Input, HStack, Button, Link, Checkbox, Divider } from '@chakra-ui/core';
-import { PinInput, PinInputField } from '@chakra-ui/core';
+import {
+  Box,
+  Heading,
+  VStack,
+  Text,
+  Input,
+  HStack,
+  Button,
+  Link,
+  Checkbox,
+  Divider,
+  PinInput,
+  PinInputField,
+} from '@chakra-ui/core';
 import React from 'react';
 import { Link as ReactLink } from 'react-router-dom';
 
@@ -12,27 +24,29 @@ export function RegistrationForm() {
 
       <VStack marginY="8" spacing="4" align="stretch">
         <HStack align="stretch">
-          <VStack align="baseline">
+          <VStack flex="1" align="baseline">
             <Text as="label">Ime</Text>
             <Input placeholder="Vaše ime" />
           </VStack>
-          <VStack align="baseline">
+
+          <VStack flex="1" align="baseline">
             <Text as="label">Prezime</Text>
             <Input placeholder="Vaše prezime" />
           </VStack>
         </HStack>
 
-        <VStack align="stretch">
+        <VStack flex="1" align="stretch">
           <Text as="label">E-mail adresa</Text>
           <Input placeholder="Vaša e-mail adresa" />
         </VStack>
 
         <HStack align="stretch">
-          <VStack align="baseline">
+          <VStack flex="1" align="baseline">
             <Text as="label">Lozinka</Text>
             <Input type="password" placeholder="Vaša lozinka" />
           </VStack>
-          <VStack align="baseline">
+
+          <VStack flex="1" align="baseline">
             <Text as="label">Ponovljena lozinka</Text>
             <Input type="password" placeholder="Ponovljena lozinka" />
           </VStack>
@@ -50,17 +64,23 @@ export function RegistrationForm() {
                 <PinInputField />
                 <PinInputField />
                 <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
+
                 <Divider orientation="vertical" width="80%" />
+
                 <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
                 <PinInputField />
                 <PinInputField />
                 <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
+
                 <Divider orientation="vertical" width="80%" />
+
                 <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
                 <PinInputField />
                 <PinInputField />
                 <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
+
                 <Divider orientation="vertical" width="80%" />
+
                 <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
                 <PinInputField />
                 <PinInputField />
@@ -70,12 +90,8 @@ export function RegistrationForm() {
           </VStack>
 
           <VStack>
-            <Checkbox border="1rem" borderColor="gray.300">
-              Prihvaćam...
-            </Checkbox>
-            <Checkbox border="1rem" borderColor="gray.300">
-              Prihvaćam...
-            </Checkbox>
+            <Checkbox border="1rem">Prihvaćam...</Checkbox>
+            <Checkbox border="1rem">Prihvaćam...</Checkbox>
           </VStack>
         </VStack>
 
