@@ -46,6 +46,7 @@ const theme = {
   colors: {
     primary: defaultTheme.colors.gray,
     secondary: defaultTheme.colors.teal,
+    error: defaultTheme.colors.red,
   },
 };
 
