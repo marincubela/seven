@@ -2,27 +2,30 @@ const Sequelize = require('sequelize');
 const db = require('../db/connect.js');
 const Rezervacija = require('./Rezervacija.js');
 
-const Jednokratna = db.define("jednokratna", {
-    idJednokratna:{
-        type:Sequelize.DataTypes.INTEGER,
-        primaryKey: true
+const Jednokratna = db.define(
+  'jednokratna',
+  {
+    idJednokratna: {
+      type: Sequelize.DataTypes.INTEGER,
+      primaryKey: true,
     },
-    vrijemePocetak:{
-        type:Sequelize.DataTypes.DATE
+    vrijemePocetak: {
+      type: Sequelize.DataTypes.DATE,
     },
-    vrijemeKraj:{
-        type:Sequelize.DataTypes.DATE
-    }
-
-}, {
-    tableName: "Jednokratna"
-})
+    vrijemeKraj: {
+      type: Sequelize.DataTypes.DATE,
+    },
+  },
+  {
+    tableName: 'Jednokratna',
+  }
+);
 
 Jednokratna.belongsTo(Rezervacija, {
-    foreignKey: 'rezervacijaId'
+  foreignKey: 'rezervacijaId',
 });
 Jednokratna.sync().then(() => {
-    console.log("Napravljena jednokratna rezervacija");
-})
+  console.log('Napravljena jednokratna rezervacija');
+});
 
 module.exports = Jednokratna;

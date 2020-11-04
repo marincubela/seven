@@ -3,27 +3,31 @@ const db = require('../db/connect.js');
 const Klijent = require('./Klijent.js');
 const Vozilo = require('./Vozilo.js');
 
-const ImaVozilo  = db.define("ImaVozilo", {
-    nazivVozila:{
-        type: Sequelize.DataTypes.STRING, 
-        allowNull: false
-    }
-}, {
-    tableName: "ImaVozilo"
-})
+const ImaVozilo = db.define(
+  'ImaVozilo',
+  {
+    nazivVozila: {
+      type: Sequelize.DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: 'ImaVozilo',
+  }
+);
 
 Klijent.belongsToMany(Vozilo, {
-    through: ImaVozilo, 
-    foreignKey: 'klijentId',
+  through: ImaVozilo,
+  foreignKey: 'klijentId',
 });
 
 Vozilo.belongsToMany(Klijent, {
-    through: ImaVozilo,
-    foreignKey: 'voziloId',
+  through: ImaVozilo,
+  foreignKey: 'voziloId',
 });
 
 ImaVozilo.sync().then(() => {
-    console.log("Napravljen ImaVozilo");
-})
+  console.log('Napravljen ImaVozilo');
+});
 
 module.exports = ImaVozilo;
