@@ -37,9 +37,14 @@ const theme = {
         focusBorderColor: 'secondary.400',
       },
     },
-    CheckBox: {
+    Checkbox: {
+      baseStyle: () => ({
+        control: {
+          borderColor: 'gray.400',
+        },
+      }),
       defaultProps: {
-        // write default border color and border size
+        colorScheme: 'teal',
       },
     },
   },
