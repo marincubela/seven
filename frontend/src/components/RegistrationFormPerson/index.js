@@ -59,7 +59,6 @@ export function RegistrationFormPerson() {
           <NumberInput>
             <NumberInputField placeholder="Vaš OIB" />
           </NumberInput>
-          {/* <Input placeholder="Vaš OIB" /> */}
         </VStack>
 
         <VStack align="baseline">
