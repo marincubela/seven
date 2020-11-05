@@ -31,6 +31,22 @@ const theme = {
         },
       },
     },
+    PinInput: {
+      defaultProps: {
+        variant: 'filled',
+        focusBorderColor: 'secondary.400',
+      },
+    },
+    Checkbox: {
+      baseStyle: () => ({
+        control: {
+          borderColor: 'gray.400',
+        },
+      }),
+      defaultProps: {
+        colorScheme: 'teal',
+      },
+    },
   },
   colors: {
     primary: defaultTheme.colors.gray,
