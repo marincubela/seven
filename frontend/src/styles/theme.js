@@ -32,6 +32,13 @@ const theme = {
       },
     },
     PinInput: {
+      variants: {
+        filled: {
+          '&:hover, &:focus': {
+            bgColor: 'primary.50',
+          },
+        },
+      },
       defaultProps: {
         variant: 'filled',
         focusBorderColor: 'secondary.400',
@@ -45,6 +52,21 @@ const theme = {
       }),
       defaultProps: {
         colorScheme: 'teal',
+      },
+    },
+    NumberInput: {
+      variants: {
+        filled: {
+          field: {
+            '&:hover, &:focus': {
+              bgColor: 'primary.50',
+            },
+          },
+        },
+      },
+      defaultProps: {
+        variant: 'filled',
+        focusBorderColor: 'secondary.400',
       },
     },
   },
