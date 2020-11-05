@@ -8,7 +8,7 @@ To install dependecies, in your terminal do the following steps:
 
 1. Be sure that you are in correct folder
 
-Your current directory should end with `seven\fronted`.
+Your current directory should end with `seven\backend`.
 
 2. Run install command
 
