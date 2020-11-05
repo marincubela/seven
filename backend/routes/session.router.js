@@ -8,6 +8,19 @@ const { arePasswordEqual } = require('../utils/password');
 const router = express.Router();
 
 // Will return user if a user is logged in
+/*
+  This endpoint is used for checking if a user is logged in or not
+
+  If user is logged in this endpoint will retun 
+  {
+    data: {
+      user: {
+        email: sting,
+        
+      }
+    }
+  }
+*/
 router.get('/', async (req, res) => {
   if (req.session.user) {
     return res.json({
@@ -43,7 +56,7 @@ router.post(
       },
     });
 
-    account = account ? account.toJSON() : account;
+    account = account ? account.toJSON() : {};
 
     const passwordMatch = await arePasswordEqual(password, account.lozinka);
 
@@ -55,7 +68,10 @@ router.post(
       });
     }
 
-    req.session.user = account;
+    // This will filter out lozinka from account data
+    const { lozinka, ...publicAccountData } = account;
+
+    req.session.user = publicAccountData;
 
     return res.status(200).json({
       data: {
