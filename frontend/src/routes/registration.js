@@ -3,7 +3,7 @@ import { Box, Text, HStack } from '@chakra-ui/core';
 import React from 'react';
 
 import { Navigation } from '../components/Navigation';
-import { RegistrationForm } from '../components/RegistrationForm';
+import { RegistrationChoose } from '../components/RegistrationChoose';
 
 export function Registration() {
   return (
@@ -15,7 +15,7 @@ export function Registration() {
         </HStack>
       </Box>
 
-      <RegistrationForm />
+      <RegistrationChoose />
     </Box>
   );
 }
