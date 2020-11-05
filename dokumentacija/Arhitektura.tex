@@ -14,41 +14,253 @@
 
 		
 
-				
+		\pagebreak		
 		\section{Baza podataka}
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
+		Za naš sustav koristit ćemo relacijsku bazu podataka koja svojom strukturom olakšava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaća baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu.
+		\newline
+        Baza podataka ove aplikacije sastoji se od sljedećih entiteta: 
+        \begin{itemize}
+            \item Račun
+            \item Klijent
+            \item Tvrtka
+            \item Vozilo
+            \item Parkiralište
+            \item Rezervacija
+            \item Jednokratna
+            \item Trajna
+            \item Ponavljajuća
+        \end{itemize}
+        
 		
 			\subsection{Opis tablica}
 			
-
-				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
+			    \textbf{Račun} \newline
+			    Entitet sadrži informacije o napravljenom računu u aplikaciji. Sadrži
+			    atribute: ID, email, OIB, admin, lozinka. U vezi je \textit{One-To-Many} s entitetima Klijent i Tvrtka.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
-					\hline \multicolumn{3}{|c|}{\textbf{korisnik - ime tablice}}	 \\[3pt] \hline
+					\hline \multicolumn{3}{|c|}{\textbf{Račun}}	 \\[3pt] \hline
 					\endfirsthead
 					
-					\hline \multicolumn{3}{|c|}{\textbf{korisnik - ime tablice}}	 \\[3pt] \hline
+					\hline \multicolumn{3}{|c|}{\textbf{Račun}}	 \\[3pt] \hline
 					\endhead
 					
 					\hline 
 					\endlastfoot
 					
-					\cellcolor{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam 	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\cellcolor{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator računa \\ \hline
+					email & VARCHAR &  e-mail adresa računa \\ \hline 
+					OIB	& CHAR(11) &   oib osobe čiji je račun	\\ \hline 
+					admin & BOOLEAN	&  	true ako je osoba administrator	\\ \hline 
+					lozinka & VARCHAR	&  	hash lozinke	\\ \hline 
 					
 					
 				\end{longtabu}
+				
+				\pagebreak
+				\textbf{Klijent} \newline
+			    Entitet sadrži informacije o klijentu koji koristi aplikaciju. Sadrži
+			    atribute: ID, ime, prezime, broj kartice, računId. U vezi je \textit{One-To-Many} s entitetima Vozilo i Rezervacija, a s entitetom Račun je u vezi \textit{Many-To-One}.
+				
+				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Klijent}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Klijent}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator klijenta \\ \hline
+					ime & VARCHAR &  ime klijenta \\ \hline 
+					prezime & VARCHAR &  prezime klijenta \\ \hline 
+					broj kartice & VARCHAR &  broj kartice klijenta \\ \hline 
+					\cellcolor{LightBlue} računId	& VARCHAR &   jedinstveni identifikator računa (račun.ID)	\\ \hline 
+					
+					
+				\end{longtabu}
+				
+				\textbf{Tvrtka} \newline
+			    Entitet sadrži informacije o tvrtki koja želi prijaviti svoje parkilište u aplikaciji. Sadrži atribute: ID, naziv, adresa, računId. U vezi je \textit{One-To-Many} s entitetom Parkiralište, a s entitetom Račun je u vezi \textit{Many-To-One}.
+				
+				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Tvrtka}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Tvrtka}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator tvrtke \\ \hline
+					naziv & VARCHAR &  naziv tvrtke \\ \hline 
+					adresa & VARCHAR &  adresa sjedišta tvrtke \\ \hline 
+					\cellcolor{LightBlue} računId	& VARCHAR &   jedinstveni identifikator računa (račun.ID)	\\ \hline 
+					
+					
+				\end{longtabu}
+				
+				\textbf{Vozilo} \newline
+			    Entitet sadrži informacije o vozilo kojeg je klijent prijavio. Sadrži
+			    atribute: ID, registracija, naziv vozila, boja, i klijentId. U vezi je \textit{One-To-Many} s entitetom Rezervacija, a s entitetom Klijent je u vezi \textit{Many-To-One}.
+				
+				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Vozilo}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Vozilo}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator vozila \\ \hline
+					registracija & VARCHAR &  broj registracije vozila \\ \hline 
+					naziv vozila & VARCHAR &  naziv vozila koje dodjeluje klijent \\ \hline 
+					boja & VARCHAR &  boja vozila koju dodjeluje klijent \\ \hline 
+					\cellcolor{LightBlue} klijentId	& VARCHAR &   jedinstveni identifikator klijenta (klijent.ID)	\\ \hline 
+					
+				\end{longtabu}
+				
+				\pagebreak
+				\textbf{Parkiralište} \newline
+			    Entitet sadrži informacije o parkiralištu neke tvrtke koje se nudi klijentima. Sadrži
+			    atribute: ID, naziv, broj mjesta, broj invalidskih mjesta, tip prakirališta, koordinate, cijena jednokratne, cijena ponavljajuće, cijena trajne i tvrtkaId. U vezi je \textit{One-To-Many} s entitetom Rezervacija, a s entitetom Tvrtka je u vezi \textit{Many-To-One}.
+				
+				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Parkiralište}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Parkiralište}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator parkirališta \\ \hline
+					naziv & VARCHAR &  naziv parkirališta \\ \hline 
+					broj mjesta & INT &  broj mjesta koje parkiralište nudi \\ \hline 
+					broj invalidskih mjesta & INT &  broj invalidskih mjesta koje ima parkiralište \\ \hline tip parkirališta & VARCHAR &  tip parkirališta (otvoreno, zatvoreno) \\ \hline 
+					koordinate & VARCHAR &  zemljopisna dužina i širina parkirališta \\ \hline 
+					cijena jednokratne & INT &  cijena sata za jednokratnu rezervaciju parkirališta \\ \hline 
+					cijena ponavljajuće & INT &  cijena sata za ponavljajuću rezervaciju parkirališta \\ \hline
+					cijena trajne & INT &  cijena trajne rezervacije parkirališta \\ \hline
+					\cellcolor{LightBlue} tvrtkaId	& VARCHAR &   jedinstveni identifikator tvrtke (tvrka.ID)	\\ \hline 
+					
+					
+				\end{longtabu}
+				
+				
+				\textbf{Rezervacija} \newline
+			    Entitet sadrži informacije o stvorenoj rezervaciji u aplikaciji. Ima
+			    atribute: ID, klijentId, parkirališteId, voziloId. U vezi je \textit{One-To-Many} s entitetima Jednokratna, Ponavljajuća i Trajna. S entitetima Klijent, Parkiralište i Vozilo je u vezi \textit{Many-To-One}.
+				
+				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Rezervacija}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Rezervacija}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator rezervacije \\ \hline
+					\cellcolor{LightBlue} klijentId	& VARCHAR &   jedinstveni identifikator klijenta (klijent.ID)	\\ \hline
+					\cellcolor{LightBlue} parkirališteId	& VARCHAR &   jedinstveni identifikator prakirališta (parkiralište.ID)	\\ \hline
+					\cellcolor{LightBlue} voziloId	& VARCHAR &   jedinstveni identifikator vozila (vozilo.ID)	\\ \hline
+					
+				\end{longtabu}
+				
+				\pagebreak
+				\textbf{Jednokratna} \newline
+			    Entitet sadrži informacije o jednokratnoj rezervaciji stvorenoj u aplikaciji. Ima
+			    atribute: ID, vrijeme početak, vrijeme kraj, rezervaijaId. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
+			    
+				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Jednokratna}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Jednokratna}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator jednokratne rezervacije \\ \hline
+					vrijeme početak & TIMESTAMP &  vrijeme početka rezervacije \\ \hline  
+					vrijeme kraj & TIMESTAMP &  vrijeme kraja rezervacije \\ \hline 
+					\cellcolor{LightBlue} rezervacijaId	& VARCHAR &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
+					
+				\end{longtabu}
+				
+				\textbf{Trajna} \newline
+			    Entitet sadrži informacije o trajnoj rezervaciji stvorenoj u aplikaciji. Ima
+			    atribute: ID, vrijeme početak, vrijeme kraj, rezervaijaId. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
+				
+				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Trajna}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Trajna}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator trajne rezervacije \\ \hline
+					vrijeme početak & TIMESTAMP &  vrijeme početka rezervacije \\ \hline  
+					vrijeme kraj & TIMESTAMP &  vrijeme kraja rezervacije \\ \hline 
+					\cellcolor{LightBlue} rezervacijaId	& VARCHAR &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
+					
+				\end{longtabu}
+				
+				\pagebreak
+				\textbf{Ponavljajuća} \newline
+			    Entitet sadrži informacije o ponavljaućoj rezervaciji stvorenoj u aplikaciji. Ima
+			    atribute: ID, datum rezervacije, datum kraja rezervcije, dani ponavljanja, vrijeme početak, vrijeme kraj i rezervaijaId. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
+				
+				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Ponavljajuća}}	 \\[3pt] \hline
+					\endfirsthead
+					
+					\hline \multicolumn{3}{|c|}{\textbf{Ponavljajuća}}	 \\[3pt] \hline
+					\endhead
+					
+					\hline 
+					\endlastfoot
+					
+					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator ponavljajuće rezervacije \\ \hline
+					datum rezervacije & DATE &  datum početka rezervacije \\ \hline
+					datum kraja rezervacije & DATE &  datum kraja rezervacije \\ \hline
+					dani ponavljanja & INT &  dani ponavljanje rezervacije (pon=1, uto=2, ...) \\ \hline
+					vrijeme početak & TIME &  vrijeme početka rezervacije \\ \hline  
+					vrijeme kraj & TIME &  vrijeme kraja rezervacije \\ \hline 
+					\cellcolor{LightBlue} rezervacijaId	& VARCHAR &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
+					
+				\end{longtabu}
+				
+				
 			
-			
+			\pagebreak
 			\subsection{Dijagram baze podataka}
-				\textit{ U ovom potpoglavlju potrebno je umetnuti dijagram baze podataka. Primarni i strani ključevi moraju biti označeni, a tablice povezane. Bazu podataka je potrebno normalizirati. Podsjetite se kolegija "Baze podataka".}
+                \begin{figure}[H]
+                	\includegraphics[width=1\linewidth]{dijagrami/ERModel.png} %veličina u odnosu na širinu linije
+                	\caption{Prikaz funkcionalnosti vezanih za korisničke podatke}
+                	\label{fig:promjene2} %label mora biti drugaciji za svaku sliku
+                \end{figure}
 			
 			\eject
 			
