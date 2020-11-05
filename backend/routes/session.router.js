@@ -1,5 +1,4 @@
 const express = require('express');
-const session = require('express-session');
 const { body, validationResult } = require('express-validator');
 
 const Racun = require('../models/Racun');
@@ -10,15 +9,17 @@ const router = express.Router();
 /*
   This endpoint is used for checking if a user is logged in or not
 
-  If user is logged, this will retun with status 200 and:
+  If user is logged in, this will retun with status 200 and:
   {
     data: {
       user: {
-        email: sting,
-        password: sting,
+        id: integer,
+        email: string,
+        password: string,
       }
     }
   }
+  User object from data is also stored in session.user
 
   If user is not logged, this will return with status 401 and:
   {
@@ -26,7 +27,7 @@ const router = express.Router();
       message: string,
     }
   }
-*/
+ */
 router.get('/', async (req, res) => {
   if (req.session.user) {
     return res.json({
@@ -38,12 +39,34 @@ router.get('/', async (req, res) => {
 
   return res.status(401).json({
     error: {
-      message: 'Korisnik nije prijavljen',
+      message: 'Korisnik nije prijavljen.',
     },
   });
 });
 
 // Will create a new session for a user (login)
+/*
+  This endpoint is used for logging user in.
+
+  If user is logged in, this will retun with status 200 and:
+  {
+    data: {
+      user: {
+        id: integer,
+        email: string,
+        password: string,
+      }
+    }
+  }
+  User object from data is also stored in session.user
+
+  If user is not logged, this will return with status 400 and:
+  {
+    error: {
+      message: string,
+    }
+  }
+*/
 router.post(
   '/',
   [
@@ -88,7 +111,17 @@ router.post(
   }
 );
 
-// Will delete user from a session (logout)
+/*
+  This endpoint is used for deleting user from a session (logout).
+  If user is logged out, this will return with status code 200 and data.user = null.
+
+  If user is not logged, this will return with status 401 and:
+  {
+    error: {
+      message: string,
+    }
+  } 
+*/
 router.delete('/', async (req, res) => {
   if (req.session.user) {
     req.session.user = null;
