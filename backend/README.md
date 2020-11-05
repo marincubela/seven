@@ -1,4 +1,4 @@
-# seven-parkiraj-me-frontend
+# seven-parkiraj-me-backend
 
 ## Setup
 
@@ -8,13 +8,35 @@ To install dependecies, in your terminal do the following steps:
 
 1. Be sure that you are in correct folder
 
-Your current directory should end with `seven\fronted`.
+Your current directory should end with `seven\backend`.
 
 2. Run install command
 
 ```bash
 npm install
 ```
+
+3. Setup your local database
+
+You should download and install [pgAdmin](https://www.pgadmin.org/download/).
+
+Once downloaded set it up and get your connection url (we will use it in a moment).
+
+To get a connection url you need to
+
+* opis
+* postupak
+* netko
+
+Once database is created and you have your connection url, in `backend` folder create `.env` file.
+
+Copy this into the created file
+
+```
+DATABASE_URL=<database-connection-url>
+```
+
+and replace `<database-connection-url>` with you local connection url.
 
 ## Code writing
 
@@ -30,12 +52,12 @@ npm run dev
 
 When you want to add a new feature to the app do the following
 
-#### 1. Checkout to branch `frontend` and pull new changes from the GitLab server
+#### 1. Checkout to branch `backend` and pull new changes from the GitLab server
 
 ```bash
-git checkout fronted
+git checkout backend
 
-git pull origin frontend
+git pull origin backend
 ```
 
 #### 2. Create your new branch
@@ -56,7 +78,7 @@ git push origin
 
 After that go to the [GitLab](https://gitlab.com/Cubi5/seven/-/merge_requests/new) and:
 
-* Select your branch as a source branch and `frontend` as a target branch.
+* Select your branch as a source branch and `backend` as a target branch.
 * If neccessary, provide a short description of what have you done
 * Review process (still to determen)
 * Press `Submit merge request`
