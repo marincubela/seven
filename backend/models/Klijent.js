@@ -18,7 +18,7 @@ const Klijent = db.define(
       allowNull: false,
     },
     brojKartice: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: Sequelize.DataTypes.STRING(16),
       unique: true,
     },
   },
