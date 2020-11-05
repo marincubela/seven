@@ -3,7 +3,6 @@ require('dotenv-flow').config();
 const express = require('express');
 
 // Routers
-const homeRouter = require('./routes/home.router');
 const sessionRouter = require('./routes/session.router');
 
 // Middlewares
@@ -20,7 +19,6 @@ app.use(express.json());
 app.use(sessionMiddleware);
 
 app.use('/session', sessionRouter);
-app.use('/', homeRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
