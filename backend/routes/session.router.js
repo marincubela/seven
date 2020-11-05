@@ -3,6 +3,7 @@ const session = require('express-session');
 const { body, validationResult } = require('express-validator');
 
 const Racun = require('../models/Racun');
+const { arePasswordEqual } = require('../utils/password');
 
 const router = express.Router();
 
@@ -42,7 +43,7 @@ router.post(
       },
     });
 
-    if (!account || account.lozinka !== password) {
+    if (!account || arePasswordEqual(password, account.lozinka)) {
       return res.status(400).json({
         error: {
           message: 'Neispravni podatci za prijavu',
