@@ -11,11 +11,13 @@ import {
   Divider,
   PinInput,
   PinInputField,
+  NumberInput,
+  NumberInputField,
 } from '@chakra-ui/core';
 import React from 'react';
 import { Link as ReactLink } from 'react-router-dom';
 
-export function RegistrationForm() {
+export function RegistrationFormPerson() {
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
       <Heading as="h2" size="xl" marginY="4">
@@ -51,6 +53,14 @@ export function RegistrationForm() {
             <Input type="password" placeholder="Ponovljena lozinka" />
           </VStack>
         </HStack>
+
+        <VStack flex="1" align="stretch">
+          <Text as="label">OIB</Text>
+          <NumberInput>
+            <NumberInputField placeholder="Vaš OIB" />
+          </NumberInput>
+          {/* <Input placeholder="Vaš OIB" /> */}
+        </VStack>
 
         <VStack align="baseline">
           <VStack>

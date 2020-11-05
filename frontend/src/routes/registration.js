@@ -1,4 +1,3 @@
-// import { Box, Center, Text } from '@chakra-ui/core';
 import { Box, Text, HStack } from '@chakra-ui/core';
 import React from 'react';
 
