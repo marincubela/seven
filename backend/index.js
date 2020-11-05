@@ -4,7 +4,7 @@ const express = require('express');
 
 // Routers
 const homeRouter = require('./routes/home.router');
-const accountRouter = require('./routes/account.router');
+const sessionRouter = require('./routes/session.router');
 
 // Middlewares
 const sessionMiddleware = require('./middleware/session');
@@ -19,7 +19,7 @@ app.use(express.json());
 // Session middleware
 app.use(sessionMiddleware);
 
-app.use('/accounts', accountRouter);
+app.use('/session', sessionRouter);
 app.use('/', homeRouter);
 
 app.listen(port, () => {
