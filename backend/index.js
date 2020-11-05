@@ -2,24 +2,21 @@ require('dotenv-flow').config();
 
 const express = require('express');
 
-// Uvoz routera
+// Routers
 const homeRouter = require('./routes/home.router');
 const accountRouter = require('./routes/account.router');
 
+// Middlewares
 const sessionMiddleware = require('./middleware/session');
 
 const app = express();
 
 const port = process.env.PORT || 3000;
 
+// Parse body middleware
+app.use(express.json());
 
-//middleware - dekodiranje parametara
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
-
+// Session middleware
 app.use(sessionMiddleware);
 
 app.use('/accounts', accountRouter);
