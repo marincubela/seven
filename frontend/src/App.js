@@ -5,6 +5,8 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import customTheme from './styles/theme';
 import { Home } from './routes/home';
 import { Registration } from './routes/registration';
+import { RegistrationFirm } from './routes/registrationFirm';
+import { RegistrationPerson } from './routes/registrationPerson';
 import { Login } from './routes/login';
 import { Error } from './routes/error';
 
@@ -15,6 +17,14 @@ export function App() {
         <Switch>
           <Route path="/registration">
             <Registration />
+          </Route>
+
+          <Route path="/registrationFirm">
+            <RegistrationFirm />
+          </Route>
+
+          <Route path="/registrationPerson">
+            <RegistrationPerson />
           </Route>
 
           <Route path="/login">
