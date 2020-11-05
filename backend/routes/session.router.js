@@ -7,17 +7,23 @@ const { arePasswordEqual } = require('../utils/password');
 
 const router = express.Router();
 
-// Will return user if a user is logged in
 /*
   This endpoint is used for checking if a user is logged in or not
 
-  If user is logged in this endpoint will retun 
+  If user is logged, this will retun with status 200 and:
   {
     data: {
       user: {
         email: sting,
-        
+        password: sting,
       }
+    }
+  }
+
+  If user is not logged, this will return with status 401 and:
+  {
+    error: {
+      message: string,
     }
   }
 */
@@ -68,10 +74,11 @@ router.post(
       });
     }
 
-    // This will filter out lozinka from account data
-    const { lozinka, ...publicAccountData } = account;
-
-    req.session.user = publicAccountData;
+    req.session.user = {
+      id: account.id,
+      email: account.email,
+      admin: account.admin,
+    };
 
     return res.status(200).json({
       data: {
