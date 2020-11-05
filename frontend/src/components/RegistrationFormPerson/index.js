@@ -100,8 +100,10 @@ export function RegistrationFormPerson() {
         </VStack>
 
         <VStack align="start">
-          <Checkbox border="1rem">Prihvaćam...</Checkbox>
-          <Checkbox border="1rem">Prihvaćam...</Checkbox>
+          <VStack>
+            <Checkbox border="1rem">Prihvaćam...</Checkbox>
+            <Checkbox border="1rem">Prihvaćam...</Checkbox>
+          </VStack>
         </VStack>
 
         <Button variant="solid">Registracija</Button>
