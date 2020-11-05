@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
     "start": "node index.js",
     "deploy": "cd ../ && git subtree push --prefix backend heroku-backend master && cd backend",
     "test": "echo \"Error: no test specified\" && exit 1"
