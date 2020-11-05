@@ -10,6 +10,7 @@ const Racun = db.define(
     },
     email: {
       type: Sequelize.DataTypes.STRING,
+      unique: true,
       allowNull: false,
     },
     OIB: {
