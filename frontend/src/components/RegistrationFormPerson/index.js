@@ -26,12 +26,12 @@ export function RegistrationFormPerson() {
 
       <VStack marginY="8" spacing="4" align="stretch">
         <HStack align="stretch">
-          <VStack flex="1" align="baseline">
+          <VStack flex="1" align="stretch">
             <Text as="label">Ime</Text>
             <Input placeholder="Vaše ime" />
           </VStack>
 
-          <VStack flex="1" align="baseline">
+          <VStack flex="1" align="stretch">
             <Text as="label">Prezime</Text>
             <Input placeholder="Vaše prezime" />
           </VStack>
@@ -43,12 +43,12 @@ export function RegistrationFormPerson() {
         </VStack>
 
         <HStack align="stretch">
-          <VStack flex="1" align="baseline">
+          <VStack flex="1" align="stretch">
             <Text as="label">Lozinka</Text>
             <Input type="password" placeholder="Vaša lozinka" />
           </VStack>
 
-          <VStack flex="1" align="baseline">
+          <VStack flex="1" align="stretch">
             <Text as="label">Ponovljena lozinka</Text>
             <Input type="password" placeholder="Ponovljena lozinka" />
           </VStack>
@@ -97,11 +97,11 @@ export function RegistrationFormPerson() {
               </PinInput>
             </HStack>
           </VStack>
+        </VStack>
 
-          <VStack>
-            <Checkbox border="1rem">Prihvaćam...</Checkbox>
-            <Checkbox border="1rem">Prihvaćam...</Checkbox>
-          </VStack>
+        <VStack align="start">
+          <Checkbox border="1rem">Prihvaćam...</Checkbox>
+          <Checkbox border="1rem">Prihvaćam...</Checkbox>
         </VStack>
 
         <Button variant="solid">Registracija</Button>
