@@ -14,8 +14,8 @@ const router = express.Router();
   {
     data: {
       user: {
-        email: sting,
-        password: sting,
+        email: string,
+        password: string,
       }
     }
   }
@@ -37,7 +37,6 @@ router.get('/', async (req, res) => {
   }
 
   // find user by id and retunt it
-
   return res.json({
     data: {
       users: 2, //return it here!,
@@ -73,11 +72,25 @@ router.get('/:id', async (req, res) => {
     });
   }
 
-  // find user by id and retunt it
+  // find user by id and return it
+  const id = req.query.id;
+  const user = await Racun.findOne({
+    where: {
+      id,
+    },
+  });
+
+  if (!user) {
+    return res.json({
+      error: {
+        message: `Korisnik s id=${id} ne postoji`,
+      },
+    });
+  }
 
   return res.json({
     data: {
-      user: 2, //return it here!,
+      user: user.toJSON(), //return it here!,
     },
   });
 });

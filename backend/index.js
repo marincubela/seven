@@ -4,6 +4,7 @@ const express = require('express');
 
 // Routers
 const sessionRouter = require('./routes/session.router');
+const userRouter = require('./routes/user.router');
 
 // Middlewares
 const sessionMiddleware = require('./middleware/session');
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(sessionMiddleware);
 
 app.use('/session', sessionRouter);
+app.use('/users', userRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
