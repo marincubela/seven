@@ -1,21 +1,15 @@
 const bcrypt = require('bcrypt');
-const { model } = require('../db/connect');
+
 const { SALT_ROUNDS } = require('./constants');
 
 const hashPassword = async (password) => {
   return new Promise((resolve, reject) =>
-    bcrypt.genSalt(SALT_ROUNDS, (err, salt) => {
+    bcrypt.hash(password, SALT_ROUNDS, (err, hash) => {
       if (err) {
         reject(err);
       }
 
-      bcrypt.hash(password, salt, (err2, hash) => {
-        if (err2) {
-          reject(err2);
-        }
-
-        resolve(hash);
-      });
+      resolve(hash);
     })
   );
 };
