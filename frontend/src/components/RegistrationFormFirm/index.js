@@ -21,7 +21,7 @@ export function RegistrationFormFirm() {
         Registriraj se
       </Heading>
 
-      <VStack marginY="8" spacing="4" align="stretch">
+      <VStack flex="1" align="stretch">
         <HStack align="stretch">
           <VStack flex="1" align="baseline">
             <Text as="label">Naziv tvrtke</Text>

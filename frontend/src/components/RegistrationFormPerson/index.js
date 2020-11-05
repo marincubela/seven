@@ -24,14 +24,14 @@ export function RegistrationFormPerson() {
         Registriraj se
       </Heading>
 
-      <VStack marginY="8" spacing="4" align="stretch">
+      <VStack flex="1" align="stretch">
         <HStack align="stretch">
-          <VStack flex="1" align="stretch">
+          <VStack flex="1" align="baseline">
             <Text as="label">Ime</Text>
             <Input placeholder="Vaše ime" />
           </VStack>
 
-          <VStack flex="1" align="stretch">
+          <VStack flex="1" align="baseline">
             <Text as="label">Prezime</Text>
             <Input placeholder="Vaše prezime" />
           </VStack>
@@ -43,12 +43,12 @@ export function RegistrationFormPerson() {
         </VStack>
 
         <HStack align="stretch">
-          <VStack flex="1" align="stretch">
+          <VStack flex="1" align="baseline">
             <Text as="label">Lozinka</Text>
             <Input type="password" placeholder="Vaša lozinka" />
           </VStack>
 
-          <VStack flex="1" align="stretch">
+          <VStack flex="1" align="baseline">
             <Text as="label">Ponovljena lozinka</Text>
             <Input type="password" placeholder="Ponovljena lozinka" />
           </VStack>
@@ -68,7 +68,7 @@ export function RegistrationFormPerson() {
 
           <VStack>
             <HStack spacing="0">
-              <PinInput size="em" variant="filled" placeholder="•">
+              <PinInput size="1em" variant="filled" placeholder="•">
                 <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
                 <PinInputField />
                 <PinInputField />
@@ -101,8 +101,8 @@ export function RegistrationFormPerson() {
 
         <VStack align="start">
           <VStack>
-            <Checkbox border="1rem">Prihvaćam...</Checkbox>
-            <Checkbox border="1rem">Prihvaćam...</Checkbox>
+            <Checkbox>Prihvaćam...</Checkbox>
+            <Checkbox>Prihvaćam...</Checkbox>
           </VStack>
         </VStack>
 
