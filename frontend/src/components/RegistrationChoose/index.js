@@ -12,7 +12,7 @@ export function RegistrationChoose() {
       <HStack flex="1">
         <Button variant="solid" height="3em" flex="1">
           <Link as={ReactLink} to="/registrationFirm" flex="1">
-            Firma
+            Tvrtka
           </Link>
         </Button>
 

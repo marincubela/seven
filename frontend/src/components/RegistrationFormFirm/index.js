@@ -24,8 +24,8 @@ export function RegistrationFormFirm() {
       <VStack marginY="8" spacing="4" align="stretch">
         <HStack align="stretch">
           <VStack flex="1" align="baseline">
-            <Text as="label">Naziv firme</Text>
-            <Input placeholder="Naziv firme" />
+            <Text as="label">Naziv tvrtke</Text>
+            <Input placeholder="Naziv tvrtke" />
           </VStack>
         </HStack>
 
