@@ -54,7 +54,7 @@ router.get('/', async (req, res) => {
       user: {
         id: integer,
         email: string,
-        password: string,
+        admin: boolean,
       }
     }
   }
