@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.send('Hello world')
-    res.sendStatus(200)
+    res.status(200).json(req.session)
 })
 
 module.exports = router;
