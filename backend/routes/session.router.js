@@ -29,21 +29,25 @@ router.post(
   '/',
   [
     // email field needs to be an email
-    body('email').isEmail(),
+    body('data.email').isEmail(),
 
     // password field is required
-    body('password').not().isEmpty(),
+    body('data.password').not().isEmpty(),
   ],
   async (req, res, next) => {
     const { email, password } = req.body.data;
 
-    const account = await Racun.findOne({
+    let account = await Racun.findOne({
       where: {
         email,
       },
     });
 
-    if (!account || arePasswordEqual(password, account.lozinka)) {
+    account = account ? account.toJSON() : account;
+
+    const passwordMatch = await arePasswordEqual(password, account.lozinka);
+
+    if (!account || !passwordMatch) {
       return res.status(400).json({
         error: {
           message: 'Neispravni podatci za prijavu',
@@ -51,7 +55,7 @@ router.post(
       });
     }
 
-    req.session.user = account.toJSON();
+    req.session.user = account;
 
     return res.status(200).json({
       data: {
