@@ -10,7 +10,7 @@ const Vozilo = db.define(
       primaryKey: true,
     },
     registracija: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: Sequelize.DataTypes.STRING,
       allowNull: false,
     },
     nazivVozila: {
