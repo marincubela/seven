@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(sessionMiddleware);
 
 app.use('/session', sessionRouter);
-app.use('/users', userRouter);
+app.use('/user', userRouter);
 app.use('/registration', registrationRouter);
 
 app.listen(port, () => {
