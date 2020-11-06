@@ -8,7 +8,7 @@ const Klijent = db.define(
     idKlijent: {
       type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement = 1
+      autoIncrement: true
     },
     prezime: {
       type: Sequelize.DataTypes.STRING,

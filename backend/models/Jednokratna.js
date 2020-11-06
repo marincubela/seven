@@ -8,7 +8,7 @@ const Jednokratna = db.define(
     idJednokratna: {
       type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement = 1
+      autoIncrement: true
     },
     vrijemePocetak: {
       type: Sequelize.DataTypes.DATE,
