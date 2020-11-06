@@ -6,9 +6,9 @@ const Trajna = db.define(
   'trajna',
   {
     idTrajna: {
-      type: Sequelize.DataTypes.UUID,
+      type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     vrijemePocetak: {
       type: Sequelize.DataTypes.DATE,

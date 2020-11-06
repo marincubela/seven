@@ -6,9 +6,9 @@ const Vozilo = db.define(
   'vozilo',
   {
     idVozilo: {
-      type: Sequelize.DataTypes.UUID,
+      type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     registracija: {
       type: Sequelize.DataTypes.STRING,
