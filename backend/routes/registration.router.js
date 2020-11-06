@@ -22,20 +22,17 @@ const createAccount = async ({ email, oib, password }) => {
 const createCompany = (accountData) => {};
 
 //Will create a Klijent model
-const createClient = async ({ name, surname, number }) => {
-  if (!(await creditCardCheck(creditCardNumber))) {
-    return res.status(400).json({
-      error: {
-        message: 'Klijent s tom karticom već postoji',
-      },
-    });
-  }
-
+const createClient = async ({
+  firstname,
+  lastname,
+  creditCardNumber,
+  racunId,
+}) => {
   const client = await Klijent.create({
-    idKlijent: id,
-    prezime: surname,
-    ime: name,
-    brojKartice: number,
+    prezime: lastname,
+    ime: firstname,
+    brojKartice: creditCardNumber,
+    racunId,
   });
 };
 
@@ -69,10 +66,6 @@ let creditCardCheck = async (number) => {
   return Boolean(accountWithCardNumber);
 };
 
-let getUserId = async () => {
-  return 1 + (await Klijent.count());
-};
-
 // Will create a Klijent accountđ
 router.post(
   '/user',
@@ -83,7 +76,7 @@ router.post(
       .custom((email) =>
         emailCheck(email).then((emailExist) => {
           if (emailExist) {
-            Promise.reject('Račun u uporabi');
+            return Promise.reject('Račun u uporabi');
           }
         })
       ),
@@ -98,7 +91,7 @@ router.post(
       .custom((oib) =>
         oibCheck(oib).then((oibExist) => {
           if (oibExist) {
-            Promise.reject('Račun u uporabi');
+            return Promise.reject('Račun u uporabi');
           }
         })
       ),
@@ -125,7 +118,7 @@ router.post(
       .custom((creditCard) =>
         creditCardCheck(creditCard).then((creditCardExist) => {
           if (creditCardExist) {
-            Promise.reject('Račun u uporabi');
+            return Promise.reject('Račun u uporabi');
           }
         })
       ),
@@ -148,7 +141,12 @@ router.post(
 
     var user = await createAccount({ email, oib, password });
 
-    await createClient(id, firstname, lastname, creditCardNumber);
+    await createClient({
+      firstname,
+      lastname,
+      creditCardNumber,
+      racunId: user.id,
+    });
 
     req.session.user = {
       id: user.id,
