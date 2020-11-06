@@ -23,9 +23,11 @@ const router = express.Router();
 
   If user is not logged, this will return with status 401 and:
   {
-    error: {
-      message: string,
-    }
+    errors: [
+      {
+        message: string,
+      }
+    ]
   }
  */
 router.get('/', async (req, res) => {
@@ -38,9 +40,11 @@ router.get('/', async (req, res) => {
   }
 
   return res.status(401).json({
-    error: {
-      message: 'Korisnik nije prijavljen.',
-    },
+    errors: [
+      {
+        message: 'Korisnik nije prijavljen.',
+      },
+    ],
   });
 });
 
@@ -62,9 +66,11 @@ router.get('/', async (req, res) => {
 
   If user is not logged, this will return with status 400 and:
   {
-    error: {
+    errors: [
+      {
       message: string,
-    }
+      }
+    ]
   }
 */
 router.post(
@@ -77,6 +83,12 @@ router.post(
     body('data.password').not().isEmpty(),
   ],
   async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { email, password } = req.body.data;
 
     let account = await Racun.findOne({
@@ -91,9 +103,11 @@ router.post(
 
     if (!account || !passwordMatch) {
       return res.status(400).json({
-        error: {
-          message: 'Neispravni podatci za prijavu',
-        },
+        errors: [
+          {
+            message: 'Neispravni podatci za prijavu',
+          },
+        ],
       });
     }
 
@@ -117,10 +131,12 @@ router.post(
 
   If user is not logged, this will return with status 401 and:
   {
-    error: {
-      message: string,
-    }
-  } 
+    errors: [
+      {
+        message: string,
+      }
+    ]
+  }
 */
 router.delete('/', async (req, res) => {
   if (req.session.user) {
@@ -134,9 +150,11 @@ router.delete('/', async (req, res) => {
   }
 
   return res.status(401).json({
-    error: {
-      message: 'Korisnik nije prijavljen',
-    },
+    errors: [
+      {
+        message: 'Korisnik nije prijavljen',
+      },
+    ],
   });
 });
 
