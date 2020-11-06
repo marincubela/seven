@@ -18,7 +18,7 @@ const Ponavljajuca = db.define(
       allowNull: false,
     },
     daniPonavljanja: {
-      type: Sequelize.DataTypes.STRING,
+      type: Sequelize.DataTypes.INTEGER,
       allowNull: false,
     },
     vrijemePocetka: {
