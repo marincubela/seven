@@ -23,7 +23,7 @@ const createCompany = (accountData) => {};
 
 //Will create a Klijent model
 const createClient = async ({ name, surname, number }) => {
-  if (!(await cardNumberCheck(creditCardNumber))) {
+  if (!(await creditCardCheck(creditCardNumber))) {
     return res.status(400).json({
       error: {
         message: 'Klijent s tom karticom već postoji',
@@ -59,7 +59,7 @@ let oibCheck = async (oib) => {
   return Boolean(accountWithOIB);
 };
 
-let cardNumberCheck = async (number) => {
+let creditCardCheck = async (number) => {
   const accountWithCardNumber = await Klijent.findOne({
     where: {
       brojKartice: number,
@@ -92,7 +92,7 @@ router.post(
     body('data.password').not().isEmpty(),
 
     // OIB field length must be 11
-    body('data.OIB')
+    body('data.oib')
       .isLength({ min: 11, max: 11 })
       .isNumeric()
       .custom((oib) =>
