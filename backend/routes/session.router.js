@@ -52,6 +52,13 @@ router.get('/', async (req, res) => {
 /*
   This endpoint is used for logging user in.
 
+  This is expecting:
+  {
+    data: {
+      email: string,
+      password: string
+    }
+  }
   If user is logged in, this will retun with status 200 and:
   {
     data: {
