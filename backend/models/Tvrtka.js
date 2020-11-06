@@ -6,7 +6,7 @@ const Tvrtka = db.define(
   'tvrtka',
   {
     idTvrtka: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },

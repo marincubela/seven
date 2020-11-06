@@ -6,7 +6,7 @@ const Klijent = db.define(
   'klijent',
   {
     idKlijent: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },

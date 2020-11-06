@@ -6,7 +6,7 @@ const Trajna = db.define(
   'trajna',
   {
     idTrajna: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },

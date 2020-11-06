@@ -8,7 +8,7 @@ const Rezervacija = db.define(
   'rezervacija',
   {
     idRezervacija: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },

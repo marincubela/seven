@@ -6,7 +6,7 @@ const Ponavljajuca = db.define(
   'Ponavljajuca',
   {
     idPonavljajuce: {
-      type: Sequelize.DataTypes.DATE,
+      type: DataTypes.DATE,
       primaryKey: true,
       autoIncrement: true
     },
