@@ -8,7 +8,7 @@ const Ponavljajuca = db.define(
     idPonavljajuce: {
       type: Sequelize.DataTypes.DATE,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement=1
     },
     datumRezervacije: {
       type: Sequelize.DataTypes.DATEONLY,

@@ -8,7 +8,7 @@ const Vozilo = db.define(
     idVozilo: {
       type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement = 1
     },
     registracija: {
       type: Sequelize.DataTypes.STRING,

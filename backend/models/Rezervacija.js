@@ -10,7 +10,7 @@ const Rezervacija = db.define(
     idRezervacija: {
       type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement=1
     },
   },
   {
