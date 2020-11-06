@@ -114,7 +114,7 @@ router.post(
     body('data.lastname').isAlpha(),
 
     // Credit card must consists of 16 numbers
-    body('data.creditCard')
+    body('data.creditCardNumber')
       .not()
       .isEmpty()
       .withMessage('Kreditna kartica ne smije biti prazna')
