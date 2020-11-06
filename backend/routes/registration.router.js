@@ -4,10 +4,17 @@ const Racun = require('../models/Racun');
 const Klijent = require('../models/Klijent');
 const Tvrtka = require('../models/Tvrtka');
 const { body } = require('express-validator');
+const { hashPassword } = require('../utils/password');
 
 // Will create a Racun model
-const createAccount = (id, email, oib, admin, password) => {
-  const user = await Racun.create({ id: id, email: email, OIB: oib, admin:admin, lozinka:password });
+const createAccount = async (id, email, oib, admin, password) => {
+  const user = await Racun.create({
+    id: id,
+    email: email,
+    OIB: oib,
+    admin: admin,
+    lozinka: await hashPassword(password),
+  });
   return user;
 };
 
@@ -15,24 +22,29 @@ const createAccount = (id, email, oib, admin, password) => {
 const createCompany = (accountData) => {};
 
 //Will create a Klijent model
-const createClient = (id, name, surname, number) => {
-  const client=await Klijent.create({idKlijent:id,prezime:surname, ime:name,brojKartice:number});
+const createClient = async (id, name, surname, number) => {
+  const client = await Klijent.create({
+    idKlijent: id,
+    prezime: surname,
+    ime: name,
+    brojKartice: number,
+  });
 };
 
-let emailCheck= async(email) =>{
+let emailCheck = async (email) => {
   const emailCheck = await Racun.findOne({
     where: {
       email,
     },
   });
 
-  if (cardCheck) {
+  if (emailCheck) {
     return false;
   }
   return true;
-}
+};
 
-let oibCheck= async(oib) =>{
+let oibCheck = async (oib) => {
   const oibCheck = await Racun.findOne({
     where: {
       OIB: oib,
@@ -43,10 +55,10 @@ let oibCheck= async(oib) =>{
     return false;
   }
   return true;
-}
+};
 
-let cardNumberCheck= async(number) =>{
-  const cardCheck = await Racun.findOne({
+let cardNumberCheck = async (number) => {
+  const cardCheck = await Klijent.findOne({
     where: {
       brojKartice: number,
     },
@@ -56,25 +68,11 @@ let cardNumberCheck= async(number) =>{
     return false;
   }
   return true;
-}
+};
 
-let getUserId= async()=>{
-  return await Klijent.count();
-}
-
-
-//Checks if card Number alredy exists
-let cardNumberCheck= async(number) =>{
-  const cardCheck = await Racun.findOne({
-    where: {
-      brojKartice: number,
-    },
-  });
-
-  if (cardCheck) {
-    return false;
-  }
-}
+let getUserId = async () => {
+  return 1 + (await Klijent.count());
+};
 
 // Will create a Klijent accountđ
 router.post(
@@ -101,8 +99,8 @@ router.post(
 
   //Checks if email alredy exists
   async (req, res, next) => {
-    const email=req.body.data.email;
-    if(!emailCheck(email)){
+    const email = req.body.data.email;
+    if (!(await emailCheck(email))) {
       return res.status(400).json({
         error: {
           message: 'Klijent s tim emailom već postoji',
@@ -110,8 +108,8 @@ router.post(
       });
     }
 
-    const oib=req.body.data.oib;
-    if(!oibCheck(oib)){
+    const oib = req.body.data.oib;
+    if (!(await oibCheck(oib))) {
       return res.status(400).json({
         error: {
           message: 'Klijent s tim OIB-om već postoji',
@@ -119,31 +117,37 @@ router.post(
       });
     }
 
-    const number=req.body.data.number;
-    if(!numberCheck(number)){
+    const number = req.body.data.number;
+    if (!(await cardNumberCheck(number))) {
       return res.status(400).json({
         error: {
           message: 'Klijent s tom karticom već postoji',
         },
       });
     }
-    const name=req.body.data.name;
-    const surname=req.body.data.surname;
-    const id= getUserId();
-    var user= createAccount(id, email, oib, false, req.body.data.password);
-    createClient(id, name, surname,number);
+    const name = req.body.data.name;
+    const surname = req.body.data.surname;
+    const id = await getUserId();
+    var user = await createAccount(
+      id,
+      email,
+      oib,
+      false,
+      req.body.data.password
+    );
+    await createClient(id, name, surname, number);
 
     req.session.user = {
       id: user.id,
       email: user.email,
       admin: user.admin,
     };
-    
+
     return res.status(200).json({
-      data:{
-        user:req.session.user,
-      }
-    })
+      data: {
+        user: req.session.user,
+      },
+    });
   }
 );
 
