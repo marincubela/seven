@@ -7,6 +7,7 @@ const Racun = db.define(
     id: {
       type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true
     },
     email: {
       type: Sequelize.DataTypes.STRING,

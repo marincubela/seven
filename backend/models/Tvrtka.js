@@ -8,6 +8,7 @@ const Tvrtka = db.define(
     idTvrtka: {
       type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true
     },
     naziv: {
       type: Sequelize.DataTypes.STRING,

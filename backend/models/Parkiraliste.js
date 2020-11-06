@@ -9,6 +9,7 @@ const Parkiraliste = db.define(
     idParkiralista: {
       type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true
     },
     nazivParkiralista: {
       type: Sequelize.DataTypes.STRING,
