@@ -79,13 +79,13 @@
 					ime & VARCHAR &  ime klijenta \\ \hline 
 					prezime & VARCHAR &  prezime klijenta \\ \hline 
 					broj kartice & VARCHAR &  broj kartice klijenta \\ \hline 
-					\cellcolor{LightBlue} računId	& VARCHAR &   jedinstveni identifikator računa (račun.ID)	\\ \hline 
+					\cellcolor{LightBlue} računId	& INT &   jedinstveni identifikator računa (račun.ID)	\\ \hline 
 					
 					
 				\end{longtabu}
 				
 				\textbf{Tvrtka} \newline
-			    Entitet sadrži informacije o tvrtki koja želi prijaviti svoje parkilište u aplikaciji. Sadrži atribute: ID, naziv, adresa, računId. U vezi je \textit{One-To-Many} s entitetom Parkiralište, a s entitetom Račun je u vezi \textit{Many-To-One}.
+			    Entitet sadrži informacije o tvrtki koja želi prijaviti svoje parkilište u aplikaciju. Sadrži atribute: ID, naziv, adresa, računId. U vezi je \textit{One-To-Many} s entitetom Parkiralište, a s entitetom Račun je u vezi \textit{Many-To-One}.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -101,7 +101,7 @@
 					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator tvrtke \\ \hline
 					naziv & VARCHAR &  naziv tvrtke \\ \hline 
 					adresa & VARCHAR &  adresa sjedišta tvrtke \\ \hline 
-					\cellcolor{LightBlue} računId	& VARCHAR &   jedinstveni identifikator računa (račun.ID)	\\ \hline 
+					\cellcolor{LightBlue} računId	& INT &   jedinstveni identifikator računa (račun.ID)	\\ \hline 
 					
 					
 				\end{longtabu}
@@ -125,7 +125,7 @@
 					registracija & VARCHAR &  broj registracije vozila \\ \hline 
 					naziv vozila & VARCHAR &  naziv vozila koje dodjeluje klijent \\ \hline 
 					boja & VARCHAR &  boja vozila koju dodjeluje klijent \\ \hline 
-					\cellcolor{LightBlue} klijentId	& VARCHAR &   jedinstveni identifikator klijenta (klijent.ID)	\\ \hline 
+					\cellcolor{LightBlue} klijentId	& INT &   jedinstveni identifikator klijenta (klijent.ID)	\\ \hline 
 					
 				\end{longtabu}
 				
@@ -153,7 +153,7 @@
 					cijena jednokratne & INT &  cijena sata za jednokratnu rezervaciju parkirališta \\ \hline 
 					cijena ponavljajuće & INT &  cijena sata za ponavljajuću rezervaciju parkirališta \\ \hline
 					cijena trajne & INT &  cijena trajne rezervacije parkirališta \\ \hline
-					\cellcolor{LightBlue} tvrtkaId	& VARCHAR &   jedinstveni identifikator tvrtke (tvrka.ID)	\\ \hline 
+					\cellcolor{LightBlue} tvrtkaId	& INT &   jedinstveni identifikator tvrtke (tvrka.ID)	\\ \hline 
 					
 					
 				\end{longtabu}
@@ -175,9 +175,9 @@
 					\endlastfoot
 					
 					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator rezervacije \\ \hline
-					\cellcolor{LightBlue} klijentId	& VARCHAR &   jedinstveni identifikator klijenta (klijent.ID)	\\ \hline
-					\cellcolor{LightBlue} parkirališteId	& VARCHAR &   jedinstveni identifikator prakirališta (parkiralište.ID)	\\ \hline
-					\cellcolor{LightBlue} voziloId	& VARCHAR &   jedinstveni identifikator vozila (vozilo.ID)	\\ \hline
+					\cellcolor{LightBlue} klijentId	& INT &   jedinstveni identifikator klijenta (klijent.ID)	\\ \hline
+					\cellcolor{LightBlue} parkirališteId	& INT &   jedinstveni identifikator prakirališta (parkiralište.ID)	\\ \hline
+					\cellcolor{LightBlue} voziloId	& INT &   jedinstveni identifikator vozila (vozilo.ID)	\\ \hline
 					
 				\end{longtabu}
 				
@@ -200,7 +200,7 @@
 					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator jednokratne rezervacije \\ \hline
 					vrijeme početak & TIMESTAMP &  vrijeme početka rezervacije \\ \hline  
 					vrijeme kraj & TIMESTAMP &  vrijeme kraja rezervacije \\ \hline 
-					\cellcolor{LightBlue} rezervacijaId	& VARCHAR &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
+					\cellcolor{LightBlue} rezervacijaId	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
 					
 				\end{longtabu}
 				
@@ -222,7 +222,7 @@
 					\cellcolor{LightGreen}ID & INT	&  jedinstveni identifikator trajne rezervacije \\ \hline
 					vrijeme početak & TIMESTAMP &  vrijeme početka rezervacije \\ \hline  
 					vrijeme kraj & TIMESTAMP &  vrijeme kraja rezervacije \\ \hline 
-					\cellcolor{LightBlue} rezervacijaId	& VARCHAR &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
+					\cellcolor{LightBlue} rezervacijaId	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
 					
 				\end{longtabu}
 				
@@ -248,7 +248,7 @@
 					dani ponavljanja & INT &  dani ponavljanje rezervacije (pon=1, uto=2, ...) \\ \hline
 					vrijeme početak & TIME &  vrijeme početka rezervacije \\ \hline  
 					vrijeme kraj & TIME &  vrijeme kraja rezervacije \\ \hline 
-					\cellcolor{LightBlue} rezervacijaId	& VARCHAR &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
+					\cellcolor{LightBlue} rezervacijaId	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
 					
 				\end{longtabu}
 				
