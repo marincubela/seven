@@ -72,7 +72,46 @@ let creditCardCheck = async (number) => {
   return Boolean(accountWithCardNumber);
 };
 
-// Will create a Klijent accountđ
+/*
+  This endpoint is used for registrating the client (Will create a Klijent account).
+
+  It is expecting
+  {
+    data: {
+      email: string,
+      oib: string,
+      creditCardNumber: string,
+      firstname: string,
+      lastname: string,
+      password: string,
+    }
+  }
+
+  If registration is succesfull, this user is logged in and 
+  this will retun with status 200 and:
+  {
+    data: {
+      user: {
+        id: integer,
+        email: string,
+        admin: boolean,
+      }
+    }
+  }
+  User object from data is also stored in session.user
+
+  If user is not logged, this will return with status 400 and:
+  {
+    errors: [
+      {
+        value: string,
+        param: 
+        msg: string,
+        location: 
+      }
+    ]
+  }
+*/
 router.post(
   '/user',
   [
@@ -171,7 +210,45 @@ router.post(
   }
 );
 
-// Will create a Tvrtka account
+/*
+  This endpoint is used for registrating the company (Will create a Tvrtka account).
+
+  It is expecting
+  {
+    data: {
+      email: string,
+      password: string,
+      oib: string,
+      companyName: string,
+      adress: string
+    }
+  }
+
+  If registration is succesfull, this user is logged in and 
+  this will retun with status 200 and:
+  {
+    data: {
+      user: {
+        id: integer,
+        email: string,
+        admin: boolean,
+      }
+    }
+  }
+  User object from data is also stored in session.user
+
+  If user is not logged, this will return with status 400 and:
+  {
+    errors: [
+      {
+        value: string,
+        param: 
+        msg: string,
+        location: 
+      }
+    ]
+  }
+*/
 router.post(
   '/company',
   [
