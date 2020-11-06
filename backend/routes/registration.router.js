@@ -3,18 +3,18 @@ const router = express.Router();
 const Racun = require('../models/Racun');
 const Klijent = require('../models/Klijent');
 const Tvrtka = require('../models/Tvrtka');
-const { body } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const { hashPassword } = require('../utils/password');
 
 // Will create a Racun model
-const createAccount = async (id, email, oib, admin, password) => {
+const createAccount = async ({ email, oib, password }) => {
   const user = await Racun.create({
-    id: id,
-    email: email,
+    email,
     OIB: oib,
-    admin: admin,
+    admin: false,
     lozinka: await hashPassword(password),
   });
+
   return user;
 };
 
@@ -22,7 +22,15 @@ const createAccount = async (id, email, oib, admin, password) => {
 const createCompany = (accountData) => {};
 
 //Will create a Klijent model
-const createClient = async (id, name, surname, number) => {
+const createClient = async ({ name, surname, number }) => {
+  if (!(await cardNumberCheck(creditCardNumber))) {
+    return res.status(400).json({
+      error: {
+        message: 'Klijent s tom karticom već postoji',
+      },
+    });
+  }
+
   const client = await Klijent.create({
     idKlijent: id,
     prezime: surname,
@@ -32,42 +40,33 @@ const createClient = async (id, name, surname, number) => {
 };
 
 let emailCheck = async (email) => {
-  const emailCheck = await Racun.findOne({
+  const accountWithEmail = await Racun.findOne({
     where: {
       email,
     },
   });
 
-  if (emailCheck) {
-    return false;
-  }
-  return true;
+  return Boolean(accountWithEmail);
 };
 
 let oibCheck = async (oib) => {
-  const oibCheck = await Racun.findOne({
+  const accountWithOIB = await Racun.findOne({
     where: {
       OIB: oib,
     },
   });
 
-  if (oibCheck) {
-    return false;
-  }
-  return true;
+  return Boolean(accountWithOIB);
 };
 
 let cardNumberCheck = async (number) => {
-  const cardCheck = await Klijent.findOne({
+  const accountWithCardNumber = await Klijent.findOne({
     where: {
       brojKartice: number,
     },
   });
 
-  if (cardCheck) {
-    return false;
-  }
-  return true;
+  return Boolean(accountWithCardNumber);
 };
 
 let getUserId = async () => {
@@ -79,63 +78,77 @@ router.post(
   '/user',
   [
     // email field needs to be an email
-    body('data.email').isEmail(),
+    body('data.email')
+      .isEmail()
+      .custom((email) =>
+        emailCheck(email).then((emailExist) => {
+          if (emailExist) {
+            Promise.reject('Račun u uporabi');
+          }
+        })
+      ),
 
     // password field is required
     body('data.password').not().isEmpty(),
 
     // OIB field length must be 11
-    body('data.OIB').isLength({ min: 11, max: 11 }).isNumeric(),
-
+    body('data.OIB')
+      .isLength({ min: 11, max: 11 })
+      .isNumeric()
+      .custom((oib) =>
+        oibCheck(oib).then((oibExist) => {
+          if (oibExist) {
+            Promise.reject('Račun u uporabi');
+          }
+        })
+      ),
     // Name field must consists of letters
-    body('data.firstname').isAlpha(),
+    body('data.firstname')
+      .not()
+      .isEmpty()
+      .withMessage('Ime je prazno')
+      .isAlpha()
+      .withMessage('Ime nije ispravno'),
 
     // Surname field must consists of letters
     body('data.lastname').isAlpha(),
 
     // Credit card must consists of 16 numbers
-    body('data.creditCard').isLength({ min: 16, max: 16 }).isNumeric(),
+    body('data.creditCard')
+      .not()
+      .isEmpty()
+      .withMessage('Kreditna kartica ne smije biti prazna')
+      .isNumeric()
+      .withMessage('Kreditna kartica mora sadržavati samo brojeve')
+      .isLength({ min: 16, max: 16 })
+      .withMessage('Kreditna kartica mora sadržavati 16 brojeva')
+      .custom((creditCard) =>
+        creditCardCheck(creditCard).then((creditCardExist) => {
+          if (creditCardExist) {
+            Promise.reject('Račun u uporabi');
+          }
+        })
+      ),
   ],
-
-  //Checks if email alredy exists
   async (req, res, next) => {
-    const email = req.body.data.email;
-    if (!(await emailCheck(email))) {
-      return res.status(400).json({
-        error: {
-          message: 'Klijent s tim emailom već postoji',
-        },
-      });
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
 
-    const oib = req.body.data.oib;
-    if (!(await oibCheck(oib))) {
-      return res.status(400).json({
-        error: {
-          message: 'Klijent s tim OIB-om već postoji',
-        },
-      });
-    }
-
-    const number = req.body.data.number;
-    if (!(await cardNumberCheck(number))) {
-      return res.status(400).json({
-        error: {
-          message: 'Klijent s tom karticom već postoji',
-        },
-      });
-    }
-    const name = req.body.data.name;
-    const surname = req.body.data.surname;
-    const id = await getUserId();
-    var user = await createAccount(
-      id,
+    const {
       email,
       oib,
-      false,
-      req.body.data.password
-    );
-    await createClient(id, name, surname, number);
+      creditCardNumber,
+      firstname,
+      lastname,
+      password,
+    } = req.body.data;
+
+    var user = await createAccount({ email, oib, password });
+
+    await createClient(id, firstname, lastname, creditCardNumber);
 
     req.session.user = {
       id: user.id,
