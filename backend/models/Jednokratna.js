@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+
 const db = require('../db/connect.js');
 const Rezervacija = require('./Rezervacija.js');
 
@@ -25,6 +26,7 @@ const Jednokratna = db.define(
 Jednokratna.belongsTo(Rezervacija, {
   foreignKey: 'rezervacijaId',
 });
+
 Jednokratna.sync().then(() => {
   console.log('Napravljena jednokratna rezervacija');
 });

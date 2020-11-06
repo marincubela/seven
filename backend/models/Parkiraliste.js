@@ -1,5 +1,5 @@
-const { STRING } = require('sequelize');
 const Sequelize = require('sequelize');
+
 const db = require('../db/connect.js');
 const Tvrtka = require('./Tvrtka.js');
 
