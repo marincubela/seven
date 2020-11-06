@@ -6,7 +6,7 @@ const Jednokratna = db.define(
   'jednokratna',
   {
     idJednokratna: {
-      type: DataTypes.INTEGER,
+      type:Sequelize.DataTypes.UUID,
       primaryKey: true,
       autoIncrement: true
     },

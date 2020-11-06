@@ -5,7 +5,7 @@ const Racun = db.define(
   'racun',
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.DataTypes.UUID,
       primaryKey: true,
       autoIncrement: true
     },

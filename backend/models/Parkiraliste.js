@@ -7,7 +7,7 @@ const Parkiraliste = db.define(
   'Parkiraliste',
   {
     idParkiralista: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.DataTypes.UUID,
       primaryKey: true,
       autoIncrement: true
     },
