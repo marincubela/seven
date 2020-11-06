@@ -5,6 +5,7 @@ const express = require('express');
 // Routers
 const sessionRouter = require('./routes/session.router');
 const userRouter = require('./routes/user.router');
+const registrationRouter = require('./routes/registration.router');
 
 // Middlewares
 const sessionMiddleware = require('./middleware/session');
@@ -21,6 +22,7 @@ app.use(sessionMiddleware);
 
 app.use('/session', sessionRouter);
 app.use('/users', userRouter);
+app.use('/registration', registrationRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
