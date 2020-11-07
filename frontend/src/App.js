@@ -9,37 +9,50 @@ import { RegistrationFirm } from './routes/registrationFirm';
 import { RegistrationPerson } from './routes/registrationPerson';
 import { Login } from './routes/login';
 import { Error } from './routes/error';
+import { DataStore } from './store/DataStore';
+import { StoreProvider } from './store/StoreProvider';
 
-export function App() {
+function App() {
+  let dataStore = window.store;
+
+  if (!dataStore) {
+    dataStore = new DataStore();
+    window.store = dataStore;
+  }
+
   return (
     <ChakraProvider theme={extendTheme(customTheme)}>
-      <Router>
-        <Switch>
-          <Route path="/registration/firm">
-            <RegistrationFirm />
-          </Route>
+      <StoreProvider store={{ store: dataStore }}>
+        <Router>
+          <Switch>
+            <Route path="/registration/firm">
+              <RegistrationFirm />
+            </Route>
 
-          <Route path="/registration/person">
-            <RegistrationPerson />
-          </Route>
+            <Route path="/registration/person">
+              <RegistrationPerson />
+            </Route>
 
-          <Route path="/registration">
-            <Registration />
-          </Route>
+            <Route path="/registration">
+              <Registration />
+            </Route>
 
-          <Route path="/login">
-            <Login />
-          </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
 
-          <Route path="/" exact>
-            <Home />
-          </Route>
+            <Route path="/" exact>
+              <Home />
+            </Route>
 
-          <Route path="/">
-            <Error />
-          </Route>
-        </Switch>
-      </Router>
+            <Route path="/">
+              <Error />
+            </Route>
+          </Switch>
+        </Router>
+      </StoreProvider>
     </ChakraProvider>
   );
 }
+
+export default App;
