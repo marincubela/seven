@@ -1,37 +1,37 @@
 import { Box, Heading, VStack, Text, Input, HStack, Button, Link } from '@chakra-ui/core';
 import React, { useState } from 'react';
-// import { Link as ReactLink, useHistory } from 'react-router-dom';
-import { Link as ReactLink } from 'react-router-dom';
+import { Link as ReactLink, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-const EMAIL_REGEX = /^\S+@\S+$/;
+import { post } from '../../utils/network';
+import { EMAIL_REGEX } from '../../utils/constants';
 
 export function LoginForm() {
-  // const [errorMessage, setErrorMessage] = useState('');
-  const [errorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const { handleSubmit, register, errors } = useForm({
-    // defaultValues: {
-    //   ['login-email']: 'mojemail',
-    // },
     mode: 'onBlur',
   });
-  // const history = useHistory();
+  const history = useHistory();
 
   function onLoginAction(formData) {
-    console.log('submitted', formData);
+    const requestBody = {
+      data: {
+        email: formData['login-email'],
+        password: formData['login-password'],
+      },
+    };
 
-    // fetch('parkamlf/session', {
-    //   method: 'POST',
-    //   body: JSON.stringify(formData),
-    // })
-    //   .then((user) => {
-    //     if (user) {
-    //       history.replace('/');
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     setErrorMessage(err.message);
-    //   });
+    post('session', requestBody)
+      .then((res) => {
+        if (res.data && res.data.user) {
+          history.replace('/');
+        }
+      })
+      .catch((res) => {
+        if (res.errors && res.errors[0] && res.errors[0].message) {
+          setErrorMessage(res.errors[0].message);
+        }
+      });
   }
 
   const emailErrorMessage = errors['login-email'] ? errors['login-email'].message : '';
