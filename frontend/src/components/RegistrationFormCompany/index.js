@@ -14,7 +14,7 @@ import {
 import React from 'react';
 import { Link as ReactLink } from 'react-router-dom';
 
-export function RegistrationFormFirm() {
+export function RegistrationFormCompany() {
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
       <Heading as="h2" size="xl" marginY="4">

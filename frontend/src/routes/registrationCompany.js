@@ -2,9 +2,9 @@ import { Box, Text, HStack } from '@chakra-ui/core';
 import React from 'react';
 
 import { Navigation } from '../components/Navigation';
-import { RegistrationFormFirm } from '../components/RegistrationFormFirm';
+import { RegistrationFormCompany } from '../components/RegistrationFormCompany';
 
-export function RegistrationFirm() {
+export function RegistrationCompany() {
   return (
     <Box marginX="auto" maxWidth="500px" paddingX="2">
       <Box as="header" paddingY="4">
@@ -14,7 +14,7 @@ export function RegistrationFirm() {
         </HStack>
       </Box>
 
-      <RegistrationFormFirm />
+      <RegistrationFormCompany />
     </Box>
   );
 }
