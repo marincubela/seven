@@ -15,16 +15,16 @@ export function App() {
     <ChakraProvider theme={extendTheme(customTheme)}>
       <Router>
         <Switch>
-          <Route path="/registration">
-            <Registration />
-          </Route>
-
-          <Route path="/registrationFirm">
+          <Route path="/registration/firm">
             <RegistrationFirm />
           </Route>
 
-          <Route path="/registrationPerson">
+          <Route path="/registration/person">
             <RegistrationPerson />
+          </Route>
+
+          <Route path="/registration">
+            <Registration />
           </Route>
 
           <Route path="/login">

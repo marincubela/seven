@@ -21,7 +21,7 @@ export function Navigation() {
           to="/registration"
           variant="nav"
           aria-current={
-            pathname === '/registration' || pathname === '/registrationFirm' || pathname === '/registrationPerson'
+            pathname === '/registration' || pathname === '/registration/firm' || pathname === '/registration/person'
               ? ''
               : undefined
           }
