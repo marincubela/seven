@@ -34,9 +34,6 @@ export function LoginForm() {
       });
   }
 
-  const emailErrorMessage = errors['login-email'] ? errors['login-email'].message : '';
-  const passwordErrorMessage = errors['login-password'] ? errors['login-password'].message : '';
-
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
       <Heading as="h2" size="xl" marginY="4">
@@ -55,13 +52,13 @@ export function LoginForm() {
                   message: 'Email je neispravan',
                 },
               })}
-              isInvalid={emailErrorMessage}
+              isInvalid={errors['login-email']}
               name="login-email"
-              placeholder="Tvoja e-mail adresa"
+              placeholder="Tvoja email adresa"
             />
-            {emailErrorMessage ? (
+            {errors['login-email'] ? (
               <Text color="error.500" fontSize="sm">
-                {emailErrorMessage}
+                {errors['login-email'].message}
               </Text>
             ) : null}
           </VStack>
@@ -72,14 +69,14 @@ export function LoginForm() {
               ref={register({
                 required: 'Lozinka je obavezna',
               })}
-              isInvalid={passwordErrorMessage}
+              isInvalid={errors['login-password']}
               name="login-password"
               placeholder="Tvoja lozinka"
               type="password"
             />
-            {passwordErrorMessage ? (
+            {errors['login-password'] ? (
               <Text color="error.500" fontSize="sm">
-                {passwordErrorMessage}
+                {errors['login-password'].message}
               </Text>
             ) : null}
           </VStack>
