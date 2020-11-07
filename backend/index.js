@@ -1,6 +1,7 @@
 require('dotenv-flow').config();
 
 const express = require('express');
+const cors = require('cors');
 
 // Routers
 const sessionRouter = require('./routes/session.router');
@@ -16,6 +17,8 @@ const port = process.env.PORT || 3000;
 
 // Parse body middleware
 app.use(express.json());
+
+app.use(cors());
 
 // Session middleware
 app.use(sessionMiddleware);
