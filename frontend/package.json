@@ -44,7 +44,7 @@
     ]
   },
   "scripts": {
-    "dev": "react-scripts start",
+    "dev": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "start": "npm run build && serve -s build",
     "test": "react-scripts test",

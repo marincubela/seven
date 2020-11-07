@@ -5,8 +5,10 @@ import { useForm } from 'react-hook-form';
 
 import { post } from '../../utils/network';
 import { EMAIL_REGEX } from '../../utils/constants';
+import { useStore } from '../../store/StoreProvider';
 
 export function LoginForm() {
+  const { store } = useStore();
   const [errorMessage, setErrorMessage] = useState('');
   const { handleSubmit, register, errors } = useForm({
     mode: 'onBlur',
@@ -24,10 +26,12 @@ export function LoginForm() {
     post('session', requestBody)
       .then((res) => {
         if (res.data && res.data.user) {
+          store.setCurrentUser(res.data.user);
           history.replace('/');
         }
       })
       .catch((res) => {
+        console.log(res);
         if (res.errors && res.errors[0] && res.errors[0].message) {
           setErrorMessage(res.errors[0].message);
         }
