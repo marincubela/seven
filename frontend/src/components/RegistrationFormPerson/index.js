@@ -1,42 +1,65 @@
-import { Box, Heading, VStack, Text, Input, HStack, Button, Link, Checkbox } from '@chakra-ui/core';
-import { PinInput, PinInputField } from '@chakra-ui/core';
+import {
+  Box,
+  Heading,
+  VStack,
+  Text,
+  Input,
+  HStack,
+  Button,
+  Link,
+  Checkbox,
+  Divider,
+  PinInput,
+  PinInputField,
+  NumberInput,
+  NumberInputField,
+} from '@chakra-ui/core';
 import React from 'react';
 import { Link as ReactLink } from 'react-router-dom';
 
-export function RegistrationForm() {
+export function RegistrationFormPerson() {
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
       <Heading as="h2" size="xl" marginY="4">
         Registriraj se
       </Heading>
 
-      <VStack marginY="8" spacing="4" align="stretch">
+      <VStack flex="1" align="stretch">
         <HStack align="stretch">
-          <VStack align="baseline">
+          <VStack flex="1" align="baseline">
             <Text as="label">Ime</Text>
             <Input placeholder="Vaše ime" />
           </VStack>
-          <VStack align="baseline">
+
+          <VStack flex="1" align="baseline">
             <Text as="label">Prezime</Text>
             <Input placeholder="Vaše prezime" />
           </VStack>
         </HStack>
 
-        <VStack align="stretch">
+        <VStack flex="1" align="stretch">
           <Text as="label">E-mail adresa</Text>
           <Input placeholder="Vaša e-mail adresa" />
         </VStack>
 
         <HStack align="stretch">
-          <VStack align="baseline">
+          <VStack flex="1" align="baseline">
             <Text as="label">Lozinka</Text>
             <Input type="password" placeholder="Vaša lozinka" />
           </VStack>
-          <VStack align="baseline">
+
+          <VStack flex="1" align="baseline">
             <Text as="label">Ponovljena lozinka</Text>
             <Input type="password" placeholder="Ponovljena lozinka" />
           </VStack>
         </HStack>
+
+        <VStack flex="1" align="stretch">
+          <Text as="label">OIB</Text>
+          <NumberInput>
+            <NumberInputField placeholder="Vaš OIB" />
+          </NumberInput>
+        </VStack>
 
         <VStack align="baseline">
           <VStack>
@@ -45,34 +68,41 @@ export function RegistrationForm() {
 
           <VStack>
             <HStack spacing="0">
-              <PinInput size="em" variant="filled" placeholder="•">
+              <PinInput size="1em" variant="filled" placeholder="•">
                 <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
                 <PinInputField />
                 <PinInputField />
+                <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
+
+                <Divider orientation="vertical" width="80%" />
+
+                <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
                 <PinInputField />
                 <PinInputField />
+                <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
+
+                <Divider orientation="vertical" width="80%" />
+
+                <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
                 <PinInputField />
                 <PinInputField />
-                <PinInputField />
-                <PinInputField />
-                <PinInputField />
-                <PinInputField />
-                <PinInputField />
-                <PinInputField />
+                <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
+
+                <Divider orientation="vertical" width="80%" />
+
+                <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
                 <PinInputField />
                 <PinInputField />
                 <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
               </PinInput>
             </HStack>
           </VStack>
+        </VStack>
 
+        <VStack align="start">
           <VStack>
-            <Checkbox border="1rem" borderColor="gray.300">
-              Prihvaćam...
-            </Checkbox>
-            <Checkbox border="1rem" borderColor="gray.300">
-              Prihvaćam...
-            </Checkbox>
+            <Checkbox>Prihvaćam...</Checkbox>
+            <Checkbox>Prihvaćam...</Checkbox>
           </VStack>
         </VStack>
 

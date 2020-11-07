@@ -20,7 +20,11 @@ export function Navigation() {
           as={ReactLink}
           to="/registration"
           variant="nav"
-          aria-current={pathname === '/registration' ? '' : undefined}
+          aria-current={
+            pathname === '/registration' || pathname === '/registration/firm' || pathname === '/registration/person'
+              ? ''
+              : undefined
+          }
         >
           Registracija
         </Link>

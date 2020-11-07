@@ -1,68 +1,70 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# seven-parkiraj-me-frontend
 
-## Available Scripts
+## Setup
 
-In the project directory, you can run:
+### Install dependecies
 
-### `yarn start`
+To install dependecies, in your terminal do the following steps:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Be sure that you are in correct folder
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Your current directory should end with `seven\backend`.
 
-### `yarn test`
+2. Run install command
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm install
+```
 
-### `yarn build`
+## Code writing
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Running application locally
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+To run you app locally you need to run following command inside your terminal
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm run dev
+```
 
-### `yarn eject`
+### Branching
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+When you want to add a new feature to the app do the following
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### 1. Checkout to branch `frontend` and pull new changes from the GitLab server
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+git checkout fronted
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+git pull origin frontend
+```
 
-## Learn More
+#### 2. Create your new branch
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Your branch should be a descriptive name for what you will do in this branch
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+git checkout -b new-branch
+```
 
-### Code Splitting
+#### 3. Once finished with you work, create a merge request
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+To create a merge request, first you need to push all changes to the GitLab server.
 
-### Analyzing the Bundle Size
+```bash
+git push origin
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+After that go to the [GitLab](https://gitlab.com/Cubi5/seven/-/merge_requests/new) and:
 
-### Making a Progressive Web App
+* Select your branch as a source branch and `frontend` as a target branch.
+* If neccessary, provide a short description of what have you done
+* Review process (still to determen)
+* Press `Submit merge request`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+After everyone reviewed the merge request and all changes are applied you may merge the merge request.
 
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+Make sure your branch is deleted by visiting [this link](https://gitlab.com/Cubi5/seven/-/branches/active)
 
 ### Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+To be determened!

@@ -32,14 +32,41 @@ const theme = {
       },
     },
     PinInput: {
+      variants: {
+        filled: {
+          '&:hover, &:focus': {
+            bgColor: 'primary.50',
+          },
+        },
+      },
       defaultProps: {
         variant: 'filled',
         focusBorderColor: 'secondary.400',
       },
     },
-    CheckBox: {
+    Checkbox: {
+      baseStyle: () => ({
+        control: {
+          borderColor: 'gray.400',
+        },
+      }),
       defaultProps: {
-        // write default border color and border size
+        colorScheme: 'teal',
+      },
+    },
+    NumberInput: {
+      variants: {
+        filled: {
+          field: {
+            '&:hover, &:focus': {
+              bgColor: 'primary.50',
+            },
+          },
+        },
+      },
+      defaultProps: {
+        variant: 'filled',
+        focusBorderColor: 'secondary.400',
       },
     },
   },

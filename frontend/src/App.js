@@ -5,6 +5,8 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import customTheme from './styles/theme';
 import { Home } from './routes/home';
 import { Registration } from './routes/registration';
+import { RegistrationFirm } from './routes/registrationFirm';
+import { RegistrationPerson } from './routes/registrationPerson';
 import { Login } from './routes/login';
 import { Error } from './routes/error';
 
@@ -13,6 +15,14 @@ export function App() {
     <ChakraProvider theme={extendTheme(customTheme)}>
       <Router>
         <Switch>
+          <Route path="/registration/firm">
+            <RegistrationFirm />
+          </Route>
+
+          <Route path="/registration/person">
+            <RegistrationPerson />
+          </Route>
+
           <Route path="/registration">
             <Registration />
           </Route>
