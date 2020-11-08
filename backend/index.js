@@ -1,8 +1,6 @@
 require('dotenv-flow').config();
 
 const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv').config();
 
 // Routers
 const sessionRouter = require('./routes/session.router');
@@ -11,15 +9,17 @@ const registrationRouter = require('./routes/registration.router');
 
 // Middlewares
 const sessionMiddleware = require('./middleware/session');
+const corsMiddleware = require('./middleware/cors');
 
 const app = express();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 // Parse body middleware
 app.use(express.json());
 
-app.use(cors());
+// Cors middleware
+app.use(corsMiddleware);
 
 // Session middleware
 app.use(sessionMiddleware);
