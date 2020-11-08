@@ -3,15 +3,15 @@ import { observer } from 'mobx-react';
 import React, { Fragment } from 'react';
 
 import { Header } from '../components/Header';
-import { RegistrationChoose } from '../components/RegistrationChoose';
+import { RegistrationFormCompany } from '../components/RegistrationFormCompany';
 
-export const Registration = observer(() => {
+export const RegistrationCompany = observer(() => {
   return (
     <Fragment>
       <Header />
 
       <Box as="main" marginX="auto" maxWidth="500px" paddingX="2">
-        <RegistrationChoose />
+        <RegistrationFormCompany />
       </Box>
     </Fragment>
   );

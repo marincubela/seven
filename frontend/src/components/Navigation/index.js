@@ -1,34 +1,63 @@
-import { Center, HStack, Link } from '@chakra-ui/core';
+import { Box, Button, HStack, Link } from '@chakra-ui/core';
+import { observer } from 'mobx-react';
 import React from 'react';
 import { Link as ReactLink, useLocation } from 'react-router-dom';
 
-export function Navigation() {
+import { useStore } from '../../store/StoreProvider';
+import { destroy } from '../../utils/network';
+
+export const Navigation = observer(() => {
   const { pathname } = useLocation();
+  const store = useStore();
+
+  const isUserLoggedIn = Boolean(store.currentUser);
+
+  const handleLogout = () => {
+    destroy('session')
+      .then(() => {
+        store.setCurrentUser(null);
+      })
+      .catch(() => {});
+  };
 
   return (
-    <Center color="green.700">
-      <HStack>
+    <Box color="secondary.700">
+      <HStack spacing="5">
         <Link as={ReactLink} to="/" variant="nav" aria-current={pathname === '/' ? '' : undefined}>
           Početna
         </Link>
 
-        <Link as={ReactLink} to="/login" variant="nav" aria-current={pathname === '/login' ? '' : undefined}>
-          Prijava
-        </Link>
+        {isUserLoggedIn && (
+          <Link as={ReactLink} to="/profil" variant="nav" aria-current={pathname === '/login' ? '' : undefined}>
+            Profil
+          </Link>
+        )}
 
-        <Link
-          as={ReactLink}
-          to="/registration"
-          variant="nav"
-          aria-current={
-            pathname === '/registration' || pathname === '/registrationFirm' || pathname === '/registrationPerson'
-              ? ''
-              : undefined
-          }
-        >
-          Registracija
-        </Link>
+        {isUserLoggedIn && <Button onClick={handleLogout}>Odjava</Button>}
+
+        {!isUserLoggedIn && (
+          <Link as={ReactLink} to="/login" variant="nav" aria-current={pathname === '/login' ? '' : undefined}>
+            Prijava
+          </Link>
+        )}
+
+        {!isUserLoggedIn && (
+          <Link
+            as={ReactLink}
+            to="/registration"
+            variant="nav"
+            aria-current={
+              pathname === '/registration' ||
+              pathname === '/registration/company' ||
+              pathname === '/registration/person'
+                ? ''
+                : undefined
+            }
+          >
+            Registracija
+          </Link>
+        )}
       </HStack>
-    </Center>
+    </Box>
   );
-}
+});

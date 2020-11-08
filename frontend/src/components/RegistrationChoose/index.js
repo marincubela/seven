@@ -11,13 +11,13 @@ export function RegistrationChoose() {
 
       <HStack flex="1">
         <Button variant="solid" height="3em" flex="1">
-          <Link as={ReactLink} to="/registrationFirm" flex="1">
+          <Link as={ReactLink} to="/registration/company" flex="1">
             Tvrtka
           </Link>
         </Button>
 
         <Button variant="solid" height="3em" flex="1">
-          <Link as={ReactLink} to="/registrationPerson" flex="1">
+          <Link as={ReactLink} to="/registration/person" flex="1">
             Osoba
           </Link>
         </Button>

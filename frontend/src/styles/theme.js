@@ -25,6 +25,7 @@ const theme = {
     Link: {
       variants: {
         nav: {
+          fontSize: 'lg',
           '&[aria-current]': {
             fontWeight: 'bold',
           },
@@ -34,8 +35,29 @@ const theme = {
     PinInput: {
       variants: {
         filled: {
+          transition: 'none',
+          '&:not([data-end])[aria-invalid="true"]': {
+            borderRight: 'none',
+            borderLeft: 'none',
+          },
           '&:hover, &:focus': {
             bgColor: 'primary.50',
+          },
+          '&[data-end="left"]': {
+            borderBottomLeftRadius: 'base',
+            borderTopLeftRadius: 'base',
+
+            '&[aria-invalid="true"]': {
+              borderRight: 'none',
+            },
+          },
+          '&[data-end="right"]': {
+            borderBottomRightRadius: 'base',
+            borderTopRightRadius: 'base',
+
+            '&[aria-invalid="true"]': {
+              borderLeft: 'none',
+            },
           },
         },
       },
@@ -54,25 +76,11 @@ const theme = {
         colorScheme: 'teal',
       },
     },
-    NumberInput: {
-      variants: {
-        filled: {
-          field: {
-            '&:hover, &:focus': {
-              bgColor: 'primary.50',
-            },
-          },
-        },
-      },
-      defaultProps: {
-        variant: 'filled',
-        focusBorderColor: 'secondary.400',
-      },
-    },
   },
   colors: {
     primary: defaultTheme.colors.gray,
     secondary: defaultTheme.colors.teal,
+    error: defaultTheme.colors.red,
   },
 };
 
