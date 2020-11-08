@@ -1,10 +1,10 @@
+const { hashPassword } = require('../utils/password');
 const express = require('express');
+const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const Racun = require('../models/Racun');
 const Klijent = require('../models/Klijent');
 const Tvrtka = require('../models/Tvrtka');
-const { body, validationResult } = require('express-validator');
-const { hashPassword } = require('../utils/password');
 
 /*router.use(
   expressValidator({
@@ -32,10 +32,10 @@ const createAccount = async ({ email, oib, password }) => {
 };
 
 //Will create a Tvrtka model
-const createCompany = async ({ companyName, adress, racunId }) => {
+const createCompany = async ({ companyName, address, racunId }) => {
   const company = await Tvrtka.create({
     naziv: companyName,
-    adresa: adress,
+    adresa: address,
     racunId,
   });
 };
@@ -118,9 +118,9 @@ let creditCardCheck = async (number) => {
     errors: [
       {
         value: string,
-        param: 
-        msg: string,
-        location: 
+        param: string
+        message: string,
+        location: string
       }
     ]
   }
@@ -237,12 +237,12 @@ router.post(
       password: string,
       oib: string,
       companyName: string,
-      adress: string
+      address: string
     }
   }
 
   If registration is succesfull, this user is logged in and 
-  this will retun with status 200 and:
+  this will retun with status 201 and:
   {
     data: {
       user: {
@@ -259,9 +259,9 @@ router.post(
     errors: [
       {
         value: string,
-        param: 
-        msg: string,
-        location: 
+        param: string,
+        message: string,
+        location: string
       }
     ]
   }
@@ -305,7 +305,7 @@ router.post(
       .withMessage('Ime tvrtke je prazno'),
 
     // Adress field is required
-    body('data.adress').not().isEmpty().withMessage('Adresa je prazna'),
+    body('data.address').not().isEmpty().withMessage('Adresa je prazna'),
   ],
   async (req, res, next) => {
     const errors = validationResult.withDefaults({
@@ -323,12 +323,12 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, oib, companyName, password, adress } = req.body.data;
+    const { email, oib, companyName, password, address } = req.body.data;
 
     var user = await createAccount({ email, oib, password });
 
     await createCompany({
-      adress,
+      address,
       companyName,
       racunId: user.id,
     });
@@ -339,7 +339,7 @@ router.post(
       admin: user.admin,
     };
 
-    return res.status(200).json({
+    return res.status(201).json({
       data: {
         user: req.session.user,
       },
