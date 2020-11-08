@@ -123,6 +123,63 @@ const getAllUsers = async () => {
   });
 };
 
+/*
+  This endpoint will return all users in app.
+
+  If user is admin, this will return with status 200 and:
+  {
+    data: {
+      clients: { 
+        id: integer,
+        email: string,
+        OIB: string,
+        admin: boolean
+        ime: string,
+        prezime: string,
+        brojKartice: string 
+      }[],
+      companies:{
+        id: integer,
+        email: string,
+        OIB: string,
+        admin: boolean,
+        naziv: string,
+        adresa: string
+      }[]
+    }
+  }
+
+  If user is not admin 
+  {
+    errors: [{
+      message: string,
+    }]
+  }
+*/
+router.get('/all', async (req, res) => {
+  if (!req.session.user.admin) {
+    return res.status(401).json({
+      errors: [
+        {
+          message: 'Neovlaštena radnja',
+        },
+      ],
+    });
+  }
+
+  await getAllUsers()
+    .then((users) => {
+      return res.json({
+        data: {
+          users,
+        },
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 /**
   This endpoint will return a user with a given id
 
@@ -188,63 +245,6 @@ router.get('/:id', async (req, res) => {
       return res.status(status).json({
         errors,
       });
-    });
-});
-
-/*
-  This endpoint will return all users in app.
-
-  If user is admin, this will return with status 200 and:
-  {
-    data: {
-      clients: { 
-        id: integer,
-        email: string,
-        OIB: string,
-        admin: boolean
-        ime: string,
-        prezime: string,
-        brojKartice: string 
-      }[],
-      companies:{
-        id: integer,
-        email: string,
-        OIB: string,
-        admin: boolean,
-        naziv: string,
-        adresa: string
-      }[]
-    }
-  }
-
-  If user is not admin 
-  {
-    errors: [{
-      message: string,
-    }]
-  }
-*/
-router.get('/all', async (req, res) => {
-  if (!req.session.user.admin) {
-    return res.status(401).json({
-      errors: [
-        {
-          message: 'Neovlaštena radnja',
-        },
-      ],
-    });
-  }
-
-  await getAllUsers()
-    .then((users) => {
-      return res.json({
-        data: {
-          users,
-        },
-      });
-    })
-    .catch((err) => {
-      console.log(err);
     });
 });
 
