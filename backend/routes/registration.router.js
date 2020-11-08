@@ -144,15 +144,10 @@ router.post(
         })
       ),
     // Name field must consists of letters
-    body('data.firstname')
-      .not()
-      .isEmpty()
-      .withMessage('Ime je prazno')
-      .isAlpha()
-      .withMessage('Ime nije ispravno'),
+    body('data.firstname').not().isEmpty().withMessage('Ime je prazno'),
 
-    // Surname field must consists of letters
-    body('data.lastname').isAlpha(),
+    // Name field must consists of letters
+    body('data.lastname').not().isEmpty().withMessage('Prezime je prazno'),
 
     // Credit card must consists of 16 numbers
     body('data.creditCardNumber')
