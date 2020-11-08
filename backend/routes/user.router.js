@@ -197,8 +197,23 @@ router.get('/:id', async (req, res) => {
   If user is admin, this will return with status 200 and:
   {
     data: {
-      clients[],
-      companies[]
+      clients: { 
+        id: integer,
+        email: string,
+        OIB: string,
+        admin: boolean
+        ime: string,
+        prezime: string,
+        brojKartice: string 
+      }[],
+      companies:{
+        id: integer,
+        email: string,
+        OIB: string,
+        admin: boolean,
+        naziv: string,
+        adresa: string
+      }[]
     }
   }
 
@@ -209,7 +224,7 @@ router.get('/:id', async (req, res) => {
     }]
   }
 */
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
   if (!req.session.user.admin) {
     return res.status(401).json({
       errors: [
