@@ -6,6 +6,19 @@ const Tvrtka = require('../models/Tvrtka');
 const { body, validationResult } = require('express-validator');
 const { hashPassword } = require('../utils/password');
 
+/*router.use(
+  expressValidator({
+    errorFormatter: function (param, msg, value) {
+      return {
+        value,
+        message: msg,
+        param,
+        location,
+      };
+    },
+  })
+);*/
+
 // Will create a Racun model
 const createAccount = async ({ email, oib, password }) => {
   const user = await Racun.create({
@@ -167,7 +180,16 @@ router.post(
       ),
   ],
   async (req, res, next) => {
-    const errors = validationResult(req);
+    const errors = validationResult.withDefaults({
+      formatter: (error) => {
+        return {
+          value: error.value,
+          message: error.msg,
+          param: error.param,
+          location: error.location,
+        };
+      },
+    })(req);
 
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -286,7 +308,16 @@ router.post(
     body('data.adress').not().isEmpty().withMessage('Adresa je prazna'),
   ],
   async (req, res, next) => {
-    const errors = validationResult(req);
+    const errors = validationResult.withDefaults({
+      formatter: (error) => {
+        return {
+          value: error.value,
+          message: error.msg,
+          param: error.param,
+          location: error.location,
+        };
+      },
+    })(req);
 
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
