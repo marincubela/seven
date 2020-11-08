@@ -111,7 +111,7 @@ export function RegistrationFormCompany() {
               <Input
                 ref={register({
                   required: 'Lozinka je obavezna',
-                  validate: (value) => value === watch('register-company-password'),
+                  validate: (value) => value === watch('register-company-password') || 'Lozinke nisu jednake',
                 })}
                 isInvalid={errors['register-company-password-repeat']}
                 name="register-company-password-repeat"
@@ -185,7 +185,7 @@ export function RegistrationFormCompany() {
 
           <Text color="error.500">{errorMessage}</Text>
 
-          <Button type="submit" variant="solid" w="100%">
+          <Button type="submit" variant="solid">
             Registracija
           </Button>
         </VStack>
