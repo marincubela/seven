@@ -3,16 +3,19 @@ const BASE_URL =
 
 const defaultHeaders = {
   'Content-Type': 'application/json',
+  'Access-Control-Allow-Credentials': 'true',
 };
 
 export const baseFetch = (endpoint, fetchOptions) => {
-  return fetch(`${BASE_URL}${endpoint}`, fetchOptions).then(async (res) => {
-    if (res.status >= 400) {
-      return Promise.reject(await res.json());
-    }
+  return fetch(`${BASE_URL}${endpoint}`, Object.assign({}, { credentials: 'include' }, fetchOptions)).then(
+    async (res) => {
+      if (res.status >= 400) {
+        return Promise.reject(await res.json());
+      }
 
-    return Promise.resolve(await res.json());
-  });
+      return Promise.resolve(await res.json());
+    },
+  );
 };
 
 export const get = (endpoint, fetchOptions = {}) => {
