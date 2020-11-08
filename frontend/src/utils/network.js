@@ -36,3 +36,12 @@ export const post = (endpoint, body = {}, fetchOptions = {}) => {
 
   return baseFetch(endpoint, reqOptions);
 };
+
+export const destroy = (endpoint, fetchOptions = {}) => {
+  const reqOptions = Object.assign({}, fetchOptions, {
+    method: 'DELETE',
+    headers: Object.assign({}, defaultHeaders, fetchOptions.headers),
+  });
+
+  return baseFetch(endpoint, reqOptions);
+};

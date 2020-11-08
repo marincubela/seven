@@ -8,7 +8,7 @@ import { EMAIL_REGEX } from '../../utils/constants';
 import { useStore } from '../../store/StoreProvider';
 
 export function LoginForm() {
-  const { store } = useStore();
+  const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
   const { handleSubmit, register, errors } = useForm({
     mode: 'onBlur',
