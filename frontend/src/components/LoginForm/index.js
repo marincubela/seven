@@ -58,7 +58,7 @@ export function LoginForm() {
               })}
               isInvalid={errors['login-email']}
               name="login-email"
-              placeholder="Tvoja email adresa"
+              placeholder="Vaša email adresa"
             />
             {errors['login-email'] ? (
               <Text color="error.500" fontSize="sm">
@@ -75,7 +75,7 @@ export function LoginForm() {
               })}
               isInvalid={errors['login-password']}
               name="login-password"
-              placeholder="Tvoja lozinka"
+              placeholder="Vaša lozinka"
               type="password"
             />
             {errors['login-password'] ? (

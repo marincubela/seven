@@ -1,9 +1,10 @@
 import { Box, Center, Text } from '@chakra-ui/core';
+import { observer } from 'mobx-react';
 import React from 'react';
 
 import { Navigation } from '../components/Navigation';
 
-export function Error() {
+export const Error = observer(() => {
   return (
     <Center w="100vw" h="100vh" bgColor="blue.100">
       <Box>
@@ -12,4 +13,4 @@ export function Error() {
       </Box>
     </Center>
   );
-}
+});

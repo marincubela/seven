@@ -1,20 +1,18 @@
-import { Box, Text, HStack } from '@chakra-ui/core';
-import React from 'react';
+import { Box } from '@chakra-ui/core';
+import { observer } from 'mobx-react';
+import React, { Fragment } from 'react';
+import { Header } from '../components/Header';
 
-import { Navigation } from '../components/Navigation';
 import { RegistrationFormPerson } from '../components/RegistrationFormPerson';
 
-export function RegistrationPerson() {
+export const RegistrationPerson = observer(() => {
   return (
-    <Box marginX="auto" maxWidth="500px" paddingX="2">
-      <Box as="header" paddingY="4">
-        <HStack spacing="16">
-          <Text>Parkiraj me - login</Text>
-          <Navigation />
-        </HStack>
-      </Box>
+    <Fragment>
+      <Header />
 
-      <RegistrationFormPerson />
-    </Box>
+      <Box as="main" marginX="auto" maxWidth="500px" paddingX="2">
+        <RegistrationFormPerson />
+      </Box>
+    </Fragment>
   );
-}
+});

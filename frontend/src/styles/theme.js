@@ -25,6 +25,7 @@ const theme = {
     Link: {
       variants: {
         nav: {
+          fontSize: 'lg',
           '&[aria-current]': {
             fontWeight: 'bold',
           },
