@@ -1,8 +1,6 @@
 import React, { createContext, useContext } from 'react';
 
-const StoreContext = createContext({
-  store: undefined,
-});
+const StoreContext = createContext();
 
 export const useStore = () => {
   const storeContext = useContext(StoreContext);
@@ -10,6 +8,8 @@ export const useStore = () => {
   if (!storeContext) {
     throw new Error();
   }
+
+  window.store = storeContext.store;
 
   return storeContext.store;
 };

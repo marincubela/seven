@@ -1,7 +1,7 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 
 export class DataStore {
-  user = null;
+  user = undefined;
 
   constructor() {
     makeObservable(this, {
