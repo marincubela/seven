@@ -14,14 +14,16 @@ import {
 } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { EMAIL_REGEX } from '../../utils/constants';
 import { post } from '../../utils/network';
 
 export function RegistrationFormPerson() {
   const [errorMessage, setErrorMessage] = useState('');
-  const { register, errors, handleSubmit, watch } = useForm();
+  const { register, errors, handleSubmit, watch, control } = useForm();
   const history = useHistory();
+
+  console.log(errors);
 
   function onRegisterUser(formData) {
     const requestBody = {
@@ -31,6 +33,7 @@ export function RegistrationFormPerson() {
         lastname: formData['register-user-lastname'],
         password: formData['register-user-password'],
         oib: formData['register-user-oib'],
+        creditCardNumber: formData['register-user-credit-card'],
       },
     };
 
@@ -53,7 +56,7 @@ export function RegistrationFormPerson() {
       </Heading>
 
       <form onSubmit={handleSubmit(onRegisterUser)}>
-        <VStack flex="1" align="stretch">
+        <VStack flex="1" align="stretch" marginY="8" spacing="4">
           <HStack align="stretch">
             <VStack flex="1" align="baseline">
               <Text as="label">Ime</Text>
@@ -183,34 +186,55 @@ export function RegistrationFormPerson() {
 
             <VStack>
               <HStack spacing="0">
-                <PinInput size="1em" variant="filled" placeholder="•">
-                  <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
-                  <PinInputField />
-                  <PinInputField />
-                  <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
+                <Controller
+                  name="register-user-credit-card"
+                  rules={{
+                    required: 'Broj kartice je obavezan',
+                    validate: (value) => value.length === 16 || 'Broj kartice mora sadržavati točno 16 brojeva',
+                  }}
+                  control={control}
+                  render={({ onChange, onBlur }) => (
+                    <PinInput
+                      size="1em"
+                      variant="filled"
+                      placeholder="•"
+                      onChange={onChange}
+                      isInvalid={errors['register-user-credit-card']}
+                    >
+                      <PinInputField onBlur={onBlur} data-end="left" />
+                      <PinInputField onBlur={onBlur} />
+                      <PinInputField onBlur={onBlur} />
+                      <PinInputField onBlur={onBlur} data-end="right" />
 
-                  <Divider orientation="vertical" width="80%" />
+                      <Divider orientation="vertical" width="80%" />
 
-                  <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
-                  <PinInputField />
-                  <PinInputField />
-                  <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
+                      <PinInputField onBlur={onBlur} data-end="left" />
+                      <PinInputField onBlur={onBlur} />
+                      <PinInputField onBlur={onBlur} />
+                      <PinInputField onBlur={onBlur} data-end="right" />
 
-                  <Divider orientation="vertical" width="80%" />
+                      <Divider orientation="vertical" width="80%" />
 
-                  <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
-                  <PinInputField />
-                  <PinInputField />
-                  <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
+                      <PinInputField onBlur={onBlur} data-end="left" />
+                      <PinInputField onBlur={onBlur} />
+                      <PinInputField onBlur={onBlur} />
+                      <PinInputField onBlur={onBlur} data-end="right" />
 
-                  <Divider orientation="vertical" width="80%" />
+                      <Divider orientation="vertical" width="80%" />
 
-                  <PinInputField sx={{ borderBottomLeftRadius: 'base', borderTopLeftRadius: 'base' }} />
-                  <PinInputField />
-                  <PinInputField />
-                  <PinInputField sx={{ borderBottomRightRadius: 'base', borderTopRightRadius: 'base' }} />
-                </PinInput>
+                      <PinInputField onBlur={onBlur} data-end="left" />
+                      <PinInputField onBlur={onBlur} />
+                      <PinInputField onBlur={onBlur} />
+                      <PinInputField onBlur={onBlur} data-end="right" />
+                    </PinInput>
+                  )}
+                />
               </HStack>
+              {errors['register-user-credit-card'] ? (
+                <Text color="error.500" fontSize="sm" alignSelf="flex-start">
+                  {errors['register-user-credit-card'].message}
+                </Text>
+              ) : null}
             </VStack>
           </VStack>
 
