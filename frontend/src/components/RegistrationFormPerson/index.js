@@ -23,8 +23,6 @@ export function RegistrationFormPerson() {
   const { register, errors, handleSubmit, watch, control } = useForm();
   const history = useHistory();
 
-  console.log(errors);
-
   function onRegisterUser(formData) {
     const requestBody = {
       data: {
