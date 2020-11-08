@@ -2,6 +2,7 @@ require('dotenv-flow').config();
 
 const express = require('express');
 const cors = require('cors');
+const dotenv = require('dotenv').config();
 
 // Routers
 const sessionRouter = require('./routes/session.router');

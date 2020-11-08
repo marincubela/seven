@@ -1,10 +1,12 @@
-const { hashPassword } = require('../utils/password');
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-const router = express.Router();
+
 const Racun = require('../models/Racun');
 const Klijent = require('../models/Klijent');
 const Tvrtka = require('../models/Tvrtka');
+const { hashPassword } = require('../utils/password');
+
+const router = express.Router();
 
 /*router.use(
   expressValidator({
@@ -181,12 +183,12 @@ router.post(
   ],
   async (req, res, next) => {
     const errors = validationResult.withDefaults({
-      formatter: (error) => {
+      formatter: ({ value, msg, param, location }) => {
         return {
-          value: error.value,
-          message: error.msg,
-          param: error.param,
-          location: error.location,
+          value,
+          message: msg,
+          param,
+          location,
         };
       },
     })(req);
@@ -304,17 +306,17 @@ router.post(
       .isEmpty()
       .withMessage('Ime tvrtke je prazno'),
 
-    // Adress field is required
+    // Address field is required
     body('data.address').not().isEmpty().withMessage('Adresa je prazna'),
   ],
   async (req, res, next) => {
     const errors = validationResult.withDefaults({
-      formatter: (error) => {
+      formatter: ({ value, msg, param, location }) => {
         return {
-          value: error.value,
-          message: error.msg,
-          param: error.param,
-          location: error.location,
+          value,
+          message: msg,
+          param,
+          location,
         };
       },
     })(req);

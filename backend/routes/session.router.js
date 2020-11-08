@@ -84,13 +84,22 @@ router.post(
   '/',
   [
     // email field needs to be an email
-    body('data.email').isEmail(),
+    body('data.email').isEmail().withMessage('Email nije ispravan'),
 
     // password field is required
-    body('data.password').not().isEmpty(),
+    body('data.password').not().isEmpty().withMessage('Lozinka je prazna'),
   ],
   async (req, res, next) => {
-    const errors = validationResult(req);
+    const errors = validationResult.withDefaults({
+      formatter: ({ value, msg, param, location }) => {
+        return {
+          value,
+          message: msg,
+          param,
+          location,
+        };
+      },
+    })(req);
 
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
