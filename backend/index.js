@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(corsMiddleware);
 
 // Session middleware
-app.use(sessionMiddleware);
+app.use(sessionMiddleware(app));
 
 app.use('/session', sessionRouter);
 app.use('/user', userRouter);
