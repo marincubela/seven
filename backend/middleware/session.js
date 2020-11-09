@@ -17,6 +17,6 @@ module.exports = session({
   name: 'pm-session',
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
-    secure: process.env.NODE_ENV === 'production', // set secure cookie for production env only -> production means that it is deployed
+    // secure: process.env.NODE_ENV === 'production', // set secure cookie for production env only -> production means that it is deployed
   },
 });
