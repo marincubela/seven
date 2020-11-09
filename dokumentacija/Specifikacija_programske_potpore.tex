@@ -777,43 +777,44 @@
 	\end{packed_enum}
 \end{packed_item}
 
-\noindent \underbar{\textbf{UC\showuccounter - Rezervacija parkinga}}
+\noindent \underbar{\textbf{UC\showuccounter - Rezervacija parkirališnog mjesta}}
 \begin{packed_item}
 	
 	\item \textbf{Glavni sudionik:} Klijent
-	\item  \textbf{Cilj:} Rezervirati parkirno mjesto na parkiralištu
+	\item  \textbf{Cilj:} Rezervirati parkirališno mjesto na parkiralištu
 	\item  \textbf{Sudionici:} Baza podataka
-	\item  \textbf{Preduvjet:} Klijent je prijavljen
+	\item  \textbf{Preduvjet:} UC2
 	\item  \textbf{Opis osnovnog tijeka:}
 	
 	\item[] \begin{packed_enum}
 		
-		\item Klijent na mapi odabire željeno parkiralište
-		\item Prikažu se podaci o parkiralištu
 		\item Klijent odabire opciju rezervacije parkirnog mjesta
 		\item Klijenta se preusmjerava na plaćanje
-		\item Klijent unosi podatke o plaćanju
-		\item Klijent se preusmjerava na kartu s uputama do parkirališta za koje je platio rezervaciju
+		\item Klijent potvrđuje plaćanje
+		\item Klijnta se tereti za navedeni iznos
+		\item Prikazuje se poruka o uspješnom plaćanju
+		\item Klijenta se preusmjerava na kartu
 		
 	\item  \textbf{Opis mogućih odstupanja:}
 	
 	\item[] \begin{packed_item}
 		
-		\item[3.a] Nema slobodnih parkirnih mjesta
+		\item[1.a] Nema slobodnih parkirališnih mjesta
 		\item[] \begin{packed_enum}
 			
-			\item Klijenta se obavještava porukom o zauzetosti parkinga
-			\item Klijentu se osvježe stanja parkinga
+			\item Klijenta se obavještava porukom o zauzetosti parkirališta
+			\item Klijentu se osvježa stanje parkirališta
 			\item Klijenta se vraća na kartu s parkiralištima
 			
 		\end{packed_enum}
 		
-		\item[4.a] Nevažeći podaci o plaćanju ili nedovoljno novca na kartici
+		\item[3.a] Nevažeći podaci o plaćanju ili nedovoljno sredstava na kartici
 		\item[] \begin{packed_enum}
 			
 			\item Klijenta se obavještava porukom o neuspjelom plaćanju
-			\item Klijentu se ponovno pokazuje forma za plaćanje
-			\item Klijent unosi nove podatke ili odabire drugu karticu
+			\item Klijenta se preusmjerava na podatke o računu
+			\item Klijent ažurira podatke o kartici
+			\item Klijenta se preusmjerava na kartu
 			
 		\end{packed_enum}
 		
