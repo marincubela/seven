@@ -17,6 +17,7 @@ module.exports = session({
   name: 'pm-session',
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
-    sameSite: 'none',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : undefined,
+    secure: process.env.NODE_ENV === 'production',
   },
 });
