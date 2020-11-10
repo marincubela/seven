@@ -15,10 +15,13 @@ import {
 import React, { useState } from 'react';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
+
 import { EMAIL_REGEX } from '../../utils/constants';
 import { post } from '../../utils/network';
+import { useStore } from '../../store/StoreProvider';
 
 export function RegistrationFormPerson() {
+  const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
   const { register, errors, handleSubmit, watch, control } = useForm();
   const history = useHistory();
@@ -38,6 +41,8 @@ export function RegistrationFormPerson() {
     post('registration/user', requestBody)
       .then((res) => {
         if (res.data && res.data.user) {
+          store.setCurrentUser(res.data.user);
+
           history.replace('/');
         }
       })
