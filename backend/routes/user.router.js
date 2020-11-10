@@ -1,4 +1,5 @@
 const express = require('express');
+const { param, validationResult } = require('express-validator');
 
 const Racun = require('../models/Racun');
 const Klijent = require('../models/Klijent');
@@ -87,8 +88,25 @@ const getUserById = async (id) => {
 /*
   Returns all users 
   {
-    clients: [],
-    companies: [],
+    data: {
+      clients: { 
+        id: integer,
+        email: string,
+        OIB: string,
+        admin: boolean
+        ime: string,
+        prezime: string,
+        brojKartice: string 
+      }[],
+      companies:{
+        id: integer,
+        email: string,
+        OIB: string,
+        admin: boolean,
+        naziv: string,
+        adresa: string
+      }[]
+    }
   }
 */
 const getAllUsers = async () => {
@@ -180,7 +198,7 @@ router.get('/all', async (req, res) => {
     });
 });
 
-/**
+/*
   This endpoint will return a user with a given id
 
   If user is logged, this will retun with status 200 and:
@@ -222,30 +240,49 @@ router.get('/all', async (req, res) => {
   ]
   }
 */
-router.get('/:id', async (req, res) => {
-  if (!(req.session.user.admin || req.session.user.id == req.params.id)) {
-    return res.status(401).json({
-      errors: [
-        {
-          message: 'Neovlaštena radnja',
-        },
-      ],
-    });
-  }
+router.get(
+  '/:id',
+  [param('id').isInt().withMessage('Traženi korisnik ne postoji.')],
+  async (req, res) => {
+    const errors = validationResult.withDefaults({
+      formatter: ({ value, msg, param, location }) => {
+        return {
+          value,
+          message: msg,
+          param,
+          location,
+        };
+      },
+    })(req);
 
-  await getUserById(req.params.id)
-    .then(({ user }) => {
-      return res.json({
-        data: {
-          user,
-        },
+    if (!errors.isEmpty()) {
+      return res.status(404).json({ errors: errors.array() });
+    }
+
+    if (!(req.session.user.admin || req.session.user.id == req.params.id)) {
+      return res.status(401).json({
+        errors: [
+          {
+            message: 'Neovlaštena radnja',
+          },
+        ],
       });
-    })
-    .catch(({ errors, status }) => {
-      return res.status(status).json({
-        errors,
+    }
+
+    await getUserById(req.params.id)
+      .then(({ user }) => {
+        return res.json({
+          data: {
+            user,
+          },
+        });
+      })
+      .catch(({ errors, status }) => {
+        return res.status(status).json({
+          errors,
+        });
       });
-    });
-});
+  }
+);
 
 module.exports = router;
