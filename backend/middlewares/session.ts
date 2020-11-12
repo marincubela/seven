@@ -1,7 +1,7 @@
-const session = require('express-session');
+import session from 'express-session';
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const { db } = require('../db/connect');
+import { db } from '../db/connect';
 
 const sessionStore = new SequelizeStore({
   db,
