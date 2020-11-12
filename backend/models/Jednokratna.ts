@@ -1,10 +1,27 @@
-import Sequelize from 'sequelize';
+import Sequelize, { Model } from 'sequelize';
 
 import { db } from '../db/connect';
 import { Rezervacija } from './Rezervacija.js';
 
-const Jednokratna = db.define(
-  'jednokratna',
+interface IJednokratnaAtrributes {
+  idJednokratna: number;
+  vrijemePocetak: Date;
+  vrijemeKraj: Date;
+}
+
+export class Jednokratna extends Model<
+  IJednokratnaAtrributes,
+  Omit<IJednokratnaAtrributes, 'idJednokratna'>
+> {
+  public idJednokratna!: number;
+  public vrijemePocetak!: Date;
+  public vrijemeKraj!: Date;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+Jednokratna.init(
   {
     idJednokratna: {
       type: Sequelize.DataTypes.INTEGER,
@@ -19,16 +36,15 @@ const Jednokratna = db.define(
     },
   },
   {
+    sequelize: db,
     tableName: 'Jednokratna',
   }
 );
 
 Jednokratna.belongsTo(Rezervacija, {
-  foreignKey: 'rezervacijaId',
+  foreignKey: 'idRezervacija',
 });
 
 Jednokratna.sync().then(() => {
   console.log('Napravljena jednokratna rezervacija');
 });
-
-export default Jednokratna;

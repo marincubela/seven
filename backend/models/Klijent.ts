@@ -1,10 +1,29 @@
-import Sequelize from 'sequelize';
+import Sequelize, { Model } from 'sequelize';
 
 import { db } from '../db/connect';
 import { Racun } from './Racun';
 
-export const Klijent = db.define(
-  'klijent',
+interface IKlijentAtrributes {
+  idKlijent: number;
+  ime: string;
+  prezime: string;
+  brojKartice: string;
+}
+
+export class Klijent extends Model<
+  IKlijentAtrributes,
+  Omit<IKlijentAtrributes, 'idJednokratna'>
+> {
+  public idKlijent!: number;
+  public ime!: string;
+  public prezime!: string;
+  public brojKartice!: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+Klijent.init(
   {
     idKlijent: {
       type: Sequelize.DataTypes.INTEGER,
@@ -25,6 +44,7 @@ export const Klijent = db.define(
     },
   },
   {
+    sequelize: db,
     tableName: 'Klijent',
   }
 );
