@@ -785,26 +785,26 @@
 \subsection{Sekvencijski dijagrami}
 
 \textbf{Obrazac uporabe UC4 - Registracija korisnika}\newline
-Korisnik šalje zahtjev za registraciju. Poslužitelj prikazuje formu za popunjavanje korisničkih podataka. Korisnik unosi tražene podatke. U slučaju da neki od traženih podataka nisu validni (podatci nisu uneseni ili su uneseni neispravno) poslužitelj prikazuje odgovarajuću poruku za pojedini podatak korisnika.Ako su podatci validni, a nisu važeći (već postoji korisnik s istom e-mail adresom ili s istim OIB-om ????) poslužitelj prikazuje korisniku poruku o neuspjeloj registraciji. Ako su podatci važeći poslužitelj prikazuje poruku o uspješnoj registraciji te ga automatski prijavljuje u aplikaciju.\newline
+Korisnik šalje zahtjev za registraciju. Poslužitelj prikazuje formu za popunjavanje korisničkih podataka. Korisnik unosi tražene podatke. U slučaju da neki od traženih podataka nisu validni (podaci nisu uneseni ili su uneseni neispravno) poslužitelj prikazuje odgovarajuću poruku za pojedini podatak korisnika. Ako su podaci validni, a nisu važeći (već postoji korisnik s istom e-mail adresom ili OIB-om ili brojem kartice) poslužitelj prikazuje korisniku poruku o neuspjeloj registraciji. Ako su podaci važeći poslužitelj prikazuje poruku o uspješnoj registraciji te ga automatski prijavljuje u aplikaciju.\newline
 \begin{figure}[H]
 	\includegraphics[width=1\linewidth]{dijagrami/UC4 - Registracija korisnika.png} %veličina u odnosu na širinu linije
 	\caption{Sekvencijski dijagram za UC4}
 	\label{fig:promjene2} %label mora biti drugaciji za svaku sliku
 \end{figure}
 \pagebreak
-\textbf{Obrazac uporabe UC27 - Rezervacija parkirališnog mjesta}\newline
+\textbf{Obrazac uporabe UC8 - Rezervacija parkirališnog mjesta}\newline
 Klijent šalje zahtjev za prikaz karte s parkiralištima. Poslužitelj dohvaća i prikazuje prijavljena parkirališta. Odabirom parkirališta, poslužitelj iz baze podataka dohvaća osnovne podatke o parkiralištu i prikazuje ih korisniku. Kako bi obavio rezervaciju parkirališnog mjesta, klijent šalje zahtjev s tipom rezervacije i potrebne informacije vezane za rezervaciju. Poslužitelj provjerava ispravnost primljenih podatka o odabranoj rezervaciji te iz baze podataka dohvaća i provjera postoji li slobodno mjesto za traženi period na parkiralištu. Ukoliko nema slobodnih parkirališnih mjesta, sustav obavještava o tome klijenta. Ako postoji slobodno mjesto, proces rezervacije se nastavlja te se klijentu prikazuje sažetak rezervacije. Klijent tada potvrđuje plaćanje, ako kartica nema dovoljno sredstva na računu poslužitelj obavještava klijenta o neuspjelom plaćanju i vraća ga na prikaz karte. U slučaju da kartica ima dovoljno sredstva, sredstva se skidaju izravnim terećenjem. Rezervacija je završena i poslužitelj informaciju o rezervaciji prosljeđuje bazi koja sprema promjenu.\newline
 \begin{figure}[H]
-	\includegraphics[width=1\linewidth]{dijagrami/UC27-Rezervacija parkirališnog mjesta.png} %veličina u odnosu na širinu linije
-	\caption{Sekvencijski dijagram za UC27}
+	\includegraphics[width=1\linewidth]{dijagrami/UC8-Rezervacija parkirališnog mjesta.png} %veličina u odnosu na širinu linije
+	\caption{Sekvencijski dijagram za UC8}
 	\label{fig:promjene2} %label mora biti drugaciji za svaku sliku
 \end{figure}
 \pagebreak
-\textbf{Obrazac uporabe UC28 - Upute do parkirališta}\newline
+\textbf{Obrazac uporabe UC9 - Upute do parkirališta}\newline
 Klijent šalje zahtjev za prikaz karte s parkiralištima. Poslužitelj dohvaća i prikazuje prijavljena parkirališta. Klijent odabire parkiralište do kojeg želi doći. Odabirom parkirališta, poslužitelj iz baze podataka dohvaća osnovne podatke o parkiralištu i prikazuje ih korisniku. Klijent šalje zahtjev za navigaciju do parkirališta. Poslužitelj otvara navigaciju te klijent dobiva upute kako doći do željenog parkirališta.
 \begin{figure}[H]
-	\includegraphics[width=1\linewidth]{dijagrami/UC28 - Upute do parkirališta.png} %veličina u odnosu na širinu linije
-	\caption{Sekvencijski dijagram za UC28}
+	\includegraphics[width=1\linewidth]{dijagrami/UC9 - Upute do parkirališta.png} %veličina u odnosu na širinu linije
+	\caption{Sekvencijski dijagram za UC9}
 	\label{fig:promjene2} %label mora biti drugaciji za svaku sliku
 \end{figure}
 \eject
