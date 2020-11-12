@@ -61,15 +61,15 @@ Parkiraliste.init(
       allowNull: false,
     },
     cijenaJednokratne: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: Sequelize.DataTypes.DECIMAL,
       allowNull: false,
     },
     cijenaPonavljajuce: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: Sequelize.DataTypes.DECIMAL,
       allowNull: false,
     },
     cijenaTrajne: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: Sequelize.DataTypes.DECIMAL,
       allowNull: false,
     },
   },

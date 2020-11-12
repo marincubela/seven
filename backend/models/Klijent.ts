@@ -12,7 +12,7 @@ interface IKlijentAtrributes {
 
 export class Klijent extends Model<
   IKlijentAtrributes,
-  Omit<IKlijentAtrributes, 'idJednokratna'>
+  Omit<IKlijentAtrributes, 'idKlijent'>
 > {
   public idKlijent!: number;
   public ime!: string;

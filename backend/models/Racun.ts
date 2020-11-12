@@ -4,14 +4,13 @@ import { db } from '../db/connect';
 import { Klijent } from './Klijent';
 import { Tvrtka } from './Tvrtka';
 
-interface IRacunAttributes {
+export interface IRacunAttributes {
   idRacun: number;
   email: string;
   OIB: string;
   admin: boolean;
   lozinka: string;
 }
-
 export class Racun extends Model<
   IRacunAttributes,
   Omit<IRacunAttributes, 'id'>
