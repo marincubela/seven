@@ -1,10 +1,10 @@
-const express = require('express');
-const { body, validationResult } = require('express-validator');
+import express from 'express';
+import { body, validationResult } from 'express-validator';
 
-const Racun = require('../models/Racun');
-const Klijent = require('../models/Klijent');
-const Tvrtka = require('../models/Tvrtka');
-const { hashPassword } = require('../utils/password');
+import { Racun } from '../models/Racun';
+import { Klijent } from '../models/Klijent';
+import { Tvrtka } from '../models/Tvrtka';
+import { hashPassword } from '../utils/password';
 
 export const registrationRouter = express.Router();
 
