@@ -1,10 +1,39 @@
-import Sequelize from 'sequelize';
+import Sequelize, { Model } from 'sequelize';
 
 import { db } from '../db/connect';
 import { Tvrtka } from './Tvrtka.js';
 
-export const Parkiraliste = db.define(
-  'Parkiraliste',
+interface IParkiralisteAtrributes {
+  idParkiralista: number;
+  nazivParkiralista: string;
+  brojMjesta: number;
+  brojInvalidskihMjesta: number;
+  tipParkiralista: string;
+  koordinate: string;
+  cijenaJednokratne: number;
+  cijenaPonavljajuce: number;
+  cijenaTrajne: number;
+}
+
+export class Parkiraliste extends Model<
+  IParkiralisteAtrributes,
+  Omit<IParkiralisteAtrributes, 'idParkiralista'>
+> {
+  idParkiralista!: number;
+  nazivParkiralista!: string;
+  brojMjesta!: number;
+  brojInvalidskihMjesta!: number;
+  tipParkiralista!: string;
+  koordinate!: string;
+  cijenaJednokratne!: number;
+  cijenaPonavljajuce!: number;
+  cijenaTrajne!: number;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+Parkiraliste.init(
   {
     idParkiralista: {
       type: Sequelize.DataTypes.INTEGER,
@@ -45,7 +74,8 @@ export const Parkiraliste = db.define(
     },
   },
   {
-    tableName: 'Parkiraliste',
+    sequelize: db,
+    tableName: 'Klijent',
   }
 );
 
