@@ -1,31 +1,50 @@
-import Sequelize from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 import { db } from '../db/connect';
 import { Racun } from './Racun';
 
-export const Tvrtka = db.define(
-  'tvrtka',
+interface ITrajnaAttributes {
+  idTvrtka: number;
+  naziv: string;
+  adresa: string;
+}
+export class Tvrtka extends Model<
+  ITrajnaAttributes,
+  Omit<ITrajnaAttributes, 'id'>
+> {
+  public idTvrtka!: number;
+  public naziv!: string;
+  public adresa!: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+Tvrtka.init(
   {
     idTvrtka: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     naziv: {
-      type: Sequelize.DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     adresa: {
-      type: Sequelize.DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },
   {
+    sequelize: db,
     tableName: 'Tvrtka',
   }
 );
 
-Tvrtka.belongsTo(Racun);
+Tvrtka.belongsTo(Racun, {
+  foreignKey: 'idRacun',
+});
 
 Tvrtka.sync().then(() => {
   console.log('Napravljena tvrtka');

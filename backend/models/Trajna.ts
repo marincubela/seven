@@ -16,6 +16,9 @@ export class Trajna extends Model<
   public idTrajna!: number;
   public vrijemePocetak!: Date;
   public vrijemeKraj!: Date;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
 Trajna.init(
@@ -39,7 +42,7 @@ Trajna.init(
 );
 
 Trajna.belongsTo(Rezervacija, {
-  foreignKey: 'rezervacijaId',
+  foreignKey: 'idRezervacija',
 });
 
 Trajna.sync().then(() => {
