@@ -1,6 +1,8 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, Association } from 'sequelize';
 
 import { db } from '../db/connect';
+import { Klijent } from './Klijent';
+import { Tvrtka } from './Tvrtka';
 
 interface IRacunAttributes {
   idRacun: number;
@@ -22,12 +24,20 @@ export class Racun extends Model<
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public readonly klijent?: Klijent;
+  public readonly tvrtka?: Tvrtka;
+
+  public static associations: {
+    klijent: Association<Racun, Klijent>;
+    tvrtka: Association<Racun, Tvrtka>;
+  };
 }
 
 Racun.init(
   {
     idRacun: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
@@ -56,6 +66,18 @@ Racun.init(
     tableName: 'Racun',
   }
 );
+
+Racun.hasOne(Klijent, {
+  sourceKey: 'idRacun',
+  foreignKey: 'idKlijent',
+  as: 'klijent',
+});
+
+Racun.hasOne(Tvrtka, {
+  sourceKey: 'idRacun',
+  foreignKey: 'idTvrtka',
+  as: 'tvrtka',
+});
 
 // TODO: extract to separate file
 Racun.sync().then(() => {
