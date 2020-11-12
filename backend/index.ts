@@ -1,15 +1,15 @@
 require('dotenv-flow').config();
 
-const express = require('express');
+import express from 'express';
 
 // Routers
-const sessionRouter = require('./routes/session.router');
-const userRouter = require('./routes/user.router');
-const registrationRouter = require('./routes/registration.router');
+import { sessionRouter } from './routes/session.router';
+import { userRouter } from './routes/user.router';
+import { registrationRouter } from './routes/registration.router';
 
 // Middlewares
-const sessionMiddleware = require('./middleware/session');
-const corsMiddleware = require('./middleware/cors');
+import { sessionMiddleware } from './middleware/session';
+import { corsMiddleware } from './middleware/cors';
 
 const app = express();
 

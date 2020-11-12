@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
-const db = require('../db/connect.js');
-const Rezervacija = require('./Rezervacija.js');
+import { db } from '../db/connect';
+import { Rezervacija } from './Rezervacija.js';
 
 const Jednokratna = db.define(
   'jednokratna',
@@ -31,4 +31,4 @@ Jednokratna.sync().then(() => {
   console.log('Napravljena jednokratna rezervacija');
 });
 
-module.exports = Jednokratna;
+export default Jednokratna;

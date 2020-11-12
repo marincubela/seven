@@ -1,9 +1,9 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
-const db = require('../db/connect.js');
-const Racun = require('./Racun.js');
+import { db } from '../db/connect';
+import { Racun } from './Racun';
 
-const Tvrtka = db.define(
+export const Tvrtka = db.define(
   'tvrtka',
   {
     idTvrtka: {
@@ -30,5 +30,3 @@ Tvrtka.belongsTo(Racun);
 Tvrtka.sync().then(() => {
   console.log('Napravljena tvrtka');
 });
-
-module.exports = Tvrtka;

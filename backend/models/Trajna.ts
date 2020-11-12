@@ -1,9 +1,9 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
-const db = require('../db/connect.js');
-const Rezervacija = require('./Rezervacija.js');
+import { db } from '../db/connect';
+import { Rezervacija } from './Rezervacija.js';
 
-const Trajna = db.define(
+export const Trajna = db.define(
   'trajna',
   {
     idTrajna: {
@@ -30,5 +30,3 @@ Trajna.belongsTo(Rezervacija, {
 Trajna.sync().then(() => {
   console.log('Napravljena trajna rezervacija');
 });
-
-module.exports = Trajna;

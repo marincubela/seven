@@ -6,9 +6,9 @@ const Klijent = require('../models/Klijent');
 const Tvrtka = require('../models/Tvrtka');
 const { hashPassword } = require('../utils/password');
 
-const router = express.Router();
+export const registrationRouter = express.Router();
 
-/*router.use(
+/*registrationRouter.use(
   expressValidator({
     errorFormatter: function (param, msg, value) {
       return {
@@ -33,7 +33,7 @@ const createAccount = async ({ email, oib, password }) => {
   return user;
 };
 
-//Will create a Tvrtka model
+// Will create a Tvrtka model
 const createCompany = async ({ companyName, address, racunId }) => {
   const company = await Tvrtka.create({
     naziv: companyName,
@@ -42,7 +42,7 @@ const createCompany = async ({ companyName, address, racunId }) => {
   });
 };
 
-//Will create a Klijent model
+// Will create a Klijent model
 const createClient = async ({
   firstname,
   lastname,
@@ -57,7 +57,7 @@ const createClient = async ({
   });
 };
 
-let emailCheck = async (email) => {
+const emailCheck = async (email) => {
   const accountWithEmail = await Racun.findOne({
     where: {
       email,
@@ -67,7 +67,7 @@ let emailCheck = async (email) => {
   return Boolean(accountWithEmail);
 };
 
-let oibCheck = async (oib) => {
+const oibCheck = async (oib) => {
   const accountWithOIB = await Racun.findOne({
     where: {
       OIB: oib,
@@ -77,10 +77,10 @@ let oibCheck = async (oib) => {
   return Boolean(accountWithOIB);
 };
 
-let creditCardCheck = async (number) => {
+const creditCardCheck = async (cardNumber) => {
   const accountWithCardNumber = await Klijent.findOne({
     where: {
-      brojKartice: number,
+      brojKartice: cardNumber,
     },
   });
 
@@ -102,7 +102,7 @@ let creditCardCheck = async (number) => {
     }
   }
 
-  If registration is succesfull, this user is logged in and 
+  If registration is succesfull, this user is logged in and
   this will retun with status 200 and:
   {
     data: {
@@ -127,7 +127,7 @@ let creditCardCheck = async (number) => {
     ]
   }
 */
-router.post(
+registrationRouter.post(
   '/user',
   [
     // email field needs to be an email
@@ -206,7 +206,7 @@ router.post(
       password,
     } = req.body.data;
 
-    var user = await createAccount({ email, oib, password });
+    const user = await createAccount({ email, oib, password });
 
     await createClient({
       firstname,
@@ -243,7 +243,7 @@ router.post(
     }
   }
 
-  If registration is succesfull, this user is logged in and 
+  If registration is succesfull, this user is logged in and
   this will retun with status 201 and:
   {
     data: {
@@ -268,7 +268,7 @@ router.post(
     ]
   }
 */
-router.post(
+registrationRouter.post(
   '/company',
   [
     // email field needs to be an email
@@ -327,7 +327,7 @@ router.post(
 
     const { email, oib, companyName, password, address } = req.body.data;
 
-    var user = await createAccount({ email, oib, password });
+    const user = await createAccount({ email, oib, password });
 
     await createCompany({
       address,
@@ -348,5 +348,3 @@ router.post(
     });
   }
 );
-
-module.exports = router;
