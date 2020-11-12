@@ -17,7 +17,7 @@ export class Vozilo extends Model<
   public idVozilo!: number;
   public registracija!: string;
   public nazivVozila!: string;
-  public boja!: boolean;
+  public boja: boolean;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;

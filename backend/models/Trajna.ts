@@ -30,9 +30,11 @@ Trajna.init(
     },
     vrijemePocetak: {
       type: DataTypes.DATE,
+      allowNull: false,
     },
     vrijemeKraj: {
       type: DataTypes.DATE,
+      allowNull: false,
     },
   },
   {
