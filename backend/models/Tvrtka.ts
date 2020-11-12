@@ -3,14 +3,14 @@ import { Model, DataTypes } from 'sequelize';
 import { db } from '../db/connect';
 import { Racun } from './Racun';
 
-interface ITrajnaAttributes {
+interface ITvrtkaAttributes {
   idTvrtka: number;
   naziv: string;
   adresa: string;
 }
 export class Tvrtka extends Model<
-  ITrajnaAttributes,
-  Omit<ITrajnaAttributes, 'id'>
+  ITvrtkaAttributes,
+  Omit<ITvrtkaAttributes, 'id'>
 > {
   public idTvrtka!: number;
   public naziv!: string;
