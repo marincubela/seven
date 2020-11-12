@@ -10,8 +10,6 @@ interface IPonavljajucaAttributes {
   daniPonavljanja: IntegerDataType;
   vrijemePocetka: Date;
   vrijemeKraja: Date;
-
-
 }
 
 export class Ponavljajuca extends Model<
@@ -61,8 +59,6 @@ Ponavljajuca.init(
     tableName: 'Ponavljajuca',
   }
 );
-
-
 
 Ponavljajuca.belongsTo(Rezervacija, {
   foreignKey: 'rezervacijaId',

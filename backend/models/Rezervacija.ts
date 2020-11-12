@@ -20,18 +20,17 @@ export class Rezervacija extends Model<
 
 Rezervacija.init(
   {
-      idRezervacija: {
-        type: Sequelize.DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
+    idRezervacija: {
+      type: Sequelize.DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
   },
-    {
-      sequelize:db,
-      tableName: 'Rezervacija',
-    }
+  {
+    sequelize: db,
+    tableName: 'Rezervacija',
+  }
 );
-
 
 Rezervacija.belongsTo(Klijent, {
   foreignKey: 'klijentId',
