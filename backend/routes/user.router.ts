@@ -1,11 +1,11 @@
-const express = require('express');
-const { param, validationResult } = require('express-validator');
+import express from 'express';
+import { param, validationResult } from 'express-validator';
 
-const Racun = require('../models/Racun');
-const Klijent = require('../models/Klijent');
-const Tvrtka = require('../models/Tvrtka');
+import { Racun } from '../models/Racun';
+import { Klijent } from '../models/Klijent';
+import { Tvrtka } from '../models/Tvrtka';
 
-const router = express.Router();
+export const userRouter = express.Router();
 
 /*
   Returns a promise, resolves if user with given id exists, rejects if not
@@ -18,11 +18,11 @@ const router = express.Router();
 const getUserById = async (id) => {
   return new Promise(async (resolve, reject) => {
     // find account by id
-    const racun = await Racun.findOne({
+    const racun = (await Racun.findOne({
       where: {
         id,
       },
-    });
+    })) as any;
 
     // reject with status 400 if account doesn't exist
     if (!racun) {
@@ -42,14 +42,19 @@ const getUserById = async (id) => {
       email: racun.email,
       OIB: racun.OIB,
       admin: racun.admin,
+      ime: undefined,
+      prezime: undefined,
+      brojKartice: undefined,
+      naziv: undefined,
+      adresa: undefined,
     };
 
     // fetch client by account id
-    const klijent = await Klijent.findOne({
+    const klijent = (await Klijent.findOne({
       where: {
         racunId: racun.id,
       },
-    });
+    })) as any;
 
     // if client exists, resolve with clients data
     if (klijent) {
@@ -60,11 +65,11 @@ const getUserById = async (id) => {
     }
 
     // fetch company by account id
-    const tvrtka = await Tvrtka.findOne({
+    const tvrtka = (await Tvrtka.findOne({
       where: {
         racunId: racun.id,
       },
-    });
+    })) as any;
 
     // if company exists, resolve with companies data
     if (tvrtka) {
@@ -86,17 +91,17 @@ const getUserById = async (id) => {
 };
 
 /*
-  Returns all users 
+  Returns all users
   {
     data: {
-      clients: { 
+      clients: {
         id: integer,
         email: string,
         OIB: string,
         admin: boolean
         ime: string,
         prezime: string,
-        brojKartice: string 
+        brojKartice: string
       }[],
       companies:{
         id: integer,
@@ -112,9 +117,10 @@ const getUserById = async (id) => {
 const getAllUsers = async () => {
   return new Promise(async (resolve, reject) => {
     const numberOfAccounts = await Racun.count();
-    let i = 0,
-      id = 1;
-    var users = { clients: [], companies: [] };
+    let i = 0;
+    let id = 1;
+
+    const users = { clients: [], companies: [] };
 
     while (i < numberOfAccounts) {
       await getUserById(id)
@@ -147,14 +153,14 @@ const getAllUsers = async () => {
   If user is admin, this will return with status 200 and:
   {
     data: {
-      clients: { 
+      clients: {
         id: integer,
         email: string,
         OIB: string,
         admin: boolean
         ime: string,
         prezime: string,
-        brojKartice: string 
+        brojKartice: string
       }[],
       companies:{
         id: integer,
@@ -167,14 +173,14 @@ const getAllUsers = async () => {
     }
   }
 
-  If user is not admin 
+  If user is not admin
   {
     errors: [{
       message: string,
     }]
   }
 */
-router.get('/all', async (req, res) => {
+userRouter.get('/all', async (req: any, res) => {
   if (!req.session.user.admin) {
     return res.status(401).json({
       errors: [
@@ -240,17 +246,15 @@ router.get('/all', async (req, res) => {
   ]
   }
 */
-router.get(
+userRouter.get(
   '/:id',
   [param('id').isInt().withMessage('Traženi korisnik ne postoji.')],
   async (req, res) => {
     const errors = validationResult.withDefaults({
-      formatter: ({ value, msg, param, location }) => {
+      formatter: ({ msg, ...rest }) => {
         return {
-          value,
           message: msg,
-          param,
-          location,
+          ...rest,
         };
       },
     })(req);
@@ -259,7 +263,7 @@ router.get(
       return res.status(404).json({ errors: errors.array() });
     }
 
-    if (!(req.session.user.admin || req.session.user.id == req.params.id)) {
+    if (!(req.session.user.admin || req.session.user.id === req.params.id)) {
       return res.status(401).json({
         errors: [
           {
@@ -277,12 +281,10 @@ router.get(
           },
         });
       })
-      .catch(({ errors, status }) => {
-        return res.status(status).json({
-          errors,
+      .catch((err) => {
+        return res.status(err.status).json({
+          errors: err.errors,
         });
       });
   }
 );
-
-module.exports = router;

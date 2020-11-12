@@ -7,7 +7,7 @@ const allowedOrigins = [
   'https://pi-parkiraj-me-frontend.herokuapp.com/',
 ];
 
-module.exports = cors({
+export const corsMiddleware = cors({
   origin: allowedOrigins,
   credentials: true,
 });

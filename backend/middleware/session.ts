@@ -1,18 +1,18 @@
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const sequelize = require('../db/connect');
+const { db } = require('../db/connect');
 
 const sessionStore = new SequelizeStore({
-  db: sequelize,
+  db,
 });
 
 sessionStore.sync();
 
-module.exports = (app) => {
+export const sessionMiddleware = (app) => {
   console.log(app.get('env'));
 
-  if (app.get('env') == 'production') {
+  if (app.get('env') === 'production') {
     app.set('trust proxy', 1);
   }
 

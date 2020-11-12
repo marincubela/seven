@@ -1,10 +1,10 @@
-const express = require('express');
-const { body, validationResult } = require('express-validator');
+import express from 'express';
+import { body, validationResult } from 'express-validator';
 
-const Racun = require('../models/Racun');
-const { arePasswordEqual } = require('../utils/password');
+import { Racun } from '../models/Racun';
+import { arePasswordEqual } from '../utils/password';
 
-const router = express.Router();
+export const sessionRouter = express.Router();
 
 /*
   This endpoint is used for checking if a user is logged in or not
@@ -30,7 +30,7 @@ const router = express.Router();
     ]
   }
  */
-router.get('/', async (req, res) => {
+sessionRouter.get('/', async (req: any, res) => {
   if (req.session.user) {
     return res.json({
       data: {
@@ -80,7 +80,7 @@ router.get('/', async (req, res) => {
     ]
   }
 */
-router.post(
+sessionRouter.post(
   '/',
   [
     // email field needs to be an email
@@ -89,7 +89,7 @@ router.post(
     // password field is required
     body('data.password').not().isEmpty().withMessage('Lozinka je prazna'),
   ],
-  async (req, res, next) => {
+  async (req: any, res) => {
     const errors = validationResult.withDefaults({
       formatter: ({ value, msg, param, location }) => {
         return {
@@ -107,7 +107,7 @@ router.post(
 
     const { email, password } = req.body.data;
 
-    let account = await Racun.findOne({
+    let account: any = await Racun.findOne({
       where: {
         email,
       },
@@ -154,7 +154,7 @@ router.post(
     ]
   }
 */
-router.delete('/', async (req, res) => {
+sessionRouter.delete('/', async (req: any, res) => {
   if (req.session.user) {
     req.session.user = null;
 
@@ -173,5 +173,3 @@ router.delete('/', async (req, res) => {
     ],
   });
 });
-
-module.exports = router;

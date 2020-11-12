@@ -1,11 +1,11 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
-const db = require('../db/connect.js');
-const Klijent = require('./Klijent.js');
-const Parkiraliste = require('./Parkiraliste.js');
-const Vozilo = require('./Vozilo.js');
+import { db } from '../db/connect';
+import { Klijent } from './Klijent.js';
+import { Parkiraliste } from './Parkiraliste.js';
+import { Vozilo } from './Vozilo.js';
 
-const Rezervacija = db.define(
+export const Rezervacija = db.define(
   'rezervacija',
   {
     idRezervacija: {
@@ -34,5 +34,3 @@ Rezervacija.belongsTo(Parkiraliste, {
 Rezervacija.sync().then(() => {
   console.log('Napravljena rezervacija');
 });
-
-module.exports = Rezervacija;

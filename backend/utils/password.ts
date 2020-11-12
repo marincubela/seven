@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 
 const { SALT_ROUNDS } = require('./constants');
 
-const hashPassword = async (password) => {
+export const hashPassword = async (password) => {
   return new Promise((resolve, reject) =>
     bcrypt.hash(password, SALT_ROUNDS, (err, hash) => {
       if (err) {
@@ -14,7 +14,7 @@ const hashPassword = async (password) => {
   );
 };
 
-const arePasswordEqual = (password, hash) => {
+export const arePasswordEqual = (password, hash) => {
   return new Promise((resolve, reject) =>
     bcrypt.compare(password, hash, (err, same) => {
       if (err) {
@@ -24,9 +24,4 @@ const arePasswordEqual = (password, hash) => {
       resolve(same);
     })
   );
-};
-
-module.exports = {
-  hashPassword,
-  arePasswordEqual,
 };
