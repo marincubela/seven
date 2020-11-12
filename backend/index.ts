@@ -8,8 +8,8 @@ import { userRouter } from './routes/user.router';
 import { registrationRouter } from './routes/registration.router';
 
 // Middlewares
-import { sessionMiddleware } from './middleware/session';
-import { corsMiddleware } from './middleware/cors';
+import { sessionMiddleware } from './middlewares/session';
+import { corsMiddleware } from './middlewares/cors';
 
 const app = express();
 
