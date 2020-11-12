@@ -3,7 +3,7 @@ import { Model, DataTypes } from 'sequelize';
 import { db } from '../db/connect';
 
 interface IRacunAttributes {
-  id: number;
+  idRacun: number;
   email: string;
   OIB: string;
   admin: boolean;
@@ -14,7 +14,7 @@ export class Racun extends Model<
   IRacunAttributes,
   Omit<IRacunAttributes, 'id'>
 > {
-  public id!: number;
+  public idRacun!: number;
   public email!: string;
   public OIB!: string;
   public admin!: boolean;
@@ -26,7 +26,7 @@ export class Racun extends Model<
 
 Racun.init(
   {
-    id: {
+    idRacun: {
       type: DataTypes.INTEGER.UNSIGNED,
       primaryKey: true,
       autoIncrement: true,

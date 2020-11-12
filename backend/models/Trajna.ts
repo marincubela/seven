@@ -1,24 +1,39 @@
-import Sequelize from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 import { db } from '../db/connect';
 import { Rezervacija } from './Rezervacija.js';
 
-export const Trajna = db.define(
-  'trajna',
+interface ITrajnaAttributes {
+  idTrajna: number;
+  vrijemePocetak: Date;
+  vrijemeKraj: Date;
+}
+
+export class Trajna extends Model<
+  ITrajnaAttributes,
+  Omit<ITrajnaAttributes, 'id'>
+> {
+  public idTrajna!: number;
+  public vrijemePocetak!: Date;
+  public vrijemeKraj!: Date;
+}
+
+Trajna.init(
   {
     idTrajna: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     vrijemePocetak: {
-      type: Sequelize.DataTypes.DATE,
+      type: DataTypes.DATE,
     },
     vrijemeKraj: {
-      type: Sequelize.DataTypes.DATE,
+      type: DataTypes.DATE,
     },
   },
   {
+    sequelize: db,
     tableName: 'Trajna',
   }
 );
