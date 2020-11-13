@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev index.ts",
     "start": "node dist/index.js",
-    "deploy": "npm run build && cd ../ && git subtree push --prefix backend heroku-backend master && cd backend",
+    "deploy": "tsc && cd ../ && git subtree push --prefix backend heroku-backend master && cd backend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
