@@ -1,4 +1,4 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, HasOneGetAssociationMixin } from 'sequelize';
 
 import { db } from '../db/connect';
 import { Racun } from './Racun';
@@ -18,6 +18,8 @@ export class Tvrtka extends Model<
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getRacun!: HasOneGetAssociationMixin<Racun>;
 }
 
 Tvrtka.init(
