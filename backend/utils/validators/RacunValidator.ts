@@ -1,10 +1,9 @@
 import yup from 'yup';
 
-import { RacunDTO } from '../../dtos/RacunDTO';
 import { BaseValidator } from './BaseValidator';
 
 export class RacunValidator extends BaseValidator {
-  private static racunSchema = yup.object().shape({
+  static schema = yup.object().shape({
     email: yup
       .string()
       .required('Email je obvezan')
@@ -17,11 +16,4 @@ export class RacunValidator extends BaseValidator {
       .matches(/^\d*$/, 'OIB mora imati samo brojeve')
       .length(11, 'OIB mora imati 11 brojeva'),
   });
-
-  public static async validate(racunDTO: RacunDTO): Promise<Array<string>> {
-    return await RacunValidator.racunSchema
-      .validate(racunDTO)
-      .then(() => [])
-      .catch(({ errors }) => errors);
-  }
 }

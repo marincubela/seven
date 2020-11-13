@@ -1,13 +1,14 @@
-import Sequelize, { Model } from 'sequelize';
+import Sequelize, { HasOneGetAssociationMixin, Model } from 'sequelize';
 
 import { db } from '../db/connect';
 import { Racun } from './Racun';
 
-interface IKlijentAtrributes {
+export interface IKlijentAtrributes {
   idKlijent: number;
   ime: string;
   prezime: string;
   brojKartice: string;
+  idRacun?: number;
 }
 
 export class Klijent extends Model<
@@ -18,9 +19,12 @@ export class Klijent extends Model<
   public ime!: string;
   public prezime!: string;
   public brojKartice!: string;
+  public idRacun!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getRacun!: HasOneGetAssociationMixin<Racun>;
 }
 
 Klijent.init(
@@ -49,7 +53,7 @@ Klijent.init(
   }
 );
 
-Klijent.belongsTo(Racun);
+Klijent.belongsTo(Racun, { foreignKey: 'idRacun' });
 
 Klijent.sync().then(() => {
   console.log('Napravljen Klijent');

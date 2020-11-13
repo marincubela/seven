@@ -1,4 +1,9 @@
-import { Model, DataTypes, Association } from 'sequelize';
+import {
+  Model,
+  DataTypes,
+  Association,
+  HasManyCreateAssociationMixin,
+} from 'sequelize';
 
 import { db } from '../db/connect';
 import { Klijent } from './Klijent';
@@ -13,7 +18,7 @@ export interface IRacunAttributes {
 }
 export class Racun extends Model<
   IRacunAttributes,
-  Omit<IRacunAttributes, 'id'>
+  Omit<IRacunAttributes, 'idRacun'>
 > {
   public idRacun!: number;
   public email!: string;
@@ -26,6 +31,8 @@ export class Racun extends Model<
 
   public readonly klijent?: Klijent;
   public readonly tvrtka?: Tvrtka;
+
+  public createKlijent!: HasManyCreateAssociationMixin<Klijent>;
 
   public static associations: {
     klijent: Association<Racun, Klijent>;

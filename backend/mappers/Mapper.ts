@@ -1,7 +1,13 @@
-export abstract class Mapper<Model = any, DTO = any> {
-  public abstract toDomain(raw: any): Model;
+export abstract class Mapper {
+  public static toDomain(raw: any): any {
+    return null;
+  }
 
-  public abstract toPersistence(vinyl: Model): any;
+  public static toPersistence(vinyl: any): any {
+    return null;
+  }
 
-  public abstract toDTO(vinyl: Model): DTO;
+  public static toDTO(vinyl: any): any {
+    return null;
+  }
 }

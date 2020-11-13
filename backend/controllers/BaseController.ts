@@ -26,8 +26,14 @@ export abstract class BaseController {
     }
   }
 
-  public static jsonResponse(res: IResponse, code: number, message: string) {
-    return res.status(code).json({ errors: [{ message }] });
+  public static jsonResponse(
+    res: IResponse,
+    code: number,
+    messages: Array<string>
+  ) {
+    return res.status(code).json({
+      errors: messages.map((message) => ({ message })),
+    });
   }
 
   public ok<T>(res: IResponse, dto?: T) {
@@ -44,40 +50,48 @@ export abstract class BaseController {
     return res.sendStatus(201);
   }
 
-  public clientError(res: IResponse, message?: string) {
-    return BaseController.jsonResponse(res, 400, message || 'Loš zahtjev');
+  public clientError(res: IResponse, messages: Array<string>) {
+    return BaseController.jsonResponse(res, 400, messages || ['Loš zahtjev']);
   }
 
-  public unauthorized(res: IResponse, message?: string) {
+  public unauthorized(res: IResponse, messages: Array<string>) {
     return BaseController.jsonResponse(
       res,
       401,
-      message || 'Neautorizirana radnja'
+      messages || ['Neautorizirana radnja']
     );
   }
 
-  // public paymentRequired(res: IResponse, message?: string) {
-  //   return BaseController.jsonResponse(res, 402, message || 'Payment required');
+  // public paymentRequired(res: IResponse,messages: Array<string>) {
+  //   return BaseController.jsonResponse(res, 402, messages || ['Payment required']);
   // }
 
-  public forbidden(res: IResponse, message?: string) {
+  public forbidden(res: IResponse, messages: Array<string>) {
     return BaseController.jsonResponse(
       res,
       403,
-      message || 'Zabranjena radnja'
+      messages || ['Zabranjena radnja']
     );
   }
 
-  public notFound(res: IResponse, message?: string) {
-    return BaseController.jsonResponse(res, 404, message || 'Nije pronađeno');
+  public notFound(res: IResponse, messages: Array<string>) {
+    return BaseController.jsonResponse(
+      res,
+      404,
+      messages || ['Nije pronađeno']
+    );
   }
 
-  public conflict(res: IResponse, message?: string) {
-    return BaseController.jsonResponse(res, 409, message || 'Sukob');
+  public conflict(res: IResponse, messages: Array<string>) {
+    return BaseController.jsonResponse(res, 409, messages || ['Sukob']);
   }
 
-  public tooMany(res: IResponse, message?: string) {
-    return BaseController.jsonResponse(res, 429, message || 'Previše zahtjeva');
+  public tooMany(res: IResponse, messages: Array<string>) {
+    return BaseController.jsonResponse(
+      res,
+      429,
+      messages || ['Previše zahtjeva']
+    );
   }
 
   // public todo(res: IResponse) {
@@ -87,6 +101,6 @@ export abstract class BaseController {
   public fail(res: IResponse, error: Error | string) {
     console.log('error', error);
 
-    return BaseController.jsonResponse(res, 500, error.toString());
+    return BaseController.jsonResponse(res, 500, [error.toString()]);
   }
 }
