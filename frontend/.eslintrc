@@ -1,0 +1,125 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "es2017": true,
+    "es2020": true,
+    "node": true,
+    "jest": true
+  },
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "prettier",
+    "prettier/react",
+    "prettier/babel"
+  ],
+  "plugins": ["import", "react-hooks", "jsx-a11y", "prettier"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "google": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".json"]
+      }
+    },
+    "polyfills": ["fetch", "Promise", "URL", "object-assign"]
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "no-unused-vars": "error",
+    "dot-notation": "off",
+    "no-await-in-loop": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 120
+      }
+    ],
+    "no-param-reassign": [1],
+    "consistent-return": [1],
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": [["external", "builtin"], "internal", ["parent", "sibling", "index"]]
+        // "newlines-between": "always"
+        // "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ],
+    // https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/FAQ.md#eslint-plugin-import
+    "import/namespace": "off",
+    "import/named": "off",
+    "import/default": "off",
+    "import/no-named-as-default-member": "off",
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1
+      }
+    ],
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "prev": ["const", "let", "var"],
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": ["const", "let", "var"],
+        "next": ["const", "let", "var"]
+      }
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".jsx", ".js"]
+      }
+    ],
+    "react/destructuring-assignment": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ],
+    "react/prop-types": [
+      "error",
+      {
+        "ignore": [],
+        "customValidators": [],
+        "skipUndeclared": true
+      }
+    ],
+    "react/jsx-fragments": ["error", "element"],
+    "react/no-array-index-key": "off",
+    "react/display-name": [
+      "off",
+      {
+        "ignoreTranspilerName": false
+      }
+    ],
+    "jsx-a11y/anchor-is-valid": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "off"
+  }
+}
