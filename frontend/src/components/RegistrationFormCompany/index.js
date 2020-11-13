@@ -17,9 +17,9 @@ export function RegistrationFormCompany() {
     const requestBody = {
       data: {
         email: formData['register-company-email'],
-        companyName: formData['register-company-name'],
+        name: formData['register-company-name'],
         password: formData['register-company-password'],
-        oib: formData['register-company-oib'],
+        OIB: formData['register-company-oib'],
         address: formData['register-company-address'],
       },
     };

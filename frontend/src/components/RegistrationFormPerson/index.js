@@ -30,11 +30,11 @@ export function RegistrationFormPerson() {
     const requestBody = {
       data: {
         email: formData['register-user-email'],
-        firstname: formData['register-user-firstname'],
-        lastname: formData['register-user-lastname'],
+        firstName: formData['register-user-firstname'],
+        lastName: formData['register-user-lastname'],
         password: formData['register-user-password'],
-        oib: formData['register-user-oib'],
-        creditCardNumber: formData['register-user-credit-card'],
+        OIB: formData['register-user-oib'],
+        cardNumber: formData['register-user-credit-card'],
       },
     };
 
