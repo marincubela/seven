@@ -1,15 +1,17 @@
 \chapter{Arhitektura i dizajn sustava}
 		
-		 Arhitektura sustava zasivat će se na MVC (Model-View-Controller)
-		načelu. Temeljno obilježje ovog obrasca jest podjela aplikacije u 3 međusobno povezane komponentne:
+		 Arhitektura sustava zasnivat će se na MVC (Model-View-Controller)
+		načelu. Temeljno obilježje ovog obrasca jest podjela aplikacije u 3 međusobno povezane komponente:
 		
 		\begin{figure}[h]
-			\includegraphics[scale=0.5]{images/mvc.png}
+			\includegraphics[scale=0.5]{images/mvc.jpeg}
+			\caption{MVC načelo}
+			\label{fig:MVC slika} 
 		\end{figure}
 		\begin{itemize}
 			\item 	\textit{ \textbf{Model} je centralna komponenta sustava, sadrži podatke te razrede čijim se objektima modelira, .}
 			\item 	\textit{\textbf{View} predstavlja prikaz obrađenih podataka.}
-			\item 	\textit {\textbf{Controller} upravlja korisničkim zahtjevima te ih proslijeđuje modelu.}
+			\item 	\textit {\textbf{Controller} upravlja korisničkim zahtjevima te ih prosljeđuje modelu.}
 		\end{itemize}
 		\paragraph{}
 		
@@ -17,12 +19,12 @@
 		
 		\paragraph{}
 		
-		Za razvoj web aplikacije, koristit ćemo programski jezik JavaScript na front-endu, te TypeScript na back-endu. Za implementaciju back-enda služit ćemo se Node.js okruženjem, a u front-end dijelu JavaScript knjižnicom React. Za pohranu podataka u bazu, odlučli smo se za PostgreSQL te ćemo koristiti tehniku ORM (Object-relational mapping).
-		Kao platformu uspostave aplikacije na udaljenom serveru, koristit ćemo cloud platformu Heroku koja podržava jezik Node.js.
+		Za razvoj web aplikacije, koristit ćemo programski jezik JavaScript na \textit{frontendu}, te TypeScript na \textit{backendu}. Za implementaciju \textit{backenda} služit ćemo se Node.js okruženjem, a u \textit{frontend} dijelu JavaScript knjižnicom React. Za pohranu podataka u bazu, odlučili smo se za PostgreSQL te ćemo koristiti tehniku ORM (\textit{Object-relational mapping}).
+		Kao platformu uspostave aplikacije na udaljenom serveru, koristit ćemo cloud platformu \textit{Heroku} koja podržava jezik Node.js.
 		
 		\paragraph{}
 		
-		Komunikacija aplikacije i klijenta na aplikacijskom sloju odvija se protokolom HTTP. Web aplikacija potom obrađuje njegov zahtjev te posreduje između njega i baze podataka služeći se ORM sequalize Node.js tehnologijom.
+		Komunikacija aplikacije i klijenta na aplikacijskom sloju odvija se protokolom HTTP. Web aplikacija potom obrađuje njegov zahtjev te posreduje između njega i baze podataka služeći se ORM sequelize Node.js tehnologijom.
 
 	
 		
@@ -52,7 +54,7 @@
 			
 			    \textbf{Račun} \newline
 			    Entitet sadrži informacije o napravljenom računu u aplikaciji. Sadrži
-			    atribute: ID, email, OIB, admin, lozinka. U vezi je \textit{One-To-Many} s entitetima Klijent i Tvrtka.
+			    atribute: idRacun, email, OIB, admin, lozinka. U vezi je \textit{One-To-Many} s entitetima Klijent i Tvrtka.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -65,7 +67,7 @@
 					\hline 
 					\endlastfoot
 					
-					\textbf{ID} & INT	&  jedinstveni identifikator računa \\ \hline
+					\textbf{idRacun} & INT	&  jedinstveni identifikator računa \\ \hline
 					email & VARCHAR &  e-mail adresa računa \\ \hline 
 					OIB	& CHAR(11) &   oib osobe čiji je račun	\\ \hline 
 					admin & BOOLEAN	&  	true ako je osoba administrator	\\ \hline 
@@ -77,7 +79,7 @@
 				\pagebreak
 				\textbf{Klijent} \newline
 			    Entitet sadrži informacije o klijentu koji koristi aplikaciju. Sadrži
-			    atribute: ID, ime, prezime, broj kartice, računId. U vezi je \textit{One-To-Many} s entitetima Vozilo i Rezervacija, a s entitetom Račun je u vezi \textit{Many-To-One}.
+			    atribute: idKlijent, ime, prezime, broj kartice, računId. U vezi je \textit{One-To-Many} s entitetima Vozilo i Rezervacija, a s entitetom Račun je u vezi \textit{Many-To-One}.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -90,7 +92,7 @@
 					\hline 
 					\endlastfoot
 					
-					\textbf{ID} & INT	&  jedinstveni identifikator klijenta \\ \hline
+					\textbf{idKlijent} & INT	&  jedinstveni identifikator klijenta \\ \hline
 					ime & VARCHAR &  ime klijenta \\ \hline 
 					prezime & VARCHAR &  prezime klijenta \\ \hline 
 					broj kartice & VARCHAR &  broj kartice klijenta \\ \hline 
@@ -100,7 +102,7 @@
 				\end{longtabu}
 				
 				\textbf{Tvrtka} \newline
-			    Entitet sadrži informacije o tvrtki koja želi prijaviti svoje parkilište u aplikaciju. Sadrži atribute: ID, naziv, adresa, računId. U vezi je \textit{One-To-Many} s entitetom Parkiralište, a s entitetom Račun je u vezi \textit{Many-To-One}.
+			    Entitet sadrži informacije o tvrtki koja želi prijaviti svoje parkiralište u aplikaciju. Sadrži atribute: idTvrtka, naziv, adresa, idRacun. U vezi je \textit{One-To-Many} s entitetom Parkiralište, a s entitetom Račun je u vezi \textit{Many-To-One}.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -113,17 +115,17 @@
 					\hline 
 					\endlastfoot
 					
-					\textbf{ID} & INT	&  jedinstveni identifikator tvrtke \\ \hline
+					\textbf{idTvrtka} & INT	&  jedinstveni identifikator tvrtke \\ \hline
 					naziv & VARCHAR &  naziv tvrtke \\ \hline 
 					adresa & VARCHAR &  adresa sjedišta tvrtke \\ \hline 
-					\textit{računId}	& INT &   jedinstveni identifikator računa (račun.ID)	\\ \hline 
+					\textit{idRacun}	& INT &   jedinstveni identifikator računa (račun.ID)	\\ \hline 
 					
 					
 				\end{longtabu}
 				
 				\textbf{Vozilo} \newline
 			    Entitet sadrži informacije o vozilo kojeg je klijent prijavio. Sadrži
-			    atribute: ID, registracija, naziv vozila, boja, i klijentId. U vezi je \textit{One-To-Many} s entitetom Rezervacija, a s entitetom Klijent je u vezi \textit{Many-To-One}.
+			    atribute: idVozilo, registracija, naziv vozila, boja, i klijentId. U vezi je \textit{One-To-Many} s entitetom Rezervacija, a s entitetom Klijent je u vezi \textit{Many-To-One}.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -136,18 +138,18 @@
 					\hline 
 					\endlastfoot
 					
-					\textbf{ID} & INT	&  jedinstveni identifikator vozila \\ \hline
+					\textbf{idVozilo} & INT	&  jedinstveni identifikator vozila \\ \hline
 					registracija & VARCHAR &  broj registracije vozila \\ \hline 
 					naziv vozila & VARCHAR &  naziv vozila koje dodjeluje klijent \\ \hline 
 					boja & VARCHAR &  boja vozila koju dodjeluje klijent \\ \hline 
-					\textit{klijentId}	& INT &   jedinstveni identifikator klijenta (klijent.ID)	\\ \hline 
+					\textit{idKlijent}	& INT &   jedinstveni identifikator klijenta (klijent.ID)	\\ \hline 
 					
 				\end{longtabu}
 				
 				\pagebreak
 				\textbf{Parkiralište} \newline
 			    Entitet sadrži informacije o parkiralištu neke tvrtke koje se nudi klijentima. Sadrži
-			    atribute: ID, naziv, broj mjesta, broj invalidskih mjesta, tip prakirališta, koordinate, cijena jednokratne, cijena ponavljajuće, cijena trajne i tvrtkaId. U vezi je \textit{One-To-Many} s entitetom Rezervacija, a s entitetom Tvrtka je u vezi \textit{Many-To-One}.
+			    atribute: idParkiraliste, naziv, broj mjesta, broj invalidskih mjesta, tip prakirališta, koordinate, cijena jednokratne, cijena ponavljajuće, cijena trajne i tvrtkaId. U vezi je \textit{One-To-Many} s entitetom Rezervacija, a s entitetom Tvrtka je u vezi \textit{Many-To-One}.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -160,15 +162,15 @@
 					\hline 
 					\endlastfoot
 					
-					\textbf{ID} & INT	&  jedinstveni identifikator parkirališta \\ \hline
+					\textbf{idParkiraliste} & INT	&  jedinstveni identifikator parkirališta \\ \hline
 					naziv & VARCHAR &  naziv parkirališta \\ \hline 
 					broj mjesta & INT &  broj mjesta koje parkiralište nudi \\ \hline 
 					broj invalidskih mjesta & INT &  broj invalidskih mjesta koje ima parkiralište \\ \hline tip parkirališta & VARCHAR &  tip parkirališta (otvoreno, zatvoreno) \\ \hline 
 					koordinate & VARCHAR &  zemljopisna dužina i širina parkirališta \\ \hline 
-					cijena jednokratne & INT &  cijena sata za jednokratnu rezervaciju parkirališta \\ \hline 
-					cijena ponavljajuće & INT &  cijena sata za ponavljajuću rezervaciju parkirališta \\ \hline
-					cijena trajne & INT &  cijena trajne rezervacije parkirališta \\ \hline
-					\textit{tvrtkaId}	& INT &   jedinstveni identifikator tvrtke (tvrka.ID)	\\ \hline 
+					cijena jednokratne & DECIMAL &  cijena sata za jednokratnu rezervaciju parkirališta \\ \hline 
+					cijena ponavljajuće & DECIMAL &  cijena sata za ponavljajuću rezervaciju parkirališta \\ \hline
+					cijena trajne & DECIMAL &  cijena trajne rezervacije parkirališta \\ \hline
+					\textit{idTvrtka}	& INT &   jedinstveni identifikator tvrtke (tvrka.ID)	\\ \hline 
 					
 					
 				\end{longtabu}
@@ -176,7 +178,7 @@
 				
 				\textbf{Rezervacija} \newline
 			    Entitet sadrži informacije o stvorenoj rezervaciji u aplikaciji. Ima
-			    atribute: ID, klijentId, parkirališteId, voziloId. U vezi je \textit{One-To-Many} s entitetima Jednokratna, Ponavljajuća i Trajna. S entitetima Klijent, Parkiralište i Vozilo je u vezi \textit{Many-To-One}.
+			    atribute: idRezervacija, klijentId, parkirališteId, voziloId. U vezi je \textit{One-To-Many} s entitetima Jednokratna, Ponavljajuća i Trajna. S entitetima Klijent, Parkiralište i Vozilo je u vezi \textit{Many-To-One}.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -189,17 +191,17 @@
 					\hline 
 					\endlastfoot
 					
-					\textbf{ID} & INT	&  jedinstveni identifikator rezervacije \\ \hline
-					\textit{klijentId}	& INT &   jedinstveni identifikator klijenta (klijent.ID)	\\ \hline
+					\textbf{idRezervacija} & INT	&  jedinstveni identifikator rezervacije \\ \hline
+					\textit{idKlijent}	& INT &   jedinstveni identifikator klijenta (klijent.ID)	\\ \hline
 					\textit{parkirališteId}	& INT &   jedinstveni identifikator prakirališta (parkiralište.ID)	\\ \hline
-					\textit{voziloId}	& INT &   jedinstveni identifikator vozila (vozilo.ID)	\\ \hline
+					\textit{idVozilo}	& INT &   jedinstveni identifikator vozila (vozilo.ID)	\\ \hline
 					
 				\end{longtabu}
 				
 				\pagebreak
 				\textbf{Jednokratna} \newline
 			    Entitet sadrži informacije o jednokratnoj rezervaciji stvorenoj u aplikaciji. Ima
-			    atribute: ID, vrijeme početak, vrijeme kraj, rezervaijaId. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
+			    atribute: idJednokratna, vrijeme početak, vrijeme kraj, rezervaijaId. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
 			    
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -212,16 +214,16 @@
 					\hline 
 					\endlastfoot
 					
-					\textbf{ID} & INT	&  jedinstveni identifikator jednokratne rezervacije \\ \hline
+					\textbf{idJednokratna} & INT	&  jedinstveni identifikator jednokratne rezervacije \\ \hline
 					vrijeme početak & TIMESTAMP &  vrijeme početka rezervacije \\ \hline  
 					vrijeme kraj & TIMESTAMP &  vrijeme kraja rezervacije \\ \hline 
-					\textit{rezervacijaId}	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
+					\textit{idRezervacija}	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
 					
 				\end{longtabu}
 				
 				\textbf{Trajna} \newline
 			    Entitet sadrži informacije o trajnoj rezervaciji stvorenoj u aplikaciji. Ima
-			    atribute: ID, vrijeme početak, vrijeme kraj, rezervaijaId. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
+			    atribute: idTrajna, vrijeme početak, vrijeme kraj, rezervaijaId. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -234,17 +236,17 @@
 					\hline 
 					\endlastfoot
 					
-					\textbf{ID} & INT	&  jedinstveni identifikator trajne rezervacije \\ \hline
+					\textbf{idTrajna} & INT	&  jedinstveni identifikator trajne rezervacije \\ \hline
 					vrijeme početak & TIMESTAMP &  vrijeme početka rezervacije \\ \hline  
 					vrijeme kraj & TIMESTAMP &  vrijeme kraja rezervacije \\ \hline 
-					\textit{rezervacijaId}	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
+					\textit{IdRezervacija}	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
 					
 				\end{longtabu}
 				
 				\pagebreak
 				\textbf{Ponavljajuća} \newline
 			    Entitet sadrži informacije o ponavljaućoj rezervaciji stvorenoj u aplikaciji. Ima
-			    atribute: ID, datum rezervacije, datum kraja rezervcije, dani ponavljanja, vrijeme početak, vrijeme kraj i rezervaijaId. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
+			    atribute: idPonavljajuca, datum rezervacije, datum kraja rezervcije, dani ponavljanja, vrijeme početak, vrijeme kraj i rezervaijaId. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -257,13 +259,13 @@
 					\hline 
 					\endlastfoot
 					
-					\textbf{ID} & INT	&  jedinstveni identifikator ponavljajuće rezervacije \\ \hline
+					\textbf{idPonavljajuca} & INT	&  jedinstveni identifikator ponavljajuće rezervacije \\ \hline
 					datum rezervacije & DATE &  datum početka rezervacije \\ \hline
 					datum kraja rezervacije & DATE &  datum kraja rezervacije \\ \hline
 					dani ponavljanja & INT &  dani ponavljanje rezervacije (pon=1, uto=2, ...) \\ \hline
 					vrijeme početak & TIME &  vrijeme početka rezervacije \\ \hline  
 					vrijeme kraj & TIME &  vrijeme kraja rezervacije \\ \hline 
-					\textit{rezervacijaId}	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
+					\textit{IdRezervacija}	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
 					
 				\end{longtabu}
 				
@@ -282,15 +284,37 @@
 			
 		\section{Dijagram razreda}
 		
-		\begin{figure}[H]
-	        \includegraphics[width=1\linewidth]{dijagrami/Class Diagram0.PNG} %veličina u odnosu na širinu linije
-        	\caption{Dijagram razreda za bazu podataka}
-        	\label{fig:promjene2} %label mora biti drugaciji za svaku sliku
-        \end{figure}
+		Na  slikama 4.3, 4.4, 4.5, 4.6, 4.7 prikazani su razredi koji pripadaju \textit{backend} dijelu MVC arhitekture. Razredi na slici 4.3 oponašaju tablice iz baze podataka kojima se pristupa preko ORM-a i pomoću njih se komunicira s bazom podataka. Slika 4.4 prikazuje DTO (\textit{Data transfer object}) razrede koji spremaju podatke kojima kontroleri komuniciraju s \textit{frontend} dijelom aplikacije i modelima. Na slici 4.5 nalaze se razredi koji komuniciraju s bazom podataka i izvršavaju upite koje kontroleri zatraže. Kontroleri su prikazani na slici 4.6. Svi kontroleri nasljeđuju osnovni kontroler koji sadrži metode za slanje odgovora, dok ostali kontroleri nude metode za izvršavanje određenog zahtjeva na određenoj putanji. Slika 4.7 prikazuje jednu vrstu pomoćnih razreda koje smo koristili za prebacivanje podataka iz domene modela u domenu koja se koristi na \textit{frontend} dijelu aplikacije. Postoje još dodatni razredi koji su nebitni za opisivanje rada aplikacije jer služe samo kao pomoćni razredi.
 		
-			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
-			
-			\textbf{\textit{dio 1. revizije}}\\
+		\begin{figure}[H]
+	        \includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - Modeli.png}
+        	\caption{Dijagram razreda za modele}
+        	\label{fig:Dijagram razreda - modeli}
+        \end{figure}
+    
+    	\begin{figure}[H]
+	    	\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - DTO.png}
+	    	\caption{Dijagram razreda za DTO}
+	    	\label{fig:Dijagram razreda - DTO} 
+	   	 \end{figure}
+    
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - Repo.png}
+			\caption{Dijagram razreda za repo}
+			\label{fig:Dijagram razreda - Repo} 
+		\end{figure}
+	
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Class Diagram - controllers.png}
+			\caption{Dijagram razreda za kontrolere}
+			\label{fig:Dijagram razreda - Kontroleri} 
+		\end{figure}	
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Class Diagram - mappers.png}
+			\caption{Dijagram razreda za mapere}
+			\label{fig:Dijagram razreda - Maperri} 
+		\end{figure}
+		
 			
 			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
 			
