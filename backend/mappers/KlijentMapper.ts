@@ -3,7 +3,7 @@ import { IKlijentAtrributes, Klijent } from '../models/Klijent';
 import { Mapper } from './Mapper';
 
 export class KlijentMapper extends Mapper {
-  public static toDomain(raw: any): IKlijentAtrributes {
+  public static toDomain(raw: KlijentDTO): IKlijentAtrributes {
     return {
       idKlijent: raw.idKlijent,
       brojKartice: raw.cardNumber,
@@ -19,7 +19,7 @@ export class KlijentMapper extends Mapper {
     return {
       idRacun: racun.idRacun,
       email: racun.email,
-      oib: racun.OIB,
+      OIB: racun.OIB,
       firstName: klijent.ime,
       lastName: klijent.prezime,
       cardNumber: klijent.brojKartice,

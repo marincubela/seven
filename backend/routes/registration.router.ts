@@ -1,5 +1,6 @@
 import express from 'express';
 
+import { KlijentController } from '../controllers/klijent/KlijentController';
 import { IRequest, IResponse } from '../interfaces/network';
 import { CreateTvrtkaController } from '../controllers/tvrtka/CreateTvrtkaController';
 
@@ -10,6 +11,48 @@ import { CreateTvrtkaController } from '../controllers/tvrtka/CreateTvrtkaContro
 // import { Tvrtka } from '../models/Tvrtka';
 
 export const registrationRouter = express.Router();
+
+/*
+  This endpoint is used for registrating the client (Will create a Klijent account).
+
+  It is expecting
+  {
+    data: {
+      email: string,
+      oib: string,
+      creditCardNumber: string,
+      firstname: string,
+      lastname: string,
+      password: string,
+    }
+  }
+
+  If registration is succesfull, this user is logged in and
+  this will retun with status 200 and:
+  {
+    data: {
+      user: {
+        id: integer,
+        email: string,
+        admin: boolean,
+      }
+    }
+  }
+  User object from data is also stored in session.user
+
+  If user is not logged, this will return with status 400 and:
+  {
+    errors: [
+      {
+        value: string,
+        param: string
+        message: string,
+        location: string
+      }
+    ]
+  }
+*/
+registrationRouter.post('/user', KlijentController.create);
 
 // /*registrationRouter.use(
 //   expressValidator({
