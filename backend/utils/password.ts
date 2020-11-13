@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 
 const { SALT_ROUNDS } = require('./constants');
 
-export const hashPassword = async (password) => {
+export const hashPassword = async (password: string): Promise<string> => {
   return new Promise((resolve, reject) =>
     bcrypt.hash(password, SALT_ROUNDS, (err, hash) => {
       if (err) {

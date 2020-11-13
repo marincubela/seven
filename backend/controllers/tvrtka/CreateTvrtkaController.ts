@@ -3,6 +3,7 @@ import { IRequest, IResponse } from '../../interfaces/network';
 import { TvrtkaDTO } from '../../dtos/TvrtkaDTO';
 import { Tvrtka } from '../../models/Tvrtka';
 import { TvrtkaRepo } from '../../repos/TvrtkaRepo';
+import { RacunRepo } from '../../repos/RacunRepo';
 import { TvrtkaValidator } from '../../utils/validators/TvrtkaValidator';
 import { RacunValidator } from '../../utils/validators/RacunValidator';
 import { RacunMapper } from '../../mappers/RacunMapper';
@@ -26,7 +27,16 @@ export class CreateTvrtkaController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
+    const tvrtaExists =
+      (await RacunRepo.getRacunByEmail(tvrtkaDto.email)) ||
+      (await RacunRepo.getRacunByOib(tvrtkaDto.OIB));
+
+    if (tvrtaExists) {
+      return this.clientError(res, ['Racun se već koristi']);
+    }
+
     const tvrtka: Tvrtka = await TvrtkaRepo.createTvrtka(tvrtkaDto);
+
     const racun = await tvrtka.getRacun();
 
     const { password, OIB, ...restData } = await RacunMapper.toDTO(racun);

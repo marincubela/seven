@@ -2,6 +2,7 @@ import { Racun } from '../models/Racun';
 import { RacunDTO } from '../dtos/RacunDTO';
 import { RacunMapper } from '../mappers/RacunMapper';
 import { BaseRepo } from './BaseRepo';
+import { hashPassword } from '../utils/password';
 
 /*
 export abstract class IRacunRepo extends BaseRepo<RacunDTO> {
@@ -46,11 +47,22 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
   }
 
   public static async createRacun(racunDTO: RacunDTO): Promise<Racun> {
-    const { idRacun, ...racunData } = RacunMapper.toDomain(racunDTO);
+    const { idRacun, lozinka, ...racunData } = RacunMapper.toDomain(racunDTO);
 
-    const racun = await Racun.create(racunData);
+    const racun = await Racun.create({
+      ...racunData,
+      lozinka: await hashPassword(lozinka),
+    });
 
     return racun;
+  }
+
+  public static async getRacunByOib(OIB: string): Promise<Racun> {
+    return await Racun.findOne({
+      where: {
+        OIB,
+      },
+    });
   }
 
   public static async getRacunByEmail(email: string): Promise<Racun> {

@@ -5,6 +5,7 @@ import { KlijentRepo } from '../../repos/KlijentRepo';
 import { KlijentValidator, RacunValidator } from '../../utils/validators';
 import { RacunMapper } from '../../mappers/RacunMapper';
 import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
+import { RacunRepo } from '../../repos/RacunRepo';
 
 export class CreateKlijentController extends BaseController {
   executeImpl = async (
@@ -24,11 +25,19 @@ export class CreateKlijentController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
+    const klijentExits =
+      (await RacunRepo.getRacunByEmail(klijentDto.email)) ||
+      (await RacunRepo.getRacunByOib(klijentDto.OIB));
+
+    if (klijentExits) {
+      this.clientError(res, ['Racun se već koristi']);
+    }
+
     const klijent = await KlijentRepo.createKlijent(klijentDto);
 
     const racun = await klijent.getRacun();
 
-    const { password, ...restData } = await RacunMapper.toDTO(racun);
+    const { password, OIB, ...restData } = await RacunMapper.toDTO(racun);
 
     req.session.user = restData as ISessionUserDTO;
 
