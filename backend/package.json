@@ -26,6 +26,7 @@
     "pg": "^8.4.2",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5",
+    "tsc": "^1.20150623.0",
     "yup": "^0.29.3"
   },
   "devDependencies": {
