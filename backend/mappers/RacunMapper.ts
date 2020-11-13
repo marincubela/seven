@@ -4,7 +4,7 @@ import { Mapper } from './Mapper';
 
 export class RacunMapper extends Mapper {
   // TODO: revisit this
-  public static toDomain(raw: any): IRacunAttributes {
+  public static toDomain(raw: RacunDTO): IRacunAttributes {
     return {
       idRacun: raw.idRacun,
       email: raw.email,
@@ -13,8 +13,6 @@ export class RacunMapper extends Mapper {
       lozinka: raw.password,
     };
   }
-
-  public static toPersistence(racun: any): any {}
 
   public static async toDTO(racun: Racun): Promise<RacunDTO> {
     return {

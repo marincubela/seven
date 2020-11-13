@@ -1,11 +1,9 @@
 import { BaseController } from '../BaseController';
 import { IRequest, IResponse } from '../../interfaces/network';
-import { Klijent } from '../../models/Klijent';
 import { KlijentDTO } from '../../dtos/KlijentDTO';
 import { KlijentRepo } from '../../repos/KlijentRepo';
-import { KlijentValidator } from '../../utils/validators';
+import { KlijentValidator, RacunValidator } from '../../utils/validators';
 import { RacunMapper } from '../../mappers/RacunMapper';
-import { Racun } from '../../models/Racun';
 
 export class CreateKlijentController extends BaseController {
   protected async executeImpl(
@@ -14,33 +12,20 @@ export class CreateKlijentController extends BaseController {
   ): Promise<void | IResponse> {
     const klijentDto = req.body.data as KlijentDTO;
 
-    const validationErrors = await KlijentValidator.validate(klijentDto);
+    const validationErrors = (
+      await Promise.all([
+        RacunValidator.validate(klijentDto),
+        KlijentValidator.validate(klijentDto),
+      ])
+    ).reduce((errs, err) => [...errs, ...err], []);
 
     if (validationErrors.length) {
       return this.clientError(res, validationErrors);
     }
 
-    let klijent: Klijent;
+    const klijent = await KlijentRepo.createKlijent(klijentDto);
 
-    try {
-      klijent = await KlijentRepo.createKlijent(klijentDto);
-    } catch (error) {
-      console.error('Error occued while creating a client.');
-      console.error(error);
-    }
-
-    let racun: Racun;
-
-    try {
-      racun = await klijent.getRacun();
-
-      if (!racun) {
-        throw new Error('No racun is found');
-      }
-    } catch (error) {
-      console.error("Error occued while getting a client's account.");
-      console.error(error);
-    }
+    const racun = await klijent.getRacun();
 
     const { password, ...restData } = await RacunMapper.toDTO(racun);
 
