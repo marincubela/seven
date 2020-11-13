@@ -10,11 +10,6 @@ import { RacunMapper } from '../../mappers/RacunMapper';
 
 export class PostSessionController extends BaseController {
   executeImpl = async (req: IRequest, res: IResponse): Promise<IResponse> => {
-    console.log('++++++++++++');
-    console.log('+ ');
-    console.log('+ ');
-    console.log('+ ');
-    console.log('++++++++++++');
     const racunDTO: RacunDTO = req.body.data;
 
     const validationErrors = await SessionValidator.validate(racunDTO);
