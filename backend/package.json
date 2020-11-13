@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
+    "prestart": "npm run build",
     "dev": "ts-node-dev index.ts",
     "start": "node dist/index.js",
-    "deploy": "tsc && cd ../ && git subtree push --prefix backend heroku-backend master && cd backend",
+    "deploy": "cd ../ && git subtree push --prefix backend heroku-backend master && cd backend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -24,7 +26,6 @@
     "pg": "^8.4.2",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5",
-    "ts-node": "^9.0.0",
     "yup": "^0.29.3"
   },
   "devDependencies": {
