@@ -8,7 +8,7 @@ import { RacunMapper } from '../../mappers/RacunMapper';
 import { Racun } from '../../models/Racun';
 
 export class CreateKlijentController extends BaseController {
-  protected static async executeImpl(
+  protected async executeImpl(
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> {

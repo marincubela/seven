@@ -1,5 +1,5 @@
 import express from 'express';
-import { CreateKlijentController } from '../controllers/klijent';
+import { KlijentController } from '../controllers/klijent/KlijentController';
 // import { body, validationResult } from 'express-validator';
 
 // import { Racun } from '../models/Racun';
@@ -50,7 +50,7 @@ export const registrationRouter = express.Router();
     ]
   }
 */
-registrationRouter.post('/user', CreateKlijentController.execute);
+registrationRouter.post('/user', KlijentController.create);
 
 // /*registrationRouter.use(
 //   expressValidator({

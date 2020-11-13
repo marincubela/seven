@@ -5,7 +5,7 @@ export abstract class BaseController {
    * This is the implementation that we will leave to the
    * subclasses to figure out.
    */
-  protected static executeImpl(
+  protected executeImpl(
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> {
@@ -17,7 +17,7 @@ export abstract class BaseController {
    * We also make sure to catch any uncaught errors in the
    * implementation.
    */
-  public static async execute(req: IRequest, res: IResponse): Promise<void> {
+  public async execute(req: IRequest, res: IResponse): Promise<void> {
     try {
       await this.executeImpl(req, res);
     } catch (err) {
@@ -38,7 +38,7 @@ export abstract class BaseController {
     });
   }
 
-  public static ok<T>(res: IResponse, dto?: T) {
+  public ok<T>(res: IResponse, dto?: T) {
     if (!!dto) {
       res.type('application/json');
 
@@ -48,15 +48,15 @@ export abstract class BaseController {
     }
   }
 
-  public static created(res: IResponse) {
+  public created(res: IResponse) {
     return res.sendStatus(201);
   }
 
-  public static clientError(res: IResponse, messages: Array<string>) {
+  public clientError(res: IResponse, messages: Array<string>) {
     return BaseController.jsonResponse(res, 400, messages || ['Loš zahtjev']);
   }
 
-  public static unauthorized(res: IResponse, messages: Array<string>) {
+  public unauthorized(res: IResponse, messages: Array<string>) {
     return BaseController.jsonResponse(
       res,
       401,
@@ -64,11 +64,11 @@ export abstract class BaseController {
     );
   }
 
-  // public static paymentRequired(res: IResponse,messages: Array<string>) {
+  // public paymentRequired(res: IResponse,messages: Array<string>) {
   //   return BaseController.jsonResponse(res, 402, messages || ['Payment required']);
   // }
 
-  public static forbidden(res: IResponse, messages: Array<string>) {
+  public forbidden(res: IResponse, messages: Array<string>) {
     return BaseController.jsonResponse(
       res,
       403,
@@ -76,7 +76,7 @@ export abstract class BaseController {
     );
   }
 
-  public static notFound(res: IResponse, messages: Array<string>) {
+  public notFound(res: IResponse, messages: Array<string>) {
     return BaseController.jsonResponse(
       res,
       404,
@@ -84,11 +84,11 @@ export abstract class BaseController {
     );
   }
 
-  public static conflict(res: IResponse, messages: Array<string>) {
+  public conflict(res: IResponse, messages: Array<string>) {
     return BaseController.jsonResponse(res, 409, messages || ['Sukob']);
   }
 
-  public static tooMany(res: IResponse, messages: Array<string>) {
+  public tooMany(res: IResponse, messages: Array<string>) {
     return BaseController.jsonResponse(
       res,
       429,
@@ -100,7 +100,7 @@ export abstract class BaseController {
   //   return BaseController.jsonResponse(res, 400, 'TODO');
   // }
 
-  public static fail(res: IResponse, error: Error | string) {
+  public fail(res: IResponse, error: Error | string) {
     console.log('error', error);
 
     return BaseController.jsonResponse(res, 500, [error.toString()]);
