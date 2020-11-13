@@ -2,7 +2,7 @@ import { IResponse } from '../../interfaces/network';
 import { IRequest } from '../../interfaces/network';
 import { BaseController } from '../../controllers/BaseController';
 
-export class DeleteSessionCOntroller extends BaseController {
+export class DeleteSessionController extends BaseController {
   protected async executeImpl(
     req: IRequest,
     res: IResponse

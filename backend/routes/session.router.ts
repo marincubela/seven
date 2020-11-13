@@ -1,11 +1,10 @@
-import { PostSessionController } from '../controllers/session/PostSessionController';
 import express from 'express';
-import { body, validationResult } from 'express-validator';
+
 import { IResponse } from '../interfaces/network';
 import { IRequest } from '../interfaces/network';
-
-import { Racun } from '../models/Racun';
-import { arePasswordEqual } from '../utils/password';
+import { GetSessionController } from '../controllers/session/GetSessionController';
+import { PostSessionController } from '../controllers/session/PostSessionController';
+import { DeleteSessionController } from '../controllers/session/DeleteSessionController';
 
 export const sessionRouter = express.Router();
 
@@ -34,21 +33,7 @@ export const sessionRouter = express.Router();
   }
  */
 sessionRouter.get('/', async (req: any, res) => {
-  if (req.session.user) {
-    return res.json({
-      data: {
-        user: req.session.user,
-      },
-    });
-  }
-
-  return res.status(401).json({
-    errors: [
-      {
-        message: 'Korisnik nije prijavljen.',
-      },
-    ],
-  });
+  new GetSessionController().execute(req, res);
 });
 
 // Will create a new session for a user (login)
@@ -101,21 +86,5 @@ sessionRouter.post('/', async (req: IRequest, res: IResponse) => {
   }
 */
 sessionRouter.delete('/', async (req: any, res) => {
-  if (req.session.user) {
-    req.session.user = null;
-
-    return res.json({
-      data: {
-        user: null,
-      },
-    });
-  }
-
-  return res.status(401).json({
-    errors: [
-      {
-        message: 'Korisnik nije prijavljen',
-      },
-    ],
-  });
+  new DeleteSessionController().execute(req, res);
 });
