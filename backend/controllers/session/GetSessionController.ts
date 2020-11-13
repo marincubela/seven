@@ -1,5 +1,5 @@
-import { IRequest, IResponse } from '../interfaces/network';
-import { BaseController } from './BaseController';
+import { IRequest, IResponse } from '../../interfaces/network';
+import { BaseController } from '../BaseController';
 
 export class GetSessionController extends BaseController {
   protected async executeImpl(
@@ -14,6 +14,6 @@ export class GetSessionController extends BaseController {
       });
     }
 
-    return this.unauthorized(res, 'Korisnik nije prijavljen.');
+    return this.unauthorized(res, ['Korisnik nije prijavljen.']);
   }
 }

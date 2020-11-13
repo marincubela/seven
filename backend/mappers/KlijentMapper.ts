@@ -1,5 +1,5 @@
 import { KlijentDTO } from '../dtos/KlijentDTO';
-import { IKlijentAtrributes } from '../models/Klijent';
+import { IKlijentAtrributes, Klijent } from '../models/Klijent';
 import { Mapper } from './Mapper';
 
 export class KlijentMapper extends Mapper {
@@ -13,7 +13,18 @@ export class KlijentMapper extends Mapper {
     };
   }
 
-  public static toPersistence(vinyl: Model): any;
+  public static toPersistence(klijent: any): any {}
 
-  public static toDTO(vinyl: Model): DTO;
+  public static async toDTO(klijent: Klijent): Promise<KlijentDTO> {
+    const racun = await klijent.getRacun();
+
+    return {
+      idRacun: racun.idRacun,
+      email: racun.email,
+      oib: racun.OIB,
+      firstName: klijent.ime,
+      lastName: klijent.prezime,
+      cardNumber: klijent.brojKartice,
+    };
+  }
 }

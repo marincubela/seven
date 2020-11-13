@@ -1,5 +1,5 @@
-export interface BaseRepo<T> {
-  exists(t: T): Promise<boolean>;
-  delete(t: T): Promise<any>;
-  save(t: T): Promise<any>;
+export abstract class BaseRepo<T> {
+  public abstract exists(t: T): Promise<boolean>;
+  public abstract delete(t: T): Promise<any>;
+  public abstract save(t: T): Promise<any>;
 }

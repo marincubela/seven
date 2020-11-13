@@ -1,8 +1,5 @@
-import { PostSessionController } from '../controllers/session/PostSessionController';
 import express from 'express';
 import { body, validationResult } from 'express-validator';
-import { IResponse } from '../interfaces/network';
-import { IRequest } from '../interfaces/network';
 
 import { Racun } from '../models/Racun';
 import { arePasswordEqual } from '../utils/password';
@@ -83,9 +80,66 @@ sessionRouter.get('/', async (req: any, res) => {
     ]
   }
 */
-sessionRouter.post('/', async (req: IRequest, res: IResponse) => {
-  new PostSessionController().execute(req, res);
-});
+sessionRouter.post(
+  '/',
+  [
+    // email field needs to be an email
+    body('data.email').isEmail().withMessage('Email nije ispravan'),
+
+    // password field is required
+    body('data.password').not().isEmpty().withMessage('Lozinka je prazna'),
+  ],
+  async (req: any, res) => {
+    const errors = validationResult.withDefaults({
+      formatter: ({ value, msg, param, location }) => {
+        return {
+          value,
+          message: msg,
+          param,
+          location,
+        };
+      },
+    })(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { email, password } = req.body.data;
+
+    let account: any = await Racun.findOne({
+      where: {
+        email,
+      },
+    });
+
+    account = account ? account.toJSON() : {};
+
+    const passwordMatch = await arePasswordEqual(password, account.lozinka);
+
+    if (!account || !passwordMatch) {
+      return res.status(400).json({
+        errors: [
+          {
+            message: 'Neispravni podatci za prijavu',
+          },
+        ],
+      });
+    }
+
+    req.session.user = {
+      id: account.id,
+      email: account.email,
+      admin: account.admin,
+    };
+
+    return res.status(200).json({
+      data: {
+        user: req.session.user,
+      },
+    });
+  }
+);
 
 /*
   This endpoint is used for deleting user from a session (logout).

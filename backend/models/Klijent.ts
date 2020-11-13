@@ -53,6 +53,7 @@ Klijent.init(
   }
 );
 
+console.log('Klijent');
 Klijent.belongsTo(Racun, { foreignKey: 'idRacun' });
 
 Klijent.sync().then(() => {

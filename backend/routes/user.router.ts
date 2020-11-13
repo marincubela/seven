@@ -20,7 +20,7 @@ const getUserById = async (id) => {
     // find account by id
     const racun = (await Racun.findOne({
       where: {
-        id,
+        idRacun,
       },
     })) as any;
 

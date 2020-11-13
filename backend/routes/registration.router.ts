@@ -5,6 +5,7 @@ import { Racun } from '../models/Racun';
 import { Klijent } from '../models/Klijent';
 import { Tvrtka } from '../models/Tvrtka';
 import { hashPassword } from '../utils/password';
+import { CreateKlijentController } from 'controllers/klijent';
 
 export const registrationRouter = express.Router();
 
@@ -34,11 +35,11 @@ const createAccount = async ({ email, oib, password }) => {
 };
 
 // Will create a Tvrtka model
-const createCompany = async ({ companyName, address, racunId }) => {
+const createCompany = async ({ companyName, address, idRacun }) => {
   const company = await Tvrtka.create({
     naziv: companyName,
     adresa: address,
-    racunId,
+    idRacun,
   });
 };
 
@@ -47,13 +48,13 @@ const createClient = async ({
   firstname,
   lastname,
   creditCardNumber,
-  racunId,
+  idRacun,
 }) => {
   const client = await Klijent.create({
     prezime: lastname,
     ime: firstname,
     brojKartice: creditCardNumber,
-    racunId,
+    idRacun,
   });
 };
 

@@ -1,4 +1,5 @@
-import { IRacunAttributes } from '../models/Racun';
+import { RacunDTO } from '../dtos/RacunDTO';
+import { IRacunAttributes, Racun } from '../models/Racun';
 import { Mapper } from './Mapper';
 
 export class RacunMapper extends Mapper {
@@ -13,7 +14,9 @@ export class RacunMapper extends Mapper {
     };
   }
 
-  public static toPersistence(vinyl: Model): any {}
+  public static toPersistence(racun: any): any {}
 
-  public static toDTO(vinyl: Model): DTO {}
+  public static toDTO(racun: Racun): Promise<RacunDTO> {
+    return null;
+  }
 }
