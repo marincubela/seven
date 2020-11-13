@@ -68,9 +68,11 @@ sessionRouter.get('/', async (req: any, res) => {
     ]
   }
 */
-sessionRouter.post('/', async (req: IRequest, res: IResponse) => {
-  new PostSessionController().execute(req, res);
+sessionRouter.post('/',  PostSessionController.execute);
 });
+// sessionRouter.post('/', async (req: IRequest, res: IResponse) => {
+//   new PostSessionController().execute(req, res);
+// });
 
 /*
   This endpoint is used for deleting user from a session (logout).

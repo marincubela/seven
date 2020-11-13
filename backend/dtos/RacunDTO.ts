@@ -1,7 +1,7 @@
 export interface RacunDTO {
   idRacun?: number;
   email: string;
-  oib?: string;
+  OIB?: string;
   admin?: boolean;
   password?: string;
 }

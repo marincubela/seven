@@ -5,10 +5,12 @@ export abstract class BaseController {
    * This is the implementation that we will leave to the
    * subclasses to figure out.
    */
-  protected abstract executeImpl(
+  protected executeImpl(
     req: IRequest,
     res: IResponse
-  ): Promise<void | IResponse>;
+  ): Promise<void | IResponse> {
+    throw new Error('Method not implemented');
+  }
 
   /**
    * This is what we will call on the route handler.
