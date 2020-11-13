@@ -1,12 +1,14 @@
 import express from 'express';
 
-import { IResponse } from '../interfaces/network';
-import { IRequest } from '../interfaces/network';
-import { GetSessionController } from '../controllers/session/GetSessionController';
-import { PostSessionController } from '../controllers/session/PostSessionController';
-import { DeleteSessionController } from '../controllers/session/DeleteSessionController';
+import { SessionController } from '../controllers/session/SessionController';
 
 export const sessionRouter = express.Router();
+
+sessionRouter.get('/', SessionController.get);
+
+sessionRouter.post('/', SessionController.create);
+
+sessionRouter.delete('/', SessionController.delete);
 
 /*
   This endpoint is used for checking if a user is logged in or not
@@ -32,9 +34,6 @@ export const sessionRouter = express.Router();
     ]
   }
  */
-sessionRouter.get('/', async (req: any, res) => {
-  new GetSessionController().execute(req, res);
-});
 
 // Will create a new session for a user (login)
 /*
@@ -68,8 +67,7 @@ sessionRouter.get('/', async (req: any, res) => {
     ]
   }
 */
-sessionRouter.post('/',  PostSessionController.execute);
-});
+
 // sessionRouter.post('/', async (req: IRequest, res: IResponse) => {
 //   new PostSessionController().execute(req, res);
 // });
@@ -87,6 +85,4 @@ sessionRouter.post('/',  PostSessionController.execute);
     ]
   }
 */
-sessionRouter.delete('/', async (req: any, res) => {
-  new DeleteSessionController().execute(req, res);
-});
+sessionRouter.delete('/', SessionController.delete);
