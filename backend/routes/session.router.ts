@@ -1,11 +1,8 @@
-import { PostSessionController } from '../controllers/session/PostSessionController';
 import express from 'express';
-import { body, validationResult } from 'express-validator';
+
 import { IResponse } from '../interfaces/network';
 import { IRequest } from '../interfaces/network';
-
-import { Racun } from '../models/Racun';
-import { arePasswordEqual } from '../utils/password';
+import { PostSessionController } from '../controllers/session/PostSessionController';
 
 export const sessionRouter = express.Router();
 

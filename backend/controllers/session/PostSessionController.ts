@@ -13,12 +13,13 @@ export class PostSessionController extends BaseController {
   ): Promise<IResponse> {
     // validator
 
-    const racunDTO: RacunDTO = req.body.data;
+    const racunDTO = req.body.data as RacunDTO;
 
     const racun = await RacunRepo.getRacunByEmail(racunDTO.email);
+
     const passwordMatch = await arePasswordEqual(
       racunDTO.password,
-      racun.lozinka
+      racun?.lozinka
     );
 
     if (!racun || !passwordMatch) {

@@ -1,4 +1,4 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, HasOneGetAssociationMixin } from 'sequelize';
 
 import { db } from '../db/connect';
 import { Racun } from './Racun';
@@ -7,6 +7,7 @@ interface ITvrtkaAttributes {
   idTvrtka: number;
   naziv: string;
   adresa: string;
+  idRacun?: number;
 }
 export class Tvrtka extends Model<
   ITvrtkaAttributes,
@@ -15,9 +16,12 @@ export class Tvrtka extends Model<
   public idTvrtka!: number;
   public naziv!: string;
   public adresa!: string;
+  public idRacun!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getRacun!: HasOneGetAssociationMixin<Racun>;
 }
 
 Tvrtka.init(
@@ -44,6 +48,7 @@ Tvrtka.init(
 
 Tvrtka.belongsTo(Racun, {
   foreignKey: 'idRacun',
+  as: 'Racun',
 });
 
 Tvrtka.sync().then(() => {
