@@ -29,7 +29,7 @@ export class CreateTvrtkaController extends BaseController {
     const tvrtka: Tvrtka = await TvrtkaRepo.createTvrtka(tvrtkaDto);
     const racun = await tvrtka.getRacun();
 
-    const { password, ...restData } = await RacunMapper.toDTO(racun);
+    const { password, OIB, ...restData } = await RacunMapper.toDTO(racun);
 
     req.session.user = restData as ISessionUserDTO;
 

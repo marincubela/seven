@@ -6,6 +6,7 @@ import { RacunRepo } from '../../repos/RacunRepo';
 import { arePasswordEqual } from '../../utils/password';
 import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
 import { SessionValidator } from '../../utils/validators/SessionValidator';
+import { RacunMapper } from '../../mappers/RacunMapper';
 
 export class PostSessionController extends BaseController {
   executeImpl = async (req: IRequest, res: IResponse): Promise<IResponse> => {
@@ -33,8 +34,10 @@ export class PostSessionController extends BaseController {
       return this.clientError(res, ['Neispravni podaci za prijavu']);
     }
 
-    req.session.user = racun;
+    const { password, OIB, ...restData } = await RacunMapper.toDTO(racun);
 
-    return this.ok<ISessionUserDTO>(res, req.session.user);
+    req.session.user = restData as ISessionUserDTO;
+
+    return this.ok(res, { data: { user: req.session.user } });
   };
 }
