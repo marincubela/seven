@@ -10,7 +10,7 @@ const sessionStore = new SequelizeStore({
 sessionStore.sync();
 
 export const sessionMiddleware = (app) => {
-  console.log(app.get('env'));
+  console.log('App is running in: ', app.get('env'));
 
   if (app.get('env') === 'production') {
     app.set('trust proxy', 1);

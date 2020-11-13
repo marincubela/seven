@@ -74,7 +74,6 @@ Racun.init(
   }
 );
 
-console.log('Raucn');
 // Racun.hasOne(Klijent, {
 //   sourceKey: 'idRacun',
 //   foreignKey: 'idKlijent',
@@ -95,5 +94,5 @@ console.log('Raucn');
 
 // TODO: extract to separate file
 Racun.sync().then(() => {
-  console.log('> Napravljen racun');
+  console.log('Napravljen racun');
 });
