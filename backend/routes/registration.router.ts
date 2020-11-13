@@ -1,8 +1,7 @@
 import express from 'express';
 
 import { KlijentController } from '../controllers/klijent/KlijentController';
-import { IRequest, IResponse } from '../interfaces/network';
-import { CreateTvrtkaController } from '../controllers/tvrtka/CreateTvrtkaController';
+import { TvrtkaController } from '../controllers/tvrtka/TvrtkaController';
 
 //import { body, validationResult } from 'express-validator';
 //import { hashPassword } from '../utils/password';
@@ -11,6 +10,10 @@ import { CreateTvrtkaController } from '../controllers/tvrtka/CreateTvrtkaContro
 // import { Tvrtka } from '../models/Tvrtka';
 
 export const registrationRouter = express.Router();
+
+registrationRouter.post('/user', KlijentController.create);
+
+registrationRouter.post('/company', TvrtkaController.create);
 
 /*
   This endpoint is used for registrating the client (Will create a Klijent account).
@@ -52,7 +55,6 @@ export const registrationRouter = express.Router();
     ]
   }
 */
-registrationRouter.post('/user', KlijentController.create);
 
 // /*registrationRouter.use(
 //   expressValidator({
@@ -314,9 +316,6 @@ registrationRouter.post('/user', KlijentController.create);
 //     ]
 //   }
 // */
-registrationRouter.post('/company', async (req: IRequest, res: IResponse) => {
-  new CreateTvrtkaController().execute(req, res);
-});
 //   [
 //     // email field needs to be an email
 //     body('data.email')
