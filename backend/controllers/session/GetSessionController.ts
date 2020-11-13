@@ -2,10 +2,7 @@ import { IRequest, IResponse } from '../../interfaces/network';
 import { BaseController } from '../BaseController';
 
 export class GetSessionController extends BaseController {
-  protected async executeImpl(
-    req: IRequest,
-    res: IResponse
-  ): Promise<IResponse> {
+  executeImpl = async (req: IRequest, res: IResponse): Promise<IResponse> => {
     if (req.session.user) {
       return res.json({
         data: {
@@ -15,5 +12,5 @@ export class GetSessionController extends BaseController {
     }
 
     return this.unauthorized(res, ['Korisnik nije prijavljen.']);
-  }
+  };
 }

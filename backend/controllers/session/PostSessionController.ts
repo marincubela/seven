@@ -8,10 +8,12 @@ import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
 import { SessionValidator } from '../../utils/validators/SessionValidator';
 
 export class PostSessionController extends BaseController {
-  protected async executeImpl(
-    req: IRequest,
-    res: IResponse
-  ): Promise<IResponse> {
+  executeImpl = async (req: IRequest, res: IResponse): Promise<IResponse> => {
+    console.log('++++++++++++');
+    console.log('+ ');
+    console.log('+ ');
+    console.log('+ ');
+    console.log('++++++++++++');
     const racunDTO: RacunDTO = req.body.data;
 
     const validationErrors = await SessionValidator.validate(racunDTO);
@@ -34,5 +36,5 @@ export class PostSessionController extends BaseController {
     req.session.user = racun;
 
     return this.ok<ISessionUserDTO>(res, req.session.user);
-  }
+  };
 }

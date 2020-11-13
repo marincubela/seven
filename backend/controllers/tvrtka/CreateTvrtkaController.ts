@@ -9,10 +9,10 @@ import { RacunMapper } from '../../mappers/RacunMapper';
 import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
 
 export class CreateTvrtkaController extends BaseController {
-  protected async executeImpl(
+  executeImpl = async (
     req: IRequest,
     res: IResponse
-  ): Promise<void | IResponse> {
+  ): Promise<void | IResponse> => {
     const tvrtkaDto = req.body.data as TvrtkaDTO;
 
     const validationErrors = (
@@ -38,5 +38,5 @@ export class CreateTvrtkaController extends BaseController {
         user: racun,
       },
     });
-  }
+  };
 }

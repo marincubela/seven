@@ -7,10 +7,10 @@ import { RacunMapper } from '../../mappers/RacunMapper';
 import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
 
 export class CreateKlijentController extends BaseController {
-  protected async executeImpl(
+  executeImpl = async (
     req: IRequest,
     res: IResponse
-  ): Promise<void | IResponse> {
+  ): Promise<void | IResponse> => {
     const klijentDto = req.body.data as KlijentDTO;
 
     const validationErrors = (
@@ -37,5 +37,5 @@ export class CreateKlijentController extends BaseController {
         user: restData,
       },
     });
-  }
+  };
 }
