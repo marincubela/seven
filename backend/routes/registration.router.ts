@@ -1,11 +1,13 @@
 import express from 'express';
-// import { body, validationResult } from 'express-validator';
 
+import { IRequest, IResponse } from '../interfaces/network';
+import { CreateTvrtkaController } from '../controllers/tvrtka/CreateTvrtkaController';
+
+//import { body, validationResult } from 'express-validator';
+//import { hashPassword } from '../utils/password';
 // import { Racun } from '../models/Racun';
 // import { Klijent } from '../models/Klijent';
 // import { Tvrtka } from '../models/Tvrtka';
-// import { hashPassword } from '../utils/password';
-// import { CreateKlijentController } from 'controllers/klijent';
 
 export const registrationRouter = express.Router();
 
@@ -269,8 +271,9 @@ export const registrationRouter = express.Router();
 //     ]
 //   }
 // */
-// registrationRouter.post(
-//   '/company',
+registrationRouter.post('/company', async (req: IRequest, res: IResponse) => {
+  new CreateTvrtkaController().execute(req, res);
+});
 //   [
 //     // email field needs to be an email
 //     body('data.email')
