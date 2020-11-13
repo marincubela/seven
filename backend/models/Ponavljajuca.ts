@@ -4,7 +4,7 @@ import { db } from '../db/connect';
 import { Rezervacija } from './Rezervacija.js';
 
 interface IPonavljajucaAttributes {
-  idPonavljajuce: number;
+  idPonavljajuca: number;
   datumRezervacije: Date;
   datumKrajaRez: Date;
   daniPonavljanja: IntegerDataType;
@@ -16,19 +16,20 @@ export class Ponavljajuca extends Model<
   IPonavljajucaAttributes,
   Omit<IPonavljajucaAttributes, 'idPonavljajuce'>
 > {
-  idPonavljajuce!: number;
+  idPonavljajuca!: number;
   datumRezervacije!: Date;
   datumKrajaRez!: Date;
   daniPonavljanja!: IntegerDataType;
   vrijemePocetka!: Date;
   vrijemeKraja!: Date;
+
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
 Ponavljajuca.init(
   {
-    idPonavljajuce: {
+    idPonavljajuca: {
       type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,

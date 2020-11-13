@@ -4,7 +4,7 @@ import { db } from '../db/connect';
 import { Tvrtka } from './Tvrtka.js';
 
 interface IParkiralisteAtrributes {
-  idParkiralista: number;
+  idParkiraliste: number;
   nazivParkiralista: string;
   brojMjesta: number;
   brojInvalidskihMjesta: number;
@@ -19,7 +19,7 @@ export class Parkiraliste extends Model<
   IParkiralisteAtrributes,
   Omit<IParkiralisteAtrributes, 'idParkiralista'>
 > {
-  idParkiralista!: number;
+  idParkiraliste!: number;
   nazivParkiralista!: string;
   brojMjesta!: number;
   brojInvalidskihMjesta!: number;
@@ -35,7 +35,7 @@ export class Parkiraliste extends Model<
 
 Parkiraliste.init(
   {
-    idParkiralista: {
+    idParkiraliste: {
       type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
