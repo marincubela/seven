@@ -5,15 +5,20 @@ import { RacunDTO } from '../../dtos/RacunDTO';
 import { RacunRepo } from '../../repos/RacunRepo';
 import { arePasswordEqual } from '../../utils/password';
 import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
+import { SessionValidator } from '../../utils/validators/SessionValidator';
 
 export class PostSessionController extends BaseController {
   protected async executeImpl(
     req: IRequest,
     res: IResponse
   ): Promise<IResponse> {
-    // validator
-
     const racunDTO: RacunDTO = req.body.data;
+
+    const validationErrors = await SessionValidator.validate(racunDTO);
+
+    if (validationErrors.length) {
+      return this.clientError(res, validationErrors);
+    }
 
     const racun = await RacunRepo.getRacunByEmail(racunDTO.email);
     const passwordMatch = await arePasswordEqual(
