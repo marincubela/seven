@@ -4,16 +4,12 @@ import { BaseValidator } from './BaseValidator';
 
 export class KlijentValidator extends BaseValidator {
   static schema = yup.object().shape({
-    email: yup
+    firstName: yup.string().required('Ime ne smije biti prazano'),
+    lastName: yup.string().required('Prezime ne smije biti prazno'),
+    cardNumber: yup
       .string()
-      .required('Email je obvezan')
-      .email('Email je neispravan'),
-    password: yup.string().required('Lozinka je obavezna'),
-    admin: yup.boolean().default(false),
-    OIB: yup
-      .string()
-      .required('OIB je obavezan')
-      .matches(/^\d*$/, 'OIB mora imati samo brojeve')
-      .length(11, 'OIB mora imati 11 brojeva'),
+      .required('Broj kartice je obavezan')
+      .matches(/^\d*$/, 'Broj kartice mora imati samo brojeve')
+      .length(16, 'Broj kartice mora imati 16 brojeva'),
   });
 }
