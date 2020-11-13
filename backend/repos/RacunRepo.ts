@@ -1,6 +1,6 @@
+import { Racun } from '../models/Racun';
 import { RacunDTO } from '../dtos/RacunDTO';
 import { RacunMapper } from '../mappers/RacunMapper';
-import { Racun } from '../models/Racun';
 import { BaseRepo } from './BaseRepo';
 
 /*

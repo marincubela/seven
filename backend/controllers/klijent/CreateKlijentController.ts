@@ -10,7 +10,7 @@ export class CreateKlijentController extends BaseController {
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> {
-    const klijentDto: KlijentDTO = req.body.data;
+    const klijentDto = req.body.data as KlijentDTO;
 
     const validationErrors = await KlijentValidator.validate(klijentDto);
 

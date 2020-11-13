@@ -54,7 +54,10 @@ Klijent.init(
 );
 
 console.log('Klijent');
-Klijent.belongsTo(Racun, { foreignKey: 'idRacun' });
+Klijent.belongsTo(Racun, {
+  foreignKey: 'idRacun',
+  as: 'Racun',
+});
 
 Klijent.sync().then(() => {
   console.log('Napravljen Klijent');

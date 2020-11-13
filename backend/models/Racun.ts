@@ -16,6 +16,7 @@ export interface IRacunAttributes {
   admin: boolean;
   lozinka: string;
 }
+
 export class Racun extends Model<
   IRacunAttributes,
   Omit<IRacunAttributes, 'idRacun'>
@@ -74,21 +75,23 @@ Racun.init(
 );
 
 console.log('Raucn');
-Racun.hasOne(Klijent, {
-  sourceKey: 'idRacun',
-  foreignKey: 'idKlijent',
-  as: 'klijent',
-  onDelete: 'CASCADE',
-  onUpdate: 'CASCADE',
-});
+// Racun.hasOne(Klijent, {
+//   sourceKey: 'idRacun',
+//   foreignKey: 'idKlijent',
+//   as: 'klijent',
+//   onDelete: 'CASCADE',
+//   onUpdate: 'CASCADE',
+// });
 
-Racun.hasOne(Tvrtka, {
-  sourceKey: 'idRacun',
-  foreignKey: 'idTvrtka',
-  as: 'tvrtka',
-  onDelete: 'CASCADE',
-  onUpdate: 'CASCADE',
-});
+// () => {
+//   Racun.hasOne(Tvrtka, {
+//     sourceKey: 'idRacun',
+//     foreignKey: 'idTvrtka',
+//     as: 'tvrtka',
+//     onDelete: 'CASCADE',
+//     onUpdate: 'CASCADE',
+//   });
+// };
 
 // TODO: extract to separate file
 Racun.sync().then(() => {

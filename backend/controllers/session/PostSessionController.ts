@@ -21,9 +21,10 @@ export class PostSessionController extends BaseController {
     }
 
     const racun = await RacunRepo.getRacunByEmail(racunDTO.email);
+
     const passwordMatch = await arePasswordEqual(
       racunDTO.password,
-      racun.lozinka
+      racun?.lozinka
     );
 
     if (!racun || !passwordMatch) {
