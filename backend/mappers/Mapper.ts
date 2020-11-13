@@ -3,11 +3,11 @@ export abstract class Mapper {
     return null;
   }
 
-  public static toPersistence(vinyl: any): any {
+  public static toPersistence(model: any): any {
     return null;
   }
 
-  public static toDTO(vinyl: any): any {
+  public static toDTO(model: any): any {
     return null;
   }
 }

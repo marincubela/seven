@@ -16,7 +16,13 @@ export class RacunMapper extends Mapper {
 
   public static toPersistence(racun: any): any {}
 
-  public static toDTO(racun: Racun): Promise<RacunDTO> {
-    return null;
+  public static async toDTO(racun: Racun): Promise<RacunDTO> {
+    return {
+      idRacun: racun.idRacun,
+      email: racun.email,
+      OIB: racun.OIB,
+      admin: racun.admin,
+      password: racun.lozinka,
+    };
   }
 }
