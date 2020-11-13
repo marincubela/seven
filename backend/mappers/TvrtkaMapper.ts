@@ -18,7 +18,7 @@ export class TvrtkaMapper extends Mapper {
     return {
       idRacun: racun.idRacun,
       email: racun.email,
-      oib: racun.OIB,
+      OIB: racun.OIB,
       name: tvrtka.naziv,
       address: tvrtka.adresa,
     };
