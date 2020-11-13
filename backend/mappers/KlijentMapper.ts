@@ -13,8 +13,6 @@ export class KlijentMapper extends Mapper {
     };
   }
 
-  public static toPersistence(klijent: any): any {}
-
   public static async toDTO(klijent: Klijent): Promise<KlijentDTO> {
     const racun = await klijent.getRacun();
 

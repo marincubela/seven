@@ -3,7 +3,7 @@ import { Model, DataTypes, HasOneGetAssociationMixin } from 'sequelize';
 import { db } from '../db/connect';
 import { Racun } from './Racun';
 
-interface ITvrtkaAttributes {
+export interface ITvrtkaAttributes {
   idTvrtka: number;
   naziv: string;
   adresa: string;
@@ -11,7 +11,7 @@ interface ITvrtkaAttributes {
 }
 export class Tvrtka extends Model<
   ITvrtkaAttributes,
-  Omit<ITvrtkaAttributes, 'id'>
+  Omit<ITvrtkaAttributes, 'idTvrtka'>
 > {
   public idTvrtka!: number;
   public naziv!: string;
