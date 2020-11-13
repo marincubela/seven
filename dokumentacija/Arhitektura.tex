@@ -1,13 +1,28 @@
 \chapter{Arhitektura i dizajn sustava}
 		
-		\textbf{\textit{dio 1. revizije}}\\
-
-		\textit{ Potrebno je opisati stil arhitekture te identificirati: podsustave, preslikavanje na radnu platformu, spremišta podataka, mrežne protokole, globalni upravljački tok i sklopovsko-programske zahtjeve. Po točkama razraditi i popratiti odgovarajućim skicama:}
-	\begin{itemize}
-		\item 	\textit{izbor arhitekture temeljem principa oblikovanja pokazanih na predavanjima (objasniti zašto ste baš odabrali takvu arhitekturu)}
-		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
-		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
-	\end{itemize}
+		 Arhitektura sustava zasivat će se na MVC (Model-View-Controller)
+		načelu. Temeljno obilježje ovog obrasca jest podjela aplikacije u 3 međusobno povezane komponentne:
+		
+		\begin{figure}[h]
+			\includegraphics[scale=0.5]{images/mvc.png}
+		\end{figure}
+		\begin{itemize}
+			\item 	\textit{ \textbf{Model} je centralna komponenta sustava, sadrži podatke te razrede čijim se objektima modelira, .}
+			\item 	\textit{\textbf{View} predstavlja prikaz obrađenih podataka.}
+			\item 	\textit {\textbf{Controller} upravlja korisničkim zahtjevima te ih proslijeđuje modelu.}
+		\end{itemize}
+		\paragraph{}
+		
+		Na ovaj je način korisničko sučelje izdvojeno, čime je automatski smanjena njegova međuovisnost s ostatkom sustava. Upravitelj modelu šalje naredbe i osvježava njegovo stanje dok pogled od modela prikuplja informacije koje potom predstavlja korisniku.  
+		
+		\paragraph{}
+		
+		Za razvoj web aplikacije, koristit ćemo programski jezik JavaScript na front-endu, te TypeScript na back-endu. Za implementaciju back-enda služit ćemo se Node.js okruženjem, a u front-end dijelu JavaScript knjižnicom React. Za pohranu podataka u bazu, odlučli smo se za PostgreSQL te ćemo koristiti tehniku ORM (Object-relational mapping).
+		Kao platformu uspostave aplikacije na udaljenom serveru, koristit ćemo cloud platformu Heroku koja podržava jezik Node.js.
+		
+		\paragraph{}
+		
+		Komunikacija aplikacije i klijenta na aplikacijskom sloju odvija se protokolom HTTP. Web aplikacija potom obrađuje njegov zahtjev te posreduje između njega i baze podataka služeći se ORM sequalize Node.js tehnologijom.
 
 	
 		
