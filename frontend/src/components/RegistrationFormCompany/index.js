@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
 
+import { useStore } from '../../store/StoreProvider';
 import { EMAIL_REGEX } from '../../utils/constants';
 import { post } from '../../utils/network';
 
 export function RegistrationFormCompany() {
+  const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
   const { register, errors, handleSubmit, watch } = useForm();
   const history = useHistory();
@@ -15,9 +17,9 @@ export function RegistrationFormCompany() {
     const requestBody = {
       data: {
         email: formData['register-company-email'],
-        companyName: formData['register-company-name'],
+        name: formData['register-company-name'],
         password: formData['register-company-password'],
-        oib: formData['register-company-oib'],
+        OIB: formData['register-company-oib'],
         address: formData['register-company-address'],
       },
     };
@@ -25,6 +27,8 @@ export function RegistrationFormCompany() {
     post('registration/company', requestBody)
       .then((res) => {
         if (res.data && res.data.user) {
+          store.setCurrentUser(res.data.user);
+
           history.replace('/');
         }
       })
