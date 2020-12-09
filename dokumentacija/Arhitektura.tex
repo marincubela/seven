@@ -54,7 +54,7 @@
 			
 			    \textbf{Račun} \newline
 			    Entitet sadrži informacije o napravljenom računu u aplikaciji. Sadrži
-			    atribute: idRacun, email, OIB, admin, lozinka. U vezi je \textit{One-To-Many} s entitetima Klijent i Tvrtka.
+			    atribute: idRacun, email, OIB, admin, lozinka. U vezi je \textit{One-To-One} s entitetima Klijent i Tvrtka.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -79,7 +79,7 @@
 				\pagebreak
 				\textbf{Klijent} \newline
 			    Entitet sadrži informacije o klijentu koji koristi aplikaciju. Sadrži
-			    atribute: idKlijent, ime, prezime, broj kartice, računId. U vezi je \textit{One-To-Many} s entitetima Vozilo i Rezervacija, a s entitetom Račun je u vezi \textit{Many-To-One}.
+			    atribute: idKlijent, ime, prezime, broj kartice, idRacun. U vezi je \textit{One-To-Many} s entitetima Vozilo i Rezervacija, a s entitetom Račun je u vezi \textit{Many-To-One}.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -96,7 +96,7 @@
 					ime & VARCHAR &  ime klijenta \\ \hline 
 					prezime & VARCHAR &  prezime klijenta \\ \hline 
 					broj kartice & VARCHAR &  broj kartice klijenta \\ \hline 
-					\textit{računId}	& INT &   jedinstveni identifikator računa (račun.ID)	\\ \hline 
+					\textit{idRacun}	& INT &   jedinstveni identifikator računa (račun.ID)	\\ \hline 
 					
 					
 				\end{longtabu}
@@ -125,7 +125,7 @@
 				
 				\textbf{Vozilo} \newline
 			    Entitet sadrži informacije o vozilo kojeg je klijent prijavio. Sadrži
-			    atribute: idVozilo, registracija, naziv vozila, boja, i klijentId. U vezi je \textit{One-To-Many} s entitetom Rezervacija, a s entitetom Klijent je u vezi \textit{Many-To-One}.
+			    atribute: idVozilo, registracija, naziv vozila, boja, i idKlijent. U vezi je \textit{One-To-Many} s entitetom Rezervacija, a s entitetom Klijent je u vezi \textit{Many-To-One}.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -149,7 +149,7 @@
 				\pagebreak
 				\textbf{Parkiralište} \newline
 			    Entitet sadrži informacije o parkiralištu neke tvrtke koje se nudi klijentima. Sadrži
-			    atribute: idParkiraliste, naziv, broj mjesta, broj invalidskih mjesta, tip prakirališta, koordinate, cijena jednokratne, cijena ponavljajuće, cijena trajne i tvrtkaId. U vezi je \textit{One-To-Many} s entitetom Rezervacija, a s entitetom Tvrtka je u vezi \textit{Many-To-One}.
+			    atribute: idParkiraliste, naziv, broj mjesta, broj invalidskih mjesta, tip prakirališta, koordinate, cijena jednokratne, cijena ponavljajuće, cijena trajne i idTvrtka. U vezi je \textit{One-To-Many} s entitetom Rezervacija, a s entitetom Tvrtka je u vezi \textit{Many-To-One}.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -178,7 +178,7 @@
 				
 				\textbf{Rezervacija} \newline
 			    Entitet sadrži informacije o stvorenoj rezervaciji u aplikaciji. Ima
-			    atribute: idRezervacija, klijentId, parkirališteId, voziloId. U vezi je \textit{One-To-Many} s entitetima Jednokratna, Ponavljajuća i Trajna. S entitetima Klijent, Parkiralište i Vozilo je u vezi \textit{Many-To-One}.
+			    atribute: idRezervacija, idKlijent, idParkiraliste, idVozilo. U vezi je \textit{One-To-Many} s entitetima Jednokratna, Ponavljajuća i Trajna. S entitetima Klijent, Parkiralište i Vozilo je u vezi \textit{Many-To-One}.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -193,7 +193,7 @@
 					
 					\textbf{idRezervacija} & INT	&  jedinstveni identifikator rezervacije \\ \hline
 					\textit{idKlijent}	& INT &   jedinstveni identifikator klijenta (klijent.ID)	\\ \hline
-					\textit{parkirališteId}	& INT &   jedinstveni identifikator prakirališta (parkiralište.ID)	\\ \hline
+					\textit{idParkiraliste}	& INT &   jedinstveni identifikator prakirališta (parkiralište.ID)	\\ \hline
 					\textit{idVozilo}	& INT &   jedinstveni identifikator vozila (vozilo.ID)	\\ \hline
 					
 				\end{longtabu}
@@ -201,7 +201,7 @@
 				\pagebreak
 				\textbf{Jednokratna} \newline
 			    Entitet sadrži informacije o jednokratnoj rezervaciji stvorenoj u aplikaciji. Ima
-			    atribute: idJednokratna, vrijeme početak, vrijeme kraj, rezervaijaId. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
+			    atribute: idJednokratna, vrijeme početak, vrijeme kraj, idRezervacija. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
 			    
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -223,7 +223,7 @@
 				
 				\textbf{Trajna} \newline
 			    Entitet sadrži informacije o trajnoj rezervaciji stvorenoj u aplikaciji. Ima
-			    atribute: idTrajna, vrijeme početak, vrijeme kraj, rezervaijaId. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
+			    atribute: idTrajna, vrijeme početak, vrijeme kraj, idRezervacija. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -239,14 +239,14 @@
 					\textbf{idTrajna} & INT	&  jedinstveni identifikator trajne rezervacije \\ \hline
 					vrijeme početak & TIMESTAMP &  vrijeme početka rezervacije \\ \hline  
 					vrijeme kraj & TIMESTAMP &  vrijeme kraja rezervacije \\ \hline 
-					\textit{IdRezervacija}	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
+					\textit{idRezervacija}	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
 					
 				\end{longtabu}
 				
 				\pagebreak
 				\textbf{Ponavljajuća} \newline
 			    Entitet sadrži informacije o ponavljaućoj rezervaciji stvorenoj u aplikaciji. Ima
-			    atribute: idPonavljajuca, datum rezervacije, datum kraja rezervcije, dani ponavljanja, vrijeme početak, vrijeme kraj i rezervaijaId. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
+			    atribute: idPonavljajuca, datum rezervacije, datum kraja rezervcije, dani ponavljanja, vrijeme početak, vrijeme kraj i idRezervacija. U vezi je \textit{Many-To-One} s entitetom Rezervacija.
 				
 				\begin{longtabu} to \textwidth {|X[6, l]|X[6, l]|X[20, l]|}
 					
@@ -265,7 +265,7 @@
 					dani ponavljanja & INT &  dani ponavljanje rezervacije (pon=1, uto=2, ...) \\ \hline
 					vrijeme početak & TIME &  vrijeme početka rezervacije \\ \hline  
 					vrijeme kraj & TIME &  vrijeme kraja rezervacije \\ \hline 
-					\textit{IdRezervacija}	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
+					\textit{idRezervacija}	& INT &   jedinstveni identifikator rezervacije (rezervacija.ID)	\\ \hline
 					
 				\end{longtabu}
 				
@@ -274,8 +274,8 @@
 			\pagebreak
 			\subsection{Dijagram baze podataka}
                 \begin{figure}[H]
-                	\includegraphics[width=1\linewidth]{dijagrami/ERModel.png} %veličina u odnosu na širinu linije
-                	\caption{ER dijagram baze podataka}
+                	\includegraphics[width=1\linewidth]{dijagrami/Diagram.png} %veličina u odnosu na širinu linije
+                	\caption{Dijagram baze podataka}
                 	\label{fig:promjene2} %label mora biti drugaciji za svaku sliku
                 \end{figure}
 			
