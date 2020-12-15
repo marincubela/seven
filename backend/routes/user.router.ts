@@ -1,3 +1,4 @@
+import { UserController } from '../controllers/user/UserController';
 import express from 'express';
 // import { param, validationResult } from 'express-validator';
 
@@ -6,6 +7,7 @@ import express from 'express';
 // import { Tvrtka } from '../models/Tvrtka';
 
 export const userRouter = express.Router();
+userRouter.delete('/:idRacun', UserController.delete);
 
 // /*
 //   Returns a promise, resolves if user with given id exists, rejects if not
