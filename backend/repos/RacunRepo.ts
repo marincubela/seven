@@ -22,9 +22,18 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
     return Boolean(racun);
   }
 
-  async delete(racunDTO: RacunDTO): Promise<any> {
+  async  delete(racunDTO: RacunDTO): Promise<any> {
     const { idRacun } = RacunMapper.toDomain(racunDTO);
 
+    return await Racun.destroy({
+      where: {
+        idRacun,
+      },
+    });
+  }
+
+  static async  deleteById(idRacun:number): Promise<any> {
+  
     return await Racun.destroy({
       where: {
         idRacun,
