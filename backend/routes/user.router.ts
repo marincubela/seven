@@ -1,11 +1,11 @@
+import { KlijentController } from '../controllers/klijent/KlijentController';
 import express from 'express';
-// import { param, validationResult } from 'express-validator';
-
-// import { Racun } from '../models/Racun';
-// import { Klijent } from '../models/Klijent';
-// import { Tvrtka } from '../models/Tvrtka';
 
 export const userRouter = express.Router();
+
+userRouter.get('/:idRacun', KlijentController.get);
+
+//userRouter.get('/all', KlijentController.getAll);
 
 // /*
 //   Returns a promise, resolves if user with given id exists, rejects if not
