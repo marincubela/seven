@@ -1,9 +1,9 @@
-import Sequelize, { Model } from 'sequelize';
+import Sequelize, { Model, DataTypes, HasOneGetAssociationMixin} from 'sequelize';
 
 import { db } from '../db/connect';
 import { Tvrtka } from './Tvrtka.js';
 
-interface IParkiralisteAtrributes {
+export interface IParkiralisteAttributes {
   idParkiraliste: number;
   nazivParkiralista: string;
   brojMjesta: number;
@@ -16,8 +16,8 @@ interface IParkiralisteAtrributes {
 }
 
 export class Parkiraliste extends Model<
-  IParkiralisteAtrributes,
-  Omit<IParkiralisteAtrributes, 'idParkiralista'>
+  IParkiralisteAttributes,
+  Omit<IParkiralisteAttributes, 'idParkiralista'>
 > {
   idParkiraliste!: number;
   nazivParkiralista!: string;
@@ -31,6 +31,8 @@ export class Parkiraliste extends Model<
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getTvrtka!: HasOneGetAssociationMixin<Tvrtka>;
 }
 
 Parkiraliste.init(
