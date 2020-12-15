@@ -1,9 +1,9 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, HasOneGetAssociationMixin } from 'sequelize';
 
 import { db } from '../db/connect';
 import { Klijent } from './Klijent.js';
 
-interface IVoziloAttributes {
+export interface IVoziloAttributes {
   idVozilo: number;
   registracija: string;
   nazivVozila: string;
@@ -21,6 +21,8 @@ export class Vozilo extends Model<
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getKlijent!: HasOneGetAssociationMixin<Klijent>;
 }
 
 Vozilo.init(
