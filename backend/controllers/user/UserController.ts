@@ -7,5 +7,5 @@ export class UserController {
 
   public static get = new GetUserController().execute;
 
-  //  public static getAll = new GetAllUsersController().execute;
+  public static getAll = new GetAllUsersController().execute;
 }
