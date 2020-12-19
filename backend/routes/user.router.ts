@@ -5,7 +5,9 @@ import express from 'express';
 export const userRouter = express.Router();
 userRouter.delete('/:idRacun', UserController.delete);
 
-userRouter.get('/:idRacun', KlijentController.get);
+//userRouter.get('/all', UserController.getAll);
+
+userRouter.get('/:idRacun', UserController.get);
 
 //userRouter.get('/all', KlijentController.getAll);
 

@@ -3,6 +3,9 @@ import { RacunDTO } from '../dtos/RacunDTO';
 import { RacunMapper } from '../mappers/RacunMapper';
 import { BaseRepo } from './BaseRepo';
 import { hashPassword } from '../utils/password';
+import { KlijentRepo } from './KlijentRepo';
+import { TvrtkaRepo } from './TvrtkaRepo';
+import { Klijent } from '../models/Klijent';
 
 /*
 export abstract class IRacunRepo extends BaseRepo<RacunDTO> {
@@ -22,7 +25,7 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
     return Boolean(racun);
   }
 
-  async  delete(racunDTO: RacunDTO): Promise<any> {
+  async delete(racunDTO: RacunDTO): Promise<any> {
     const { idRacun } = RacunMapper.toDomain(racunDTO);
 
     return await Racun.destroy({
@@ -32,8 +35,7 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
     });
   }
 
-  static async  deleteById(idRacun:number): Promise<any> {
-  
+  static async deleteById(idRacun: number): Promise<any> {
     return await Racun.destroy({
       where: {
         idRacun,
@@ -88,5 +90,13 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
         idRacun,
       },
     });
+  }
+
+  public static async isKlijent(idRacun: number): Promise<Boolean> {
+    return Boolean(await KlijentRepo.getKlijentByIdRacun(idRacun));
+  }
+
+  public static async isTvrtka(idRacun: number): Promise<Boolean> {
+    return Boolean(await TvrtkaRepo.getTvrtkaByIdRacun(idRacun));
   }
 }
