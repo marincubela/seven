@@ -16,12 +16,12 @@ export class GetUserController extends BaseController {
       throw new Error('Id ne može biti negativan!');
     }
 
-    // Izvaditi dohvat racuna iz mappera i to elegantno rijesiti
-    const racun = await RacunRepo.getRacunById(idRacun);
-
     if (idRacun != req.session.user.idRacun && !req.session.user.admin) {
       return this.forbidden(res, null);
     }
+
+    // Izvaditi dohvat racuna iz mappera i to elegantno rijesiti
+    const racun = await RacunRepo.getRacunById(idRacun);
 
     if (await RacunRepo.isKlijent(idRacun)) {
       const klijent = await KlijentRepo.getKlijentByIdRacun(idRacun);
