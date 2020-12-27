@@ -45,7 +45,7 @@ export class CreateTvrtkaController extends BaseController {
 
     return this.ok(res, {
       data: {
-        user: racun,
+        user: restData,
       },
     });
   };
