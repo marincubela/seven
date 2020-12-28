@@ -1,7 +1,7 @@
-import Sequelize, { Model, DataTypes, HasOneGetAssociationMixin} from 'sequelize';
+import Sequelize, { Model, HasOneGetAssociationMixin } from 'sequelize';
 
 import { db } from '../db/connect';
-import { Tvrtka } from './Tvrtka.js';
+import { Tvrtka } from './Tvrtka';
 
 export interface IParkiralisteAttributes {
   idParkiraliste: number;
@@ -13,11 +13,12 @@ export interface IParkiralisteAttributes {
   cijenaJednokratne: number;
   cijenaPonavljajuce: number;
   cijenaTrajne: number;
+  idTvrtka?: number;
 }
 
 export class Parkiraliste extends Model<
   IParkiralisteAttributes,
-  Omit<IParkiralisteAttributes, 'idParkiralista'>
+  Omit<IParkiralisteAttributes, 'idParkiraliste'>
 > {
   idParkiraliste!: number;
   nazivParkiralista!: string;
@@ -28,6 +29,7 @@ export class Parkiraliste extends Model<
   cijenaJednokratne!: number;
   cijenaPonavljajuce!: number;
   cijenaTrajne!: number;
+  idTvrtka!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -77,12 +79,13 @@ Parkiraliste.init(
   },
   {
     sequelize: db,
-    tableName: 'Klijent',
+    tableName: 'Parkiraliste',
   }
 );
 
 Parkiraliste.belongsTo(Tvrtka, {
-  foreignKey: 'tvrtkaId',
+  foreignKey: 'idTvrtka',
+  as: 'Tvrtka',
 });
 
 Parkiraliste.sync().then(() => {

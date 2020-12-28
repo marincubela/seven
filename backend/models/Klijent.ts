@@ -1,9 +1,12 @@
-import Sequelize, { Association, HasOneGetAssociationMixin, Model } from 'sequelize';
+import Sequelize, {
+  Association,
+  HasOneGetAssociationMixin,
+  Model,
+} from 'sequelize';
 
 import { db } from '../db/connect';
 import { Racun } from './Racun';
 import { Vozilo } from './Vozilo';
-
 
 export interface IKlijentAtrributes {
   idKlijent: number;
@@ -63,8 +66,6 @@ Klijent.belongsTo(Racun, {
   foreignKey: 'idRacun',
   as: 'Racun',
 });
-
-
 
 Klijent.sync().then(() => {
   console.log('Napravljen Klijent');
