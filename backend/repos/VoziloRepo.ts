@@ -5,7 +5,7 @@ import { BaseRepo } from './BaseRepo';
 
 export class VoziloRepo extends BaseRepo<VoziloDTO> {
   async exists(voziloDTO: VoziloDTO): Promise<boolean> {
-    const { idKlijent } = VoziloMapper.toDomain(voziloDTO);
+    /*const { idKlijent } = VoziloMapper.toDomain(voziloDTO);
 
     const vozilo = await Vozilo.findOne({
       where: {
@@ -14,6 +14,9 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
     });
 
     return Boolean(vozilo);
+    */
+
+    return false;
   }
 
   async delete(voziloDTO: VoziloDTO): Promise<any> {
@@ -28,7 +31,9 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
 
   async save(voziloDTO: VoziloDTO): Promise<any> {
     if (await this.exists(voziloDTO)) {
-      const { idVozilo, idKlijent, ...voziloData } = VoziloMapper.toDomain(voziloDTO);
+      const { idVozilo, idKlijent, ...voziloData } = VoziloMapper.toDomain(
+        voziloDTO
+      );
 
       return await Vozilo.update(voziloData, {
         where: {

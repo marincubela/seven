@@ -27,16 +27,14 @@ export class CreateVoziloController extends BaseController {
       await KlijentRepo.getKlijentByIdRacun(req.session.user.idRacun)
     ).idKlijent;
 
+    const vozilo = await VoziloRepo.createVozilo(voziloDto);
 
-    const vozilo = await (new VoziloRepo).save(voziloDto);
-    //u responseu ne vracati broj kartice, email, itd...
+    const { registration, carName, color } = await VoziloMapper.toDTO(vozilo);
 
     return this.ok(res, {
-        data:{
-            vehicle: await VoziloMapper.toDTO(vozilo)
-        }
-    })
-
-
-    }
+      data: {
+        vehicle: { registration, carName, color },
+      },
+    });
+  };
 }
