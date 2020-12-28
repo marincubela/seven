@@ -1,23 +1,25 @@
 import { Model, DataTypes, HasOneGetAssociationMixin } from 'sequelize';
 
 import { db } from '../db/connect';
-import { Klijent } from './Klijent.js';
+import { Klijent } from './Klijent';
 
 export interface IVoziloAttributes {
   idVozilo: number;
   registracija: string;
   nazivVozila: string;
   boja: boolean;
+  idKlijent?: number;
 }
 
 export class Vozilo extends Model<
   IVoziloAttributes,
-  Omit<IVoziloAttributes, 'id'>
+  Omit<IVoziloAttributes, 'idVozilo'>
 > {
   public idVozilo!: number;
   public registracija!: string;
   public nazivVozila!: string;
   public boja: boolean;
+  public idKlijent!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -53,6 +55,7 @@ Vozilo.init(
 
 Vozilo.belongsTo(Klijent, {
   foreignKey: 'idKlijent',
+  as: 'Klijent',
 });
 
 Vozilo.sync().then(() => {

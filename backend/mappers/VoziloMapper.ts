@@ -8,7 +8,8 @@ export class VoziloMapper extends Mapper {
         idVozilo: voziloDTO.idVozilo,
         registracija: voziloDTO.registration,
         nazivVozila: voziloDTO.carName,
-        boja: voziloDTO.color
+        boja: voziloDTO.color,
+        idKlijent: voziloDTO.idKlijent
     };
   }
 
