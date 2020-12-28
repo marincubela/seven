@@ -27,6 +27,7 @@ export class ParkiralisteMapper extends Mapper {
     const racun = await tvrtka.getRacun();
 
     return {
+      idParkiraliste: parkiraliste.idParkiraliste,
       parkingName: parkiraliste.nazivParkiralista,
       capacity: parkiraliste.brojMjesta,
       disabledCapacity: parkiraliste.brojInvalidskihMjesta,
