@@ -13,6 +13,10 @@ export class GetAllUsersController extends BaseController {
 
     const users = await RacunRepo.getAll();
 
-    return this.ok(res, { data: { users } });
+    return this.ok(res, {
+      data: {
+        users,
+      },
+    });
   };
 }
