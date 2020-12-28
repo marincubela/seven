@@ -5,3 +5,7 @@ import { ParkiralisteController } from '../controllers/parkiraliste/Parkiraliste
 export const parkingRouter = express.Router();
 
 parkingRouter.post('/', ParkiralisteController.create);
+
+parkingRouter.delete('/:idParkiraliste', ParkiralisteController.delete);
+
+parkingRouter.get('/:idParkiraliste', ParkiralisteController.get);

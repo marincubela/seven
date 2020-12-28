@@ -48,4 +48,22 @@ export class ParkiralisteRepo extends BaseRepo<ParkiralisteDTO> {
 
     return parkiraliste;
   }
+
+  static async getParkiralisteByIdParkiraliste(
+    idParkiraliste: number
+  ): Promise<Parkiraliste> {
+    return await Parkiraliste.findOne({
+      where: {
+        idParkiraliste,
+      },
+    });
+  }
+
+  static async deleteByIdParkiraliste(idParkiraliste: number): Promise<any> {
+    return await Parkiraliste.destroy({
+      where: {
+        idParkiraliste,
+      },
+    });
+  }
 }
