@@ -9,10 +9,12 @@ export class DeleteUserController extends BaseController {
   ): Promise<void | IResponse> => {
     const idRacun = Number(req.params.idRacun);
 
-    
+    if (isNaN(idRacun)) {
+      return this.fail(res, 'Id nije broj');
+    }
 
-    if(req.session.user.admin){
-      console.log("admin je");
+    if (idRacun < 1) {
+      return this.fail(res, 'Id mora biti pozitivan');
     }
 
     if (!req.session.user.admin && req.session.user.idRacun != idRacun) {
@@ -20,13 +22,13 @@ export class DeleteUserController extends BaseController {
     }
 
     //brisanje racuna
-    RacunRepo.deleteById(idRacun);
+    await RacunRepo.deleteById(idRacun);
 
     //odjava
-    if(!req.session.user.admin){
-        req.session.user = null;
+    if (!req.session.user.admin) {
+      req.session.user = null;
     }
-    
+
     return this.ok(res);
   };
 }

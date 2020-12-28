@@ -13,7 +13,7 @@ export class GetUserController extends BaseController {
   ): Promise<void | IResponse> => {
     const idRacun = Number(req.params.idRacun);
     if (idRacun < 1) {
-      throw new Error('Id ne može biti negativan!');
+      return this.fail(res, 'Id mora biti pozitivan broj');
     }
 
     if (idRacun != req.session.user.idRacun && !req.session.user.admin) {
