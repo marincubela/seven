@@ -6,7 +6,7 @@ export class DeleteSessionController extends BaseController {
   executeImpl = async (req: IRequest, res: IResponse): Promise<IResponse> => {
     if (req.session.user) {
       req.session.user = null;
-      this.ok(res, {
+      return this.ok(res, {
         data: {
           user: null,
         },
