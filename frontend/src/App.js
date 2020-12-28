@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChakraProvider, extendTheme } from '@chakra-ui/core';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { observer } from 'mobx-react';
@@ -11,10 +11,11 @@ import { RegistrationPerson } from './routes/registrationPerson';
 import { Login } from './routes/login';
 import { Error } from './routes/error';
 import { get } from './utils/network';
-import { useStore } from './store/StoreProvider';
+import { StoreProvider } from './store/StoreProvider';
+import { getOrInitializeStore } from './utils/store';
 
 const App = () => {
-  const store = useStore();
+  const [store] = useState(() => getOrInitializeStore());
 
   useEffect(() => {
     get('session')
@@ -25,35 +26,37 @@ const App = () => {
   }, []);
 
   return (
-    <ChakraProvider theme={extendTheme(customTheme)}>
-      <Router>
-        <Switch>
-          <Route path="/registration/company">
-            <RegistrationCompany />
-          </Route>
+    <StoreProvider store={store}>
+      <ChakraProvider theme={extendTheme(customTheme)}>
+        <Router>
+          <Switch>
+            <Route path="/registration/company">
+              <RegistrationCompany />
+            </Route>
 
-          <Route path="/registration/person">
-            <RegistrationPerson />
-          </Route>
+            <Route path="/registration/person">
+              <RegistrationPerson />
+            </Route>
 
-          <Route path="/registration">
-            <Registration />
-          </Route>
+            <Route path="/registration">
+              <Registration />
+            </Route>
 
-          <Route path="/login">
-            <Login />
-          </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
 
-          <Route path="/" exact>
-            <Home />
-          </Route>
+            <Route path="/" exact>
+              <Home />
+            </Route>
 
-          <Route path="/">
-            <Error />
-          </Route>
-        </Switch>
-      </Router>
-    </ChakraProvider>
+            <Route path="/">
+              <Error />
+            </Route>
+          </Switch>
+        </Router>
+      </ChakraProvider>
+    </StoreProvider>
   );
 };
 
