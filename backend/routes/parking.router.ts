@@ -8,4 +8,6 @@ parkingRouter.post('/', ParkiralisteController.create);
 
 parkingRouter.delete('/:idParkiraliste', ParkiralisteController.delete);
 
+parkingRouter.get('/all', ParkiralisteController.getAll);
+
 parkingRouter.get('/:idParkiraliste', ParkiralisteController.get);

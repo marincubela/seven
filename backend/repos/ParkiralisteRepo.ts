@@ -59,6 +59,19 @@ export class ParkiralisteRepo extends BaseRepo<ParkiralisteDTO> {
     });
   }
 
+  static async getAll(): Promise<ParkiralisteDTO[]> {
+    const parkings = await Parkiraliste.findAll();
+    const parkingsDTO: ParkiralisteDTO[] = [];
+
+    for (const parking of parkings) {
+      const parkiralisteData = await ParkiralisteMapper.toDTO(parking);
+
+      parkingsDTO.push(parkiralisteData);
+    }
+
+    return parkingsDTO;
+  }
+
   static async deleteByIdParkiraliste(idParkiraliste: number): Promise<any> {
     return await Parkiraliste.destroy({
       where: {
