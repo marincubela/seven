@@ -52,6 +52,15 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
 
     return vozilo;
   }
+  static async getVoziloByIdVozilo(
+    idVozilo : number
+  ): Promise<Vozilo> {
+    return await Vozilo.findOne({
+      where: {
+        idVozilo,
+      },
+    });
+  }
 
   static async deleteByIdVozilo(idVozilo: number): Promise<any>{
     return await Vozilo.destroy({
