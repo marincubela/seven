@@ -6,3 +6,8 @@ export const vehicleRouter = express.Router();
 
 vehicleRouter.post('/', VoziloController.create);
 vehicleRouter.delete('/:idVozilo', VoziloController.delete);
+vehicleRouter.get('/all', VoziloController.getAll);
+
+vehicleRouter.get('/client/:idRacun', VoziloController.getFromCompany);
+
+vehicleRouter.get('/:idVozilo', VoziloController.get);
