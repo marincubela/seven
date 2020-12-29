@@ -62,6 +62,38 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
     });
   }
 
+  static async getAll(): Promise<VoziloDTO[]> {
+    const vehicles = await Vozilo.findAll();
+    const vehiclesDTO: VoziloDTO[] = [];
+
+    for (const vehicle of vehicles) {
+      const voziloData = await VoziloMapper.toDTO(vehicle);
+
+      vehiclesDTO.push(voziloData);
+    }
+
+    return vehiclesDTO;
+  }
+
+  static async getVoziloFromClient(
+    idKlijent: number
+  ): Promise<VoziloDTO[]> {
+    const vehicles = await Vozilo.findAll({
+      where: {
+        idKlijent,
+      },
+    });
+    const vehiclesDTO: VoziloDTO[] = [];
+
+    for (const vehicle of vehicles) {
+      const voziloData = await VoziloMapper.toDTO(vehicle);
+
+      vehiclesDTO.push(voziloData);
+    }
+
+    return vehiclesDTO;
+  }
+
   static async deleteByIdVozilo(idVozilo: number): Promise<any>{
     return await Vozilo.destroy({
       where: {
