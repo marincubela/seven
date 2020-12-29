@@ -1,7 +1,15 @@
-import { CreateParkiralisteController } from './CreateParkiralisteController';
+import {
+  CreateParkiralisteController,
+  DeleteParkiralisteController,
+  GetAllParkiralisteController,
+  GetParkiralisteController,
+  GetFromCompanyParkiralisteController,
+} from '.';
+/*import { CreateParkiralisteController } from './CreateParkiralisteController';
 import { DeleteParkiralisteController } from './DeleteParkiralisteController';
-import { GetAllParkiralisteController } from './GetAllParkiralisteController';
+import { GetAllParkiralisteController } from './GetAllParkiralisteController'; 
 import { GetParkiralisteController } from './GetParkiralisteController';
+import { GetFromCompanyParkiralisteController } from './GetFromCompanyParkiralisteController'; */
 
 export class ParkiralisteController {
   public static create = new CreateParkiralisteController().execute;
@@ -11,4 +19,7 @@ export class ParkiralisteController {
   public static get = new GetParkiralisteController().execute;
 
   public static getAll = new GetAllParkiralisteController().execute;
+
+  public static getFromCompany = new GetFromCompanyParkiralisteController()
+    .execute;
 }

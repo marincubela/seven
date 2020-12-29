@@ -116,7 +116,15 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
     return Boolean(await KlijentRepo.getKlijentByIdRacun(idRacun));
   }
 
+  public static async getIdKlijent(idRacun: number): Promise<number> {
+    return (await KlijentRepo.getKlijentByIdRacun(idRacun)).idKlijent;
+  }
+
   public static async isTvrtka(idRacun: number): Promise<Boolean> {
     return Boolean(await TvrtkaRepo.getTvrtkaByIdRacun(idRacun));
+  }
+
+  public static async getIdTvrtka(idRacun: number): Promise<number> {
+    return (await TvrtkaRepo.getTvrtkaByIdRacun(idRacun)).idTvrtka;
   }
 }
