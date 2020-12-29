@@ -11,11 +11,11 @@ export class GetParkiralisteController extends BaseController {
     const idParkiraliste = Number(req.params.idParkiraliste);
 
     if (isNaN(idParkiraliste)) {
-      return this.fail(res, 'Id parkirališta nije broj');
+      return this.clientError(res, ['Id parkirališta nije broj']);
     }
 
     if (idParkiraliste < 1) {
-      return this.fail(res, 'Id parkirališta mora biti pozitivan');
+      return this.clientError(res, ['Id parkirališta mora biti pozitivan']);
     }
 
     const parkiraliste = await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
