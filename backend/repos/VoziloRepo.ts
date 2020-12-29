@@ -2,7 +2,6 @@ import { VoziloMapper } from '../mappers/VoziloMapper';
 import { Vozilo } from '../models/Vozilo';
 import { VoziloDTO } from '../dtos/VoziloDTO';
 import { BaseRepo } from './BaseRepo';
-
 export class VoziloRepo extends BaseRepo<VoziloDTO> {
   async exists(voziloDTO: VoziloDTO): Promise<boolean> {
     /*const { idKlijent } = VoziloMapper.toDomain(voziloDTO);
@@ -52,5 +51,13 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
     });
 
     return vozilo;
+  }
+
+  static async deleteByIdVozilo(idVozilo: number): Promise<any>{
+    return await Vozilo.destroy({
+      where: {
+        idVozilo,
+      },
+    });
   }
 }
