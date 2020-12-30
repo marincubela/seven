@@ -35,6 +35,7 @@ const theme = {
           fontSize: 'lg',
           '&[aria-current]': {
             fontWeight: 'bold',
+            color: 'primary.600',
           },
         },
       },
