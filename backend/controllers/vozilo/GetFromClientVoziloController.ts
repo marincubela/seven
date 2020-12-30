@@ -8,7 +8,7 @@ export class GetFromClientVoziloController extends BaseController {
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> => {
-    const idRacun = Number(req.params.idRacun);
+    const idRacun = Number(req.query.client);
 
     if (isNaN(idRacun)) {
       return this.clientError(res, ['Id nije broj']);
