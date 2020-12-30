@@ -1,5 +1,7 @@
 const BASE_URL =
-  process.env.NODE_ENV === 'production' ? 'https://pi-parkiraj-me.herokuapp.com/' : 'http://localhost:5000/';
+  process.env.NODE_ENV === 'production'
+    ? 'https://pi-parkiraj-me.herokuapp.com/'
+    : 'https://pi-parkiraj-me.herokuapp.com/';
 
 const defaultHeaders = {
   'Content-Type': 'application/json',
