@@ -42,7 +42,7 @@
   },
   "rules": {
     "prettier/prettier": "error",
-    "no-unused-vars": "error",
+    "no-unused-vars": "warn",
     "dot-notation": "off",
     "no-await-in-loop": "off",
     "max-len": [

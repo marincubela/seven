@@ -1,30 +1,25 @@
 import { Box, Center, HStack, Icon, Input, InputGroup, InputRightElement, Text, Link, VStack } from '@chakra-ui/core';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { MapContainer, TileLayer } from 'react-leaflet';
 
 import 'leaflet/dist/leaflet.css';
 
 import { useStore } from '../store/StoreProvider';
+import { Map } from '../components/home/Map';
 
-import { ReactComponent as SearchIcon } from '../icons/search.svg';
-import { ReactComponent as MapIcon } from '../icons/map.svg';
-import { ReactComponent as UserIcon } from '../icons/user.svg';
-import { ReactComponent as AddIcon } from '../icons/plus-circle.svg';
-import { ReactComponent as ClockIcon } from '../icons/clock.svg';
-import { ReactComponent as CarIcon } from '../icons/car.svg';
+import { ReactComponent as SearchIcon } from '../assets/icons/search.svg';
+import { ReactComponent as MapIcon } from '../assets/icons/map.svg';
+import { ReactComponent as UserIcon } from '../assets/icons/user.svg';
+import { ReactComponent as AddIcon } from '../assets/icons/plus-circle.svg';
+import { ReactComponent as ClockIcon } from '../assets/icons/clock.svg';
+import { ReactComponent as CarIcon } from '../assets/icons/car.svg';
 
 export const Home = observer(() => {
   const store = useStore();
 
   return (
-    <Box w="100vw" h="100vh" bg="center/cover no-repeat url('/images/map.png')">
-      <Box as={MapContainer} center={[45.8, 15.97]} zoom={14} w="100%" h="100%" zoomControl={false}>
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-      </Box>
+    <Box w="100vw" h="100vh">
+      <Map />
 
       <Box p={3} maxW="450px" w={['100%', '40%']} zIndex="400" position="fixed" top="0" left="0">
         <InputGroup size="lg" mb={4} display="none">
