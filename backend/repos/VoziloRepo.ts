@@ -52,9 +52,7 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
 
     return vozilo;
   }
-  static async getVoziloByIdVozilo(
-    idVozilo : number
-  ): Promise<Vozilo> {
+  static async getVoziloByIdVozilo(idVozilo: number): Promise<Vozilo> {
     return await Vozilo.findOne({
       where: {
         idVozilo,
@@ -75,9 +73,7 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
     return vehiclesDTO;
   }
 
-  static async getVoziloFromClient(
-    idKlijent: number
-  ): Promise<VoziloDTO[]> {
+  static async getVoziloFromClient(idKlijent: number): Promise<VoziloDTO[]> {
     const vehicles = await Vozilo.findAll({
       where: {
         idKlijent,
@@ -94,7 +90,7 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
     return vehiclesDTO;
   }
 
-  static async deleteByIdVozilo(idVozilo: number): Promise<any>{
+  static async deleteByIdVozilo(idVozilo: number): Promise<any> {
     return await Vozilo.destroy({
       where: {
         idVozilo,

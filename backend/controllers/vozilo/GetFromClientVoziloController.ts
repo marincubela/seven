@@ -22,7 +22,7 @@ export class GetFromClientVoziloController extends BaseController {
       return this.forbidden(res, null);
     }
 
-    if (!(await RacunRepo.isTvrtka(idRacun))) {
+    if (!(await RacunRepo.isKlijent(idRacun))) {
       return this.forbidden(res, null);
     }
 
