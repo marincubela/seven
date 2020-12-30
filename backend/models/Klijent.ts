@@ -1,7 +1,12 @@
-import Sequelize, { HasOneGetAssociationMixin, Model } from 'sequelize';
+import Sequelize, {
+  Association,
+  HasOneGetAssociationMixin,
+  Model,
+} from 'sequelize';
 
 import { db } from '../db/connect';
 import { Racun } from './Racun';
+import { Vozilo } from './Vozilo';
 
 export interface IKlijentAtrributes {
   idKlijent: number;
@@ -25,6 +30,10 @@ export class Klijent extends Model<
   public readonly updatedAt!: Date;
 
   public getRacun!: HasOneGetAssociationMixin<Racun>;
+
+  public static associations: {
+    vozilo: Association<Klijent, Vozilo>;
+  };
 }
 
 Klijent.init(

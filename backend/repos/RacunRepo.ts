@@ -3,6 +3,12 @@ import { RacunDTO } from '../dtos/RacunDTO';
 import { RacunMapper } from '../mappers/RacunMapper';
 import { BaseRepo } from './BaseRepo';
 import { hashPassword } from '../utils/password';
+import { KlijentRepo } from './KlijentRepo';
+import { TvrtkaRepo } from './TvrtkaRepo';
+import { Klijent } from '../models/Klijent';
+import { UsersDTO } from '../dtos/ResponseDtos/UsersDTO';
+import { KlijentMapper } from '../mappers/KlijentMapper';
+import { TvrtkaMapper } from '../mappers/TvrtkaMapper';
 
 /*
 export abstract class IRacunRepo extends BaseRepo<RacunDTO> {
@@ -25,6 +31,14 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
   async delete(racunDTO: RacunDTO): Promise<any> {
     const { idRacun } = RacunMapper.toDomain(racunDTO);
 
+    return await Racun.destroy({
+      where: {
+        idRacun,
+      },
+    });
+  }
+
+  static async deleteById(idRacun: number): Promise<any> {
     return await Racun.destroy({
       where: {
         idRacun,
@@ -79,5 +93,38 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
         idRacun,
       },
     });
+  }
+
+  public static async getAll(): Promise<UsersDTO> {
+    const accounts = await Racun.findAll();
+    const users: UsersDTO = { clients: [], companies: [] };
+
+    for (const racun of accounts) {
+      if (await this.isKlijent(racun.idRacun)) {
+        const klijent = await KlijentRepo.getKlijentByIdRacun(racun.idRacun);
+        users.clients.push(await KlijentMapper.toDTO(klijent));
+      } else {
+        const tvrtka = await TvrtkaRepo.getTvrtkaByIdRacun(racun.idRacun);
+        users.companies.push(await TvrtkaMapper.toDTO(tvrtka));
+      }
+    }
+
+    return users;
+  }
+
+  public static async isKlijent(idRacun: number): Promise<Boolean> {
+    return Boolean(await KlijentRepo.getKlijentByIdRacun(idRacun));
+  }
+
+  public static async getIdKlijent(idRacun: number): Promise<number> {
+    return (await KlijentRepo.getKlijentByIdRacun(idRacun)).idKlijent;
+  }
+
+  public static async isTvrtka(idRacun: number): Promise<Boolean> {
+    return Boolean(await TvrtkaRepo.getTvrtkaByIdRacun(idRacun));
+  }
+
+  public static async getIdTvrtka(idRacun: number): Promise<number> {
+    return (await TvrtkaRepo.getTvrtkaByIdRacun(idRacun)).idTvrtka;
   }
 }

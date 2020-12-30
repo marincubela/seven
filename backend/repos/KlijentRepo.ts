@@ -62,4 +62,12 @@ export class KlijentRepo extends BaseRepo<KlijentDTO> {
 
     return klijent;
   }
+
+  public static async getKlijentByIdRacun(idRacun: number): Promise<Klijent> {
+    return await Klijent.findOne({
+      where: {
+        idRacun,
+      },
+    });
+  }
 }

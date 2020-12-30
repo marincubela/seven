@@ -55,4 +55,12 @@ export class TvrtkaRepo extends BaseRepo<TvrtkaDTO> {
 
     return tvrtka;
   }
+
+  public static async getTvrtkaByIdRacun(idRacun: number): Promise<Tvrtka> {
+    return await Tvrtka.findOne({
+      where: {
+        idRacun,
+      },
+    });
+  }
 }
