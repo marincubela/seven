@@ -16,6 +16,13 @@ const theme = {
             },
           },
         },
+        map: {
+          field: {
+            bgColor: 'white',
+            boxShadow: 'lg',
+            border: ({ space, colors }) => `${space[1]} solid ${colors.accent[500]}`,
+          },
+        },
       },
       defaultProps: {
         variant: 'filled',
@@ -80,6 +87,7 @@ const theme = {
   colors: {
     primary: defaultTheme.colors.gray,
     secondary: defaultTheme.colors.teal,
+    accent: defaultTheme.colors.yellow,
     error: defaultTheme.colors.red,
   },
 };
