@@ -3,6 +3,8 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/core';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
+import 'leaflet/dist/leaflet.css';
+
 import customTheme from './styles/theme';
 import { Home } from './routes/home';
 import { Registration } from './routes/registration';
@@ -13,6 +15,7 @@ import { Error } from './routes/error';
 import { get } from './utils/network';
 import { StoreProvider } from './store/StoreProvider';
 import { getOrInitializeStore } from './utils/store';
+import { Map } from './routes/map';
 
 const App = () => {
   const [store] = useState(() => getOrInitializeStore());
@@ -32,6 +35,10 @@ const App = () => {
           <Switch>
             <Route path="/registration/company">
               <RegistrationCompany />
+            </Route>
+
+            <Route path="/map">
+              <Map />
             </Route>
 
             <Route path="/registration/person">

@@ -1,6 +1,9 @@
 import { Box, Center, HStack, Icon, Input, InputGroup, InputRightElement, Text, Link, VStack } from '@chakra-ui/core';
 import { observer } from 'mobx-react';
 import React from 'react';
+import { MapContainer, TileLayer } from 'react-leaflet';
+
+import 'leaflet/dist/leaflet.css';
 
 import { useStore } from '../store/StoreProvider';
 
@@ -16,7 +19,14 @@ export const Home = observer(() => {
 
   return (
     <Box w="100vw" h="100vh" bg="center/cover no-repeat url('/images/map.png')">
-      <Box p={3} maxW="450px" w={['100%', '40%']}>
+      <Box as={MapContainer} center={[45.8, 15.97]} zoom={14} w="100%" h="100%" zoomControl={false}>
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+      </Box>
+
+      <Box p={3} maxW="450px" w={['100%', '40%']} zIndex="400" position="fixed" top="0" left="0">
         <InputGroup size="lg" mb={4} display="none">
           <Input variant="map" placeholder="Traži parkiralište" />
           <InputRightElement pointerEvents="none">
