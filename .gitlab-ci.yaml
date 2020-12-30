@@ -1,0 +1,35 @@
+# Node docker image on which this would be run
+image: node:12.20.0
+
+before_deploy:
+  - cd backend/
+  - apt-get update -qq && apt-get install
+
+cache:
+  paths:
+    - backend/node_modules/
+
+stages:
+  - build
+  - deploy
+
+install_dependencies:
+  stage: build
+  only:
+    - backend
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - backend/node_modules/
+
+deploy_heroku:
+  stage: deploy
+  image: ruby:latest
+  only:
+    - backend
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
