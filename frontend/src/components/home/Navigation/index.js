@@ -1,6 +1,7 @@
 import { Box, Center, HStack, Icon, Text, Link, VStack } from '@chakra-ui/core';
 import React from 'react';
 import { Link as ReactLink } from 'react-router-dom';
+import { observer } from 'mobx-react';
 
 import { useStore } from '../../../store/StoreProvider';
 
@@ -10,7 +11,7 @@ import { ReactComponent as AddIcon } from '../../../assets/icons/plus-circle.svg
 import { ReactComponent as ClockIcon } from '../../../assets/icons/clock.svg';
 import { ReactComponent as CarIcon } from '../../../assets/icons/car.svg';
 
-export const Navigation = ({ ...rest }) => {
+export const Navigation = observer((props) => {
   const store = useStore();
 
   const isUserLoggedIn = Boolean(store.currentUser);
@@ -22,6 +23,7 @@ export const Navigation = ({ ...rest }) => {
       bgColor="white"
       boxShadow="lg"
       border={({ space, colors }) => `${space[1]} solid ${colors.accent[500]}`}
+      {...props}
     >
       <Center p={2}>
         <Text fontWeight="bold" fontSize="xl">
@@ -56,7 +58,7 @@ export const Navigation = ({ ...rest }) => {
         )}
 
         {isUserLoggedIn && (
-          <Link variant="nav" aria-current px={2} to="/profile">
+          <Link variant="nav" px={2} to="/profile">
             <HStack spacing={4}>
               <Icon as={UserIcon} />
               <Text>Moj profil</Text>
@@ -84,4 +86,4 @@ export const Navigation = ({ ...rest }) => {
       </VStack>
     </Box>
   );
-};
+});
