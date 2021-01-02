@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Button, Divider, HStack, Icon, Link, Text, VStack } from '@chakra-ui/core';
 import { Link as ReactLink } from 'react-router-dom';
 import { observer } from 'mobx-react';
@@ -10,6 +10,7 @@ import { ReactComponent as MapIcon } from '../../../assets/icons/map.svg';
 import { ReactComponent as UserIcon } from '../../../assets/icons/user.svg';
 import { ReactComponent as ClockIcon } from '../../../assets/icons/clock.svg';
 import { ReactComponent as CarIcon } from '../../../assets/icons/car.svg';
+import { ReactComponent as AdminIcon } from '../../../assets/icons/admin.svg';
 
 export const PrivateNavigation = observer((props) => {
   const store = useStore();
@@ -51,6 +52,19 @@ export const PrivateNavigation = observer((props) => {
           <Text>Moja vozila</Text>
         </HStack>
       </Link>
+
+      {store.currentUser?.isAdmin && (
+        <Fragment>
+          <Divider />
+
+          <Link as={ReactLink} variant="nav" px={2} to="/admin">
+            <HStack spacing={4}>
+              <Icon as={AdminIcon} />
+              <Text>Admin panel</Text>
+            </HStack>
+          </Link>
+        </Fragment>
+      )}
 
       <Divider />
 
