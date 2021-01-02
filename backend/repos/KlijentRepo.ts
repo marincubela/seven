@@ -70,4 +70,21 @@ export class KlijentRepo extends BaseRepo<KlijentDTO> {
       },
     });
   }
+
+  public static async getKlijentByIdKlijent(
+    idKlijent: number
+  ): Promise<Klijent> {
+    return await Klijent.findOne({
+      where: {
+        idKlijent,
+      },
+    });
+  }
+
+  public static async getIdRacunByIdKlijent(
+    idKlijent: number
+  ): Promise<number> {
+    return (await (await this.getKlijentByIdKlijent(idKlijent)).getRacun())
+      .idRacun;
+  }
 }
