@@ -3,6 +3,11 @@ const BASE_URL =
     ? 'https://pi-parkiraj-me.herokuapp.com/'
     : 'https://pi-parkiraj-me.herokuapp.com/';
 
+// const BASE_URL =
+//   process.env.NODE_ENV === 'production'
+//     ? 'https://pi-parkiraj-me-backend-test.herokuapp.com/'
+//     : 'https://pi-parkiraj-me-backend-test.herokuapp.com/';
+
 const defaultHeaders = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Credentials': 'true',
