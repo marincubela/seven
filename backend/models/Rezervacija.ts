@@ -1,12 +1,15 @@
-import Sequelize, { Model } from 'sequelize';
+import Sequelize, { HasOneGetAssociationMixin, Model } from 'sequelize';
 
 import { db } from '../db/connect';
 import { Klijent } from './Klijent.js';
 import { Parkiraliste } from './Parkiraliste.js';
 import { Vozilo } from './Vozilo.js';
 
-interface IRezervacijaAttributes {
+export interface IRezervacijaAttributes {
   idRezervacija: number;
+  idKlijent?: number;
+  idParkiraliste?: number;
+  idVozilo?: number;
 }
 
 export class Rezervacija extends Model<
@@ -14,8 +17,16 @@ export class Rezervacija extends Model<
   Omit<IRezervacijaAttributes, 'idRezervacija'>
 > {
   public idRezervacija!: number;
+  public idKlijent!: number;
+  public idParkiraliste!: number;
+  public idVozilo!: number;
+
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getKlijent!: HasOneGetAssociationMixin<Klijent>;
+  public getParkiraliste!: HasOneGetAssociationMixin<Parkiraliste>;
+  public getVozilo!: HasOneGetAssociationMixin<Vozilo>;
 }
 
 Rezervacija.init(
@@ -33,15 +44,18 @@ Rezervacija.init(
 );
 
 Rezervacija.belongsTo(Klijent, {
-  foreignKey: 'klijentId',
+  foreignKey: 'idKlijent',
+  as: 'Klijent',
 });
 
 Rezervacija.belongsTo(Vozilo, {
-  foreignKey: 'voziloId',
+  foreignKey: 'idVozilo',
+  as: 'Vozilo',
 });
 
 Rezervacija.belongsTo(Parkiraliste, {
-  foreignKey: 'parkiralisteId',
+  foreignKey: 'idParkiraliste',
+  as: 'Parkiraliste',
 });
 
 Rezervacija.sync().then(() => {
