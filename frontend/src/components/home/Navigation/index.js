@@ -26,9 +26,9 @@ export const Navigation = observer((props) => {
         </Text>
       </Center>
 
-      {!isUserLoggedIn && <PrivateNavigation />}
+      {isUserLoggedIn && <PrivateNavigation />}
 
-      {isUserLoggedIn && <PublicNavigation />}
+      {!isUserLoggedIn && <PublicNavigation />}
     </Box>
   );
 });
