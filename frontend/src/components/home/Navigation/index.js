@@ -58,7 +58,7 @@ export const Navigation = observer((props) => {
         )}
 
         {isUserLoggedIn && (
-          <Link variant="nav" px={2} to="/profile">
+          <Link as={ReactLink} variant="nav" px={2} to="/profile">
             <HStack spacing={4}>
               <Icon as={UserIcon} />
               <Text>Moj profil</Text>
