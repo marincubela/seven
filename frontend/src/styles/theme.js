@@ -3,6 +3,13 @@ import defaultTheme from '@chakra-ui/theme';
 const theme = {
   components: {
     Button: {
+      variants: {
+        'link.nav': {
+          ...defaultTheme.components.Link.baseStyle,
+          fontSize: 'md',
+          fontWeight: 'normal',
+        },
+      },
       defaultProps: {
         colorScheme: 'secondary',
       },
