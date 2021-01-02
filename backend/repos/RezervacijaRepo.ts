@@ -4,7 +4,6 @@ import { RezervacijaDTO } from '../dtos/RezervacijaDTO';
 import { BaseRepo } from './BaseRepo';
 
 export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
- 
   async exists(rezervacijaDTO: RezervacijaDTO): Promise<boolean> {
     return false;
   }
@@ -71,5 +70,24 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
         idRezervacija,
       },
     });
+  }
+
+  static async getReservationsFromClient(
+    idKlijent: number
+  ): Promise<RezervacijaDTO[]> {
+    const reservations = await Rezervacija.findAll({
+      where: {
+        idKlijent,
+      },
+    });
+    const reservationsDTO: RezervacijaDTO[] = [];
+
+    for (const reservation of reservations) {
+      const rezervacijaData = await RezervacijaMapper.toDTO(reservation);
+
+      reservationsDTO.push(rezervacijaData);
+    }
+
+    return reservationsDTO;
   }
 }
