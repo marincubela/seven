@@ -1,9 +1,10 @@
 import Sequelize, { HasOneGetAssociationMixin, Model } from 'sequelize';
 
 import { db } from '../db/connect';
-import { Klijent } from './Klijent.js';
-import { Parkiraliste } from './Parkiraliste.js';
-import { Vozilo } from './Vozilo.js';
+import { Klijent } from './Klijent';
+import { Parkiraliste } from './Parkiraliste';
+import { Vozilo } from './Vozilo';
+
 
 export interface IRezervacijaAttributes {
   idRezervacija: number;
