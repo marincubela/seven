@@ -6,9 +6,9 @@ export const parkingRouter = express.Router();
 
 parkingRouter.get('/all', ParkiralisteController.getAll);
 
-parkingRouter.get('/company/:idRacun', ParkiralisteController.getFromCompany);
-
 parkingRouter.get('/:idParkiraliste', ParkiralisteController.get);
+
+parkingRouter.get('', ParkiralisteController.getFromCompany);
 
 parkingRouter.post('/', ParkiralisteController.create);
 

@@ -90,6 +90,11 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
     return vehiclesDTO;
   }
 
+  static async getIdKlijentFromIdVozilo(idVozilo: number): Promise<number> {
+    return (await (await this.getVoziloByIdVozilo(idVozilo)).getKlijent())
+      .idKlijent;
+  }
+
   static async deleteByIdVozilo(idVozilo: number): Promise<any> {
     return await Vozilo.destroy({
       where: {

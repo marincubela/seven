@@ -1,0 +1,73 @@
+\chapter{Opis projektnog zadatka}
+
+Cilj projekta je razviti programsku podršku za stvaranje web aplikacije \textit {Parkiraj me}. Aplikacija će korisniku omogućiti praćenje stanja slobodnih parkirališnih mjesta na svim lokacijama diljem Zagreba u stvarnom vremenu te jednokratnu, ponavljajuću ili trajnu rezervaciju parkirališnog mjesta. Putem aplikacije sve zainteresirane tvrtke moći će ponuditi svoja parkirališta na kojima će korisnici kasnije moći rezervirati svoja mjesta.
+
+Pokretanjem aplikacije prikazuje se karta s prikazanim dostupnim parkiralištima i brojem slobodnih parkirališnih mjesta te opcija za registraciju ili prijavu u sustav.\newline 
+Neprijavljeni korisnik može se prijaviti na postojeći račun (mora upisati e-mail adresu i lozinku). Neregistrirani korisnik ima mogućnost registracije kao: \textit{Klijent} (rezervira parkirališna mjesta) ili \textit{Tvrtka} (ovlašteni zaposlenik tvrtke).
+\newline
+Za klijenta potrebni podaci za registraciju su:
+\begin{itemize}
+    \item OIB
+    \item Ime i prezime
+    \item E-mail adresa
+    \item Lozinka
+    \item Registracija vozila
+    \item Broj kreditne kartice
+\end{itemize}
+Za tvrtku potrebni podaci za registraciju su:
+\begin{itemize}
+    \item OIB
+    \item Naziv tvrtke
+    \item E-mail adresa
+    \item Lozinka
+    \item Adresa sjedišta
+\end{itemize}
+
+\textit{\underbar{Klijent}} je registrirani korisnik stariji od 18 godina, koji ima pravo rezervirati parkirno mjesto. Klijent na karti odabire parkiralište na kojem želi rezervirati mjesto i dobiva informaciju o broju slobodnih mjesta. Druga mogućnost je da na temelju trenutne lokacije aplikacija daje prijedlog najbližih parkirališta sa slobodnim parkirnim mjestima (prednost imaju parkirališta s brojem slobodnih mjesta većim od 10). Ukoliko odabrano parkiralište ima slobodnih mjesta odabire mogućnost rezervacije. Nakon toga klijent bira tip rezervacije koju želi i odabire vozilo za koje želi izvršiti rezervaciju. Rezervacija se naplaćuje izravnim terećenjem njegove kreditne kartice. Potvrdom plaćanja aktivira se rezervacija u sustavu. 
+
+Klijent istovremeno može imati više različitih tipova rezervacija, na različitim parkiralištima s različitim vozilima.
+
+Klijent ima mogućnost ostavljanja recenzije za sva parkirališta.
+\newline
+
+\textit{\underbar{Tvrtka}} je korisnik kojeg prijavljuje ovlašteni zaposlenik tvrtke. Ovlašteni zaposlenik nakon registracije svoje tvrtke unosi podatke o parkiralištima koje nudi ta tvrtka. Odabirom opcije za dodavanje parkirališta unosi se:
+\begin{itemize}
+    \item ime parkirališta
+    \item lokacija parkirališta
+    \item tip parkirališta (otvoreno ili zatvoreno)
+    \item ukupni broj mjesta 
+    \item broj invalidskih mjesta (potrebno za određivanje broja slobodnih mjesta)
+    \item cijena parkinga
+\end{itemize}
+ Preduvjet za prijavu parkirališta je opremljenost pametnim kamerama na svakom parkirališnom mjestu kako bi se prepoznala zauzeta mjesta te kako bi se mogla očitati registracija vozila na parkirališnom mjestu. Nakon uspješne prijave parkirališta, to parkiralište postaje vidljivo svim korisnicima aplikacije na karti te su na njemu moguće rezervacije.
+\newline
+
+\textit{\underbar{Administrator}} sustava upravlja svim korisnicima aplikacije. On ima pristup popisu svih registriranih korisnika i njihovih osnovnih podataka (ime, prezime, e-mail adresa, popis vozila). Ima pristup popisu rezervacija,
+također može potvrditi dodavanje ili brisanje parkirališta.
+\newpage\textit{Upravljanje korisničkim računom}
+
+Korisnici imaju mogućnost upravljanja svojim računima, pregledavanjem, uređivanjem i brisanjem svojeg računa.
+
+Klijent ima pregled svih svojih prijavljenih vozila. Svako vozilo ima svoju registraciju, ime i boju. Vozilo klijent može uređivati (promjenom registracije, imena ili boje vozila). Može dodavati nova vozila ili postojeća obrisati. 
+
+Klijent ima pregled svih svojih kreditnih kartica. Svaka kartica ima svoj broj, datum valjanosti, ime vlasnika kartice i CVV. Kartice se mogu uređivati u slučaju pogrešnog unosa, mogu se dodavati nove ili brisati postojeće.
+
+Tvrtka ima pregled vlastitih parkirališta. Svako parkiralište može uređivati, može dodavati nova parkirališta ili brisati postojeća. 
+\newline
+\newline
+\textit{Rezervacija}
+
+Parkirno mjesto se može rezervirati jednokratno, kao ponavljajuća rezervacija ili kao trajna rezervacija. Svaka rezervacija ima svoj jedinstveni id. Cijena rezervacije ovisi o tipu rezervacije i cjeniku pojedinog parkirališta.
+
+\textit{\underbar{Jednokratna rezervacija}} se rezervira za vremenski period kraći od 24 sata i rezervacija se mora obaviti barem 6 sati unaprijed. Plaćanje se vrši odmah u trenutku rezervacije.
+
+\textit{\underbar{Ponavljajuća rezervacija}} mora trajati najmanje 1 sat i mora se ponavljati barem jednom tjedno tijekom mjesec dana. Plaćanje se vrši svakih 30 dana.
+
+\textit{\underbar{Trajna rezervacija}} odnosi se na rezervaciju parkirališnog mjesta 0-24 sata svaki dan na neodređeni period. Plaćanje se vrši svakih 30 dana.
+\newline
+\newline
+\textit{Dodatno:}
+
+Ukoliko se briše korisnički račun neke tvrtke, brišu se sva njena parkirališta, a za sve korisnike ukida se rezervacija ako postoji na tim parkiralištima. Ukoliko ima preostalog neiskorištenog rezerviranog vremena korisniku se vraća novac.
+
+Sustav treba podržavati rad više korisnika u stvarnom vremenu.
