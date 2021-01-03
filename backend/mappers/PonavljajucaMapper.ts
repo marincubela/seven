@@ -11,6 +11,7 @@ export class PonavljajucaMapper extends Mapper {
       daniPonavljanja:raw.repeatDays,
       vrijemePocetka:raw.startTime,
       vrijemeKraja:raw.endTime,
+      idRezervacija: raw.idRezervacija,
     };
   }
   public static async toDTO(ponavljajuca: Ponavljajuca): Promise<PonavljajucaDTO> {
