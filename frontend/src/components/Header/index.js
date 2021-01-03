@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link as ReactLink } from 'react-router-dom';
-import { Text, Flex, Box } from '@chakra-ui/core';
+import { Text, Flex, Box } from '@chakra-ui/react';
 
 import { Navigation } from '../Navigation';
 

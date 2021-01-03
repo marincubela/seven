@@ -1,4 +1,4 @@
-import { Box, Center, Text } from '@chakra-ui/core';
+import { Box, Center, Text } from '@chakra-ui/react';
 import React from 'react';
 import { observer } from 'mobx-react';
 
