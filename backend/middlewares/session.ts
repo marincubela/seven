@@ -24,7 +24,7 @@ export const sessionMiddleware = (app) => {
     name: 'pm-session',
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
-      sameSite: 'none',
+      sameSite: false,
       secure: false,
       httpOnly: true,
       domain: 'parkirajme.xyz',

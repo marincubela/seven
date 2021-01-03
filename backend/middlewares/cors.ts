@@ -11,15 +11,13 @@ const allowedOrigins = [
   'https://pi-parkiraj-me-frontend.herokuapp.com/',
 
   'http://app.parkirajme.xyz',
-  'https://app.parkirajme.xyz/',
-  'http://app.parkirajme.xyz',
-  'https://app.parkirajme.xyz/',
+  'http://app.parkirajme.xyz/',
 
   'http://frontend-local.parkirajme.xyz',
   'http://frontend-local.parkirajme.xyz/',
 ];
 
 export const corsMiddleware = cors({
-  origin: allowedOrigins,
+  origin: '*',
   credentials: true,
 });
