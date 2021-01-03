@@ -27,26 +27,7 @@ export class GetReservationController extends BaseController {
       return this.notFound(res, ['Trazena rezervacija ne postoji!']);
     }
 
-    const {
-      firstName,
-      lastName,
-      cardNumber,
-      registration,
-      carName,
-      color,
-      parkingName,
-      capacity,
-      disabledCapacity,
-      parkingType,
-      coordinates,
-      oneTimePrice,
-      repetitivePrice,
-      permanentPrice,
-      email,
-      name,
-      address,
-      ...rezervacijaData
-    } = await RezervacijaMapper.toDTO(rezervacija);
+    const rezervacijaData = await RezervacijaMapper.toDTO(rezervacija);
 
     return this.ok(res, {
       data: {
