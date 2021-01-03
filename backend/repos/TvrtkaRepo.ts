@@ -63,4 +63,16 @@ export class TvrtkaRepo extends BaseRepo<TvrtkaDTO> {
       },
     });
   }
+
+  public static async getIdRacunFromIdTvrtka(
+    idTvrtka: number
+  ): Promise<number> {
+    const tvrtka = await Tvrtka.findOne({ where: { idTvrtka } });
+
+    if (tvrtka) {
+      return tvrtka.idRacun;
+    } else {
+      return null;
+    }
+  }
 }
