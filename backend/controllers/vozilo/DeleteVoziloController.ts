@@ -28,7 +28,11 @@ export class DeleteVoziloController extends BaseController {
       return this.forbidden(res, null);
     }
     //obrisi vozilo
-    await VoziloRepo.deleteByIdVozilo(idVozilo);
+    const deletedRows = await VoziloRepo.deleteByIdVozilo(idVozilo);
+
+    if (!deletedRows) {
+      return this.notFound(res, ['Traženo vozilo ne postoji']);
+    }
 
     return this.ok(res);
   };
