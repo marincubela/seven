@@ -30,7 +30,7 @@ export class CreateKlijentController extends BaseController {
       (await RacunRepo.getRacunByOib(klijentDto.OIB));
 
     if (klijentExits) {
-      this.clientError(res, ['Racun se već koristi']);
+      return this.clientError(res, ['Racun se već koristi']);
     }
 
     const klijent = await KlijentRepo.createKlijent(klijentDto);
