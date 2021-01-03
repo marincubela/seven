@@ -11,11 +11,12 @@ export interface IPonavljajucaAttributes {
   daniPonavljanja: IntegerDataType;
   vrijemePocetka: Date;
   vrijemeKraja: Date;
+  idRezervacija?: number;
 }
 
 export class Ponavljajuca extends Model<
   IPonavljajucaAttributes,
-  Omit<IPonavljajucaAttributes, 'idPonavljajuce'>
+  Omit<IPonavljajucaAttributes, 'idPonavljajuca'>
 > {
   idPonavljajuca!: number;
   datumRezervacije!: Date;
@@ -23,6 +24,7 @@ export class Ponavljajuca extends Model<
   daniPonavljanja!: IntegerDataType;
   vrijemePocetka!: Date;
   vrijemeKraja!: Date;
+  public idRezervacija!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
