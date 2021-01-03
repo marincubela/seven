@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, HStack, Heading } from '@chakra-ui/core';
+import { Link, HStack, Heading } from '@chakra-ui/react';
 import { useRouteMatch, Link as ReactLink } from 'react-router-dom';
 
 export const AdminNavigation = (props) => {

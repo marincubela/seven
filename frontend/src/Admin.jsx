@@ -1,4 +1,4 @@
-import { Divider } from '@chakra-ui/core';
+import { Divider } from '@chakra-ui/react';
 import { observer } from 'mobx-react';
 import React, { Fragment } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
