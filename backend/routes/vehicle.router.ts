@@ -8,7 +8,7 @@ vehicleRouter.post('/', VoziloController.create);
 
 vehicleRouter.delete('/:idVozilo', VoziloController.delete);
 
-vehicleRouter.get('/all', VoziloController.getAll);
+//vehicleRouter.get('/all', VoziloController.getAll);
 
 vehicleRouter.get('/:idVozilo', VoziloController.get);
 
