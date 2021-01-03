@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Heading, VStack, Text, Input, Button, Select } from '@chakra-ui/core';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { TwitterPicker } from 'react-color';
 
 import { post } from '../../utils/network';
 
 export function VehiclesAdd() {
   const { handleSubmit, register, errors } = useForm();
+  const [carColor, setCarColor] = useState(null);
   const history = useHistory();
 
   function onVehicleInput(formData) {
@@ -14,7 +16,9 @@ export function VehiclesAdd() {
       data: {
         registration: formData['add-vehicle-registration'],
         carName: formData['add-vehicle-name'],
-        color: formData['add-vehicle-color'],
+        // color: formData['add-vehicle-color'],
+        // mozda nije najbolje rjesenje???
+        color: carColor.hex,
       },
     };
 
@@ -31,6 +35,11 @@ export function VehiclesAdd() {
         }
       });
   }
+
+  // function handleChangeComplete = (color) => {
+  //   this.inputColor = color;
+  // };
+
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
       <Heading as="h2" size="xl" marginY="4">
@@ -66,7 +75,7 @@ export function VehiclesAdd() {
             </Text>
           ) : null}
           <Text>Boja</Text>
-          <Select
+          {/* <Select
             variant="filled"
             placeholder="Odaberi boju"
             ref={register({
@@ -75,11 +84,26 @@ export function VehiclesAdd() {
             isInvalid={errors['add-vehicle-color']}
             name="add-vehicle-color"
           >
-            <option>crvena</option>
-            <option>zelena</option>
-            <option>žuta</option>
-            <option>plava</option>
-          </Select>
+            <option value="#FF0000" style={{ color: '#FF0000' }}>
+              Crvena
+            </option>
+            <option value="#00FF00" style={{ color: '#00FF00' }}>
+              zelena
+            </option>
+
+            <option value="#FFFF00" style={{ color: '#FFFF00' }}>
+              žuta
+            </option>
+            <option value="#0000FF" style={{ color: '#0000FF' }}>
+              plava
+            </option>
+          </Select> */}
+          <TwitterPicker
+            onChangeComplete={(color) => {
+              setCarColor(color);
+            }}
+          />
+
           {errors['add-vehicle-color'] ? (
             <Text color="error.500" fontSize="sm">
               {errors['add-vehicle-color'].message}
