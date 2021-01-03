@@ -53,7 +53,7 @@ export const PrivateNavigation = observer((props) => {
         </HStack>
       </Link>
 
-      {store.currentUser?.isAdmin && (
+      {store.currentUser?.admin && (
         <Fragment>
           <Divider />
 
