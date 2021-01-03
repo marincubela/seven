@@ -10,11 +10,6 @@ import { UsersDTO } from '../dtos/ResponseDtos/UsersDTO';
 import { KlijentMapper } from '../mappers/KlijentMapper';
 import { TvrtkaMapper } from '../mappers/TvrtkaMapper';
 
-/*
-export abstract class IRacunRepo extends BaseRepo<RacunDTO> {
-  public abstract createRacun(racunDTO: RacunDTO): Promise<Racun>;
-}
-*/
 export class RacunRepo implements BaseRepo<RacunDTO> {
   async exists(racunDTO: RacunDTO): Promise<boolean> {
     const { idRacun } = RacunMapper.toDomain(racunDTO);
