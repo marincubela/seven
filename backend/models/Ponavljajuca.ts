@@ -1,20 +1,22 @@
-import Sequelize, { IntegerDataType, Model } from 'sequelize';
+import Sequelize, { IntegerDataType} from 'sequelize';
+import { HasOneGetAssociationMixin, Model } from 'sequelize';
 
 import { db } from '../db/connect';
 import { Rezervacija } from './Rezervacija.js';
 
-interface IPonavljajucaAttributes {
+export interface IPonavljajucaAttributes {
   idPonavljajuca: number;
   datumRezervacije: Date;
   datumKrajaRez: Date;
   daniPonavljanja: IntegerDataType;
   vrijemePocetka: Date;
   vrijemeKraja: Date;
+  idRezervacija?: number;
 }
 
 export class Ponavljajuca extends Model<
   IPonavljajucaAttributes,
-  Omit<IPonavljajucaAttributes, 'idPonavljajuce'>
+  Omit<IPonavljajucaAttributes, 'idPonavljajuca'>
 > {
   idPonavljajuca!: number;
   datumRezervacije!: Date;
@@ -22,9 +24,12 @@ export class Ponavljajuca extends Model<
   daniPonavljanja!: IntegerDataType;
   vrijemePocetka!: Date;
   vrijemeKraja!: Date;
+  public idRezervacija!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getRezervacija!: HasOneGetAssociationMixin<Rezervacija>;
 }
 
 Ponavljajuca.init(
@@ -63,6 +68,7 @@ Ponavljajuca.init(
 
 Ponavljajuca.belongsTo(Rezervacija, {
   foreignKey: 'rezervacijaId',
+  as:'Rezervacija',
 });
 
 Ponavljajuca.sync().then(() => {

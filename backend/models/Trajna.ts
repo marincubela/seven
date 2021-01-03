@@ -1,24 +1,27 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, HasOneGetAssociationMixin } from 'sequelize';
 
 import { db } from '../db/connect';
 import { Rezervacija } from './Rezervacija.js';
 
-interface ITrajnaAttributes {
+export interface ITrajnaAttributes {
   idTrajna: number;
   vrijemePocetak: Date;
   vrijemeKraj: Date;
+  idRezervacija?: number;
 }
 
 export class Trajna extends Model<
   ITrajnaAttributes,
-  Omit<ITrajnaAttributes, 'id'>
+  Omit<ITrajnaAttributes, 'idTrajna'>
 > {
   public idTrajna!: number;
   public vrijemePocetak!: Date;
   public vrijemeKraj!: Date;
+  public idRezervacija!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+  public getRezervacija!: HasOneGetAssociationMixin<Rezervacija>;
 }
 
 Trajna.init(
