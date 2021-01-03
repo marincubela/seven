@@ -60,6 +60,16 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
     return await RacunRepo.createRacun(racunDTO);
   }
 
+  public static async exists(idRacun: number): Promise<Boolean> {
+    return Boolean(
+      await Racun.findOne({
+        where: {
+          idRacun,
+        },
+      })
+    );
+  }
+
   public static async createRacun(racunDTO: RacunDTO): Promise<Racun> {
     const { idRacun, lozinka, ...racunData } = RacunMapper.toDomain(racunDTO);
 
