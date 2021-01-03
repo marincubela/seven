@@ -5,8 +5,6 @@ import { Jednokratna } from '../models/Jednokratna';
 import { BaseRepo } from './BaseRepo';
 import { RezervacijaRepo } from './RezervacijaRepo';
 
-
-
 export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
   async exists(jednokratnaDTO: JednokratnaDTO): Promise<boolean> {
     const { idRezervacija } = JednokratnaMapper.toDomain(jednokratnaDTO);
@@ -32,7 +30,9 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
 
   async save(jednokratnaDTO: JednokratnaDTO): Promise<any> {
     if (await this.exists(jednokratnaDTO)) {
-      const { idRezervacija, ...jednokratnaData } = JednokratnaMapper.toDomain(jednokratnaDTO);
+      const { idRezervacija, ...jednokratnaData } = JednokratnaMapper.toDomain(
+        jednokratnaDTO
+      );
 
       const rezervacijaRepo = new RezervacijaRepo();
       rezervacijaRepo.save(jednokratnaDTO);
@@ -47,10 +47,14 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
     return await JednokratnaRepo.createJednokratna(jednokratnaDTO);
   }
 
-  static async createJednokratna(jednokratnaDTO: JednokratnaDTO): Promise<Jednokratna> {
+  static async createJednokratna(
+    jednokratnaDTO: JednokratnaDTO
+  ): Promise<Jednokratna> {
     const rezervacija = await RezervacijaRepo.createRezervacija(jednokratnaDTO);
 
-    const { idJednokratna, ...jednokratnaData } = JednokratnaMapper.toDomain(jednokratnaDTO);
+    const { idJednokratna, ...jednokratnaData } = JednokratnaMapper.toDomain(
+      jednokratnaDTO
+    );
 
     const jednokratna = await Jednokratna.create({
       ...jednokratnaData,
@@ -60,7 +64,9 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
     return jednokratna;
   }
 
-  public static async getJednokratnaByIdRezervacija(idRezervacija: number): Promise<Jednokratna> {
+  public static async getJednokratnaByIdRezervacija(
+    idRezervacija: number
+  ): Promise<Jednokratna> {
     return await Jednokratna.findOne({
       where: {
         idRezervacija,
@@ -81,7 +87,10 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
   public static async getIdRezervacijaByIdJednokratna(
     idJednokratna: number
   ): Promise<number> {
-    return (await (await this.getJednokratnaByIdJednokratna(idJednokratna)).getRezervacija())
-      .idRezervacija;
+    return (
+      await (
+        await this.getJednokratnaByIdJednokratna(idJednokratna)
+      ).getRezervacija()
+    ).idRezervacija;
   }
 }
