@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 
 import customTheme from './styles/theme';
 import { Home } from './routes/home';
+import { Profile } from './routes/profile';
 import { Registration } from './routes/registration';
 import { RegistrationCompany } from './routes/registrationCompany';
 import { RegistrationPerson } from './routes/registrationPerson';
@@ -46,6 +47,10 @@ const App = () => {
 
             <Route path="/login">
               <Login />
+            </Route>
+
+            <Route path="/profile">
+              <Profile />
             </Route>
 
             <Route path="/" exact>
