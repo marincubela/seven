@@ -20,12 +20,16 @@ export class PostSessionController extends BaseController {
 
     const racun = await RacunRepo.getRacunByEmail(racunDTO.email);
 
+    if (!racun) {
+      return this.clientError(res, ['Neispravni podaci za prijavu']);
+    }
+
     const passwordMatch = await arePasswordEqual(
       racunDTO.password,
       racun?.lozinka
     );
 
-    if (!racun || !passwordMatch) {
+    if (!passwordMatch) {
       return this.clientError(res, ['Neispravni podaci za prijavu']);
     }
 
