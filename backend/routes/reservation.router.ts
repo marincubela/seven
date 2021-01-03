@@ -6,6 +6,6 @@ export const reservationRouter = express.Router();
 
 reservationRouter.get('/:idReservation', RezervacijaController.get);
 
-reservationRouter.delete('/:idReservation', RezervacijaController.delete);
+reservationRouter.get('', RezervacijaController.getFromClient);
 
-reservationRouter.get('/:idKlijent', RezervacijaController.getFromClient);
+reservationRouter.delete('/:idReservation', RezervacijaController.delete);
