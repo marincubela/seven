@@ -3,6 +3,13 @@ import defaultTheme from '@chakra-ui/theme';
 const theme = {
   components: {
     Button: {
+      variants: {
+        'link.nav': {
+          ...defaultTheme.components.Link.baseStyle,
+          fontSize: 'md',
+          fontWeight: 'normal',
+        },
+      },
       defaultProps: {
         colorScheme: 'secondary',
       },
@@ -14,6 +21,13 @@ const theme = {
             '&:hover, &:focus': {
               bgColor: 'primary.50',
             },
+          },
+        },
+        map: {
+          field: {
+            bgColor: 'white',
+            boxShadow: 'lg',
+            border: ({ space, colors }) => `${space[1]} solid ${colors.accent[500]}`,
           },
         },
       },
@@ -28,6 +42,7 @@ const theme = {
           fontSize: 'lg',
           '&[aria-current]': {
             fontWeight: 'bold',
+            color: 'primary.600',
           },
         },
       },
@@ -80,6 +95,7 @@ const theme = {
   colors: {
     primary: defaultTheme.colors.gray,
     secondary: defaultTheme.colors.teal,
+    accent: defaultTheme.colors.yellow,
     error: defaultTheme.colors.red,
   },
 };
