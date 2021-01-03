@@ -22,11 +22,15 @@ export class DeleteUserController extends BaseController {
     }
 
     //brisanje racuna
-    await RacunRepo.deleteById(idRacun);
+    const deletedRows = await RacunRepo.deleteById(idRacun);
 
     //odjava
     if (!req.session.user.admin) {
       req.session.user = null;
+    } else {
+      if (!deletedRows) {
+        return this.notFound(res, ['Traženi korisnik ne postoji']);
+      }
     }
 
     return this.ok(res);
