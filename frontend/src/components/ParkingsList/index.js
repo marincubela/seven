@@ -1,43 +1,38 @@
-import React from 'react';
-import { Box, Button, Heading, Link } from '@chakra-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Box, Button, Heading, Link, Text } from '@chakra-ui/core';
 import { Link as ReactLink } from 'react-router-dom';
 import { get } from '../../utils/network';
-// import { useStore } from '../../store/StoreProvider';
+import { useStore } from '../../store/StoreProvider';
 
 export function ParkingsList() {
-  var Parkings;
+  const [parkings, setParkings] = useState([]);
 
-  // vehicle?client={broj racuna trenutnog usera}
-  // get(`vehicle?client=${encodeURIComponent('8')}`)
-  get(`parking/company/${encodeURIComponent('8')}`)
-    .then((res) => {
-      if (res.data && res.data.Parkings) {
-        // dohvaćena parkirališta
-        Parkings = res.data.Parkings;
-        console.log('dohvaćena parkirališta: ');
-        console.log(Parkings);
-      }
-    })
-    .catch((res) => {
-      console.log('erorrrrrrr');
-      console.log(res);
-      // if (true) {
-      //   // setErrormessage
-      // }
-    });
+  const store = useStore();
 
-  // const items = [];
-
-  // for (const voz in vehicles) {
-  //   var el = <li>voz</li>;
-
-  //   items.push(el);
-  // }
+  useEffect(() => {
+    get(`parking/company/${store.currentUser.idRacun}`)
+      .then((res) => {
+        if (res.data && res.data.parkings) {
+          setParkings(res.data.parkings);
+          console.log(res.data.parkings);
+        }
+      })
+      .catch((res) => {
+        console.log('eror');
+        console.log(res);
+      });
+  }, []);
 
   return (
     <Box>
       <Heading>Parkirališta</Heading>
-      {/* <Box>{vehicles}</Box> */}
+      <Box>
+        {parkings.map((p) => (
+          <Box key={p.idParkiraliste}>
+            <Text>{p.nazivParkiralista}</Text>
+          </Box>
+        ))}
+      </Box>
       <Button>
         <Link as={ReactLink} to="/parkings/add" flex="1">
           Dodaj
