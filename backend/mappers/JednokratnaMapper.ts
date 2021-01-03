@@ -8,6 +8,7 @@ export class JednokratnaMapper extends Mapper {
       idJednokratna: raw.idJednokratna,
       vrijemePocetak: raw.startTime,
       vrijemeKraj: raw.endTime,
+      idRezervacija: raw.idRezervacija,
     };
   }
   public static async toDTO(jednokratna: Jednokratna): Promise<JednokratnaDTO> {
