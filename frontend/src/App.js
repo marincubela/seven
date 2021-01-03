@@ -14,8 +14,8 @@ import { Login } from './routes/login';
 import { Error } from './routes/error';
 import { get } from './utils/network';
 // import { useStore } from './store/StoreProvider';
-import { VehiclesList } from './components/VehiclesList';
-import { Vehicles } from './routes/vehiclesAdd';
+import { VehiclesL } from './routes/vehiclesList';
+import { VehiclesA } from './routes/vehiclesAdd';
 
 import { StoreProvider } from './store/StoreProvider';
 import { getOrInitializeStore } from './utils/store';
@@ -37,11 +37,11 @@ const App = () => {
         <Router>
           <Switch>
             <Route path="/vehicles/add">
-              <Vehicles />
+              <VehiclesA />
             </Route>
 
             <Route path="/vehicles">
-              <VehiclesList />
+              <VehiclesL />
             </Route>
 
             <Route path="/registration/company">

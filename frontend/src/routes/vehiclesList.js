@@ -5,7 +5,7 @@ import { Header } from '../components/Header';
 
 import { VehiclesList } from '../components/VehiclesList';
 
-export const Vehicles = observer(() => {
+export const VehiclesL = observer(() => {
   return (
     <Fragment>
       <Header />

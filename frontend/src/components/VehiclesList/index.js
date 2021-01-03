@@ -12,7 +12,7 @@ export function VehiclesList() {
 
   useEffect(() => {
     if (store.currentUser) {
-      get(`vehicle/client/${store.currentUser.idRacun}`)
+      get(`vehicle?client=${store.currentUser.idRacun}`)
         .then((res) => {
           if (res.data && res.data.vehicles) {
             setVehicles(res.data.vehicles);
@@ -20,6 +20,7 @@ export function VehiclesList() {
           }
         })
         .catch((res) => {
+          // handle error
           console.log('erorrrrrrr');
           console.log(res);
         });
@@ -28,17 +29,23 @@ export function VehiclesList() {
     }
   }, []);
 
+  //registration: string;
+  // carName: string;
+  // color: boolean;
   return (
-    <Box>
-      <Heading>vozila</Heading>
+    <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
+      <Heading as="h2" size="xl" marginY="4">
+        vozila
+      </Heading>
 
-      <Box>
-        {vehicles.map((veh) => (
-          <Box key={veh.idVozilo}>
-            <Text>{veh.carName}</Text>
-          </Box>
-        ))}
-      </Box>
+      {vehicles
+        ? vehicles.map((veh) => (
+            <Box key={veh.idVozilo}>
+              <Text>{veh.color}</Text>
+            </Box>
+          ))
+        : null}
+
       <Button>
         <Link as={ReactLink} to="/vehicles/add" flex="1">
           Dodaj
