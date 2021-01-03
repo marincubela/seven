@@ -18,6 +18,6 @@ const allowedOrigins = [
 ];
 
 export const corsMiddleware = cors({
-  origin: '*',
+  origin: allowedOrigins,
   credentials: true,
 });
