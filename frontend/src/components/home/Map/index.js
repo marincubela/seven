@@ -22,7 +22,7 @@ export const Map = () => {
       .catch(() => {});
   }, []);
 
-  console.log(parkings?.[0]?.coordinates.split(' ').map((c) => parseFloat(c)));
+  console.log(parkings?.[0]?.coordinates.split(', ').map((c) => parseFloat(c)));
 
   return (
     <Box as={MapContainer} center={[45.8, 15.97]} zoom={14} w="100%" h="100%" zoomControl={false}>
