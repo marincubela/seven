@@ -2,6 +2,6 @@ export interface VoziloDTO {
   idVozilo?: number;
   registration: string;
   carName: string;
-  color: boolean;
+  color: string;
   idKlijent?: number;
 }
