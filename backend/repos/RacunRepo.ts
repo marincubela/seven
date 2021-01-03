@@ -105,12 +105,14 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
     const users: UsersDTO = { clients: [], companies: [] };
 
     for (const racun of accounts) {
-      if (await this.isKlijent(racun.idRacun)) {
+      if (await RacunRepo.isKlijent(racun.idRacun)) {
         const klijent = await KlijentRepo.getKlijentByIdRacun(racun.idRacun);
         users.clients.push(await KlijentMapper.toDTO(klijent));
-      } else {
+      } else if (await RacunRepo.isTvrtka(racun.idRacun)) {
         const tvrtka = await TvrtkaRepo.getTvrtkaByIdRacun(racun.idRacun);
         users.companies.push(await TvrtkaMapper.toDTO(tvrtka));
+      } else {
+        throw new Error('Račun nije ni tvrtka ni klijent, greška u bazi');
       }
     }
 
