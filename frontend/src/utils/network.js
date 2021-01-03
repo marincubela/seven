@@ -1,5 +1,5 @@
 const BASE_URL =
-  process.env.NODE_ENV === 'production' ? 'http://backend.parkirajme.xyz/' : 'http://backend-test.parkirajme.xyz';
+  process.env.NODE_ENV === 'production' ? 'http://backend.parkirajme.xyz/' : 'http://backend-test.parkirajme.xyz/';
 
 const defaultHeaders = {
   'Content-Type': 'application/json',
