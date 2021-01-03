@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-export const DeleteAlert = ({ isOpen, close, name, ...rest }) => {
+export const DeleteAlert = ({ isOpen, close, name, onDelete, ...rest }) => {
   return (
     <AlertDialog isOpen={isOpen} {...rest}>
       <AlertDialogOverlay>
@@ -24,7 +24,8 @@ export const DeleteAlert = ({ isOpen, close, name, ...rest }) => {
             <Button variant="outline" onClick={close}>
               Odustani
             </Button>
-            <Button colorScheme="error" ml={3}>
+
+            <Button colorScheme="error" ml={2} onClick={onDelete}>
               Izbriši
             </Button>
           </AlertDialogFooter>

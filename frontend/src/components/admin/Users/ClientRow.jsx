@@ -22,7 +22,11 @@ export const ClientRow = ({ user: { idRacun, firstName, lastName, email }, ...re
             icon={<Icon as={EditIcon} />}
           />
 
-          <DeleteAction aria-label={`Izbriši ${firstName} ${lastName}`} name={`${firstName} ${lastName}`} />
+          <DeleteAction
+            aria-label={`Izbriši ${firstName} ${lastName}`}
+            name={`${firstName} ${lastName}`}
+            idRacun={idRacun}
+          />
         </HStack>
       </Td>
     </Tr>

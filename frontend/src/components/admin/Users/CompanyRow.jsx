@@ -21,7 +21,7 @@ export const CompanyRow = ({ user: { idRacun, name, email }, ...rest }) => {
             icon={<Icon as={EditIcon} />}
           />
 
-          <DeleteAction aria-label={`Izbriši ${name}`} name={name} />
+          <DeleteAction aria-label={`Izbriši ${name}`} name={name} idRacun={idRacun} />
         </HStack>
       </Td>
     </Tr>
