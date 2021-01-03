@@ -7,6 +7,7 @@ export interface IJednokratnaAttributes {
   idJednokratna: number;
   vrijemePocetak: Date;
   vrijemeKraj: Date;
+  idRezervacija?: number;
 }
 
 export class Jednokratna extends Model<
@@ -16,6 +17,7 @@ export class Jednokratna extends Model<
   public idJednokratna!: number;
   public vrijemePocetak!: Date;
   public vrijemeKraj!: Date;
+  public idRezervacija!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
