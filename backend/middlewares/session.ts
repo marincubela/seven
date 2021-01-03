@@ -26,7 +26,7 @@ export const sessionMiddleware = (app) => {
       maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
       sameSite: app.get('env') === 'production' ? 'none' : undefined,
       secure: app.get('env') === 'production',
-      domain: 'herokuapp.com',
+      domain: 'parkirajme.xyz',
       path: '/',
     },
   });
