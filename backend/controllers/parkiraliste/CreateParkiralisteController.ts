@@ -34,20 +34,11 @@ export class CreateParkiralisteController extends BaseController {
       parkiralisteDto
     );
 
-    const {
-      idRacun,
-      email,
-      password,
-      OIB,
-      idTvrtka,
-      address,
-      name,
-      ...parkiralisteData
-    } = await ParkiralisteMapper.toDTO(parkiraliste);
+    const parkiralisteDTO = await ParkiralisteMapper.toDTO(parkiraliste);
 
     return this.ok(res, {
       data: {
-        parking: parkiralisteData,
+        parking: parkiralisteDTO,
       },
     });
   };

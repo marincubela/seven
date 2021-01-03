@@ -23,9 +23,6 @@ export class ParkiralisteMapper extends Mapper {
   public static async toDTO(
     parkiraliste: Parkiraliste
   ): Promise<ParkiralisteDTO> {
-    const tvrtka = await parkiraliste.getTvrtka();
-    const racun = await tvrtka.getRacun();
-
     return {
       idParkiraliste: parkiraliste.idParkiraliste,
       parkingName: parkiraliste.nazivParkiralista,
@@ -36,10 +33,7 @@ export class ParkiralisteMapper extends Mapper {
       oneTimePrice: parkiraliste.cijenaJednokratne,
       repetitivePrice: parkiraliste.cijenaPonavljajuce,
       permanentPrice: parkiraliste.cijenaTrajne,
-      idTvrtka: tvrtka.idTvrtka,
-      name: tvrtka.naziv,
-      address: tvrtka.adresa,
-      email: racun.email,
+      idTvrtka: parkiraliste.idTvrtka,
     };
   }
 }
