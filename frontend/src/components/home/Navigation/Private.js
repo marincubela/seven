@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Button, Divider, HStack, Icon, Link, Text, VStack } from '@chakra-ui/core';
+import { Button, Divider, HStack, Icon, Link, Text, VStack } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
