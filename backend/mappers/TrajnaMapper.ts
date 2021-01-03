@@ -8,6 +8,7 @@ export class TrajnaMapper extends Mapper {
       idTrajna: raw.idTrajna,
       vrijemePocetak: raw.startTime,
       vrijemeKraj: raw.endTime,
+      idRezervacija: raw.idRezervacija,
     };
   }
   public static async toDTO(trajna: Trajna): Promise<TrajnaDTO> {
