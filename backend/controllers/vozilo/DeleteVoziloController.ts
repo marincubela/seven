@@ -34,6 +34,6 @@ export class DeleteVoziloController extends BaseController {
       return this.notFound(res, ['Traženo vozilo ne postoji']);
     }
 
-    return this.ok(res);
+    return this.ok(res, {});
   };
 }

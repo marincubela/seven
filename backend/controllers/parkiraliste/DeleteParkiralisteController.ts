@@ -32,6 +32,6 @@ export class DeleteParkiralisteController extends BaseController {
 
     await ParkiralisteRepo.deleteByIdParkiraliste(idParkiraliste);
 
-    return this.ok(res);
+    return this.ok(res, {});
   };
 }

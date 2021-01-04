@@ -33,6 +33,6 @@ export class DeleteUserController extends BaseController {
       }
     }
 
-    return this.ok(res);
+    return this.ok(res, {});
   };
 }
