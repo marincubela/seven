@@ -30,19 +30,6 @@ export const ProfilePage = observer(() => {
         Osobni podaci
       </Heading>
       <Stack>
-        <Box>
-          <Text fontSize="sm">E-mail</Text>
-          <Text fontSize="lg" fontWeight="bold" color="primary.600">
-            {user.email}
-          </Text>
-        </Box>
-        <Box>
-          <Text fontSize="sm">OIB</Text>
-          <Text fontSize="lg" fontWeight="bold" color="primary.600">
-            {user.OIB}
-          </Text>
-        </Box>
-
         {user.klijent ? (
           <Fragment>
             <Box>
@@ -52,13 +39,13 @@ export const ProfilePage = observer(() => {
               </Text>
             </Box>
             <Box>
-              <Text fontSize="sm">Ime</Text>
+              <Text fontSize="sm">Prezime</Text>
               <Text fontSize="lg" fontWeight="bold" color="primary.600">
                 {user.klijent.lastName}
               </Text>
             </Box>
             <Box>
-              <Text fontSize="sm">Ime</Text>
+              <Text fontSize="sm">Broj kreditne kartice</Text>
               <Text fontSize="lg" fontWeight="bold" color="primary.600">
                 {user.klijent.cardNumber}
               </Text>
@@ -82,6 +69,19 @@ export const ProfilePage = observer(() => {
             </Box>
           </Fragment>
         ) : null}
+
+        <Box>
+          <Text fontSize="sm">E-mail</Text>
+          <Text fontSize="lg" fontWeight="bold" color="primary.600">
+            {user.email}
+          </Text>
+        </Box>
+        <Box>
+          <Text fontSize="sm">OIB</Text>
+          <Text fontSize="lg" fontWeight="bold" color="primary.600">
+            {user.OIB}
+          </Text>
+        </Box>
 
         <HStack spacing="10" padding="5">
           <Button>
