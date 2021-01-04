@@ -33,7 +33,7 @@ export class CreateTvrtkaController extends BaseController {
       (await RacunRepo.getRacunByOib(tvrtkaDto.OIB));
 
     if (tvrtaExists) {
-      return this.clientError(res, ['Racun se već koristi']);
+      return this.clientError(res, ['Račun se već koristi']);
     }
 
     const tvrtka: Tvrtka = await TvrtkaRepo.createTvrtka(tvrtkaDto);
