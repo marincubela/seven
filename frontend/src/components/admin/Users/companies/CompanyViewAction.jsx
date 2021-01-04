@@ -27,15 +27,15 @@ import { ReactComponent as EyeIcon } from '../../../../assets/icons/eye.svg';
 
 import { update } from '../../../../utils/network';
 
-export const ClientViewAction = ({ user, ...rest }) => {
-  const { firstName, lastName } = user;
+export const CompanyViewAction = ({ user, ...rest }) => {
+  const { name } = user;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const history = useHistory();
 
   const handleToggleAdmin = () => {
-    update(`user/client/${user.idRacun}`, {
+    update(`user/company/${user.idRacun}`, {
       data: {
         admin: !user.admin,
       },
@@ -51,7 +51,7 @@ export const ClientViewAction = ({ user, ...rest }) => {
       <IconButton
         ml="auto"
         variant="outline"
-        aria-label={`Uredi ${firstName} ${lastName}`}
+        aria-label={`Uredi ${name}`}
         colorScheme="primary"
         size="sm"
         icon={<Icon as={EyeIcon} />}
@@ -64,23 +64,14 @@ export const ClientViewAction = ({ user, ...rest }) => {
         <ModalContent>
           <ModalCloseButton />
 
-          <ModalHeader>
-            Uređivanje {firstName} {lastName}
-          </ModalHeader>
+          <ModalHeader>Uređivanje {name}</ModalHeader>
 
           <ModalBody>
             <Stack>
               <Box>
-                <Text fontSize="sm">Ime</Text>
+                <Text fontSize="sm">Naziv</Text>
                 <Text fontSize="lg" fontWeight="bold" color="primary.600">
-                  {user.firstName}
-                </Text>
-              </Box>
-
-              <Box>
-                <Text fontSize="sm">Prezime</Text>
-                <Text fontSize="lg" fontWeight="bold" color="primary.600">
-                  {user.lastName}
+                  {user.name}
                 </Text>
               </Box>
 
@@ -99,9 +90,9 @@ export const ClientViewAction = ({ user, ...rest }) => {
               </Box>
 
               <Box>
-                <Text fontSize="sm">Broj kartice</Text>
+                <Text fontSize="sm">Adresa sjedista</Text>
                 <Text fontSize="lg" fontWeight="bold" color="primary.600">
-                  {user.cardNumber}
+                  {user.address}
                 </Text>
               </Box>
             </Stack>
@@ -123,7 +114,7 @@ export const ClientViewAction = ({ user, ...rest }) => {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Jeste li sigurni da želite {user.firstName} {user.lastName}{' '}
+              Jeste li sigurni da želite {user.name}{' '}
               {user.admin ? 'ukloniti kao administratora' : 'dodati kao administratora'}?
             </AlertDialogBody>
 
