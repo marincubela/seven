@@ -30,7 +30,7 @@ export const Users = (props) => {
   }
 
   return (
-    <Tabs {...props}>
+    <Tabs {...props} isFitted>
       <TabList>
         <Tab>Klijenti</Tab>
         <Tab>Tvrtke</Tab>
