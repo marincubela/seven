@@ -2,6 +2,9 @@ import { RezervacijaMapper } from '../mappers/RezervacijaMapper';
 import { Rezervacija } from '../models/Rezervacija';
 import { RezervacijaDTO } from '../dtos/RezervacijaDTO';
 import { BaseRepo } from './BaseRepo';
+import { JednokratnaRepo } from './JednokratnaRepo';
+import { TrajnaRepo } from './TrajnaRepo';
+import { PonavljajucaRepo } from './PonavljajucaRepo';
 
 export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
   async exists(rezervacijaDTO: RezervacijaDTO): Promise<boolean> {
@@ -89,5 +92,37 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
     }
 
     return reservationsDTO;
+  }
+  //jednokratna
+  public static async isJednokratna(idRezervacija: number): Promise<Boolean> {
+    return Boolean(
+      await JednokratnaRepo.getJednokratnaByIdRezervacija(idRezervacija)
+    );
+  }
+  public static async getIdJednokratna(idRezervacija: number): Promise<Number> {
+    return (await JednokratnaRepo.getJednokratnaByIdRezervacija(idRezervacija))
+      .idJednokratna;
+  }
+
+  //ponavaljajuca
+  public static async isPonavljajuca(idRezervacija: number): Promise<Boolean> {
+    return Boolean(
+      await PonavljajucaRepo.getPonavljajucaByIdRezervacija(idRezervacija)
+    );
+  }
+  public static async getIdPonavljajuca(
+    idRezervacija: number
+  ): Promise<Number> {
+    return (
+      await PonavljajucaRepo.getPonavljajucaByIdRezervacija(idRezervacija)
+    ).idPonavljajuca;
+  }
+
+  //trajna
+  public static async isTrajna(idRezervacija: number): Promise<Boolean> {
+    return Boolean(await TrajnaRepo.getTrajnaByIdRezervacija(idRezervacija));
+  }
+  public static async getIdTrajna(idRezervacija: number): Promise<Number> {
+    return (await TrajnaRepo.getTrajnaByIdRezervacija(idRezervacija)).idTrajna;
   }
 }
