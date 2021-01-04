@@ -1,6 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Text, Button, Heading, Link, HStack, IconButton } from '@chakra-ui/react';
-import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import {
+  Box,
+  Text,
+  Button,
+  Heading,
+  Link,
+  HStack,
+  IconButton,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Divider,
+} from '@chakra-ui/react';
+import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
 
 import { get, destroy } from '../../utils/network';
@@ -18,11 +33,11 @@ export function VehiclesList() {
         .then((res) => {
           if (res.data && res.data.vehicles) {
             setVehicles(res.data.vehicles);
-            console.log(res.data.vehicles);
+            // console.log(res.data.vehicles);
           }
         })
         .catch((res) => {
-          // handle error
+          // set error
           console.log('erorrrrrrr');
           console.log(res);
         });
@@ -43,14 +58,31 @@ export function VehiclesList() {
       });
   }
 
+  const [isOpen, setIsOpen] = React.useState(false);
+  const onClose = () => setIsOpen(false);
+  const cancelRef = React.useRef();
+  const [deleteVehicle, setdeleteVehicle] = useState([]);
+
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
-      <Heading as="h2" size="xl" marginY="4" textAlign="center">
-        vozila
+      <Heading as="h2" size="xl" marginY="4" textAlign="center" marginBottom="6">
+        Vaša vozila
       </Heading>
 
+      {/* <Box h={10} pading={0}>
+        <HStack h="inherit">
+          <Box w="10%" marginRight={4}/>
+          <Box w="30%">
+          <Text fontSize="lg">Naziv vozila</Text>
+          </Box>
+          <Box w="30%">
+          <Text fontSize="lg">Registracija</Text>
+          </Box>
+        </HStack>
+      <Divider orientation="horizontal" bgColor="black" h="0.15rem" />
+      </Box> */}
       {vehicles.map((veh) => (
-        <Box key={veh.idVozilo} h={10} marginY="4" borderRadius="lg" background="white">
+        <Box key={veh.idVozilo} h={10} marginBottom="4" marginTop="2" borderRadius="lg" background="white">
           <HStack h="inherit">
             <Box
               bgColor={`${veh.color}`}
@@ -60,11 +92,11 @@ export function VehiclesList() {
               borderTopLeftRadius="base"
               marginRight={4}
             />
-            <Box w="30%">
+            <Box w="30%" paddingLeft={1}>
               <Text fontSize="lg">{veh.carName}</Text>
             </Box>
             {/* <Divider orientation="vertical" bgColor="primary.200" w={1} /> */}
-            <Box w="30%">
+            <Box w="30%" paddingLeft={2}>
               <Text fontSize="lg">{veh.registration}</Text>
             </Box>
             {/* <Divider orientation="vertical" bgColor="primary.200" w={1} /> */}
@@ -79,7 +111,9 @@ export function VehiclesList() {
               aria-label="Delete vehicle"
               icon={<DeleteIcon />}
               onClick={() => {
-                handleDelete(veh.idVozilo);
+                // handleDelete(veh.idVozilo);
+                setIsOpen(true);
+                setdeleteVehicle(veh);
               }}
             />
           </HStack>
@@ -93,6 +127,33 @@ export function VehiclesList() {
           </Link>
         </Button>
       </Box>
+      <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Izbriši vozilo
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Jeste li sigurni da želite izbrisati vozilo <b>{deleteVehicle.carName}</b>?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button leftIcon={<CloseIcon />} ref={cancelRef} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button
+                leftIcon={<DeleteIcon />}
+                colorScheme="red"
+                onClick={() => handleDelete(deleteVehicle.idVozilo)}
+                ml={3}
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Box>
   );
 }
