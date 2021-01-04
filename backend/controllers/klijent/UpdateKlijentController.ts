@@ -5,7 +5,6 @@ import { KlijentRepo } from '../../repos/KlijentRepo';
 import { KlijentValidator, RacunValidator } from '../../utils/validators';
 import { RacunMapper } from '../../mappers/RacunMapper';
 import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
-import { RacunRepo } from '../../repos/RacunRepo';
 import { KlijentMapper } from '../../mappers/KlijentMapper';
 
 export class UpdateKlijentController extends BaseController {
