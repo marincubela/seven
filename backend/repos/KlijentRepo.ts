@@ -87,4 +87,21 @@ export class KlijentRepo extends BaseRepo<KlijentDTO> {
     return (await (await this.getKlijentByIdKlijent(idKlijent)).getRacun())
       .idRacun;
   }
+
+
+  public static async update(klijentDTO: KlijentDTO):Promise<number>{
+    
+      const { idRacun, ...klijentData } = KlijentMapper.toDomain(klijentDTO);
+
+      const racunRepo = new RacunRepo();
+      racunRepo.save(klijentDTO);
+
+      await Klijent.update(klijentData, {
+        where: {
+          idRacun,
+        },
+      });
+      const klijent=await this.getIdRacunByIdKlijent(klijentDTO.idKlijent);
+      return klijent;
+}
 }
