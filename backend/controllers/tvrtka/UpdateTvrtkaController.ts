@@ -12,6 +12,20 @@ export class UpdateTvrtkaController extends BaseController {
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> => {
+    const idRacun = Number(req.params.idRacun);
+
+    if (isNaN(idRacun)) {
+      return this.clientError(res, ['Id nije broj']);
+    }
+
+    if (idRacun < 1) {
+      return this.clientError(res, ['Id mora biti pozitivan broj']);
+    }
+
+    if (idRacun !== req.session.user.idRacun && !req.session.user.admin) {
+      return this.forbidden(res, null);
+    }
+
     const tvrtkaDto = req.body.data as TvrtkaDTO;
 
     const validationErrors = (
@@ -25,29 +39,30 @@ export class UpdateTvrtkaController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
-    const idRacun = req.session.user.idRacun;
-
     if (!(await TvrtkaRepo.checkUniqueForUpdate(tvrtkaDto, idRacun))) {
       return this.clientError(res, ['Račun se već koristi']);
     }
 
     tvrtkaDto.idRacun = idRacun;
     const tvrtka = await TvrtkaRepo.update(tvrtkaDto);
-    const racun = await tvrtka.getRacun();
 
-    const { admin, email, OIB } = await RacunMapper.toDTO(racun);
+    if (idRacun === req.session.user.idRacun) {
+      const racun = await tvrtka.getRacun();
 
-    const { name, address } = await TvrtkaMapper.toDTO(tvrtka);
-    const user = {
-      idRacun,
-      admin,
-      email,
-      OIB,
-      klijent: null,
-      tvrtka: { name, address },
-    } as ISessionUserDTO;
+      const { admin, email, OIB } = await RacunMapper.toDTO(racun);
 
-    req.session.user = user;
+      const { name, address } = await TvrtkaMapper.toDTO(tvrtka);
+      const user = {
+        idRacun,
+        admin,
+        email,
+        OIB,
+        klijent: null,
+        tvrtka: { name, address },
+      } as ISessionUserDTO;
+
+      req.session.user = user;
+    }
 
     return this.ok(res, { data: { user: req.session.user } });
   };

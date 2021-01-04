@@ -12,6 +12,20 @@ export class UpdateKlijentController extends BaseController {
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> => {
+    const idRacun = Number(req.params.idRacun);
+
+    if (isNaN(idRacun)) {
+      return this.clientError(res, ['Id nije broj']);
+    }
+
+    if (idRacun < 1) {
+      return this.clientError(res, ['Id mora biti pozitivan broj']);
+    }
+
+    if (idRacun !== req.session.user.idRacun && !req.session.user.admin) {
+      return this.forbidden(res, null);
+    }
+
     const klijentDto = req.body.data as KlijentDTO;
 
     const validationErrors = (
@@ -25,32 +39,38 @@ export class UpdateKlijentController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
-    const idRacun = req.session.user.idRacun;
-
     if (!(await KlijentRepo.checkUniqueForUpdate(klijentDto, idRacun))) {
       return this.clientError(res, ['Račun se već koristi']);
     }
 
     klijentDto.idRacun = idRacun;
     const klijent = await KlijentRepo.update(klijentDto);
-    const racun = await klijent.getRacun();
 
-    const { admin, email, OIB } = await RacunMapper.toDTO(racun);
+    if (idRacun === req.session.user.idRacun) {
+      const racun = await klijent.getRacun();
 
-    const { firstName, lastName, cardNumber } = await KlijentMapper.toDTO(
-      klijent
-    );
-    const user = {
-      idRacun,
-      admin,
-      email,
-      OIB,
-      klijent: { firstName, lastName, cardNumber },
-      tvrtka: null,
-    } as ISessionUserDTO;
+      const { admin, email, OIB } = await RacunMapper.toDTO(racun);
 
-    req.session.user = user;
+      const { firstName, lastName, cardNumber } = await KlijentMapper.toDTO(
+        klijent
+      );
 
-    return this.ok(res, { data: { user: req.session.user } });
+      const user = {
+        idRacun,
+        admin,
+        email,
+        OIB,
+        klijent: { firstName, lastName, cardNumber },
+        tvrtka: null,
+      } as ISessionUserDTO;
+
+      req.session.user = user;
+    }
+
+    return this.ok(res, {
+      data: {
+        user: req.session.user,
+      },
+    });
   };
 }

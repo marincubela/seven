@@ -10,6 +10,6 @@ userRouter.get('/all', UserController.getAll);
 
 userRouter.get('/:idRacun', UserController.get);
 
-userRouter.patch('/client/update', KlijentController.update);
+userRouter.patch('/client/:idRacun', KlijentController.update);
 
-userRouter.patch('/company/update', TvrtkaController.update);
+userRouter.patch('/company/:idRacun', TvrtkaController.update);
