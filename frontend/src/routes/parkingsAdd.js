@@ -1,11 +1,11 @@
-import { Box } from '@chakra-ui/core';
+import { Box } from '@chakra-ui/react';
 import { observer } from 'mobx-react';
 import React, { Fragment } from 'react';
 import { Header } from '../components/Header';
 
 import { ParkingsAdd } from '../components/ParkingsAdd';
 
-export const Parkings = observer(() => {
+export const Parking = observer(() => {
   return (
     <Fragment>
       <Header />
