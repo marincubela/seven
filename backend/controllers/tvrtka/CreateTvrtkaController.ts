@@ -8,6 +8,7 @@ import { TvrtkaValidator } from '../../utils/validators/TvrtkaValidator';
 import { RacunValidator } from '../../utils/validators/RacunValidator';
 import { RacunMapper } from '../../mappers/RacunMapper';
 import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
+import { TvrtkaMapper } from '../../mappers/TvrtkaMapper';
 
 export class CreateTvrtkaController extends BaseController {
   executeImpl = async (
@@ -39,14 +40,23 @@ export class CreateTvrtkaController extends BaseController {
 
     const racun = await tvrtka.getRacun();
 
-    const { password, OIB, ...restData } = await RacunMapper.toDTO(racun);
+    const { idRacun, admin, email, OIB } = await RacunMapper.toDTO(racun);
 
-    req.session.user = restData as ISessionUserDTO;
+    const user = {
+      idRacun,
+      admin,
+      email,
+      OIB,
+      klijent: null,
+      tvrtka: null,
+    } as ISessionUserDTO;
 
-    return this.ok(res, {
-      data: {
-        user: restData,
-      },
-    });
+    const { name, address } = await TvrtkaMapper.toDTO(tvrtka);
+
+    user.tvrtka = { name, address };
+
+    req.session.user = user;
+
+    return this.ok(res, { data: { user: req.session.user } });
   };
 }
