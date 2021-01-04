@@ -116,6 +116,22 @@ export function ProfileEditCompanyPage() {
               </Text>
             ) : null}
           </VStack>
+          <VStack flex="1" align="stretch">
+            <Text as="label">Adresa sjedišta</Text>
+            <Input
+              ref={register({
+                required: 'Adresa sjedišta je obavezna',
+              })}
+              isInvalid={errors['edit-company-address']}
+              name="edit-company-address"
+              placeholder="Vaša adresa sjedišta"
+            />
+            {errors['edit-company-address'] ? (
+              <Text color="error.500" fontSize="sm">
+                {errors['edit-company-address'].message}
+              </Text>
+            ) : null}
+          </VStack>
 
           <Text color="error.500">{errorMessage}</Text>
 

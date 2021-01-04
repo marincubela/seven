@@ -1,5 +1,5 @@
-import { Box, Heading, VStack, Text, HStack, Button } from '@chakra-ui/react';
-import React from 'react';
+import { Box, Heading, Text, HStack, Button, Stack } from '@chakra-ui/react';
+import React, { Fragment } from 'react';
 import { observer } from 'mobx-react';
 import { Link as ReactLink, useHistory, Link } from 'react-router-dom';
 import { destroy } from '../../utils/network';
@@ -26,46 +26,82 @@ export const ProfilePage = observer(() => {
 
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
-      <Heading as="h2" size="l" marginY="4">
+      <Heading as="h2" size="xl" marginY="4">
         Osobni podaci
       </Heading>
-      <VStack flex="1" align="baseline">
-        <Text as="label">E-mail: {user.email}</Text>
-        <Text as="label">OIB: {user.OIB}</Text>
+      <Stack>
+        <Box>
+          <Text fontSize="sm">E-mail</Text>
+          <Text fontSize="lg" fontWeight="bold" color="primary.600">
+            {user.email}
+          </Text>
+        </Box>
+        <Box>
+          <Text fontSize="sm">OIB</Text>
+          <Text fontSize="lg" fontWeight="bold" color="primary.600">
+            {user.OIB}
+          </Text>
+        </Box>
+
         {user.klijent ? (
-          <VStack flex="1" align="baseline">
-            <Text as="label">Ime: {user.klijent.firstName}</Text>
-            <Text as="label">Prezime: {user.klijent.lastName}</Text>
-            <Text as="label">Broj kartice: {user.klijent.cardNumber}</Text>
-          </VStack>
+          <Fragment>
+            <Box>
+              <Text fontSize="sm">Ime</Text>
+              <Text fontSize="lg" fontWeight="bold" color="primary.600">
+                {user.klijent.firstName}
+              </Text>
+            </Box>
+            <Box>
+              <Text fontSize="sm">Ime</Text>
+              <Text fontSize="lg" fontWeight="bold" color="primary.600">
+                {user.klijent.lastName}
+              </Text>
+            </Box>
+            <Box>
+              <Text fontSize="sm">Ime</Text>
+              <Text fontSize="lg" fontWeight="bold" color="primary.600">
+                {user.klijent.cardNumber}
+              </Text>
+            </Box>
+          </Fragment>
         ) : null}
 
         {user.tvrtka ? (
-          <VStack flex="1" align="baseline">
-            <Text as="label">Ime: {user.tvrtka.name}</Text>
-            <Text as="label">Adresa: {user.tvrtka.address}</Text>
-          </VStack>
+          <Fragment>
+            <Box>
+              <Text fontSize="sm">Ime</Text>
+              <Text fontSize="lg" fontWeight="bold" color="primary.600">
+                {user.tvrtka.name}
+              </Text>
+            </Box>
+            <Box>
+              <Text fontSize="sm">Adresa sjedišta</Text>
+              <Text fontSize="lg" fontWeight="bold" color="primary.600">
+                {user.tvrtka.address}
+              </Text>
+            </Box>
+          </Fragment>
         ) : null}
-      </VStack>
 
-      <HStack spacing="10" padding="5">
-        <Button>
-          {user.klijent ? (
-            <Link fontWeight="bold" marginLeft="2" as={ReactLink} to="/profile/edit/person">
-              Uredi korisnički račun
-            </Link>
-          ) : null}
+        <HStack spacing="10" padding="5">
+          <Button>
+            {user.klijent ? (
+              <Link fontWeight="bold" marginLeft="2" as={ReactLink} to="/profile/edit/person">
+                Uredi korisnički račun
+              </Link>
+            ) : null}
 
-          {user.tvrtka ? (
-            <Link fontWeight="bold" marginLeft="2" as={ReactLink} to="/profile/edit/company">
-              Uredi korisnički račun
-            </Link>
-          ) : null}
-        </Button>
-        <Button colorScheme="error" onClick={destroyUser}>
-          Izbriši korisnički račun
-        </Button>
-      </HStack>
+            {user.tvrtka ? (
+              <Link fontWeight="bold" marginLeft="2" as={ReactLink} to="/profile/edit/company">
+                Uredi korisnički račun
+              </Link>
+            ) : null}
+          </Button>
+          <Button colorScheme="error" onClick={destroyUser}>
+            Izbriši korisnički račun
+          </Button>
+        </HStack>
+      </Stack>
     </Box>
   );
 });
