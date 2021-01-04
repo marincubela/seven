@@ -1,5 +1,5 @@
 import React from 'react';
-import { HStack, Icon, Link, Text, VStack } from '@chakra-ui/core';
+import { HStack, Icon, Link, Text, VStack } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
