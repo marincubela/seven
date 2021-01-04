@@ -6,6 +6,7 @@ import { TvrtkaValidator, RacunValidator } from '../../utils/validators';
 import { RacunMapper } from '../../mappers/RacunMapper';
 import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
 import { TvrtkaMapper } from '../../mappers/TvrtkaMapper';
+import { RacunUpdateValidator } from '../../utils/validators/RacunUpdateValidator';
 
 export class UpdateTvrtkaController extends BaseController {
   executeImpl = async (
@@ -26,7 +27,7 @@ export class UpdateTvrtkaController extends BaseController {
       return this.forbidden(res, null);
     }
 
-    const oldTvrtkaData = await TvrtkaMapper.toDTO(
+    const { password, ...oldTvrtkaData } = await TvrtkaMapper.toDTO(
       await TvrtkaRepo.getTvrtkaByIdRacun(idRacun)
     );
 
@@ -34,7 +35,7 @@ export class UpdateTvrtkaController extends BaseController {
 
     const validationErrors = (
       await Promise.all([
-        RacunValidator.validate(tvrtkaDto),
+        RacunUpdateValidator.validate(tvrtkaDto),
         TvrtkaValidator.validate(tvrtkaDto),
       ])
     ).reduce((errs, err) => [...errs, ...err], []);
