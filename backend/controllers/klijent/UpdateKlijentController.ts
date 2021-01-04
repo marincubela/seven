@@ -27,26 +27,29 @@ export class UpdateKlijentController extends BaseController {
 
     const klijentExists =
       (await RacunRepo.getRacunByEmail(klijentDto.email)) ||
-      (await RacunRepo.getRacunByOib(klijentDto.OIB));
-    const racunId =await KlijentRepo.getIdRacunByIdKlijent(klijentDto.idRacun);
+      (await RacunRepo.getRacunByOib(klijentDto.OIB)) ||
+      (await KlijentRepo.getKlijentByCardNumber(klijentDto.cardNumber));
 
-    if (klijentExists && (racunId == req.session.user.idRacun || req.session.user.admin)) {
+    const idRacun = await KlijentRepo.getIdRacunByIdKlijent(klijentDto.idRacun);
+
+    if (
+      idRacun == req.session.user.idRacun &&
+      (await KlijentRepo.checkUniqueForUpdate(klijentDto, idRacun))
+    ) {
       await KlijentRepo.update(klijentDto);
-      const racun=await RacunRepo.getRacunById(racunId);
-    
+      const racun = await RacunRepo.getRacunById(idRacun);
 
-    const { password, OIB, ...restData } = await RacunMapper.toDTO(racun);
+      const { password, OIB, ...restData } = await KlijentMapper.toDTO(racun);
 
-    req.session.user = restData as ISessionUserDTO;
+      req.session.user = restData as ISessionUserDTO;
 
-    return this.ok(res, {
-      data: {
-        user: restData,
-      },
-    });
-  }
-else{
-  return this.forbidden(res, null);
-}
-}
+      return this.ok(res, {
+        data: {
+          user: restData,
+        },
+      });
+    } else {
+      return this.forbidden(res, null);
+    }
+  };
 }
