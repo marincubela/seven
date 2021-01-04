@@ -1,8 +1,9 @@
 import { HStack, Icon, IconButton, Td, Tr } from '@chakra-ui/react';
 import React from 'react';
 
-import { ReactComponent as EditIcon } from '../../../assets/icons/edit.svg';
-import { DeleteAction } from './DeleteAction';
+import { DeleteAction } from '../shared/DeleteAction';
+
+import { ReactComponent as EditIcon } from '../../../../assets/icons/edit.svg';
 
 export const CompanyRow = ({ user: { idRacun, name, email }, ...rest }) => {
   return (

@@ -2,8 +2,8 @@ import { Center, Spinner, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakr
 import React, { useEffect, useState } from 'react';
 
 import { get } from '../../../utils/network';
-import { Clients } from './Clients';
-import { Companies } from './Companies';
+import { Clients } from './clients/Clients';
+import { Companies } from './companies/Companies';
 
 export const Users = (props) => {
   const [users, setUsers] = useState();

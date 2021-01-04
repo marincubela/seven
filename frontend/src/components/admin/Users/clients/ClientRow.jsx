@@ -1,10 +1,12 @@
-import { HStack, Icon, IconButton, Td, Tr } from '@chakra-ui/react';
+import { HStack, Td, Tr } from '@chakra-ui/react';
 import React from 'react';
 
-import { ReactComponent as EditIcon } from '../../../assets/icons/edit.svg';
-import { DeleteAction } from './DeleteAction';
+import { DeleteAction } from '../shared/DeleteAction';
+import { ClientEditAction } from './ClientEditAction';
 
-export const ClientRow = ({ user: { idRacun, firstName, lastName, email }, ...rest }) => {
+export const ClientRow = ({ user, ...rest }) => {
+  const { idRacun, firstName, lastName, email } = user;
+
   return (
     <Tr {...rest}>
       <Td>{idRacun}</Td>
@@ -12,15 +14,17 @@ export const ClientRow = ({ user: { idRacun, firstName, lastName, email }, ...re
       <Td>{lastName}</Td>
       <Td>{email}</Td>
       <Td>
-        <HStack spacing={4}>
-          <IconButton
+        <HStack spacing={2}>
+          {/* <IconButton
             ml="auto"
             variant="outline"
-            aria-label={`Uredi ${firstName} ${lastName}`}
+            aria-label={`Pregledaj ${firstName} ${lastName}`}
             colorScheme="primary"
             size="sm"
-            icon={<Icon as={EditIcon} />}
-          />
+            icon={<Icon as={EyeIcon} />}
+          /> */}
+
+          <ClientEditAction user={user} />
 
           <DeleteAction
             aria-label={`Izbriši ${firstName} ${lastName}`}

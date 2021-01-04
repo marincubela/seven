@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import React, { Fragment, useState } from 'react';
 
 import { DeleteAlert } from './DeleteAlert';
-import { destroy } from '../../../utils/network';
+import { destroy } from '../../../../utils/network';
 
-import { ReactComponent as DeleteIcon } from '../../../assets/icons/delete.svg';
+import { ReactComponent as DeleteIcon } from '../../../../assets/icons/delete.svg';
 
 export const DeleteAction = ({ name, idRacun, ...rest }) => {
   const [isOpen, setIsOpen] = useState(false);
