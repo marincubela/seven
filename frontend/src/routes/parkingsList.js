@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/core';
+import { Box } from '@chakra-ui/react';
 import { observer } from 'mobx-react';
 import React, { Fragment } from 'react';
 import { Header } from '../components/Header';
@@ -10,7 +10,7 @@ export const Parkings = observer(() => {
     <Fragment>
       <Header />
 
-      <Box as="main" marginX="auto" maxWidth="500px" paddingX="2">
+      <Box as="main" marginX="auto" maxWidth="auto" paddingX="2" paddingY="5">
         <ParkingsList />
       </Box>
     </Fragment>

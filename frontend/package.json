@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/icons": "^1.0.2",
     "@chakra-ui/react": "^1.1.1",
+    "@chakra-ui/system": "^1.1.2",
+    "@chakra-ui/theme": "^1.2.2",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
     "@testing-library/jest-dom": "^4.2.4",

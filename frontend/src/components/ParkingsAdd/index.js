@@ -8,7 +8,7 @@ import {
   Input,
   Button,
   Select,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
