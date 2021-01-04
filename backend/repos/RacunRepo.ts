@@ -5,10 +5,10 @@ import { BaseRepo } from './BaseRepo';
 import { hashPassword } from '../utils/password';
 import { KlijentRepo } from './KlijentRepo';
 import { TvrtkaRepo } from './TvrtkaRepo';
-import { Klijent } from '../models/Klijent';
 import { UsersDTO } from '../dtos/ResponseDtos/UsersDTO';
 import { KlijentMapper } from '../mappers/KlijentMapper';
 import { TvrtkaMapper } from '../mappers/TvrtkaMapper';
+import { Op } from 'sequelize';
 
 export class RacunRepo implements BaseRepo<RacunDTO> {
   async exists(racunDTO: RacunDTO): Promise<boolean> {
@@ -133,5 +133,19 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
 
   public static async getIdTvrtka(idRacun: number): Promise<number> {
     return (await TvrtkaRepo.getTvrtkaByIdRacun(idRacun)).idTvrtka;
+  }
+
+  public static async checkUniqueForUpdate(
+    racunDTO: RacunDTO,
+    idRacun: number
+  ): Promise<Boolean> {
+    const racun = await Racun.findAll({
+      where: {
+        [Op.or]: [{ OIB: racunDTO.OIB }, { email: racunDTO.email }],
+        idRacun: { [Op.ne]: idRacun },
+      },
+    });
+
+    return !racun.length;
   }
 }

@@ -4,11 +4,7 @@ import { KlijentMapper } from '../mappers/KlijentMapper';
 import { Klijent } from '../models/Klijent';
 import { BaseRepo } from './BaseRepo';
 import { RacunRepo } from './RacunRepo';
-
-/*
-export interface IKlijentRepo extends BaseRepo<Klijent> {
-  createKlijent(klijentDTO: KlijentDTO): Promise<Klijent>;
-} */
+import { Op } from 'sequelize';
 
 export class KlijentRepo extends BaseRepo<KlijentDTO> {
   async exists(klijentDTO: KlijentDTO): Promise<boolean> {
@@ -98,20 +94,34 @@ export class KlijentRepo extends BaseRepo<KlijentDTO> {
       .idRacun;
   }
 
+  public static async update(klijentDTO: KlijentDTO): Promise<Klijent> {
+    const { idRacun, ...klijentData } = KlijentMapper.toDomain(klijentDTO);
 
-  public static async update(klijentDTO: KlijentDTO):Promise<number>{
-    
-      const { idRacun, ...klijentData } = KlijentMapper.toDomain(klijentDTO);
+    await new RacunRepo().save(klijentDTO);
 
-      const racunRepo = new RacunRepo();
-      racunRepo.save(klijentDTO);
+    await Klijent.update(klijentData, {
+      where: {
+        idRacun,
+      },
+    });
 
-      await Klijent.update(klijentData, {
-        where: {
-          idRacun,
-        },
-      });
-      const klijent=await this.getIdRacunByIdKlijent(klijentDTO.idKlijent);
-      return klijent;
-}
+    return this.getKlijentByIdRacun(idRacun);
+  }
+
+  public static async checkUniqueForUpdate(
+    klijentDTO: KlijentDTO,
+    idRacun: number
+  ): Promise<Boolean> {
+    const klijent = await Klijent.findAll({
+      where: {
+        brojKartice: klijentDTO.cardNumber,
+        idRacun: { [Op.ne]: idRacun },
+      },
+    });
+
+    return (
+      !klijent.length &&
+      (await RacunRepo.checkUniqueForUpdate(klijentDTO, idRacun))
+    );
+  }
 }

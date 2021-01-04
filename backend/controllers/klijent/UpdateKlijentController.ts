@@ -6,6 +6,7 @@ import { KlijentValidator, RacunValidator } from '../../utils/validators';
 import { RacunMapper } from '../../mappers/RacunMapper';
 import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
 import { RacunRepo } from '../../repos/RacunRepo';
+import { KlijentMapper } from '../../mappers/KlijentMapper';
 
 export class UpdateKlijentController extends BaseController {
   executeImpl = async (
@@ -25,31 +26,32 @@ export class UpdateKlijentController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
-    const klijentExists =
-      (await RacunRepo.getRacunByEmail(klijentDto.email)) ||
-      (await RacunRepo.getRacunByOib(klijentDto.OIB)) ||
-      (await KlijentRepo.getKlijentByCardNumber(klijentDto.cardNumber));
+    const idRacun = req.session.user.idRacun;
 
-    const idRacun = await KlijentRepo.getIdRacunByIdKlijent(klijentDto.idRacun);
-
-    if (
-      idRacun == req.session.user.idRacun &&
-      (await KlijentRepo.checkUniqueForUpdate(klijentDto, idRacun))
-    ) {
-      await KlijentRepo.update(klijentDto);
-      const racun = await RacunRepo.getRacunById(idRacun);
-
-      const { password, OIB, ...restData } = await KlijentMapper.toDTO(racun);
-
-      req.session.user = restData as ISessionUserDTO;
-
-      return this.ok(res, {
-        data: {
-          user: restData,
-        },
-      });
-    } else {
-      return this.forbidden(res, null);
+    if (!(await KlijentRepo.checkUniqueForUpdate(klijentDto, idRacun))) {
+      return this.clientError(res, ['Račun se već koristi']);
     }
+
+    klijentDto.idRacun = idRacun;
+    const klijent = await KlijentRepo.update(klijentDto);
+    const racun = await klijent.getRacun();
+
+    const { admin, email, OIB } = await RacunMapper.toDTO(racun);
+
+    const { firstName, lastName, cardNumber } = await KlijentMapper.toDTO(
+      klijent
+    );
+    const user = {
+      idRacun,
+      admin,
+      email,
+      OIB,
+      klijent: { firstName, lastName, cardNumber },
+      tvrtka: null,
+    } as ISessionUserDTO;
+
+    req.session.user = user;
+
+    return this.ok(res, { data: { user: req.session.user } });
   };
 }
