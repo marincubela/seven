@@ -15,6 +15,7 @@ export class VoziloMapper extends Mapper {
 
   public static async toDTO(vozilo: Vozilo): Promise<VoziloDTO> {
     return {
+      idVozilo: vozilo.idVozilo,
       registration: vozilo.registracija,
       carName: vozilo.nazivVozila,
       color: vozilo.boja,
