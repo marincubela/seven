@@ -6,6 +6,7 @@ import { KlijentValidator, RacunValidator } from '../../utils/validators';
 import { RacunMapper } from '../../mappers/RacunMapper';
 import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
 import { RacunRepo } from '../../repos/RacunRepo';
+import { KlijentMapper } from '../../mappers/KlijentMapper';
 
 export class CreateKlijentController extends BaseController {
   executeImpl = async (
@@ -38,14 +39,25 @@ export class CreateKlijentController extends BaseController {
 
     const racun = await klijent.getRacun();
 
-    const { password, OIB, ...restData } = await RacunMapper.toDTO(racun);
+    const { idRacun, admin, email, OIB } = await RacunMapper.toDTO(racun);
 
-    req.session.user = restData as ISessionUserDTO;
+    const user = {
+      idRacun,
+      admin,
+      email,
+      OIB,
+      klijent: null,
+      tvrtka: null,
+    } as ISessionUserDTO;
 
-    return this.ok(res, {
-      data: {
-        user: restData,
-      },
-    });
+    const { firstName, lastName, cardNumber } = await KlijentMapper.toDTO(
+      klijent
+    );
+
+    user.klijent = { firstName, lastName, cardNumber };
+
+    req.session.user = user;
+
+    return this.ok(res, { data: { user: req.session.user } });
   };
 }
