@@ -15,6 +15,7 @@ import { Error } from './routes/error';
 import { get } from './utils/network';
 import { StoreProvider } from './store/StoreProvider';
 import { getOrInitializeStore } from './utils/store';
+import { AdminRouter } from './Admin';
 
 const App = () => {
   const [store] = useState(() => getOrInitializeStore());
@@ -38,6 +39,10 @@ const App = () => {
       <ChakraProvider theme={extendTheme(customTheme)}>
         <Router>
           <Switch>
+            <Route path="/admin">
+              <AdminRouter />
+            </Route>
+
             <Route path="/registration/company">
               <RegistrationCompany />
             </Route>
