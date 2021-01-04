@@ -1,8 +1,8 @@
 import { Box, Heading, VStack, Text, HStack, Button } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { Link as ReactLink, useHistory, Link } from 'react-router-dom';
-import { get, destroy } from '../../utils/network';
+import { destroy } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
 
 export const ProfilePage = observer(() => {
@@ -18,7 +18,10 @@ export const ProfilePage = observer(() => {
   const user = store.currentUser;
 
   function destroyUser() {
-    destroy(`user/${user.idRacuna}`);
+    destroy(`user/${user.idRacun}`).then(() => {
+      store.setCurrentUser(null);
+      history.push('/');
+    });
   }
 
   return (
