@@ -37,6 +37,16 @@ export const post = (endpoint, body = {}, fetchOptions = {}) => {
   return baseFetch(endpoint, reqOptions);
 };
 
+export const update = (endpoint, body = {}, fetchOptions = {}) => {
+  const reqOptions = Object.assign({}, fetchOptions, {
+    method: 'PATCH',
+    headers: Object.assign({}, defaultHeaders, fetchOptions.headers),
+    body: JSON.stringify(body),
+  });
+
+  return baseFetch(endpoint, reqOptions);
+};
+
 export const destroy = (endpoint, fetchOptions = {}) => {
   const reqOptions = Object.assign({}, fetchOptions, {
     method: 'DELETE',
