@@ -20,14 +20,20 @@ import { getOrInitializeStore } from './utils/store';
 
 const App = () => {
   const [store] = useState(() => getOrInitializeStore());
+  const [finished, setFinished] = useState(false);
 
   useEffect(() => {
     get('session')
       .then((res) => {
         store.setCurrentUser(res.data.user);
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setFinished(true));
   }, []);
+
+  if (!finished) {
+    return null;
+  }
 
   return (
     <StoreProvider store={store}>
