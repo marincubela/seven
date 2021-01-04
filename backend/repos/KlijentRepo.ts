@@ -81,6 +81,16 @@ export class KlijentRepo extends BaseRepo<KlijentDTO> {
     });
   }
 
+  public static async getKlijentByCardNumber(
+    brojKartice: string
+  ): Promise<Klijent> {
+    return await Klijent.findOne({
+      where: {
+        brojKartice,
+      },
+    });
+  }
+
   public static async getIdRacunByIdKlijent(
     idKlijent: number
   ): Promise<number> {

@@ -8,7 +8,7 @@ export interface IVoziloAttributes {
   idVozilo: number;
   registracija: string;
   nazivVozila: string;
-  boja: boolean;
+  boja: string;
   idKlijent?: number;
 }
 
@@ -19,7 +19,7 @@ export class Vozilo extends Model<
   public idVozilo!: number;
   public registracija!: string;
   public nazivVozila!: string;
-  public boja: boolean;
+  public boja: string;
   public idKlijent!: number;
 
   public readonly createdAt!: Date;

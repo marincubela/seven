@@ -29,11 +29,11 @@ export class CreateVoziloController extends BaseController {
 
     const vozilo = await VoziloRepo.createVozilo(voziloDto);
 
-    const { registration, carName, color } = await VoziloMapper.toDTO(vozilo);
+    const voziloDTO = await VoziloMapper.toDTO(vozilo);
 
     return this.ok(res, {
       data: {
-        vehicle: { registration, carName, color },
+        vehicle: voziloDTO,
       },
     });
   };

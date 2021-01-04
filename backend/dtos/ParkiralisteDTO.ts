@@ -1,6 +1,4 @@
-import { TvrtkaDTO } from './TvrtkaDTO';
-
-export interface ParkiralisteDTO extends TvrtkaDTO {
+export interface ParkiralisteDTO {
   idParkiraliste?: number;
   parkingName: string;
   capacity: number;
@@ -10,4 +8,5 @@ export interface ParkiralisteDTO extends TvrtkaDTO {
   oneTimePrice: number;
   repetitivePrice: number;
   permanentPrice: number;
+  idTvrtka?: number;
 }

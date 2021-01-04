@@ -10,11 +10,6 @@ import { UsersDTO } from '../dtos/ResponseDtos/UsersDTO';
 import { KlijentMapper } from '../mappers/KlijentMapper';
 import { TvrtkaMapper } from '../mappers/TvrtkaMapper';
 
-/*
-export abstract class IRacunRepo extends BaseRepo<RacunDTO> {
-  public abstract createRacun(racunDTO: RacunDTO): Promise<Racun>;
-}
-*/
 export class RacunRepo implements BaseRepo<RacunDTO> {
   async exists(racunDTO: RacunDTO): Promise<boolean> {
     const { idRacun } = RacunMapper.toDomain(racunDTO);
@@ -60,6 +55,16 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
     return await RacunRepo.createRacun(racunDTO);
   }
 
+  public static async exists(idRacun: number): Promise<Boolean> {
+    return Boolean(
+      await Racun.findOne({
+        where: {
+          idRacun,
+        },
+      })
+    );
+  }
+
   public static async createRacun(racunDTO: RacunDTO): Promise<Racun> {
     const { idRacun, lozinka, ...racunData } = RacunMapper.toDomain(racunDTO);
 
@@ -100,12 +105,14 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
     const users: UsersDTO = { clients: [], companies: [] };
 
     for (const racun of accounts) {
-      if (await this.isKlijent(racun.idRacun)) {
+      if (await RacunRepo.isKlijent(racun.idRacun)) {
         const klijent = await KlijentRepo.getKlijentByIdRacun(racun.idRacun);
         users.clients.push(await KlijentMapper.toDTO(klijent));
-      } else {
+      } else if (await RacunRepo.isTvrtka(racun.idRacun)) {
         const tvrtka = await TvrtkaRepo.getTvrtkaByIdRacun(racun.idRacun);
         users.companies.push(await TvrtkaMapper.toDTO(tvrtka));
+      } else {
+        throw new Error('Račun nije ni tvrtka ni klijent, greška u bazi');
       }
     }
 

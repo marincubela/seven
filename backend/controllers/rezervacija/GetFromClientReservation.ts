@@ -8,7 +8,7 @@ export class GetFromClientReservation extends BaseController {
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> => {
-    const idKlijent = Number(req.params.idKlijent);
+    const idKlijent = Number(req.query.client);
 
     if (isNaN(idKlijent)) {
       return this.clientError(res, ['Id nije broj']);

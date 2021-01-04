@@ -5,6 +5,7 @@ import { ParkiralisteValidator } from '../../utils/validators/ParkiralisteValida
 import { TvrtkaRepo } from '../../repos/TvrtkaRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 import { ParkiralisteMapper } from '../../mappers/ParkiralisteMapper';
+import { RacunRepo } from '../../repos/RacunRepo';
 
 export class CreateParkiralisteController extends BaseController {
   executeImpl = async (
@@ -21,6 +22,10 @@ export class CreateParkiralisteController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
+    if (!(await RacunRepo.isTvrtka(req.session.user.idRacun))) {
+      return this.forbidden(res, null);
+    }
+
     parkiralisteDto.idTvrtka = (
       await TvrtkaRepo.getTvrtkaByIdRacun(req.session.user.idRacun)
     ).idTvrtka;
@@ -29,20 +34,11 @@ export class CreateParkiralisteController extends BaseController {
       parkiralisteDto
     );
 
-    const {
-      idRacun,
-      email,
-      password,
-      OIB,
-      idTvrtka,
-      address,
-      name,
-      ...parkiralisteData
-    } = await ParkiralisteMapper.toDTO(parkiraliste);
+    const parkiralisteDTO = await ParkiralisteMapper.toDTO(parkiraliste);
 
     return this.ok(res, {
       data: {
-        parking: parkiralisteData,
+        parking: parkiralisteDTO,
       },
     });
   };

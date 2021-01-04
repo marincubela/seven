@@ -23,6 +23,6 @@ export class DeleteReservationController extends BaseController {
     //obrisi
     await RezervacijaRepo.deleteByIdRezervacija(idRezervacija);
 
-    return this.ok(res);
+    return this.ok(res, {});
   };
 }
