@@ -5,8 +5,6 @@ import { Ponavljajuca } from '../models/Ponavljajuca';
 import { BaseRepo } from './BaseRepo';
 import { RezervacijaRepo } from './RezervacijaRepo';
 
-
-
 export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
   async exists(ponavljajucaDTO: PonavljajucaDTO): Promise<boolean> {
     const { idRezervacija } = PonavljajucaMapper.toDomain(ponavljajucaDTO);
@@ -32,7 +30,10 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
 
   async save(ponavljajucaDTO: PonavljajucaDTO): Promise<any> {
     if (await this.exists(ponavljajucaDTO)) {
-      const { idRezervacija, ...ponavljajucaData } = PonavljajucaMapper.toDomain(ponavljajucaDTO);
+      const {
+        idRezervacija,
+        ...ponavljajucaData
+      } = PonavljajucaMapper.toDomain(ponavljajucaDTO);
 
       const rezervacijaRepo = new RezervacijaRepo();
       rezervacijaRepo.save(ponavljajucaDTO);
@@ -47,10 +48,16 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
     return await PonavljajucaRepo.createPonavljajuca(ponavljajucaDTO);
   }
 
-  static async createPonavljajuca(ponavljajucaDTO: PonavljajucaDTO): Promise<Ponavljajuca> {
-    const rezervacija = await RezervacijaRepo.createRezervacija(ponavljajucaDTO);
+  static async createPonavljajuca(
+    ponavljajucaDTO: PonavljajucaDTO
+  ): Promise<Ponavljajuca> {
+    const rezervacija = await RezervacijaRepo.createRezervacija(
+      ponavljajucaDTO
+    );
 
-    const { idPonavljajuca, ...ponavljajucaData } = PonavljajucaMapper.toDomain(ponavljajucaDTO);
+    const { idPonavljajuca, ...ponavljajucaData } = PonavljajucaMapper.toDomain(
+      ponavljajucaDTO
+    );
 
     const ponavljajuca = await Ponavljajuca.create({
       ...ponavljajucaData,
@@ -60,7 +67,9 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
     return ponavljajuca;
   }
 
-  public static async getPonavljajucaByIdRezervacija(idRezervacija: number): Promise<Ponavljajuca> {
+  public static async getPonavljajucaByIdRezervacija(
+    idRezervacija: number
+  ): Promise<Ponavljajuca> {
     return await Ponavljajuca.findOne({
       where: {
         idRezervacija,
@@ -81,7 +90,10 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
   public static async getIdRezervacijaByIdPonavljajuca(
     idPonavljajuca: number
   ): Promise<number> {
-    return (await (await this.getPonavljajucaByIdPonavljajuca(idPonavljajuca)).getRezervacija())
-      .idRezervacija;
+    return (
+      await (
+        await this.getPonavljajucaByIdPonavljajuca(idPonavljajuca)
+      ).getRezervacija()
+    ).idRezervacija;
   }
 }
