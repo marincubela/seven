@@ -18,6 +18,7 @@ import { StoreProvider } from './store/StoreProvider';
 import { getOrInitializeStore } from './utils/store';
 import { ProfileEditPerson } from './routes/profileEditPerson';
 import { ProfileEditCompany } from './routes/profileEditCompany';
+import { AdminRouter } from './Admin';
 
 const App = () => {
   const [store] = useState(() => getOrInitializeStore());
@@ -41,6 +42,10 @@ const App = () => {
       <ChakraProvider theme={extendTheme(customTheme)}>
         <Router>
           <Switch>
+            <Route path="/admin">
+              <AdminRouter />
+            </Route>
+
             <Route path="/registration/company">
               <RegistrationCompany />
             </Route>
