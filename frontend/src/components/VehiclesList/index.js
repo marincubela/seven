@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Text, Button, Heading, Link, HStack, IconButton } from '@chakra-ui/core';
+import { Box, Text, Button, Heading, Link, HStack, IconButton } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
 

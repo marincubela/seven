@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Heading, VStack, Text, Input, Button, Select } from '@chakra-ui/core';
+import { Box, Heading, VStack, Text, Input, Button, Select } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { TwitterPicker } from 'react-color';
