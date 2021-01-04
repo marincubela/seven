@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ChakraProvider, extendTheme } from '@chakra-ui/core';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { observer } from 'mobx-react';
 

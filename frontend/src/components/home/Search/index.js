@@ -1,4 +1,4 @@
-import { Icon, Input, InputGroup, InputRightElement } from '@chakra-ui/core';
+import { Icon, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import React from 'react';
 
 import { ReactComponent as SearchIcon } from '../../../assets/icons/search.svg';
