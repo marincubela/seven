@@ -36,7 +36,9 @@ export const ClientViewAction = ({ user, ...rest }) => {
 
   const handleToggleAdmin = () => {
     update(`user/client/${user.idRacun}`, {
-      admin: !user.admin,
+      data: {
+        admin: !user.admin,
+      },
     }).then(() => {
       // This will trigger the users list to update after the user is deleted
       history.push('/admin');
