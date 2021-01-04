@@ -23,7 +23,7 @@ export class UpdateKlijentController extends BaseController {
       return this.clientError(res, ['Id mora biti pozitivan broj']);
     }
 
-    if (idRacun !== req.session.user.idRacun && !req.session.user.admin) {
+    if (idRacun !== req.session?.user.idRacun && !req.session?.user.admin) {
       return this.forbidden(res, null);
     }
 
