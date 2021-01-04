@@ -26,7 +26,11 @@ export class UpdateTvrtkaController extends BaseController {
       return this.forbidden(res, null);
     }
 
-    const tvrtkaDto = req.body.data as TvrtkaDTO;
+    const oldTvrtkaData = await TvrtkaMapper.toDTO(
+      await TvrtkaRepo.getTvrtkaByIdRacun(idRacun)
+    );
+
+    const tvrtkaDto = { ...oldTvrtkaData, ...req.body.data } as TvrtkaDTO;
 
     const validationErrors = (
       await Promise.all([
@@ -64,6 +68,10 @@ export class UpdateTvrtkaController extends BaseController {
       req.session.user = user;
     }
 
-    return this.ok(res, { data: { user: req.session.user } });
+    return this.ok(res, {
+      data: {
+        user: tvrtkaDto,
+      },
+    });
   };
 }

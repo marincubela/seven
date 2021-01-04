@@ -26,7 +26,11 @@ export class UpdateKlijentController extends BaseController {
       return this.forbidden(res, null);
     }
 
-    const klijentDto = req.body.data as KlijentDTO;
+    const oldClientData = await KlijentMapper.toDTO(
+      await KlijentRepo.getKlijentByIdRacun(idRacun)
+    );
+
+    const klijentDto = { ...oldClientData, ...req.body.data } as KlijentDTO;
 
     const validationErrors = (
       await Promise.all([
@@ -69,7 +73,7 @@ export class UpdateKlijentController extends BaseController {
 
     return this.ok(res, {
       data: {
-        user: req.session.user,
+        user: klijentDto,
       },
     });
   };
