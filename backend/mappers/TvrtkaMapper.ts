@@ -1,6 +1,7 @@
 import { Tvrtka, ITvrtkaAttributes } from '../models/Tvrtka';
 import { TvrtkaDTO } from '../dtos/TvrtkaDTO';
 import { Mapper } from './Mapper';
+import { RacunMapper } from './RacunMapper';
 
 export class TvrtkaMapper extends Mapper {
   public static toDomain(tvrtkaDTO: TvrtkaDTO): ITvrtkaAttributes {
@@ -16,9 +17,7 @@ export class TvrtkaMapper extends Mapper {
     const racun = await tvrtka.getRacun();
 
     return {
-      idRacun: racun.idRacun,
-      email: racun.email,
-      OIB: racun.OIB,
+      ...(await RacunMapper.toDTO(racun)),
       name: tvrtka.naziv,
       address: tvrtka.adresa,
     };
