@@ -1,39 +1,38 @@
 import React, { useState } from 'react';
-import { Box, Heading, VStack, Text, Input, Button, Select } from '@chakra-ui/core';
+import { Box, Heading, VStack, Text, Input, Button } from '@chakra-ui/core';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { TwitterPicker } from 'react-color';
 
-import { post } from '../../utils/network';
+// import { post } from '../../utils/network';
 
-export function VehiclesAdd() {
+export function VehicleUpdate() {
   const { handleSubmit, register, errors } = useForm();
   const [carColor, setCarColor] = useState(null);
-  const history = useHistory();
+  //   const history = useHistory();
+  const location = useLocation();
+  //   console.log(location);
+  //   console.log(location.search);
 
   function onVehicleInput(formData) {
-    const requestBody = {
-      data: {
-        registration: formData['add-vehicle-registration'],
-        carName: formData['add-vehicle-name'],
-        // color: formData['add-vehicle-color'],
-        // mozda nije najbolje rjesenje???
-        color: carColor.hex,
-      },
-    };
-
-    post('vehicle', requestBody)
-      .then((res) => {
-        console.log('odgovor je: ' + res);
-        history.replace('/vehicles');
-      })
-
-      .catch((res) => {
-        if (res.errors && res.errors[0] && res.errors[0].message) {
-          // setErrorMessage(res.errors[0].message);
-          console.log(res.errors[0].message);
-        }
-      });
+    // const requestBody = {
+    //   data: {
+    //     registration: formData['add-vehicle-registration'],
+    //     carName: formData['add-vehicle-name'],
+    //     color: carColor.hex,
+    //   },
+    // };
+    // post('vehicle', requestBody)
+    //   .then((res) => {
+    //     console.log('odgovor je: ' + res);
+    //     history.replace('/vehicles');
+    //   })
+    //   .catch((res) => {
+    //     if (res.errors && res.errors[0] && res.errors[0].message) {
+    //       // setErrorMessage(res.errors[0].message);
+    //       console.log(res.errors[0].message);
+    //     }
+    //   });
   }
 
   const colorsForPicker = [
@@ -56,7 +55,7 @@ export function VehiclesAdd() {
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
       <Heading as="h2" size="xl" marginY="4">
-        Dodaj vozilo
+        Uredi podatke o vozilu
       </Heading>
 
       <form onSubmit={handleSubmit(onVehicleInput)}>
@@ -69,6 +68,7 @@ export function VehiclesAdd() {
             isInvalid={errors['add-vehicle-name']}
             name="add-vehicle-name"
             placeholder="Naziv vozila"
+            defaultValue={location.state.carName}
           />
           {errors['add-vehicle-name'] ? (
             <Text color="error.500" fontSize="sm">
@@ -81,6 +81,7 @@ export function VehiclesAdd() {
             isInvalid={errors['add-vehicle-registration']}
             name="add-vehicle-registration"
             placeholder="Registracija"
+            defaultValue={location.state.registration}
           />
           {errors['add-vehicle-registration'] ? (
             <Text color="error.500" fontSize="sm">
@@ -90,6 +91,8 @@ export function VehiclesAdd() {
           <Text>Boja</Text>
 
           <TwitterPicker
+            defaultValue={location.state.color}
+            // value={location.state.color}
             colors={colorsForPicker}
             onChangeComplete={(color) => {
               setCarColor(color);
@@ -102,7 +105,7 @@ export function VehiclesAdd() {
             </Text>
           ) : null}
           <Button type="submit" variant="solid">
-            Dodaj
+            Spremi promjene
           </Button>
         </VStack>
       </form>

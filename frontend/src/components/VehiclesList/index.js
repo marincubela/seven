@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Text, Button, Heading, Link, HStack, Divider, IconButton } from '@chakra-ui/core';
+import { Box, Text, Button, Heading, Link, HStack, IconButton } from '@chakra-ui/core';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
+
 import { get, destroy } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
 
@@ -29,10 +30,6 @@ export function VehiclesList() {
       history.replace('/');
     }
   }, []);
-
-  // registration: string;
-  // carName: string;
-  // color: boolean;
 
   function handleDelete(idVehicle) {
     destroy(`vehicle/${idVehicle}`)
@@ -72,7 +69,12 @@ export function VehiclesList() {
             </Box>
             {/* <Divider orientation="vertical" bgColor="primary.200" w={1} /> */}
             <Box w="10%" />
-            <IconButton aria-label="Edit vehicle" icon={<EditIcon />} />
+            <IconButton
+              as={ReactLink}
+              to={{ pathname: `/vehicles/update`, state: veh }}
+              aria-label="Edit vehicle"
+              icon={<EditIcon />}
+            />
             <IconButton
               aria-label="Delete vehicle"
               icon={<DeleteIcon />}

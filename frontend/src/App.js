@@ -16,6 +16,7 @@ import { get } from './utils/network';
 // import { useStore } from './store/StoreProvider';
 import { VehiclesL } from './routes/vehiclesList';
 import { VehiclesA } from './routes/vehiclesAdd';
+import { VehiclesUp } from './routes/vehicleUpdate';
 
 import { StoreProvider } from './store/StoreProvider';
 import { getOrInitializeStore } from './utils/store';
@@ -38,6 +39,10 @@ const App = () => {
           <Switch>
             <Route path="/vehicles/add">
               <VehiclesA />
+            </Route>
+
+            <Route path="/vehicles/update">
+              <VehiclesUp />
             </Route>
 
             <Route path="/vehicles">
