@@ -39,6 +39,22 @@ export function VehiclesAdd() {
   // function handleChangeComplete = (color) => {
   //   this.inputColor = color;
   // };
+  const colorsForPicker = [
+    '#000000',
+    '#ABB8C3',
+    '#FF6900',
+    '#FCB900',
+    '#7BDCB5',
+    '#00D084',
+    '#8ED1FC',
+    '#0693E3',
+    '#A52A2A',
+    '#800000',
+    '#EB144C',
+    '#F78DA7',
+    '#9900EF',
+    '#FFFFFF',
+  ];
 
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
@@ -48,10 +64,10 @@ export function VehiclesAdd() {
 
       <form onSubmit={handleSubmit(onVehicleInput)}>
         <VStack flex="1" marginY="8" spacing="4" align="stretch">
-          <Text>Ime</Text>
+          <Text>Naziv</Text>
           <Input
             ref={register({
-              required: 'Ime je obavezno',
+              required: 'Naziv je obavezan',
             })}
             isInvalid={errors['add-vehicle-name']}
             name="add-vehicle-name"
@@ -99,6 +115,7 @@ export function VehiclesAdd() {
             </option>
           </Select> */}
           <TwitterPicker
+            colors={colorsForPicker}
             onChangeComplete={(color) => {
               setCarColor(color);
             }}

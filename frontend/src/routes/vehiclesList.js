@@ -10,7 +10,7 @@ export const VehiclesL = observer(() => {
     <Fragment>
       <Header />
 
-      <Box as="main" marginX="auto" maxWidth="500px" paddingX="2">
+      <Box as="main" marginX="auto" maxWidth="700px" paddingX="2">
         <VehiclesList />
       </Box>
     </Fragment>
