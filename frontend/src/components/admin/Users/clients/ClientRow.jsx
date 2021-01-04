@@ -2,7 +2,7 @@ import { HStack, Td, Tr } from '@chakra-ui/react';
 import React from 'react';
 
 import { DeleteAction } from '../shared/DeleteAction';
-import { ClientEditAction } from './ClientEditAction';
+import { ClientViewAction } from './ClientViewAction';
 
 export const ClientRow = ({ user, ...rest }) => {
   const { idRacun, firstName, lastName, email } = user;
@@ -15,16 +15,7 @@ export const ClientRow = ({ user, ...rest }) => {
       <Td>{email}</Td>
       <Td>
         <HStack spacing={2}>
-          {/* <IconButton
-            ml="auto"
-            variant="outline"
-            aria-label={`Pregledaj ${firstName} ${lastName}`}
-            colorScheme="primary"
-            size="sm"
-            icon={<Icon as={EyeIcon} />}
-          /> */}
-
-          <ClientEditAction user={user} />
+          <ClientViewAction user={user} />
 
           <DeleteAction
             aria-label={`Izbriši ${firstName} ${lastName}`}
