@@ -16,7 +16,7 @@ import { get } from './utils/network';
 import { StoreProvider } from './store/StoreProvider';
 import { getOrInitializeStore } from './utils/store';
 import { Parkings } from './routes/parkingsList';
-import { Parking } from './routes/parkingsAdd';
+import { ParkingAdd } from './routes/parkingsAdd';
 
 const App = () => {
   const [store] = useState(() => getOrInitializeStore());
@@ -35,7 +35,7 @@ const App = () => {
         <Router>
           <Switch>
             <Route path="/parkings/add">
-              <Parking />
+              <ParkingAdd />
             </Route>
 
             <Route path="/parkings">

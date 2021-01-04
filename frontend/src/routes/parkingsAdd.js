@@ -5,7 +5,7 @@ import { Header } from '../components/Header';
 
 import { ParkingsAdd } from '../components/ParkingsAdd';
 
-export const Parking = observer(() => {
+export const ParkingAdd = observer(() => {
   return (
     <Fragment>
       <Header />
