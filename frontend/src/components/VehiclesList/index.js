@@ -61,11 +61,11 @@ export function VehiclesList() {
               marginRight={4}
             />
             <Box w="30%">
-              <Text>{veh.carName}</Text>
+              <Text fontSize="lg">{veh.carName}</Text>
             </Box>
             {/* <Divider orientation="vertical" bgColor="primary.200" w={1} /> */}
             <Box w="30%">
-              <Text>{veh.registration}</Text>
+              <Text fontSize="lg">{veh.registration}</Text>
             </Box>
             {/* <Divider orientation="vertical" bgColor="primary.200" w={1} /> */}
             <Box w="10%" />
