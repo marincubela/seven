@@ -6,6 +6,7 @@ import { KlijentValidator, RacunValidator } from '../../utils/validators';
 import { RacunMapper } from '../../mappers/RacunMapper';
 import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
 import { KlijentMapper } from '../../mappers/KlijentMapper';
+import { RacunUpdateValidator } from '../../utils/validators/RacunUpdateValidator';
 
 export class UpdateKlijentController extends BaseController {
   executeImpl = async (
@@ -26,7 +27,7 @@ export class UpdateKlijentController extends BaseController {
       return this.forbidden(res, null);
     }
 
-    const oldClientData = await KlijentMapper.toDTO(
+    const { password, ...oldClientData } = await KlijentMapper.toDTO(
       await KlijentRepo.getKlijentByIdRacun(idRacun)
     );
 
@@ -34,7 +35,7 @@ export class UpdateKlijentController extends BaseController {
 
     const validationErrors = (
       await Promise.all([
-        RacunValidator.validate(klijentDto),
+        RacunUpdateValidator.validate(klijentDto),
         KlijentValidator.validate(klijentDto),
       ])
     ).reduce((errs, err) => [...errs, ...err], []);
