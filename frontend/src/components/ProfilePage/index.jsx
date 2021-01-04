@@ -50,9 +50,17 @@ export const ProfilePage = observer(() => {
 
       <HStack spacing="10" padding="5">
         <Button>
-          <Link fontWeight="bold" marginLeft="2" as={ReactLink} to="/profile/edit">
-            Uredi korisnički račun
-          </Link>
+          {user.klijent ? (
+            <Link fontWeight="bold" marginLeft="2" as={ReactLink} to="/profile/edit/person">
+              Uredi korisnički račun
+            </Link>
+          ) : null}
+
+          {user.tvrtka ? (
+            <Link fontWeight="bold" marginLeft="2" as={ReactLink} to="/profile/edit/company">
+              Uredi korisnički račun
+            </Link>
+          ) : null}
         </Button>
         <Button colorScheme="error" onClick={destroyUser}>
           Izbriši korisnički račun
