@@ -19,6 +19,7 @@ import {
   Th,
   Thead,
   Tr,
+  Text,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, AddIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
@@ -29,7 +30,7 @@ export function ParkingsList() {
   const [parkings, setParkings] = useState([]);
 
   const store = useStore();
-
+  const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
 
   const [isOpen, setIsOpen] = React.useState(false);
@@ -43,12 +44,12 @@ export function ParkingsList() {
         .then((res) => {
           if (res.data && res.data.parkings) {
             setParkings(res.data.parkings);
-            //console.log(res.data.parkings);
           }
         })
         .catch((res) => {
-          console.log('eror');
-          console.log(res);
+          if (res.errors && res.errors[0] && res.errors[0].message) {
+            setErrorMessage(res.errors[0].message);
+          }
         });
     } else {
       history.replace('/');
@@ -60,6 +61,7 @@ export function ParkingsList() {
       .then(() => {
         setIsOpen(false);
         history.replace('/');
+        setTimeout(() => history.push('/parkings'), 1);
       })
       .catch((err) => {
         console.log('eror');
@@ -121,6 +123,9 @@ export function ParkingsList() {
             </Tr>
           ))}
         </Tbody>
+
+        <Text color="error.500">{errorMessage}</Text>
+
         <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
           <AlertDialogOverlay>
             <AlertDialogContent>
@@ -129,7 +134,7 @@ export function ParkingsList() {
               </AlertDialogHeader>
 
               <AlertDialogBody>
-                Jeste li sigurni da želite izbrisati parkiralište {deleteParking.parkingName}?
+                Jeste li sigurni da želite izbrisati parkiralište <b>{deleteParking.parkingName}</b>?
               </AlertDialogBody>
 
               <AlertDialogFooter>

@@ -1,14 +1,5 @@
-import React from 'react';
-import {
-  Box,
-  Heading,
-  VStack,
-  HStack,
-  Text,
-  Input,
-  Button,
-  Select,
-} from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { Box, Heading, VStack, HStack, Text, Input, Button, Select } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
@@ -16,6 +7,7 @@ import { post } from '../../utils/network';
 
 export function ParkingsAdd() {
   const { handleSubmit, register, errors } = useForm();
+  const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
 
   function onParkingInput(formData) {
@@ -40,8 +32,7 @@ export function ParkingsAdd() {
 
       .catch((res) => {
         if (res.errors && res.errors[0] && res.errors[0].message) {
-          // setErrorMessage(res.errors[0].message);
-          console.log(res.errors[0].message);
+          setErrorMessage(res.errors[0].message);
         }
       });
   }
@@ -76,12 +67,13 @@ export function ParkingsAdd() {
             <VStack flex="1" align="baseline">
               <Text as="label">Broj mjesta</Text>
               <Input
-                ref={register({ 
+                ref={register({
                   required: 'Broj mjesta je obavezan',
                   pattern: {
                     value: /^\d*$/,
                     message: 'Cijena mora sadržavati samo brojeve',
-                  }, })}
+                  },
+                })}
                 isInvalid={errors['add-parking-capacity']}
                 name="add-parking-capacity"
                 placeholder="Broj mjesta"
@@ -91,26 +83,27 @@ export function ParkingsAdd() {
                   {errors['add-parking-capacity'].message}
                 </Text>
               ) : null}
-              </VStack>
+            </VStack>
 
             <VStack flex="1" align="baseline">
-                <Text as="label">Broj invalidskih mjesta</Text>
-                <Input
-                  ref={register({ 
-                    required: 'Broj invalidskih mjesta je obavezan',
-                    pattern: {
-                      value: /^\d*$/,
-                      message: 'Cijena mora sadržavati samo brojeve',
-                    }, })}
-                  isInvalid={errors['add-parking-disabledCapacity']}
-                  name="add-parking-disabledCapacity"
-                  placeholder="Broj invalidskih mjesta"
-                />
-                {errors['add-parking-disabledCapacity'] ? (
-                  <Text color="error.500" fontSize="sm">
-                    {errors['add-parking-disabledCapacity'].message}
-                  </Text>
-                ) : null}
+              <Text as="label">Broj invalidskih mjesta</Text>
+              <Input
+                ref={register({
+                  required: 'Broj invalidskih mjesta je obavezan',
+                  pattern: {
+                    value: /^\d*$/,
+                    message: 'Cijena mora sadržavati samo brojeve',
+                  },
+                })}
+                isInvalid={errors['add-parking-disabledCapacity']}
+                name="add-parking-disabledCapacity"
+                placeholder="Broj invalidskih mjesta"
+              />
+              {errors['add-parking-disabledCapacity'] ? (
+                <Text color="error.500" fontSize="sm">
+                  {errors['add-parking-disabledCapacity'].message}
+                </Text>
+              ) : null}
             </VStack>
           </HStack>
 
@@ -150,72 +143,74 @@ export function ParkingsAdd() {
             ) : null}
           </VStack>
 
-          <VStack flex="1" align="stretch"></VStack>
-            <Text as="label">Cijena rezervacija</Text>
-            <HStack>
-              <VStack>
-                <Text as="label">Jednokratna</Text>
-                <Input 
-                  size="sm"
-                  variant="filled"
-                  ref={register({ 
-                    required: 'Cijena jednokratne je obavezna',
-                    pattern: {
-                      value: /^\d*$/,
-                      message: 'Cijena mora sadržavati samo brojeve',
-                    }, })}
-                  isInvalid={errors['add-parking-oneTimePrice']}
-                  name="add-parking-oneTimePrice"
-                />
-                {errors['add-parking-oneTimePrice'] ? (
+          <Text as="label">Cijena rezervacija</Text>
+          <HStack>
+            <VStack>
+              <Text as="label">Jednokratna</Text>
+              <Input
+                size="sm"
+                ref={register({
+                  required: 'Cijena jednokratne je obavezna',
+                  pattern: {
+                    value: /^\d*$/,
+                    message: 'Cijena mora sadržavati samo brojeve',
+                  },
+                })}
+                isInvalid={errors['add-parking-oneTimePrice']}
+                name="add-parking-oneTimePrice"
+              />
+              {errors['add-parking-oneTimePrice'] ? (
                 <Text color="error.500" fontSize="sm">
                   {errors['add-parking-oneTimePrice'].message}
                 </Text>
-                ) : null}
-              </VStack>
+              ) : null}
+            </VStack>
 
-              <VStack>
-                <Text as="label">Ponavljajuća</Text>
-                <Input 
-                  size="sm"
-                  variant="filled"
-                  ref={register({ 
-                    required: 'Cijena ponavljajuće je obavezna',
-                    pattern: {
-                      value: /^\d*$/,
-                      message: 'Cijena mora sadržavati samo brojeve',
-                    }, })}
-                  isInvalid={errors['add-parking-repetitivePrice']}
-                  name="add-parking-repetitivePrice"
-                />
-                {errors['add-parking-repetitivePrice'] ? (
+            <VStack>
+              <Text as="label">Ponavljajuća</Text>
+              <Input
+                size="sm"
+                ref={register({
+                  required: 'Cijena ponavljajuće je obavezna',
+                  pattern: {
+                    value: /^\d*$/,
+                    message: 'Cijena mora sadržavati samo brojeve',
+                  },
+                })}
+                isInvalid={errors['add-parking-repetitivePrice']}
+                name="add-parking-repetitivePrice"
+              />
+              {errors['add-parking-repetitivePrice'] ? (
                 <Text color="error.500" fontSize="sm">
                   {errors['add-parking-repetitivePrice'].message}
                 </Text>
-                ) : null}
-              </VStack>
+              ) : null}
+            </VStack>
 
-              <VStack>
-                <Text as="label">Trajna</Text>
-                <Input 
-                  size="sm"
-                  variant="filled"
-                  ref={register({ 
-                    required: 'Cijena trajne je obavezna',
-                    pattern: {
-                      value: /^\d*$/,
-                      message: 'Cijena mora sadržavati samo brojeve',
-                    }, })}
-                  isInvalid={errors['add-parking-permanentPrice']}
-                  name="add-parking-permanentPrice"
-                />
-                {errors['add-parking-permanentPrice'] ? (
+            <VStack>
+              <Text as="label">Trajna</Text>
+              <Input
+                size="sm"
+                ref={register({
+                  required: 'Cijena trajne je obavezna',
+                  pattern: {
+                    value: /^\d*$/,
+                    message: 'Cijena mora sadržavati samo brojeve',
+                  },
+                })}
+                isInvalid={errors['add-parking-permanentPrice']}
+                name="add-parking-permanentPrice"
+              />
+              {errors['add-parking-permanentPrice'] ? (
                 <Text color="error.500" fontSize="sm">
                   {errors['add-parking-permanentPrice'].message}
                 </Text>
-                ) : null}
-              </VStack>
-            </HStack>
+              ) : null}
+            </VStack>
+          </HStack>
+
+          <Text color="error.500">{errorMessage}</Text>
+
           <Button type="submit" variant="solid">
             Dodaj
           </Button>
