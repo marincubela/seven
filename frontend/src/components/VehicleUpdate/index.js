@@ -4,35 +4,35 @@ import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import { TwitterPicker } from 'react-color';
 
-// import { post } from '../../utils/network';
+import { update } from '../../utils/network';
 
 export function VehicleUpdate() {
-  const { handleSubmit, register, errors } = useForm();
-  const [carColor, setCarColor] = useState(null);
-  //   const history = useHistory();
   const location = useLocation();
-  //   console.log(location);
-  //   console.log(location.search);
+  const history = useHistory();
+  const { handleSubmit, register, errors } = useForm();
+  const [carColor, setCarColor] = useState(location.state.color);
+  // const [carColor, setCarColor] = useState(null);
 
   function onVehicleInput(formData) {
-    // const requestBody = {
-    //   data: {
-    //     registration: formData['add-vehicle-registration'],
-    //     carName: formData['add-vehicle-name'],
-    //     color: carColor.hex,
-    //   },
-    // };
-    // post('vehicle', requestBody)
-    //   .then((res) => {
-    //     console.log('odgovor je: ' + res);
-    //     history.replace('/vehicles');
-    //   })
-    //   .catch((res) => {
-    //     if (res.errors && res.errors[0] && res.errors[0].message) {
-    //       // setErrorMessage(res.errors[0].message);
-    //       console.log(res.errors[0].message);
-    //     }
-    //   });
+    const requestBody = {
+      data: {
+        registration: formData['add-vehicle-registration'],
+        carName: formData['add-vehicle-name'],
+        color: carColor.hex,
+      },
+    };
+
+    update(`vehicle/${location.state.idVozilo}`, requestBody)
+      .then((res) => {
+        console.log('odgovor je: ' + res);
+        history.replace('/vehicles');
+      })
+      .catch((res) => {
+        if (res.errors && res.errors[0] && res.errors[0].message) {
+          // setErrorMessage(res.errors[0].message);
+          console.log(res.errors[0].message);
+        }
+      });
   }
 
   const colorsForPicker = [
@@ -64,6 +64,7 @@ export function VehicleUpdate() {
           <Input
             ref={register({
               required: 'Naziv je obavezan',
+              validate: (value) => value.length <= 20 || 'Maksimalna duljina naziva: 20',
             })}
             isInvalid={errors['add-vehicle-name']}
             name="add-vehicle-name"
@@ -77,7 +78,10 @@ export function VehicleUpdate() {
           ) : null}
           <Text>Registracija</Text>
           <Input
-            ref={register({ required: 'Registracija je obavezna' })}
+            ref={register({
+              required: 'Registracija je obavezna',
+              validate: (value) => value.length <= 20 || 'Maksimalna duljina registracije: 20',
+            })}
             isInvalid={errors['add-vehicle-registration']}
             name="add-vehicle-registration"
             placeholder="Registracija"
@@ -92,7 +96,6 @@ export function VehicleUpdate() {
 
           <TwitterPicker
             defaultValue={location.state.color}
-            // value={location.state.color}
             colors={colorsForPicker}
             onChangeComplete={(color) => {
               setCarColor(color);
