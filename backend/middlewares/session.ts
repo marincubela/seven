@@ -27,7 +27,7 @@ export const sessionMiddleware = (app) => {
       sameSite: false,
       secure: false,
       httpOnly: true,
-      domain: 'parkirajme.xyz',
+      domain: app.get('env') === 'production' ? 'parkirajme.xyz' : 'localhost',
       path: '/',
     },
   });
