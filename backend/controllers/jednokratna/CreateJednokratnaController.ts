@@ -15,8 +15,6 @@ export class CreateJednokratnaController extends BaseController {
   ): Promise<void | IResponse> => {
     const jednokratnaDto = req.body.data as JednokratnaDTO;
 
-    console.log(jednokratnaDto);
-
     const validationErrors = (
       await Promise.all([JednokratnaValidator.validate(jednokratnaDto)])
     ).reduce((errs, err) => [...errs, ...err], []);
