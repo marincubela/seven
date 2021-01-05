@@ -3,10 +3,7 @@ import { IRequest, IResponse } from '../../interfaces/network';
 import { JednokratnaDTO } from '../../dtos/JednokratnaDTO';
 import { JednokratnaRepo } from '../../repos/JednokratnaRepo';
 import { JednokratnaValidator } from '../../utils/validators';
-import { RezervacijaMapper } from '../../mappers/RezervacijaMapper';
-import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
 import { KlijentRepo } from '../../repos/KlijentRepo';
-import { JednokratnaMapper } from '../../mappers/JednokratnaMapper';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 
