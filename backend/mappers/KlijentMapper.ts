@@ -1,6 +1,7 @@
 import { KlijentDTO } from '../dtos/KlijentDTO';
 import { IKlijentAtrributes, Klijent } from '../models/Klijent';
 import { Mapper } from './Mapper';
+import { RacunMapper } from './RacunMapper';
 
 export class KlijentMapper extends Mapper {
   public static toDomain(raw: KlijentDTO): IKlijentAtrributes {
@@ -17,9 +18,7 @@ export class KlijentMapper extends Mapper {
     const racun = await klijent.getRacun();
 
     return {
-      idRacun: racun.idRacun,
-      email: racun.email,
-      OIB: racun.OIB,
+      ...(await RacunMapper.toDTO(racun)),
       firstName: klijent.ime,
       lastName: klijent.prezime,
       cardNumber: klijent.brojKartice,

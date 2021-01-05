@@ -20,7 +20,6 @@ export class RacunMapper extends Mapper {
       email: racun.email,
       OIB: racun.OIB,
       admin: racun.admin,
-      password: racun.lozinka,
     };
   }
 }

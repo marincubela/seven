@@ -75,4 +75,25 @@ export class TvrtkaRepo extends BaseRepo<TvrtkaDTO> {
       return null;
     }
   }
+
+  public static async update(tvrtkaDTO: TvrtkaDTO): Promise<Tvrtka> {
+    const { idRacun, ...tvrtkaData } = TvrtkaMapper.toDomain(tvrtkaDTO);
+
+    await new RacunRepo().save(tvrtkaDTO);
+
+    await Tvrtka.update(tvrtkaData, {
+      where: {
+        idRacun,
+      },
+    });
+
+    return this.getTvrtkaByIdRacun(idRacun);
+  }
+
+  public static async checkUniqueForUpdate(
+    tvrtkaDTO: TvrtkaDTO,
+    idRacun: number
+  ): Promise<Boolean> {
+    return await RacunRepo.checkUniqueForUpdate(tvrtkaDTO, idRacun);
+  }
 }
