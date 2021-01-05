@@ -5,7 +5,7 @@ import { BaseRepo } from './BaseRepo';
 import { JednokratnaRepo } from './JednokratnaRepo';
 import { TrajnaRepo } from './TrajnaRepo';
 import { PonavljajucaRepo } from './PonavljajucaRepo';
-import { ReservationsDTO } from '../dtos/ResponseDtos/ReservationsDTO'
+import { ReservationsDTO } from '../dtos/ResponseDtos/ReservationsDTO';
 import { JednokratnaMapper } from '../mappers/JednokratnaMapper';
 import { PonavljajucaMapper } from '../mappers/PonavljajucaMapper';
 import { TrajnaMapper } from '../mappers/TrajnaMapper';
@@ -47,10 +47,9 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
   static async createRezervacija(
     rezervacijaDTO: RezervacijaDTO
   ): Promise<Rezervacija> {
-    const {
-      idRezervacija,
-      ...rezervacijaData
-    } = RezervacijaMapper.toDomain(rezervacijaDTO);
+    const { idRezervacija, ...rezervacijaData } = RezervacijaMapper.toDomain(
+      rezervacijaDTO
+    );
 
     const rezervacija = await Rezervacija.create({
       ...rezervacijaData,
@@ -86,25 +85,40 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
     });
 
     //sta ako nema rezervacija?
-    
-    const reservationsDTO: ReservationsDTO = {singleUse: [], repeated: [], permanent: []};
-    
-    for(const reservation of reservations){
-        if(await RezervacijaRepo.isJednokratna(reservation.idRezervacija)){
-          const jednokratna = await JednokratnaRepo.getJednokratnaByIdRezervacija(reservation.idRezervacija);
-          reservationsDTO.singleUse.push(await JednokratnaMapper.toDTO(jednokratna));
-        }
-        else if(await RezervacijaRepo.isPonavljajuca(reservation.idRezervacija)){
-          const ponavljajuca = await PonavljajucaRepo.getPonavljajucaByIdRezervacija(reservation.idRezervacija);
-          reservationsDTO.repeated.push(await PonavljajucaMapper.toDTO(ponavljajuca));
-        }
-        else if(await RezervacijaRepo.isTrajna(reservation.idRezervacija)){
-          const trajna = await TrajnaRepo.getTrajnaByIdRezervacija(reservation.idRezervacija);
-          reservationsDTO.permanent.push(await TrajnaMapper.toDTO(trajna));
-        }
-        else{
-          throw new Error('Rezervacija nije ni jednokratna ni ponavljajuca ni trajna, greska u bazi');
-        }
+
+    const reservationsDTO: ReservationsDTO = {
+      singleUse: [],
+      repeated: [],
+      permanent: [],
+    };
+
+    for (const reservation of reservations) {
+      if (await RezervacijaRepo.isJednokratna(reservation.idRezervacija)) {
+        const jednokratna = await JednokratnaRepo.getJednokratnaByIdRezervacija(
+          reservation.idRezervacija
+        );
+        reservationsDTO.singleUse.push(
+          await JednokratnaMapper.toDTO(jednokratna)
+        );
+      } else if (
+        await RezervacijaRepo.isPonavljajuca(reservation.idRezervacija)
+      ) {
+        const ponavljajuca = await PonavljajucaRepo.getPonavljajucaByIdRezervacija(
+          reservation.idRezervacija
+        );
+        reservationsDTO.repeated.push(
+          await PonavljajucaMapper.toDTO(ponavljajuca)
+        );
+      } else if (await RezervacijaRepo.isTrajna(reservation.idRezervacija)) {
+        const trajna = await TrajnaRepo.getTrajnaByIdRezervacija(
+          reservation.idRezervacija
+        );
+        reservationsDTO.permanent.push(await TrajnaMapper.toDTO(trajna));
+      } else {
+        throw new Error(
+          'Rezervacija nije ni jednokratna ni ponavljajuca ni trajna, greska u bazi'
+        );
+      }
     }
     return reservationsDTO;
   }
@@ -140,16 +154,15 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
   public static async getIdTrajna(idRezervacija: number): Promise<Number> {
     return (await TrajnaRepo.getTrajnaByIdRezervacija(idRezervacija)).idTrajna;
   }
-  public static async checkAvailability(rezervacijaDTO:RezervacijaDTO):Promise<Boolean>{
+  public static async checkAvailability(
+    rezervacijaDTO: RezervacijaDTO
+  ): Promise<Boolean> {
     const rezervacije = await Rezervacija.findAll({
       where: {
-        idKlijent: rezervacijaDTO.idParkiraliste,
-        idVozilo: rezervacijaDTO.idParkiraliste,
-        idParkiraliste: rezervacijaDTO.idParkiraliste,
+        idVozilo: rezervacijaDTO.idVozilo,
       },
     });
-    if(rezervacije.length!=0)
-      return false
-    return true;
+
+    return rezervacije.length === 0;
   }
 }

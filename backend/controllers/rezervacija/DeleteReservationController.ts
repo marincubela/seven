@@ -8,7 +8,7 @@ export class DeleteReservationController extends BaseController {
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> => {
-    const idRezervacija = Number(req.params.idReservation);
+    const idRezervacija = Number(req.params.idRezervacija);
 
     if (isNaN(idRezervacija)) {
       return this.clientError(res, ['Id rezervacije nije broj!']);

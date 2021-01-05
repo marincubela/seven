@@ -4,10 +4,13 @@ import { RezervacijaController } from '../controllers/rezervacija/RezervacijaCon
 
 export const reservationRouter = express.Router();
 
-reservationRouter.get('/:idReservation', RezervacijaController.get);
+reservationRouter.get('/:idRezervacija', RezervacijaController.get);
 
 reservationRouter.get('', RezervacijaController.getFromClient);
 
-reservationRouter.delete('/:idReservation', RezervacijaController.delete);
+reservationRouter.delete('/:idRezervacija', RezervacijaController.delete);
 
-reservationRouter.post('/SingleUse', RezervacijaController.createJednokratnaController)
+reservationRouter.post(
+  '/SingleUse',
+  RezervacijaController.createJednokratnaController
+);

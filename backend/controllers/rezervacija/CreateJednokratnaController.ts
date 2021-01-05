@@ -29,7 +29,7 @@ export class CreateJednokratnaController extends BaseController {
       jednokratnaDto
     );
 
-    if (jednokratnaExits) {
+    if (!jednokratnaExits) {
       return this.clientError(res, [
         'Rezervacija na to vozilo u to vrijeme već postoji!',
       ]);

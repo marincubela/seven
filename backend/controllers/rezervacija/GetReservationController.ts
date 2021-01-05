@@ -2,13 +2,13 @@ import { BaseController } from '../BaseController';
 import { IResponse } from '../../interfaces/network';
 import { IRequest } from '../../interfaces/network';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
-import { RezervacijaMapper } from '../../mappers/RezervacijaMapper';
 import { JednokratnaRepo } from '../../repos/JednokratnaRepo';
 import { JednokratnaMapper } from '../../mappers/JednokratnaMapper';
 import { PonavljajucaRepo } from '../../repos/PonavljajucaRepo';
 import { PonavljajucaMapper } from '../../mappers/PonavljajucaMapper';
 import { TrajnaRepo } from '../../repos/TrajnaRepo';
 import { TrajnaMapper } from '../../mappers/TrajnaMapper';
+import { KlijentRepo } from '../../repos/KlijentRepo';
 
 export class GetReservationController extends BaseController {
   executeImpl = async (
@@ -29,6 +29,15 @@ export class GetReservationController extends BaseController {
     const rezervacija = await RezervacijaRepo.getRezervacijaByIdRezervacija(
       idRezervacija
     );
+
+    if (
+      !rezervacija ||
+      (await KlijentRepo.getIdRacunByIdKlijent(rezervacija.idKlijent)) !=
+        req.session.user.idRacun
+    ) {
+      return this.forbidden(res, null);
+    }
+
     //ako je jednokratna
     if (await RezervacijaRepo.isJednokratna(idRezervacija)) {
       const jednokratna = await JednokratnaRepo.getJednokratnaByIdRezervacija(
