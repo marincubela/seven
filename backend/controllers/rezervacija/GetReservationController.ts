@@ -43,8 +43,10 @@ export class GetReservationController extends BaseController {
       });
     }
     //ako je ponavljajuca
-    if(await RezervacijaRepo.isPonavljajuca(idRezervacija)){
-      const ponavljajuca = await PonavljajucaRepo.getPonavljajucaByIdRezervacija(idRezervacija);
+    if (await RezervacijaRepo.isPonavljajuca(idRezervacija)) {
+      const ponavljajuca = await PonavljajucaRepo.getPonavljajucaByIdRezervacija(
+        idRezervacija
+      );
       const rezervacija = await PonavljajucaMapper.toDTO(ponavljajuca);
 
       return this.ok(res, {
@@ -54,18 +56,20 @@ export class GetReservationController extends BaseController {
       });
     }
 
-    if(await RezervacijaRepo.isTrajna(idRezervacija)){
+    if (await RezervacijaRepo.isTrajna(idRezervacija)) {
       const trajna = await TrajnaRepo.getTrajnaByIdRezervacija(idRezervacija);
       const rezervacija = await TrajnaMapper.toDTO(trajna);
 
       return this.ok(res, {
-        data:{
+        data: {
           rezervacija,
         },
       });
     }
     throw new Error(
-      'Rezervacija s id=' + idRezervacija + ' nije ni jednokratna ni ponavljajuca ni trajna, pogreska u bazi!'
+      'Rezervacija s id=' +
+        idRezervacija +
+        ' nije ni jednokratna ni ponavljajuca ni trajna, pogreska u bazi!'
     );
   };
 }
