@@ -5,6 +5,7 @@ import { VoziloValidator } from '../../utils/validators';
 import { VoziloMapper } from '../../mappers/VoziloMapper';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { KlijentRepo } from '../../repos/KlijentRepo';
+import { RacunRepo } from '../../repos/RacunRepo';
 
 export class CreateVoziloController extends BaseController {
   executeImpl = async (
@@ -19,6 +20,10 @@ export class CreateVoziloController extends BaseController {
 
     if (validationErrors.length) {
       return this.clientError(res, validationErrors);
+    }
+
+    if (!(await RacunRepo.isKlijent(req.session.user.idRacun))) {
+      return this.forbidden(res, null);
     }
 
     voziloDto.idKlijent = (
