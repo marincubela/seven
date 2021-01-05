@@ -5,6 +5,7 @@ import { BaseController } from '../BaseController';
 import { TrajnaRepo } from '../../repos/TrajnaRepo';
 import { TrajnaDTO } from '../../dtos/TrajnaDTO';
 import { TrajnaValidator } from '../../utils/validators/TrajnaValidator';
+import { consoleTestResultHandler } from 'tslint/lib/test';
 
 export class UpdateTrajnaController extends BaseController {
   executeImpl = async (
@@ -23,11 +24,11 @@ export class UpdateTrajnaController extends BaseController {
     //dodati jos preduvijeta
 
     const oldReservationData = await TrajnaMapper.toDTO(
-      await TrajnaRepo.getTrajnaByIdTrajna(idRezervacija)
+      await TrajnaRepo.getTrajnaByIdRezervacija(idRezervacija)
     );
 
     const trajnaDTO = { ...oldReservationData, ...req.body.data } as TrajnaDTO;
-    trajnaDTO.idTrajna = idRezervacija;
+    trajnaDTO.idTrajna = await TrajnaRepo.getIdTrajna(idRezervacija);
 
     const validationErrors = (
       await Promise.all([TrajnaValidator.validate(trajnaDTO)])
@@ -37,6 +38,7 @@ export class UpdateTrajnaController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
+    trajnaDTO.idRezervacija = idRezervacija;
     const rezervacija = await TrajnaRepo.update(trajnaDTO);
 
     return this.ok(res, {
