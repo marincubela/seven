@@ -1,8 +1,8 @@
-import Sequelize, { IntegerDataType} from 'sequelize';
+import Sequelize, { IntegerDataType } from 'sequelize';
 import { HasOneGetAssociationMixin, Model } from 'sequelize';
 
 import { db } from '../db/connect';
-import { Rezervacija } from './Rezervacija.js';
+import { Rezervacija } from './Rezervacija';
 
 export interface IPonavljajucaAttributes {
   idPonavljajuca: number;
@@ -68,7 +68,7 @@ Ponavljajuca.init(
 
 Ponavljajuca.belongsTo(Rezervacija, {
   foreignKey: 'rezervacijaId',
-  as:'Rezervacija',
+  as: 'Rezervacija',
 });
 
 Ponavljajuca.sync().then(() => {

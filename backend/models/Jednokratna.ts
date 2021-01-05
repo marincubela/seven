@@ -1,7 +1,7 @@
 import Sequelize, { HasOneGetAssociationMixin, Model } from 'sequelize';
 
 import { db } from '../db/connect';
-import { Rezervacija } from './Rezervacija.js';
+import { Rezervacija } from './Rezervacija';
 
 export interface IJednokratnaAttributes {
   idJednokratna: number;
