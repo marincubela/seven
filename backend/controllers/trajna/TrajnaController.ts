@@ -1,7 +1,8 @@
 import { UpdateTrajnaController } from "./UpdateTrajnaController";
+import { CreateTrajnaController } from "./CreateTrajnaController";
 
 export class TrajnaController {
-    //kad se napravi create dodat cu
+    public static create = new CreateTrajnaController().execute;
    
      public static update = new UpdateTrajnaController().execute;
    }
