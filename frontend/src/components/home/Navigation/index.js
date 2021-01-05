@@ -22,7 +22,7 @@ export const Navigation = observer((props) => {
     >
       <Center p={2}>
         <Text fontWeight="bold" fontSize="xl">
-          {isUserLoggedIn ? `Pozdrav, ${store.currentUser.email}!` : 'Pozdrav!'}
+          {isUserLoggedIn ? `Pozdrav, ${store.currentUser.email}!` : 'Dobrodošli!'}
         </Text>
       </Center>
 
