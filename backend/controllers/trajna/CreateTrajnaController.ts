@@ -10,7 +10,7 @@ import { TrajnaMapper } from '../../mappers/TrajnaMapper';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 
-export class CreateJednokratnaController extends BaseController {
+export class CreateTrajnaController extends BaseController {
   executeImpl = async (
     req: IRequest,
     res: IResponse
@@ -18,19 +18,19 @@ export class CreateJednokratnaController extends BaseController {
     const trajnaDto = req.body.data as TrajnaDTO;
 
     //Provjeri rezervira li korisnik u svoje ime
-    if(await KlijentRepo.getIdRacunByIdKlijent(trajnaDto.idKlijent)!=req.session.user.idRacun){
+    if(!await KlijentRepo.idValidationCheck(trajnaDto.idKlijent) || await KlijentRepo.getIdRacunByIdKlijent(trajnaDto.idKlijent)!=req.session.user.idRacun){
       return this.forbidden(res, null);
     }
 
     //Provjeri postoje li auto i parkiraliste
-    if(!(ParkiralisteRepo.idValidationCheck(trajnaDto.idParkiraliste)&&VoziloRepo.idValidationCheck(trajnaDto.idVozilo))){
+    if(!(await ParkiralisteRepo.idValidationCheck(trajnaDto.idParkiraliste)&&await VoziloRepo.idValidationCheck(trajnaDto.idVozilo))){
       return this.clientError(res, [
         'Neispravan id vozila ili parkiralista!',
       ]);
     }
 
     //Provjeri posjeduje li korisnik navedeni auto
-   if(!KlijentRepo.checkCarOwner(trajnaDto.idKlijent, trajnaDto.idVozilo)){
+   if(!await KlijentRepo.checkCarOwner(trajnaDto.idKlijent, trajnaDto.idVozilo)){
         return this.forbidden(res, null);
     }
 
