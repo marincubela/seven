@@ -32,6 +32,10 @@ export class UpdateJednokratnaController extends BaseController {
       ...req.body.data,
     } as JednokratnaDTO;
 
+    jednokratnaDTO.idJednokratna = await JednokratnaRepo.getIdJednokratna(
+      idRezervacija
+    );
+
     // jednokratnaDTO.idJednokratna = idRezervacija;
 
     //nisam sigurna trebaju li mi ova provjera (34-43 linija)?

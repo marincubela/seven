@@ -95,6 +95,16 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
     ).idRezervacija;
   }
 
+  public static async getIdJednokratna(idRezervacija: number): Promise<number> {
+    const jednokratna = await this.getJednokratnaByIdRezervacija(idRezervacija);
+
+    if (!jednokratna) {
+      return null;
+    }
+
+    return jednokratna.idJednokratna;
+  }
+
   public static async checkAvailability(
     jednokratnaDTO: JednokratnaDTO
   ): Promise<Boolean> {
@@ -124,15 +134,21 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
     return true;
   }
 
-  public static async update(jednokratnaDTO: JednokratnaDTO): Promise<Jednokratna> {
-    const voziloData = JednokratnaMapper.toDomain(jednokratnaDTO);
+  public static async update(
+    jednokratnaDTO: JednokratnaDTO
+  ): Promise<Jednokratna> {
+    const jednokratnaData = JednokratnaMapper.toDomain(jednokratnaDTO);
 
-    await Jednokratna.update(voziloData, {
+    await RezervacijaRepo.updateRezervacija(jednokratnaDTO);
+
+    await Jednokratna.update(jednokratnaData, {
       where: {
-       idJednokratna: jednokratnaDTO.idJednokratna,
+        idJednokratna: jednokratnaDTO.idJednokratna,
       },
     });
 
-    return await this.getJednokratnaByIdJednokratna(jednokratnaDTO.idJednokratna);
+    return await this.getJednokratnaByIdJednokratna(
+      jednokratnaDTO.idJednokratna
+    );
   }
 }
