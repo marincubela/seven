@@ -120,13 +120,17 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
           vrijemeKraj: {
             [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
           },
+          [Op.and]:{
+            vrijemeKraj: {[Op.gt]: jednokratnaDTO.endTime},
+            vrijemePocetak: {[Op.lt]: jednokratnaDTO.endTime}
+          }
         },
       },
     });
 
     for (const jednokratna of jednokratne) {
       if (
-        !RezervacijaRepo.checkAvailability(
+        !await RezervacijaRepo.checkAvailability(
           await JednokratnaMapper.toDTO(jednokratna)
         )
       ) {
@@ -143,13 +147,17 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
           vrijemeKraj: {
             [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
           },
+          [Op.and]:{
+            vrijemeKraj: {[Op.gt]: jednokratnaDTO.endTime},
+            vrijemePocetak: {[Op.lt]: jednokratnaDTO.endTime}
+          }
         },
       },
     });
 
     for (const trajna of trajne) {
       if (
-        !RezervacijaRepo.checkAvailability(
+        ! await RezervacijaRepo.checkAvailability(
           await TrajnaMapper.toDTO(trajna)
         )
       ) {
