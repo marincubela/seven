@@ -17,12 +17,12 @@ export const Navigation = observer((props) => {
       borderRadius="base"
       bgColor="white"
       boxShadow="lg"
-      border={({ space, colors }) => `${space[1]} solid ${colors.accent[500]}`}
+      border={({ space, colors }) => `${space[1]} solid ${colors.primary[500]}`}
       {...props}
     >
       <Center p={2}>
         <Text fontWeight="bold" fontSize="xl">
-          {isUserLoggedIn ? `Pozdrav, ${store.currentUser.email}!` : 'Pozdrav!'}
+          {isUserLoggedIn ? `Pozdrav, ${store.currentUser.email}!` : 'Dobrodošli!'}
         </Text>
       </Center>
 
