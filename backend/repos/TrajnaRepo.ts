@@ -86,6 +86,8 @@ export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
   public static async update(trajnaDTO: TrajnaDTO): Promise<Trajna> {
     const trajnaData = TrajnaMapper.toDomain(trajnaDTO);
 
+    await RezervacijaRepo.updateRezervacija(trajnaDTO);
+
     await Trajna.update(trajnaData, {
       where: {
         idTrajna: trajnaDTO.idTrajna,
@@ -93,5 +95,15 @@ export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
     });
 
     return await this.getTrajnaByIdTrajna(trajnaDTO.idTrajna);
+  }
+
+  public static async getIdTrajna(idRezervacija: number): Promise<number> {
+    const trajna = await this.getTrajnaByIdRezervacija(idRezervacija);
+
+    if (!trajna) {
+      return null;
+    }
+
+    return trajna.idTrajna;
   }
 }

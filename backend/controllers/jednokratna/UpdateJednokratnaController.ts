@@ -11,6 +11,7 @@ export class UpdateJednokratnaController extends BaseController {
     res: IResponse
   ): Promise<void | IResponse> => {
     const idRezervacija = Number(req.params.idRezervacija);
+    
     if (isNaN(idRezervacija)) {
       return this.clientError(res, ['Id nije broj']);
     }
