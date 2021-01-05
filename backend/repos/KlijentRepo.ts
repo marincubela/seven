@@ -4,6 +4,7 @@ import { KlijentMapper } from '../mappers/KlijentMapper';
 import { Klijent } from '../models/Klijent';
 import { BaseRepo } from './BaseRepo';
 import { RacunRepo } from './RacunRepo';
+import { VoziloRepo } from './VoziloRepo';
 import { Op } from 'sequelize';
 
 export class KlijentRepo extends BaseRepo<KlijentDTO> {
@@ -123,5 +124,14 @@ export class KlijentRepo extends BaseRepo<KlijentDTO> {
       !klijent.length &&
       (await RacunRepo.checkUniqueForUpdate(klijentDTO, idRacun))
     );
+  }
+
+  public static async checkCarOwner(idKlijent:number, idVozilo: number): Promise<Boolean>{
+    const vozila = await VoziloRepo.getVoziloFromClient(idKlijent);
+    for(const vozilo of vozila){
+      if (vozilo.idVozilo==idVozilo)
+        return true;
+    }
+    return false;
   }
 }
