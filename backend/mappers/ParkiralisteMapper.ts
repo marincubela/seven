@@ -27,6 +27,7 @@ export class ParkiralisteMapper extends Mapper {
       idParkiraliste: parkiraliste.idParkiraliste,
       parkingName: parkiraliste.nazivParkiralista,
       capacity: parkiraliste.brojMjesta,
+      freeCapacity: parkiraliste.brojMjesta,
       disabledCapacity: parkiraliste.brojInvalidskihMjesta,
       parkingType: parkiraliste.tipParkiralista,
       coordinates: parkiraliste.koordinate,

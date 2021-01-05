@@ -1,4 +1,8 @@
-import Sequelize, { Model, HasOneGetAssociationMixin, Association } from 'sequelize';
+import Sequelize, {
+  Model,
+  HasOneGetAssociationMixin,
+  Association,
+} from 'sequelize';
 
 import { db } from '../db/connect';
 import { Rezervacija } from './Rezervacija';
@@ -31,12 +35,19 @@ export class Parkiraliste extends Model<
   cijenaPonavljajuce!: number;
   cijenaTrajne!: number;
   idTvrtka!: number;
+  slobodnaMjesta!: number;
+
+  constructor() {
+    super();
+
+    this.slobodnaMjesta = Math.round(Math.random() * this.brojMjesta);
+  }
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
   public getTvrtka!: HasOneGetAssociationMixin<Tvrtka>;
-  
+
   public static associations: {
     rezervacija: Association<Parkiraliste, Rezervacija>;
   };
