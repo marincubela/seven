@@ -21,6 +21,7 @@ export class Trajna extends Model<
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
   public getRezervacija!: HasOneGetAssociationMixin<Rezervacija>;
 }
 
@@ -48,6 +49,7 @@ Trajna.init(
 
 Trajna.belongsTo(Rezervacija, {
   foreignKey: 'idRezervacija',
+  as: 'Rezervacija',
 });
 
 Trajna.sync().then(() => {

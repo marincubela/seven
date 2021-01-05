@@ -18,12 +18,12 @@ export class Ponavljajuca extends Model<
   IPonavljajucaAttributes,
   Omit<IPonavljajucaAttributes, 'idPonavljajuca'>
 > {
-  idPonavljajuca!: number;
-  datumRezervacije!: Date;
-  datumKrajaRez!: Date;
-  daniPonavljanja!: IntegerDataType;
-  vrijemePocetka!: Date;
-  vrijemeKraja!: Date;
+  public idPonavljajuca!: number;
+  public datumRezervacije!: Date;
+  public datumKrajaRez!: Date;
+  public daniPonavljanja!: IntegerDataType;
+  public vrijemePocetka!: Date;
+  public vrijemeKraja!: Date;
   public idRezervacija!: number;
 
   public readonly createdAt!: Date;
@@ -67,7 +67,7 @@ Ponavljajuca.init(
 );
 
 Ponavljajuca.belongsTo(Rezervacija, {
-  foreignKey: 'rezervacijaId',
+  foreignKey: 'idRezervacija',
   as: 'Rezervacija',
 });
 

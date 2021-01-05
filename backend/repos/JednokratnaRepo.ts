@@ -48,7 +48,7 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
     return await JednokratnaRepo.createJednokratna(jednokratnaDTO);
   }
 
-  static async createJednokratna(
+  public static async createJednokratna(
     jednokratnaDTO: JednokratnaDTO
   ): Promise<Jednokratna> {
     const rezervacija = await RezervacijaRepo.createRezervacija(jednokratnaDTO);
@@ -94,23 +94,33 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
       ).getRezervacija()
     ).idRezervacija;
   }
-  public static async checkAvailability(jednokratnaDTO:JednokratnaDTO):Promise<Boolean>{
-    const jednokratne= await Jednokratna.findAll({
-      where:{
-        vrijemePocetak:{
-          [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime]
-        },
-        vrijemeKraj:{
-          [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime]
+
+  public static async checkAvailability(
+    jednokratnaDTO: JednokratnaDTO
+  ): Promise<Boolean> {
+    const jednokratne = await Jednokratna.findAll({
+      where: {
+        [Op.or]: {
+          vrijemePocetak: {
+            [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
+          },
+          vrijemeKraj: {
+            [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
+          },
         },
       },
     });
-    for(const jednokratna of jednokratne){
-      if(!RezervacijaRepo.checkAvailability(await JednokratnaMapper.toDTO(jednokratna))){
-          return false;
-      }
-      return true;
 
+    for (const jednokratna of jednokratne) {
+      if (
+        !RezervacijaRepo.checkAvailability(
+          await JednokratnaMapper.toDTO(jednokratna)
+        )
+      ) {
+        return false;
+      }
     }
+
+    return true;
   }
 }
