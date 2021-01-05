@@ -9,4 +9,5 @@ export interface ParkiralisteDTO {
   repetitivePrice: number;
   permanentPrice: number;
   idTvrtka?: number;
+  idRacun?: number;
 }

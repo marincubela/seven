@@ -34,6 +34,7 @@ export class ParkiralisteMapper extends Mapper {
       repetitivePrice: parkiraliste.cijenaPonavljajuce,
       permanentPrice: parkiraliste.cijenaTrajne,
       idTvrtka: parkiraliste.idTvrtka,
+      idRacun: (await (await parkiraliste.getTvrtka()).getRacun()).idRacun,
     };
   }
 }
