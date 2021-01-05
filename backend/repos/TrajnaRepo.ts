@@ -1,9 +1,12 @@
 import { Rezervacija } from '../models/Rezervacija';
 import { TrajnaDTO } from '../dtos/TrajnaDTO';
 import { TrajnaMapper } from '../mappers/TrajnaMapper';
+import { JednokratnaMapper } from '../mappers/JednokratnaMapper';
 import { Trajna } from '../models/Trajna';
+import { Jednokratna } from '../models/Jednokratna';
 import { BaseRepo } from './BaseRepo';
 import { RezervacijaRepo } from './RezervacijaRepo';
+import { Op } from 'sequelize';
 
 export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
   async exists(trajnaDTO: TrajnaDTO): Promise<boolean> {
@@ -105,5 +108,57 @@ export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
     }
 
     return trajna.idTrajna;
+  }
+
+  public static async checkAvailability(
+    trajnaDTO: TrajnaDTO
+  ): Promise<Boolean> {
+    const jednokratne = await Jednokratna.findAll({
+      where: {
+        [Op.or]: {
+          vrijemePocetak: {
+            [Op.between]: [trajnaDTO.startTime, trajnaDTO.endTime],
+          },
+          vrijemeKraj: {
+            [Op.between]: [trajnaDTO.startTime, trajnaDTO.endTime],
+          },
+        },
+      },
+    });
+
+    for (const jednokratna of jednokratne) {
+      if (
+        !RezervacijaRepo.checkAvailability(
+          await JednokratnaMapper.toDTO(jednokratna)
+        )
+      ) {
+        return false;
+      }
+    }
+
+    const trajne= await Trajna.findAll({
+      where: {
+        [Op.or]: {
+          vrijemePocetak: {
+            [Op.between]: [trajnaDTO.startTime, trajnaDTO.endTime],
+          },
+          vrijemeKraj: {
+            [Op.between]: [trajnaDTO.startTime, trajnaDTO.endTime],
+          },
+        },
+      },
+    });
+
+    for (const trajna of trajne) {
+      if (
+        !RezervacijaRepo.checkAvailability(
+          await TrajnaMapper.toDTO(trajna)
+        )
+      ) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }
