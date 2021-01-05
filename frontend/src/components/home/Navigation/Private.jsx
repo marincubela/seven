@@ -39,21 +39,36 @@ export const PrivateNavigation = observer((props) => {
         </HStack>
       </Link>
 
-      <Link as={ReactLink} variant="nav" px={2} to="/reservations">
-        <HStack spacing={4}>
-          <Icon as={ClockIcon} />
-          <Text>Moje rezervacije</Text>
-        </HStack>
-      </Link>
+      {store.currentUser.klijent && (
+        <Fragment>
+          <Link as={ReactLink} variant="nav" px={2} to="/reservations">
+            <HStack spacing={4}>
+              <Icon as={ClockIcon} />
+              <Text>Moje rezervacije</Text>
+            </HStack>
+          </Link>
 
-      <Link as={ReactLink} variant="nav" px={2} to="/vehicles">
-        <HStack spacing={4}>
-          <Icon as={CarIcon} />
-          <Text>Moja vozila</Text>
-        </HStack>
-      </Link>
+          <Link as={ReactLink} variant="nav" px={2} to="/vehicles">
+            <HStack spacing={4}>
+              <Icon as={CarIcon} />
+              <Text>Moja vozila</Text>
+            </HStack>
+          </Link>
+        </Fragment>
+      )}
 
-      {store.currentUser?.admin && (
+      {store.currentUser.tvrtka && (
+        <Fragment>
+          <Link as={ReactLink} variant="nav" px={2} to="/parkings">
+            <HStack spacing={4}>
+              <Icon as={ClockIcon} />
+              <Text>Moja parkirališta</Text>
+            </HStack>
+          </Link>
+        </Fragment>
+      )}
+
+      {store.currentUser.admin && (
         <Fragment>
           <Divider />
 
