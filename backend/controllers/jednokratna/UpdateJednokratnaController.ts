@@ -19,6 +19,8 @@ export class UpdateJednokratnaController extends BaseController {
       return this.clientError(res, ['Id mora biti pozitivan broj']);
     }
 
+    // Jel prijavljen korisnik cija se rezervacija pokusava promijeniti
+
     const oldReservationData = await JednokratnaMapper.toDTO(
       await JednokratnaRepo.getJednokratnaByIdRezervacija(idRezervacija)
     );
@@ -30,7 +32,7 @@ export class UpdateJednokratnaController extends BaseController {
       ...req.body.data,
     } as JednokratnaDTO;
 
-    jednokratnaDTO.idJednokratna = idRezervacija;
+    // jednokratnaDTO.idJednokratna = idRezervacija;
 
     //nisam sigurna trebaju li mi ova provjera (34-43 linija)?
     const jednokratnaExits = await JednokratnaRepo.checkAvailability(
@@ -51,6 +53,7 @@ export class UpdateJednokratnaController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
+    jednokratnaDTO.idRezervacija = idRezervacija;
     const rezervacija = await JednokratnaRepo.update(jednokratnaDTO);
 
     return this.ok(res, {
