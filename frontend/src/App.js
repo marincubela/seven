@@ -18,6 +18,7 @@ import { StoreProvider } from './store/StoreProvider';
 import { getOrInitializeStore } from './utils/store';
 import { Parkings } from './routes/parkingsList';
 import { ParkingAdd } from './routes/parkingsAdd';
+import { ParkingEdit } from './routes/parkingsEdit';
 import { ProfileEditPerson } from './routes/profileEditPerson';
 import { ProfileEditCompany } from './routes/profileEditCompany';
 import { AdminRouter } from './Admin';
@@ -46,6 +47,10 @@ const App = () => {
           <Switch>
             <Route path="/parkings/add">
               <ParkingAdd />
+            </Route>
+
+            <Route path="/parkings/edit">
+              <ParkingEdit />
             </Route>
 
             <Route path="/parkings">

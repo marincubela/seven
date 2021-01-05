@@ -106,7 +106,9 @@ export function ParkingsList() {
               <Td>
                 <HStack align="center">
                   <Button aria-label="Edit parking" leftIcon={<EditIcon />}>
-                    Uredi
+                    <Link fontWeight="bold" marginLeft="2" as={ReactLink} to={{ pathname: '/parkings/edit', state: p }}>
+                      Uredi
+                    </Link>
                   </Button>
                   <Button
                     aria-label="Delete parking"
