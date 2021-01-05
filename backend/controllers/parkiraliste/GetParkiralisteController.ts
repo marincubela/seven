@@ -27,14 +27,10 @@ export class GetParkiralisteController extends BaseController {
     }
 
     const parkiralisteDTO = await ParkiralisteMapper.toDTO(parkiraliste);
-    const parking = {
-      freeSpaces: Math.round(Math.random() * 100),
-      ...parkiralisteDTO,
-    };
 
     return this.ok(res, {
       data: {
-        parking,
+        parking: parkiralisteDTO,
       },
     });
   };
