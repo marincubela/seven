@@ -102,4 +102,14 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
       },
     });
   }
+
+  public static async idValidationCheck(idVozilo: number): Promise<Boolean>{
+    const vozilo = await Vozilo.findOne({
+      where: {
+        idVozilo,
+      },
+    });
+
+    return Boolean(vozilo);
+  }
 }
