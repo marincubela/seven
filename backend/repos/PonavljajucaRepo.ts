@@ -96,4 +96,20 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
       ).getRezervacija()
     ).idRezervacija;
   }
+
+  public static async update(
+    ponavljajucaDTO: PonavljajucaDTO
+  ): Promise<Ponavljajuca> {
+    const ponavljajucaData = PonavljajucaMapper.toDomain(ponavljajucaDTO);
+
+    await Ponavljajuca.update(ponavljajucaData, {
+      where: {
+        idPonavljajuca: ponavljajucaDTO.idPonavljajuca,
+      },
+    });
+
+    return await this.getPonavljajucaByIdPonavljajuca(
+      ponavljajucaDTO.idPonavljajuca
+    );
+  }
 }

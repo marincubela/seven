@@ -2,6 +2,8 @@ import { JednokratnaController } from '../controllers/jednokratna/JednokratnaCon
 import express from 'express';
 
 import { RezervacijaController } from '../controllers/rezervacija/RezervacijaController';
+import { PonavljajucaController } from '../controllers/ponavljajuca/PonavljajucaController';
+import { TrajnaController } from '../controllers/trajna/TrajnaController';
 
 export const reservationRouter = express.Router();
 
@@ -16,4 +18,14 @@ reservationRouter.post('/onetime', JednokratnaController.create);
 reservationRouter.patch(
   '/onetime/:idRezervacija',
   JednokratnaController.update
+);
+
+reservationRouter.patch(
+  '/repetitive/:idRezervacija',
+  PonavljajucaController.update
+);
+
+reservationRouter.patch(
+  '/permanent/:idRezervacija',
+  TrajnaController.update
 );

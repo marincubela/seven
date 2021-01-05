@@ -38,7 +38,6 @@ export class UpdateJednokratnaController extends BaseController {
 
     // jednokratnaDTO.idJednokratna = idRezervacija;
 
-    //nisam sigurna trebaju li mi ova provjera (34-43 linija)?
     const jednokratnaExits = await JednokratnaRepo.checkAvailability(
       jednokratnaDTO
     );
