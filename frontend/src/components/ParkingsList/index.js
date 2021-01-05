@@ -123,37 +123,37 @@ export function ParkingsList() {
             </Tr>
           ))}
         </Tbody>
-
-        <Text color="error.500">{errorMessage}</Text>
-
-        <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
-          <AlertDialogOverlay>
-            <AlertDialogContent>
-              <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Izbriši parkiralište
-              </AlertDialogHeader>
-
-              <AlertDialogBody>
-                Jeste li sigurni da želite izbrisati parkiralište <b>{deleteParking.parkingName}</b>?
-              </AlertDialogBody>
-
-              <AlertDialogFooter>
-                <Button leftIcon={<CloseIcon />} ref={cancelRef} onClick={onClose}>
-                  Cancel
-                </Button>
-                <Button
-                  leftIcon={<DeleteIcon />}
-                  colorScheme="red"
-                  onClick={() => handleDelete(deleteParking.idParkiraliste)}
-                  ml={3}
-                >
-                  Delete
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
       </Table>
+
+      <Text color="error.500">{errorMessage}</Text>
+
+      <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Izbriši parkiralište
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Jeste li sigurni da želite izbrisati parkiralište <b>{deleteParking.parkingName}</b>?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button leftIcon={<CloseIcon />} ref={cancelRef} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button
+                leftIcon={<DeleteIcon />}
+                colorScheme="red"
+                onClick={() => handleDelete(deleteParking.idParkiraliste)}
+                ml={3}
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Box>
   );
 }
