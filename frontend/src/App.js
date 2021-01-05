@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet';
 
 import customTheme from './styles/theme';
 import { Home } from './routes/home';
+import { Profile } from './routes/profile';
 import { Registration } from './routes/registration';
 import { RegistrationCompany } from './routes/registrationCompany';
 import { RegistrationPerson } from './routes/registrationPerson';
@@ -20,6 +21,9 @@ import { VehiclesUp } from './routes/vehicleUpdate';
 
 import { StoreProvider } from './store/StoreProvider';
 import { getOrInitializeStore } from './utils/store';
+import { ProfileEditPerson } from './routes/profileEditPerson';
+import { ProfileEditCompany } from './routes/profileEditCompany';
+import { AdminRouter } from './Admin';
 
 const App = () => {
   const [store] = useState(() => getOrInitializeStore());
@@ -54,6 +58,9 @@ const App = () => {
             <Route path="/vehicles">
               <VehiclesL />
             </Route>
+            <Route path="/admin">
+              <AdminRouter />
+            </Route>
 
             <Route path="/registration/company">
               <RegistrationCompany />
@@ -69,6 +76,18 @@ const App = () => {
 
             <Route path="/login">
               <Login />
+            </Route>
+
+            <Route path="/profile/edit/company">
+              <ProfileEditCompany />
+            </Route>
+
+            <Route path="/profile/edit/person">
+              <ProfileEditPerson />
+            </Route>
+
+            <Route path="/profile">
+              <Profile />
             </Route>
 
             <Route path="/" exact>
