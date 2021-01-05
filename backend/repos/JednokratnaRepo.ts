@@ -4,6 +4,7 @@ import { JednokratnaMapper } from '../mappers/JednokratnaMapper';
 import { Jednokratna } from '../models/Jednokratna';
 import { BaseRepo } from './BaseRepo';
 import { RezervacijaRepo } from './RezervacijaRepo';
+import { Op } from 'sequelize';
 
 export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
   async exists(jednokratnaDTO: JednokratnaDTO): Promise<boolean> {
@@ -92,5 +93,24 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
         await this.getJednokratnaByIdJednokratna(idJednokratna)
       ).getRezervacija()
     ).idRezervacija;
+  }
+  public static async checkAvailability(jednokratnaDTO:JednokratnaDTO):Promise<Boolean>{
+    const jednokratne= await Jednokratna.findAll({
+      where:{
+        vrijemePocetak:{
+          [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime]
+        },
+        vrijemeKraj:{
+          [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime]
+        },
+      },
+    });
+    for(const jednokratna of jednokratne){
+      if(!RezervacijaRepo.checkAvailability(await JednokratnaMapper.toDTO(jednokratna))){
+          return false;
+      }
+      return true;
+
+    }
   }
 }

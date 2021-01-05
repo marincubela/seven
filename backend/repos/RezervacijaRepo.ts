@@ -5,6 +5,7 @@ import { BaseRepo } from './BaseRepo';
 import { JednokratnaRepo } from './JednokratnaRepo';
 import { TrajnaRepo } from './TrajnaRepo';
 import { PonavljajucaRepo } from './PonavljajucaRepo';
+import { Op } from 'sequelize';
 
 export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
   async exists(rezervacijaDTO: RezervacijaDTO): Promise<boolean> {
@@ -45,9 +46,6 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
   ): Promise<Rezervacija> {
     const {
       idRezervacija,
-      idVozilo,
-      idKlijent,
-      idParkiraliste,
       ...rezervacijaData
     } = RezervacijaMapper.toDomain(rezervacijaDTO);
 
@@ -124,5 +122,17 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
   }
   public static async getIdTrajna(idRezervacija: number): Promise<Number> {
     return (await TrajnaRepo.getTrajnaByIdRezervacija(idRezervacija)).idTrajna;
+  }
+  public static async checkAvailability(rezervacijaDTO:RezervacijaDTO):Promise<Boolean>{
+    const rezervacije = await Rezervacija.findAll({
+      where: {
+        idKlijent: rezervacijaDTO.idParkiraliste,
+        idVozilo: rezervacijaDTO.idParkiraliste,
+        idParkiraliste: rezervacijaDTO.idParkiraliste,
+      },
+    });
+    if(rezervacije.length!=0)
+      return false
+    return true;
   }
 }
