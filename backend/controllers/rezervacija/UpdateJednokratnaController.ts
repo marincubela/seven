@@ -1,8 +1,5 @@
 import { BaseController } from '../BaseController';
 import { IRequest, IResponse } from '../../interfaces/network';
-import { RezervacijaMapper } from '../../mappers/RezervacijaMapper';
-import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
-import { RezervacijaDTO } from '../../dtos/RezervacijaDTO';
 import { JednokratnaMapper } from '../../mappers/JednokratnaMapper';
 import { JednokratnaRepo } from '../../repos/JednokratnaRepo';
 import { JednokratnaDTO } from '../../dtos/JednokratnaDTO';
@@ -12,31 +9,53 @@ export class UpdateResevationController extends BaseController {
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> => {
-      const idRezervacija = Number(req.params.idRezervacija);
-      if (isNaN(idRezervacija)) {
-        return this.clientError(res, ['Id nije broj']);
-      }
-  
-      if (idRezervacija < 1) {
-        return this.clientError(res, ['Id mora biti pozitivan broj']);
-      }
-      
-      const oldReservationData = await JednokratnaMapper.toDTO(
-        await JednokratnaRepo.getJednokratnaByIdRezervacija(idRezervacija)
-      );
+    const idRezervacija = Number(req.params.idRezervacija);
+    if (isNaN(idRezervacija)) {
+      return this.clientError(res, ['Id nije broj']);
+    }
 
-      const reservationDto = {...oldReservationData, ...req.body.data} as JednokratnaDTO;
-      const validationErrors = (
-        await Promise.all([
-          JednokratnaValidator.validate(reservationDto)
-        ])
-      ).reduce((errs, err) => [...errs, ...err], []);
+    if (idRezervacija < 1) {
+      return this.clientError(res, ['Id mora biti pozitivan broj']);
+    }
 
-      if(validationErrors.length){
-        return this.clientError(res, validationErrors);
-      }
+    const oldReservationData = await JednokratnaMapper.toDTO(
+      await JednokratnaRepo.getJednokratnaByIdRezervacija(idRezervacija)
+    );
 
-      if(!(await JednokratnaRepo.ch))
-      
+    //dodati provjere dodatne
+
+    const jednokratnaDTO = {
+      ...oldReservationData,
+      ...req.body.data,
+    } as JednokratnaDTO;
+
+    jednokratnaDTO.idJednokratna = idRezervacija;
+
+    //nisam sigurna trebaju li mi ova provjera (34-43 linija)?
+    const jednokratnaExits = await JednokratnaRepo.checkAvailability(
+      jednokratnaDTO
+    );
+
+    if (!jednokratnaExits) {
+      return this.clientError(res, [
+        'Rezervacija na to vozilo u to vrijeme već postoji!',
+      ]);
+    }
+
+    const validationErrors = (
+      await Promise.all([JednokratnaValidator.validate(jednokratnaDTO)])
+    ).reduce((errs, err) => [...errs, ...err], []);
+
+    if (validationErrors.length) {
+      return this.clientError(res, validationErrors);
+    }
+
+    const rezervacija = await JednokratnaRepo.update(jednokratnaDTO);
+
+    return this.ok(res, {
+      data: {
+        onetime: await JednokratnaMapper.toDTO(rezervacija),
+      },
+    });
   };
 }
