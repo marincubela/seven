@@ -5,8 +5,6 @@ import { Trajna } from '../models/Trajna';
 import { BaseRepo } from './BaseRepo';
 import { RezervacijaRepo } from './RezervacijaRepo';
 
-
-
 export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
   async exists(trajnaDTO: TrajnaDTO): Promise<boolean> {
     const { idRezervacija } = TrajnaMapper.toDomain(trajnaDTO);
@@ -60,7 +58,9 @@ export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
     return trajna;
   }
 
-  public static async getTrajnaByIdRezervacija(idRezervacija: number): Promise<Trajna> {
+  public static async getTrajnaByIdRezervacija(
+    idRezervacija: number
+  ): Promise<Trajna> {
     return await Trajna.findOne({
       where: {
         idRezervacija,
@@ -68,9 +68,7 @@ export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
     });
   }
 
-  public static async getTrajnaByIdTrajna(
-    idTrajna: number
-  ): Promise<Trajna> {
+  public static async getTrajnaByIdTrajna(idTrajna: number): Promise<Trajna> {
     return await Trajna.findOne({
       where: {
         idTrajna,
@@ -83,5 +81,17 @@ export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
   ): Promise<number> {
     return (await (await this.getTrajnaByIdTrajna(idTrajna)).getRezervacija())
       .idRezervacija;
+  }
+
+  public static async update(trajnaDTO: TrajnaDTO): Promise<Trajna> {
+    const trajnaData = TrajnaMapper.toDomain(trajnaDTO);
+
+    await Trajna.update(trajnaData, {
+      where: {
+        idTrajna: trajnaDTO.idTrajna,
+      },
+    });
+
+    return await this.getTrajnaByIdTrajna(trajnaDTO.idTrajna);
   }
 }
