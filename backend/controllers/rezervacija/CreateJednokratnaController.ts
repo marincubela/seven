@@ -15,20 +15,24 @@ export class CreateJednokratnaController extends BaseController {
   ): Promise<void | IResponse> => {
     const jednokratnaDto = req.body.data as JednokratnaDTO;
 
+    console.log(jednokratnaDto);
+
     const validationErrors = (
-      await Promise.all([
-        JednokratnaValidator.validate(jednokratnaDto),
-      ])
+      await Promise.all([JednokratnaValidator.validate(jednokratnaDto)])
     ).reduce((errs, err) => [...errs, ...err], []);
 
     if (validationErrors.length) {
       return this.clientError(res, validationErrors);
     }
 
-    const jednokratnaExits = await JednokratnaRepo.checkAvailability(jednokratnaDto);
+    const jednokratnaExits = await JednokratnaRepo.checkAvailability(
+      jednokratnaDto
+    );
 
     if (jednokratnaExits) {
-      return this.clientError(res, ['Rezervacija na to vozilo u to vrijeme već postoji!']);
+      return this.clientError(res, [
+        'Rezervacija na to vozilo u to vrijeme već postoji!',
+      ]);
     }
 
     const jednokratna = await JednokratnaRepo.createJednokratna(jednokratnaDto);
