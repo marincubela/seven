@@ -11,7 +11,7 @@ import {
   Divider,
   PinInput,
   PinInputField,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';

@@ -1,4 +1,4 @@
-import { Box, Button, HStack, Link } from '@chakra-ui/core';
+import { Box, Button, HStack, Link } from '@chakra-ui/react';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { Link as ReactLink, useLocation } from 'react-router-dom';
