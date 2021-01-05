@@ -1,14 +1,14 @@
 import { BaseController } from '../BaseController';
 import { IRequest, IResponse } from '../../interfaces/network';
-import { KlijentDTO } from '../../dtos/KlijentDTO';
-import { KlijentRepo } from '../../repos/KlijentRepo';
-import { KlijentValidator, RacunValidator } from '../../utils/validators';
+import { TvrtkaDTO } from '../../dtos/TvrtkaDTO';
+import { TvrtkaRepo } from '../../repos/TvrtkaRepo';
+import { TvrtkaValidator, RacunValidator } from '../../utils/validators';
 import { RacunMapper } from '../../mappers/RacunMapper';
 import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
-import { KlijentMapper } from '../../mappers/KlijentMapper';
+import { TvrtkaMapper } from '../../mappers/TvrtkaMapper';
 import { RacunUpdateValidator } from '../../utils/validators/RacunUpdateValidator';
 
-export class UpdateKlijentController extends BaseController {
+export class UpdateTvrtkaController extends BaseController {
   executeImpl = async (
     req: IRequest,
     res: IResponse
@@ -27,16 +27,16 @@ export class UpdateKlijentController extends BaseController {
       return this.forbidden(res, null);
     }
 
-    const { password, ...oldClientData } = await KlijentMapper.toDTO(
-      await KlijentRepo.getKlijentByIdRacun(idRacun)
+    const { password, ...oldTvrtkaData } = await TvrtkaMapper.toDTO(
+      await TvrtkaRepo.getTvrtkaByIdRacun(idRacun)
     );
 
-    const klijentDto = { ...oldClientData, ...req.body.data } as KlijentDTO;
+    const tvrtkaDto = { ...oldTvrtkaData, ...req.body.data } as TvrtkaDTO;
 
     const validationErrors = (
       await Promise.all([
-        RacunUpdateValidator.validate(klijentDto),
-        KlijentValidator.validate(klijentDto),
+        RacunUpdateValidator.validate(tvrtkaDto),
+        TvrtkaValidator.validate(tvrtkaDto),
       ])
     ).reduce((errs, err) => [...errs, ...err], []);
 
@@ -44,29 +44,26 @@ export class UpdateKlijentController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
-    if (!(await KlijentRepo.checkUniqueForUpdate(klijentDto, idRacun))) {
+    if (!(await TvrtkaRepo.checkUniqueForUpdate(tvrtkaDto, idRacun))) {
       return this.clientError(res, ['Račun se već koristi']);
     }
 
-    klijentDto.idRacun = idRacun;
-    const klijent = await KlijentRepo.update(klijentDto);
+    tvrtkaDto.idRacun = idRacun;
+    const tvrtka = await TvrtkaRepo.update(tvrtkaDto);
 
     if (idRacun === req.session.user.idRacun) {
-      const racun = await klijent.getRacun();
+      const racun = await tvrtka.getRacun();
 
       const { admin, email, OIB } = await RacunMapper.toDTO(racun);
 
-      const { firstName, lastName, cardNumber } = await KlijentMapper.toDTO(
-        klijent
-      );
-
+      const { name, address } = await TvrtkaMapper.toDTO(tvrtka);
       const user = {
         idRacun,
         admin,
         email,
         OIB,
-        klijent: { firstName, lastName, cardNumber },
-        tvrtka: null,
+        klijent: null,
+        tvrtka: { name, address },
       } as ISessionUserDTO;
 
       req.session.user = user;
@@ -74,7 +71,7 @@ export class UpdateKlijentController extends BaseController {
 
     return this.ok(res, {
       data: {
-        user: klijentDto,
+        user: tvrtkaDto,
       },
     });
   };
