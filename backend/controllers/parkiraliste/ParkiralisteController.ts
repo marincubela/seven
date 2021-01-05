@@ -4,6 +4,7 @@ import {
   GetAllParkiralisteController,
   GetParkiralisteController,
   GetFromCompanyParkiralisteController,
+  UpdateParkiralisteController,
 } from '.';
 /*import { CreateParkiralisteController } from './CreateParkiralisteController';
 import { DeleteParkiralisteController } from './DeleteParkiralisteController';
@@ -22,4 +23,6 @@ export class ParkiralisteController {
 
   public static getFromCompany = new GetFromCompanyParkiralisteController()
     .execute;
+
+  public static update = new UpdateParkiralisteController().execute;
 }
