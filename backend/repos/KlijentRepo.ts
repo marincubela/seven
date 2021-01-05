@@ -6,6 +6,7 @@ import { BaseRepo } from './BaseRepo';
 import { RacunRepo } from './RacunRepo';
 import { VoziloRepo } from './VoziloRepo';
 import { Op } from 'sequelize';
+import { exists } from 'fs';
 
 export class KlijentRepo extends BaseRepo<KlijentDTO> {
   async exists(klijentDTO: KlijentDTO): Promise<boolean> {
@@ -133,5 +134,15 @@ export class KlijentRepo extends BaseRepo<KlijentDTO> {
         return true;
     }
     return false;
+  }
+
+  public static async idValidationCheck(idKlijent: number): Promise<Boolean>{
+    const klijent = await Klijent.findOne({
+      where: {
+        idKlijent,
+      },
+    });
+
+    return Boolean(klijent);
   }
 }
