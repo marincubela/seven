@@ -13,7 +13,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  Divider,
+  // Divider,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
@@ -33,11 +33,9 @@ export function VehiclesList() {
         .then((res) => {
           if (res.data && res.data.vehicles) {
             setVehicles(res.data.vehicles);
-            // console.log(res.data.vehicles);
           }
         })
         .catch((res) => {
-          // set error
           console.log('erorrrrrrr');
           console.log(res);
         });
@@ -50,7 +48,9 @@ export function VehiclesList() {
     destroy(`vehicle/${idVehicle}`)
       .then(() => {
         history.replace('/');
-        // history.go(0);
+        setTimeout(() => {
+          history.replace('/vehicles');
+        }, 5);
       })
       .catch((err) => {
         console.log('error');
@@ -69,18 +69,6 @@ export function VehiclesList() {
         Vaša vozila
       </Heading>
 
-      {/* <Box h={10} pading={0}>
-        <HStack h="inherit">
-          <Box w="10%" marginRight={4}/>
-          <Box w="30%">
-          <Text fontSize="lg">Naziv vozila</Text>
-          </Box>
-          <Box w="30%">
-          <Text fontSize="lg">Registracija</Text>
-          </Box>
-        </HStack>
-      <Divider orientation="horizontal" bgColor="black" h="0.15rem" />
-      </Box> */}
       {vehicles.map((veh) => (
         <Box key={veh.idVozilo} h={10} marginBottom="4" marginTop="2" borderRadius="lg" background="white">
           <HStack h="inherit">

@@ -8,7 +8,7 @@ import { post } from '../../utils/network';
 
 export function VehiclesAdd() {
   const { handleSubmit, register, errors } = useForm();
-  const [carColor, setCarColor] = useState(null);
+  const [carColor, setCarColor] = useState({ hex: '#FFFFFF' });
   const history = useHistory();
 
   function onVehicleInput(formData) {
@@ -24,7 +24,7 @@ export function VehiclesAdd() {
 
     post('vehicle', requestBody)
       .then((res) => {
-        console.log('odgovor je: ' + res);
+        // console.log('odgovor je: ' + res);
         history.replace('/vehicles');
       })
 
@@ -65,6 +65,7 @@ export function VehiclesAdd() {
           <Input
             ref={register({
               required: 'Naziv je obavezan',
+              validate: (value) => value.length <= 20 || 'Maksimalna duljina naziva: 20',
             })}
             isInvalid={errors['add-vehicle-name']}
             name="add-vehicle-name"
@@ -77,7 +78,10 @@ export function VehiclesAdd() {
           ) : null}
           <Text>Registracija</Text>
           <Input
-            ref={register({ required: 'Registracija je obavezna' })}
+            ref={register({
+              required: 'Registracija je obavezna',
+              validate: (value) => value.length <= 20 || 'Maksimalna duljina registracije: 20',
+            })}
             isInvalid={errors['add-vehicle-registration']}
             name="add-vehicle-registration"
             placeholder="Registracija"
