@@ -11,6 +11,6 @@ reservationRouter.get('', RezervacijaController.getFromClient);
 reservationRouter.delete('/:idRezervacija', RezervacijaController.delete);
 
 reservationRouter.post(
-  '/SingleUse',
+  '/onetime',
   RezervacijaController.createJednokratnaController
 );
