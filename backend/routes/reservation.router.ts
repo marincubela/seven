@@ -14,6 +14,7 @@ reservationRouter.get('', RezervacijaController.getFromClient);
 reservationRouter.delete('/:idRezervacija', RezervacijaController.delete);
 
 reservationRouter.post('/onetime', JednokratnaController.create);
+reservationRouter.post('/permanent', TrajnaController.create);
 
 reservationRouter.patch(
   '/onetime/:idRezervacija',
