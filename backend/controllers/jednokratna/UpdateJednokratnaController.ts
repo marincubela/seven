@@ -4,7 +4,8 @@ import { JednokratnaMapper } from '../../mappers/JednokratnaMapper';
 import { JednokratnaRepo } from '../../repos/JednokratnaRepo';
 import { JednokratnaDTO } from '../../dtos/JednokratnaDTO';
 import { JednokratnaValidator } from '../../utils/validators';
-export class UpdateResevationController extends BaseController {
+
+export class UpdateJednokratnaController extends BaseController {
   executeImpl = async (
     req: IRequest,
     res: IResponse
