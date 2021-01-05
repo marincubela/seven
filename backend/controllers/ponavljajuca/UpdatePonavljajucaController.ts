@@ -23,14 +23,17 @@ export class UpdatePonavljajucaController extends BaseController {
     //dodati jos preduvijeta
 
     const oldReservationData = await PonavljajucaMapper.toDTO(
-      await PonavljajucaRepo.getPonavljajucaByIdPonavljajuca(idRezervacija)
+      await PonavljajucaRepo.getPonavljajucaByIdRezervacija(idRezervacija)
     );
 
     const ponavljajucaDTO = {
       ...oldReservationData,
       ...req.body.data,
     } as PonavljajucaDTO;
-    ponavljajucaDTO.idPonavljajuca = idRezervacija;
+
+    ponavljajucaDTO.idPonavljajuca = await PonavljajucaRepo.getIdPonavljajuca(
+      idRezervacija
+    );
 
     const validationErrors = (
       await Promise.all([PonavljajucaValidator.validate(ponavljajucaDTO)])
@@ -40,11 +43,12 @@ export class UpdatePonavljajucaController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
+    ponavljajucaDTO.idRezervacija = idRezervacija;
     const rezervacija = await PonavljajucaRepo.update(ponavljajucaDTO);
 
     return this.ok(res, {
       data: {
-        repeated: await PonavljajucaMapper.toDTO(rezervacija),
+        repetitive: await PonavljajucaMapper.toDTO(rezervacija),
       },
     });
   };
