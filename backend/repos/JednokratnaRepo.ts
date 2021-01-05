@@ -123,4 +123,16 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
 
     return true;
   }
+
+  public static async update(jednokratnaDTO: JednokratnaDTO): Promise<Jednokratna> {
+    const voziloData = JednokratnaMapper.toDomain(jednokratnaDTO);
+
+    await Jednokratna.update(voziloData, {
+      where: {
+       idJednokratna: jednokratnaDTO.idJednokratna,
+      },
+    });
+
+    return await this.getJednokratnaByIdJednokratna(jednokratnaDTO.idJednokratna);
+  }
 }
