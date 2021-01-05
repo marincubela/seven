@@ -1,4 +1,4 @@
-import { Box, Heading, VStack, Text, Input, HStack, Button, Link, Checkbox } from '@chakra-ui/core';
+import { Box, Heading, VStack, Text, Input, HStack, Button, Link, Checkbox } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as ReactLink, useHistory } from 'react-router-dom';

@@ -1,20 +1,23 @@
-import { Box, Center, Text } from '@chakra-ui/core';
+import { Box } from '@chakra-ui/react';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import { Navigation } from '../components/Navigation';
-import { useStore } from '../store/StoreProvider';
+import 'leaflet/dist/leaflet.css';
+
+import { Map } from '../components/home/Map';
+import { Search } from '../components/home/Search';
+import { Navigation } from '../components/home/Navigation';
 
 export const Home = observer(() => {
-  const store = useStore();
-
   return (
-    <Center w="100vw" h="100vh" bgColor="blue.100">
-      <Box>
-        {store.currentUser ? <Text>Bok, {store.currentUser.email}</Text> : null}
-        <Text fontSize="lg">Parkiraj me | Početna</Text>
+    <Box w="100vw" h="100vh">
+      <Map />
+
+      <Box p={2} maxW="450px" w={['100%', '40%']} zIndex="400" position="fixed" top="0" left="0">
+        <Search mb={4} display="none" />
+
         <Navigation />
       </Box>
-    </Center>
+    </Box>
   );
 });
