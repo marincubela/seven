@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Heading, VStack, Text, Input, Button, Select } from '@chakra-ui/react';
+import { Box, Heading, VStack, Text, Input, Button } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { TwitterPicker } from 'react-color';
@@ -16,15 +16,13 @@ export function VehiclesAdd() {
       data: {
         registration: formData['add-vehicle-registration'],
         carName: formData['add-vehicle-name'],
-        // color: formData['add-vehicle-color'],
-        // mozda nije najbolje rjesenje???
+        // color: formData['add-vehicle
         color: carColor.hex,
       },
     };
 
     post('vehicle', requestBody)
-      .then((res) => {
-        // console.log('odgovor je: ' + res);
+      .then(() => {
         history.replace('/vehicles');
       })
 
