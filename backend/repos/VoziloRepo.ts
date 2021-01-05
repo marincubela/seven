@@ -52,6 +52,19 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
 
     return vozilo;
   }
+
+  public static async update(voziloDTO: VoziloDTO): Promise<Vozilo> {
+    const voziloData = VoziloMapper.toDomain(voziloDTO);
+
+    await Vozilo.update(voziloData, {
+      where: {
+        idVozilo: voziloDTO.idVozilo,
+      },
+    });
+
+    return await this.getVoziloByIdVozilo(voziloDTO.idVozilo);
+  }
+
   static async getVoziloByIdVozilo(idVozilo: number): Promise<Vozilo> {
     return await Vozilo.findOne({
       where: {
@@ -91,8 +104,13 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
   }
 
   static async getIdKlijentFromIdVozilo(idVozilo: number): Promise<number> {
-    return (await (await this.getVoziloByIdVozilo(idVozilo)).getKlijent())
-      .idKlijent;
+    const vozilo = await this.getVoziloByIdVozilo(idVozilo);
+
+    if (vozilo) {
+      return (await vozilo.getKlijent()).idKlijent;
+    }
+
+    return null;
   }
 
   static async deleteByIdVozilo(idVozilo: number): Promise<any> {

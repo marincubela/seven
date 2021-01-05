@@ -13,3 +13,5 @@ parkingRouter.get('', ParkiralisteController.getFromCompany);
 parkingRouter.post('/', ParkiralisteController.create);
 
 parkingRouter.delete('/:idParkiraliste', ParkiralisteController.delete);
+
+parkingRouter.patch('/:idParkiraliste', ParkiralisteController.update);

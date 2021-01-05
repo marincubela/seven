@@ -3,8 +3,6 @@ import { IRequest, IResponse } from '../../interfaces/network';
 import { VoziloDTO } from '../../dtos/VoziloDTO';
 import { VoziloValidator } from '../../utils/validators';
 import { VoziloMapper } from '../../mappers/VoziloMapper';
-import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
-import { RacunRepo } from '../../repos/RacunRepo';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { KlijentRepo } from '../../repos/KlijentRepo';
 
