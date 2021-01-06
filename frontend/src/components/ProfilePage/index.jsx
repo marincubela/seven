@@ -12,6 +12,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   useDisclosure,
+  Flex,
 } from '@chakra-ui/react';
 import React, { Fragment, useState } from 'react';
 import { observer } from 'mobx-react';
@@ -100,24 +101,24 @@ export const ProfilePage = observer(() => {
           </Text>
         </Box>
 
-        <HStack spacing="10" padding="5">
+        <Flex justifyContent="space-around">
           <Button>
             {user.klijent ? (
               <Link fontWeight="bold" marginLeft="2" as={ReactLink} to="/profile/edit/person">
-                Uredi korisnički račun
+                Uredi
               </Link>
             ) : null}
 
             {user.tvrtka ? (
               <Link fontWeight="bold" marginLeft="2" as={ReactLink} to="/profile/edit/company">
-                Uredi korisnički račun
+                Uredi
               </Link>
             ) : null}
           </Button>
           <Button colorScheme="error" onClick={onOpen}>
-            Izbriši korisnički račun
+            Izbriši
           </Button>
-        </HStack>
+        </Flex>
       </Stack>
 
       <Text color="error.500">{errorMessage}</Text>

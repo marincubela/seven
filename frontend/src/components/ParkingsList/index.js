@@ -144,7 +144,7 @@ export function ParkingsList() {
 
             <AlertDialogFooter>
               <Button leftIcon={<CloseIcon />} ref={cancelRef} onClick={onClose}>
-                Cancel
+                Odustani
               </Button>
               <Button
                 leftIcon={<DeleteIcon />}
@@ -152,7 +152,7 @@ export function ParkingsList() {
                 onClick={() => handleDelete(deleteParking.idParkiraliste)}
                 ml={3}
               >
-                Delete
+                Izbriši
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
