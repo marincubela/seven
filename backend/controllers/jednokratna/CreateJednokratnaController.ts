@@ -45,9 +45,9 @@ export class CreateJednokratnaController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
-    if(!await JednokratnaRepo.checkTime(jednokratnaDto.startTime, jednokratnaDto.endTime)){
+    /*if(!await JednokratnaRepo.checkTime(jednokratnaDto.startTime, jednokratnaDto.endTime)){
       return this.clientError(res,['Neispravno vrijeme!',]);
-    }
+    }*/
     
     const jednokratnaExits = await JednokratnaRepo.checkAvailability(
       jednokratnaDto

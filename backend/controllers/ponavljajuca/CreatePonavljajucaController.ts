@@ -18,7 +18,6 @@ export class CreatePonavljajucaController extends BaseController {
   ): Promise<void | IResponse> => {
     const ponavljajucaDto = req.body.data as PonavljajucaDTO;
 
-    console.log(await KlijentRepo.idValidationCheck(ponavljajucaDto.idKlijent));
 
     //Provjeri rezervira li korisnik u svoje ime
     if(!await KlijentRepo.idValidationCheck(ponavljajucaDto.idKlijent) || await KlijentRepo.getIdRacunByIdKlijent(ponavljajucaDto.idKlijent)!=req.session.user.idRacun){
@@ -31,25 +30,38 @@ export class CreatePonavljajucaController extends BaseController {
         'Neispravan id vozila ili parkiralista!',
       ]);
     }
-
     //Provjeri posjeduje li korisnik navedeni auto
    if(!await KlijentRepo.checkCarOwner(ponavljajucaDto.idKlijent, ponavljajucaDto.idVozilo)){
         return this.forbidden(res, null);
     }
+  
 
     const validationErrors = (
       await Promise.all([PonavljajucaValidator.validate(ponavljajucaDto)])
     ).reduce((errs, err) => [...errs, ...err], []);
 
+
     if (validationErrors.length) {
       return this.clientError(res, validationErrors);
     }
+    
 
-    if(!await PonavljajucaRepo.checkTime(ponavljajucaDto)){
+    /*if(!await PonavljajucaRepo.checkTime(ponavljajucaDto)){
       return this.clientError(res,['Neispravno vrijeme!',]);
     }
-    
-    /*const ponavljajucaExits = await PonavljajucaRepo.checkAvailability(
+
+    if(!await PonavljajucaRepo.checkMinDuration(ponavljajucaDto)){
+      return this.clientError(res,['Rezervacija mora trajati barem 1 sat!',]);
+    }
+
+    if(!await PonavljajucaRepo.checkRepeatDays(ponavljajucaDto)){
+      return this.clientError(res,['Rezervacija se mora ponavljati barem 1 tjedno',]);
+    }
+
+    if(!await PonavljajucaRepo.checkTimespan(ponavljajucaDto)){
+      return this.clientError(res,['Rezervacija mora biti na najmanje 30 dana!',]);
+    }
+    const ponavljajucaExits = await PonavljajucaRepo.checkAvailability(
       ponavljajucaDto
     );
 

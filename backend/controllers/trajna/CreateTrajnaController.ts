@@ -40,9 +40,9 @@ export class CreateTrajnaController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
-    if(!await TrajnaRepo.checkTime(trajnaDto.startTime, trajnaDto.endTime)){
+    /*if(!await TrajnaRepo.checkTime(trajnaDto.startTime, trajnaDto.endTime)){
       return this.clientError(res,['Neispravno vrijeme!',]);
-    }
+    }*/
 
     const trajnaExits = await TrajnaRepo.checkAvailability(
       trajnaDto
