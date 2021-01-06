@@ -3,7 +3,7 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
-import 'leaflet/dist/leaflet.css';
+import 'leaflet/dist/leaflet';
 
 import customTheme from './styles/theme';
 import { Home } from './routes/home';
@@ -14,6 +14,11 @@ import { RegistrationPerson } from './routes/registrationPerson';
 import { Login } from './routes/login';
 import { Error } from './routes/error';
 import { get } from './utils/network';
+// import { useStore } from './store/StoreProvider';
+import { VehiclesL } from './routes/vehiclesList';
+import { VehiclesA } from './routes/vehiclesAdd';
+import { VehiclesUp } from './routes/vehicleUpdate';
+
 import { StoreProvider } from './store/StoreProvider';
 import { getOrInitializeStore } from './utils/store';
 import { ProfileEditPerson } from './routes/profileEditPerson';
@@ -42,6 +47,17 @@ const App = () => {
       <ChakraProvider theme={extendTheme(customTheme)}>
         <Router>
           <Switch>
+            <Route path="/vehicles/add">
+              <VehiclesA />
+            </Route>
+
+            <Route path="/vehicles/update">
+              <VehiclesUp />
+            </Route>
+
+            <Route path="/vehicles">
+              <VehiclesL />
+            </Route>
             <Route path="/admin">
               <AdminRouter />
             </Route>

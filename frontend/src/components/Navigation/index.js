@@ -10,6 +10,8 @@ export const Navigation = observer(() => {
   const { pathname } = useLocation();
   const store = useStore();
 
+  const isClientLoggedIn = Boolean(store.currentUser?.klijent);
+  const isCompanyLoggedIn = Boolean(store.currentUser?.tvrtka);
   const isUserLoggedIn = Boolean(store.currentUser);
 
   const handleLogout = () => {
@@ -24,12 +26,24 @@ export const Navigation = observer(() => {
     <Box color="secondary.700">
       <HStack spacing="5">
         <Link as={ReactLink} to="/" variant="nav" aria-current={pathname === '/' ? '' : undefined}>
-          Početna
+          Karta
         </Link>
 
         {isUserLoggedIn && (
-          <Link as={ReactLink} to="/profil" variant="nav" aria-current={pathname === '/login' ? '' : undefined}>
+          <Link as={ReactLink} to="/profile" variant="nav" aria-current={pathname === '/profile' ? '' : undefined}>
             Profil
+          </Link>
+        )}
+
+        {isClientLoggedIn && (
+          <Link as={ReactLink} to="/vehicles" variant="nav" aria-current={pathname === '/vehicles' ? '' : undefined}>
+            Vozila
+          </Link>
+        )}
+
+        {isCompanyLoggedIn && (
+          <Link as={ReactLink} to="/parkings" variant="nav" aria-current={pathname === '/parkings' ? '' : undefined}>
+            Parkirališta
           </Link>
         )}
 

@@ -5,6 +5,8 @@
   "dependencies": {
     "@chakra-ui/icons": "^1.0.2",
     "@chakra-ui/react": "^1.1.1",
+    "@chakra-ui/system": "^1.1.2",
+    "@chakra-ui/theme": "^1.2.2",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
     "@testing-library/jest-dom": "^4.2.4",
@@ -15,6 +17,7 @@
     "mobx": "^6.0.3",
     "mobx-react": "^7.0.3",
     "react": "^16.13.1",
+    "react-color": "^2.19.3",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.10.1",
     "react-leaflet": "^3.0.5",
