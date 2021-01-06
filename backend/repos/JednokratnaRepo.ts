@@ -185,4 +185,11 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
       jednokratnaDTO.idJednokratna
     );
   }
+
+  public static async checkTime(startTime:Date, endTime:Date): Promise<Boolean>{
+    const currentDate=new Date();
+    if((startTime.getTime()-currentDate.getTime())/3600<6 || startTime>endTime || (startTime.getTime()-endTime.getTime())/3600>24)
+          return false;
+    return true;
+  }
 }
