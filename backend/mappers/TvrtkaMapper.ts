@@ -2,6 +2,7 @@ import { Tvrtka, ITvrtkaAttributes } from '../models/Tvrtka';
 import { TvrtkaDTO } from '../dtos/TvrtkaDTO';
 import { Mapper } from './Mapper';
 import { RacunMapper } from './RacunMapper';
+import { PublicTvrtkaDTO } from '../dtos/PublicDTO';
 
 export class TvrtkaMapper extends Mapper {
   public static toDomain(tvrtkaDTO: TvrtkaDTO): ITvrtkaAttributes {
@@ -18,6 +19,17 @@ export class TvrtkaMapper extends Mapper {
 
     return {
       ...(await RacunMapper.toDTO(racun)),
+      name: tvrtka.naziv,
+      address: tvrtka.adresa,
+    };
+  }
+
+  public static async toPublicDTO(tvrtka: Tvrtka): Promise<PublicTvrtkaDTO> {
+    const racun = await tvrtka.getRacun();
+
+    return {
+      idRacun: racun.idRacun,
+      idTvrtka: tvrtka.idTvrtka,
       name: tvrtka.naziv,
       address: tvrtka.adresa,
     };
