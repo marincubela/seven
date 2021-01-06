@@ -1,9 +1,10 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
 import { get } from '../../../utils/network';
+import { MapPin } from './MapPin';
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -29,9 +30,7 @@ export const Map = () => {
       {parkings.map((parking) => (
         <Marker position={parking.coordinates.split(' ').map((c) => parseFloat(c))} key={parking.idParkiraliste}>
           <Popup>
-            <Text size="lg" fontWeight="bold">
-              {parking.parkingName}
-            </Text>
+            <MapPin parking={parking} />
           </Popup>
         </Marker>
       ))}
