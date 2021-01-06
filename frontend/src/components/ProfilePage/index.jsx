@@ -1,11 +1,28 @@
-import { Box, Heading, Text, HStack, Button, Stack } from '@chakra-ui/react';
-import React, { Fragment } from 'react';
+import {
+  Box,
+  Heading,
+  Text,
+  HStack,
+  Button,
+  Stack,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+  useDisclosure,
+} from '@chakra-ui/react';
+import React, { Fragment, useState } from 'react';
 import { observer } from 'mobx-react';
 import { Link as ReactLink, useHistory, Link } from 'react-router-dom';
+import { DeleteIcon, EditIcon, AddIcon, CloseIcon } from '@chakra-ui/icons';
 import { destroy } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
 
 export const ProfilePage = observer(() => {
+  const [errorMessage, setErrorMessage] = useState('');
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const store = useStore();
   const history = useHistory();
 
@@ -97,11 +114,34 @@ export const ProfilePage = observer(() => {
               </Link>
             ) : null}
           </Button>
-          <Button colorScheme="error" onClick={destroyUser}>
+          <Button colorScheme="error" onClick={onOpen}>
             Izbriši korisnički račun
           </Button>
         </HStack>
       </Stack>
+
+      <Text color="error.500">{errorMessage}</Text>
+
+      <AlertDialog isOpen={isOpen} onClose={onClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Izbriši račun
+            </AlertDialogHeader>
+
+            <AlertDialogBody>Jeste li sigurni da želite izbrisati račun?</AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button leftIcon={<CloseIcon />} onClick={onClose}>
+                Odustani
+              </Button>
+              <Button leftIcon={<DeleteIcon />} colorScheme="red" onClick={() => destroyUser()} ml={3}>
+                Obriši
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Box>
   );
 });
