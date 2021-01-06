@@ -1,9 +1,11 @@
 import { Rezervacija } from '../models/Rezervacija';
 import { PonavljajucaDTO } from '../dtos/PonavljajucaDTO';
+import { JednokratnaDTO } from '../dtos/JednokratnaDTO';
 import { PonavljajucaMapper } from '../mappers/PonavljajucaMapper';
 import { Ponavljajuca } from '../models/Ponavljajuca';
 import { BaseRepo } from './BaseRepo';
 import { RezervacijaRepo } from './RezervacijaRepo';
+import { Op } from 'sequelize';
 
 export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
   async exists(ponavljajucaDTO: PonavljajucaDTO): Promise<boolean> {
@@ -123,5 +125,31 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
       return null;
     }
     return ponavljajuca.idPonavljajuca;
+  }
+  public static checkOverlapForOnetime(jednokratnaDTO:JednokratnaDTO){
+        const timeClash=Ponavljajuca.findAll({
+          where: {
+            [Op.or]: {
+              vrijemePocetak: {
+                [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
+              },
+              vrijemeKraj: {
+                [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
+              },
+              [Op.and]:{
+                vrijemeKraj: {[Op.gt]: jednokratnaDTO.endTime},
+                vrijemePocetak: {[Op.lt]: jednokratnaDTO.endTime}
+              }
+            },
+          },
+        })
+  }
+
+  public static async checkTime(ponavljajucaDTO: PonavljajucaDTO): Promise<Boolean>{
+    const currentDate=new Date();
+    if(ponavljajucaDTO.startTime>ponavljajucaDTO.endTime || (ponavljajucaDTO.endTime.getTime()-ponavljajucaDTO.startTime.getTime())/3600<1
+        || !(ponavljajucaDTO.repeatDays.toString(ponavljajucaDTO.repeatDays).match(/^[1-7]+$/)))
+          return false;
+    return true;
   }
 }
