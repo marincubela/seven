@@ -3,11 +3,9 @@ import { IRequest, IResponse } from '../../interfaces/network';
 import { TrajnaDTO } from '../../dtos/TrajnaDTO';
 import { TrajnaRepo } from '../../repos/TrajnaRepo';
 import { TrajnaValidator } from '../../utils/validators';
-import { RezervacijaMapper } from '../../mappers/RezervacijaMapper';
-import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
 import { KlijentRepo } from '../../repos/KlijentRepo';
-import { TrajnaMapper } from '../../mappers/TrajnaMapper';
 import { VoziloRepo } from '../../repos/VoziloRepo';
+import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 
 export class CreateTrajnaController extends BaseController {
@@ -42,7 +40,10 @@ export class CreateTrajnaController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
-    
+    if(!await TrajnaRepo.checkTime(trajnaDto.startTime, trajnaDto.endTime)){
+      return this.clientError(res,['Neispravno vrijeme!',]);
+    }
+
     const trajnaExits = await TrajnaRepo.checkAvailability(
       trajnaDto
     );
