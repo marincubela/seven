@@ -1,7 +1,7 @@
 import { Divider } from '@chakra-ui/react';
 import { observer } from 'mobx-react';
 import React, { Fragment } from 'react';
-import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 
 import { AdminContainer } from './components/admin/Container';
 import { AdminNavigation } from './components/admin/Navigation';
@@ -28,14 +28,12 @@ export const AdminRouter = observer(() => {
       <AdminContainer>
         <Switch>
           <Route path={`${path}/`} exact>
-            Admin panel
+            <Redirect to={`${path}/users`} />
           </Route>
 
           <Route path={`${path}/users`}>
             <Users />
           </Route>
-
-          <Route path={`${path}/parkings`}>Parkings | Admin panel</Route>
         </Switch>
       </AdminContainer>
     </Fragment>
