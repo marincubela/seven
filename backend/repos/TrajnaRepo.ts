@@ -169,4 +169,11 @@ export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
 
     return true;
   }
+
+  public static async checkTime(startTime:Date, endTime:Date): Promise<Boolean>{
+    const currentDate=new Date();
+    if((startTime.getTime()-currentDate.getTime())/3600<0 || startTime>endTime)
+          return false;
+    return true;
+  }
 }
