@@ -3,13 +3,10 @@ import { IRequest, IResponse } from '../../interfaces/network';
 import { JednokratnaDTO } from '../../dtos/JednokratnaDTO';
 import { JednokratnaRepo } from '../../repos/JednokratnaRepo';
 import { JednokratnaValidator } from '../../utils/validators';
-import { RezervacijaMapper } from '../../mappers/RezervacijaMapper';
-import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
 import { KlijentRepo } from '../../repos/KlijentRepo';
 import { JednokratnaMapper } from '../../mappers/JednokratnaMapper';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
-import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 
 export class CreateJednokratnaController extends BaseController {
   executeImpl = async (
@@ -21,20 +18,33 @@ export class CreateJednokratnaController extends BaseController {
     console.log(await KlijentRepo.idValidationCheck(jednokratnaDto.idKlijent));
 
     //Provjeri rezervira li korisnik u svoje ime
-    if(!await KlijentRepo.idValidationCheck(jednokratnaDto.idKlijent) || await KlijentRepo.getIdRacunByIdKlijent(jednokratnaDto.idKlijent)!=req.session.user.idRacun){
+    if (
+      !(await KlijentRepo.idValidationCheck(jednokratnaDto.idKlijent)) ||
+      (await KlijentRepo.getIdRacunByIdKlijent(jednokratnaDto.idKlijent)) !=
+        req.session.user.idRacun
+    ) {
       return this.forbidden(res, null);
     }
 
     //Provjeri postoje li auto i parkiraliste
-    if(!(await ParkiralisteRepo.idValidationCheck(jednokratnaDto.idParkiraliste)&& await VoziloRepo.idValidationCheck(jednokratnaDto.idVozilo))){
-      return this.clientError(res, [
-        'Neispravan id vozila ili parkiralista!',
-      ]);
+    if (
+      !(
+        (await ParkiralisteRepo.idValidationCheck(
+          jednokratnaDto.idParkiraliste
+        )) && (await VoziloRepo.idValidationCheck(jednokratnaDto.idVozilo))
+      )
+    ) {
+      return this.clientError(res, ['Neispravan id vozila ili parkiralista!']);
     }
 
     //Provjeri posjeduje li korisnik navedeni auto
-   if(!await KlijentRepo.checkCarOwner(jednokratnaDto.idKlijent, jednokratnaDto.idVozilo)){
-        return this.forbidden(res, null);
+    if (
+      !(await KlijentRepo.checkCarOwner(
+        jednokratnaDto.idKlijent,
+        jednokratnaDto.idVozilo
+      ))
+    ) {
+      return this.forbidden(res, null);
     }
 
     const validationErrors = (
@@ -48,7 +58,7 @@ export class CreateJednokratnaController extends BaseController {
     /*if(!await JednokratnaRepo.checkTime(jednokratnaDto.startTime, jednokratnaDto.endTime)){
       return this.clientError(res,['Neispravno vrijeme!',]);
     }*/
-    
+
     const jednokratnaExits = await JednokratnaRepo.checkAvailability(
       jednokratnaDto
     );
@@ -61,6 +71,8 @@ export class CreateJednokratnaController extends BaseController {
 
     const jednokratna = await JednokratnaRepo.createJednokratna(jednokratnaDto);
 
-    return this.ok(res, { data: { reservation: jednokratnaDto } });
+    return this.ok(res, {
+      data: { reservation: await JednokratnaMapper.toDTO(jednokratna) },
+    });
   };
 }
