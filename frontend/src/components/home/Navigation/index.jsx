@@ -7,6 +7,8 @@ import { PublicNavigation } from './Public';
 import { PrivateNavigation } from './Private';
 
 const getDisplayName = (user) => {
+  if (!user) return null;
+
   if (user.tvrtka) return user.tvrtka.name;
 
   if (user.klijent) return `${user.klijent.firstName} ${user.klijent.lastName}`;
