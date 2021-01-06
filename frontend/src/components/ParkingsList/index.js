@@ -74,10 +74,8 @@ export function ParkingsList() {
       <Flex>
         <Heading>Moja parkirališta</Heading>
         <Spacer />
-        <Button aria-label="Add parking" leftIcon={<AddIcon />} size="lg">
-          <Link as={ReactLink} to="/parkings/add" flex="1">
-            Dodaj
-          </Link>
+        <Button aria-label="Add parking" as={ReactLink} to="/parkings/add" leftIcon={<AddIcon />} size="lg">
+          Dodaj
         </Button>
       </Flex>
 
@@ -105,11 +103,15 @@ export function ParkingsList() {
               <Td isNumeric>{p.permanentPrice} kn</Td>
               <Td>
                 <HStack align="center">
-                  <Button aria-label="Edit parking" leftIcon={<EditIcon />}>
-                    <Link fontWeight="bold" marginLeft="2" as={ReactLink} to={{ pathname: '/parkings/edit', state: p }}>
-                      Uredi
-                    </Link>
+                  <Button
+                    aria-label="Edit parking"
+                    leftIcon={<EditIcon />}
+                    as={ReactLink}
+                    to={{ pathname: '/parkings/edit', state: p }}
+                  >
+                    Uredi
                   </Button>
+
                   <Button
                     aria-label="Delete parking"
                     leftIcon={<DeleteIcon />}
