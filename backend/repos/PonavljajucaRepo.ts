@@ -57,6 +57,7 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
       ponavljajucaDTO
     );
 
+
     const { idPonavljajuca, ...ponavljajucaData } = PonavljajucaMapper.toDomain(
       ponavljajucaDTO
     );
@@ -144,12 +145,47 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
           },
         })
   }
+  public static toDateFromHours(hours: Date): Date{
+    var t1 = new Date();
+    var parts = hours.toString().split(":");
+    t1.setHours(+parts[0],+parts[1],+parts[2],0);
+    return t1;
+  }
+
+  public static toDateFromMonths(months: Date):Date{
+    var field=months.toString().split("-");
+    return new Date(+field[0], +field[1], +field[2]);
+  }
 
   public static async checkTime(ponavljajucaDTO: PonavljajucaDTO): Promise<Boolean>{
     const currentDate=new Date();
-    if(ponavljajucaDTO.startTime>ponavljajucaDTO.endTime || (ponavljajucaDTO.endTime.getTime()-ponavljajucaDTO.startTime.getTime())/3600<1
-        || !(ponavljajucaDTO.repeatDays.toString(ponavljajucaDTO.repeatDays).match(/^[1-7]+$/)))
+    var start = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.startTime)
+    var end = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.endTime)
+  
+    if(start.getTime()> end.getTime() || start.getTime()>currentDate.getTime())
           return false;
+    return true;
+  }
+
+  public static async checkMinDuration(ponavljajucaDTO:PonavljajucaDTO):Promise<Boolean>{
+    var start = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.startTime)
+    var end = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.endTime)
+    if((end.getTime()-start.getTime())/3600<1)
+          return false;
+    return true;
+  }
+
+  public static async checkRepeatDays(ponavljajucaDTO:PonavljajucaDTO):Promise<Boolean>{
+    if(!(ponavljajucaDTO.repeatDays.toString(ponavljajucaDTO.repeatDays).match(/^[1-7]+$/)))
+            return false;
+    return true;
+  }
+
+  public static async checkTimespan(ponavljajucaDTO:PonavljajucaDTO):Promise<Boolean>{
+    var resStart=PonavljajucaRepo.toDateFromMonths(ponavljajucaDTO.reservationDate);
+    var resEnd=PonavljajucaRepo.toDateFromMonths(ponavljajucaDTO.reservationEndDate);
+    if((resEnd.getTime()-resStart.getTime())/(3600*24)<30)
+            return false;
     return true;
   }
 }
