@@ -24,14 +24,7 @@ export const Navigation = observer((props) => {
   const displayName = getDisplayName(store.currentUser);
 
   return (
-    <Box
-      p={2}
-      borderRadius="base"
-      bgColor="white"
-      boxShadow="lg"
-      border={({ space, colors }) => `${space[1]} solid ${colors.primary[500]}`}
-      {...props}
-    >
+    <Box p={2} {...props}>
       <Center p={2}>
         <Text fontWeight="bold" fontSize="xl">
           {displayName ? `Pozdrav, ${displayName}!` : 'Dobrodošli!'}
