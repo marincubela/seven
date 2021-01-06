@@ -58,7 +58,7 @@ export const Home = observer(() => {
 
       <Modal isOpen={isOpen} onClose={onClose} closeOnEsc closeOnOverlayClick zIndex="500" motionPreset="slideInBottom">
         <ModalOverlay />
-        <ModalContent containerProps={{ bottom: '0', top: '0', alignItems: 'flex-end' }} mb="0">
+        <ModalContent containerProps={{ bottom: '0', top: 'unset', alignItems: 'flex-end' }} mb="0">
           <ModalCloseButton />
           <ModalBody>
             <Navigation />
