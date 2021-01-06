@@ -1,7 +1,7 @@
 import { UpdatePonavljajucaController } from "./UpdatePonavljajucaController";
-
+import { CreatePonavljajucaController } from "./CreatePonavljajucaController";
 
 export class PonavljajucaController {
- //kad se napravi create dodat cu
+  public static create = new CreatePonavljajucaController().execute;
   public static update = new UpdatePonavljajucaController().execute;
 }
