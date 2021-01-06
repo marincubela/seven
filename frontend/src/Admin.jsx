@@ -27,12 +27,12 @@ export const AdminRouter = observer(() => {
 
       <AdminContainer>
         <Switch>
-          <Route path={`${path}/`} exact>
-            <Redirect to={`${path}/users`} />
-          </Route>
-
           <Route path={`${path}/users`}>
             <Users />
+          </Route>
+
+          <Route path={`${path}/`}>
+            <Redirect to={`${path}/users`} />
           </Route>
         </Switch>
       </AdminContainer>
