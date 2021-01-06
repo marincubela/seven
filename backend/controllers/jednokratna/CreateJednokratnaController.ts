@@ -9,6 +9,7 @@ import { KlijentRepo } from '../../repos/KlijentRepo';
 import { JednokratnaMapper } from '../../mappers/JednokratnaMapper';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
+import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 
 export class CreateJednokratnaController extends BaseController {
   executeImpl = async (
@@ -44,6 +45,9 @@ export class CreateJednokratnaController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
+    if(!await JednokratnaRepo.checkTime(jednokratnaDto.startTime, jednokratnaDto.endTime)){
+      return this.clientError(res,['Neispravno vrijeme!',]);
+    }
     
     const jednokratnaExits = await JednokratnaRepo.checkAvailability(
       jednokratnaDto
