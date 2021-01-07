@@ -55,6 +55,8 @@ export class CreatePonavljajucaController extends BaseController {
     }
 
     // Postoji li rezervacija s danim vozilom u to vrijeme
+
+    // Treba se promijeniti u RezervacijaRepo.isAvailable(), al treba prilagoditi... ima posla
     if (!(await PonavljajucaRepo.isAvailable(ponavljajucaDto))) {
       return this.conflict(res, ['Nije moguće rezervirati u dano vrijeme']);
     }
