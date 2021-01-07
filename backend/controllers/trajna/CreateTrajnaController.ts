@@ -5,8 +5,9 @@ import { TrajnaRepo } from '../../repos/TrajnaRepo';
 import { TrajnaValidator } from '../../utils/validators';
 import { KlijentRepo } from '../../repos/KlijentRepo';
 import { VoziloRepo } from '../../repos/VoziloRepo';
-import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
+import { isAfter, isBefore, parseISO } from 'date-fns';
+import { TrajnaMapper } from '../../mappers/TrajnaMapper';
 
 export class CreateTrajnaController extends BaseController {
   executeImpl = async (
@@ -16,20 +17,45 @@ export class CreateTrajnaController extends BaseController {
     const trajnaDto = req.body.data as TrajnaDTO;
 
     //Provjeri rezervira li korisnik u svoje ime
-    if(!await KlijentRepo.idValidationCheck(trajnaDto.idKlijent) || await KlijentRepo.getIdRacunByIdKlijent(trajnaDto.idKlijent)!=req.session.user.idRacun){
+    //Provjeri posjeduje li korisnik navedeni auto
+    if (
+      !(await KlijentRepo.getKlijentByIdKlijent(trajnaDto.idKlijent)) ||
+      (await KlijentRepo.getIdRacunByIdKlijent(trajnaDto.idKlijent)) !=
+        req.session.user.idRacun ||
+      !(await KlijentRepo.checkCarOwner(
+        trajnaDto.idKlijent,
+        trajnaDto.idVozilo
+      ))
+    ) {
       return this.forbidden(res, null);
     }
 
     //Provjeri postoje li auto i parkiraliste
-    if(!(await ParkiralisteRepo.idValidationCheck(trajnaDto.idParkiraliste)&&await VoziloRepo.idValidationCheck(trajnaDto.idVozilo))){
+    if (
+      !(
+        (await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
+          trajnaDto.idParkiraliste
+        )) && (await VoziloRepo.getVoziloByIdVozilo(trajnaDto.idVozilo))
+      )
+    ) {
+      return this.clientError(res, ['Neispravan id vozila ili parkirališta!']);
+    }
+
+    // Provjeri ispravnost vremena
+    if (
+      !this.checkTime(
+        new Date(trajnaDto.startTime).toISOString(),
+        new Date(trajnaDto.endTime).toISOString()
+      )
+    ) {
       return this.clientError(res, [
-        'Neispravan id vozila ili parkiralista!',
+        'Početak i kraj rezervacije nisu ispravni',
       ]);
     }
 
-    //Provjeri posjeduje li korisnik navedeni auto
-   if(!await KlijentRepo.checkCarOwner(trajnaDto.idKlijent, trajnaDto.idVozilo)){
-        return this.forbidden(res, null);
+    // Postoji li rezervacija s danim vozilom u to vrijeme
+    if (!(await TrajnaRepo.isAvailable(trajnaDto))) {
+      return this.conflict(res, ['Nije moguće rezervirati u dano vrijeme']);
     }
 
     const validationErrors = (
@@ -40,22 +66,24 @@ export class CreateTrajnaController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
-    /*if(!await TrajnaRepo.checkTime(trajnaDto.startTime, trajnaDto.endTime)){
-      return this.clientError(res,['Neispravno vrijeme!',]);
-    }*/
-
-    const trajnaExits = await TrajnaRepo.checkAvailability(
-      trajnaDto
-    );
-
-    if (!trajnaExits) {
-      return this.clientError(res, [
-        'Rezervacija na to vozilo u to vrijeme već postoji!',
-      ]);
-    }
-
     const trajna = await TrajnaRepo.createTrajna(trajnaDto);
 
-    return this.ok(res, { data: { reservation: trajnaDto } });
+    return this.ok(res, {
+      data: {
+        reservation: await TrajnaMapper.toDTO(trajna),
+      },
+    });
   };
+
+  private checkTime(startTime: string, endTime: string): Boolean {
+    const start = parseISO(startTime);
+    const end = parseISO(endTime);
+    const now = parseISO(new Date().toISOString());
+
+    if (isAfter(start, end) || isBefore(start, new Date())) {
+      return false;
+    }
+
+    return true;
+  }
 }

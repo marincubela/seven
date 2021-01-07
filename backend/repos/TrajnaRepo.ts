@@ -110,6 +110,40 @@ export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
     return trajna.idTrajna;
   }
 
+  public static async isAvailable(trajnaDTO: TrajnaDTO): Promise<Boolean> {
+    const rezervacije = await Rezervacija.findAll({
+      where: {
+        idVozilo: trajnaDTO.idVozilo,
+      },
+    });
+
+    for (const rezervacija of rezervacije) {
+      const trajne = await Trajna.findAll({
+        where: {
+          idRezervacija: rezervacija.idRezervacija,
+          [Op.or]: {
+            vrijemePocetak: {
+              [Op.between]: [trajnaDTO.startTime, trajnaDTO.endTime],
+            },
+            vrijemeKraj: {
+              [Op.between]: [trajnaDTO.startTime, trajnaDTO.endTime],
+            },
+            [Op.and]: {
+              vrijemeKraj: { [Op.gt]: trajnaDTO.endTime },
+              vrijemePocetak: { [Op.lt]: trajnaDTO.endTime },
+            },
+          },
+        },
+      });
+
+      if (trajne.length) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   public static async checkAvailability(
     trajnaDTO: TrajnaDTO
   ): Promise<Boolean> {
@@ -122,25 +156,25 @@ export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
           vrijemeKraj: {
             [Op.between]: [trajnaDTO.startTime, trajnaDTO.endTime],
           },
-          [Op.and]:{
-            vrijemeKraj: {[Op.gt]: trajnaDTO.endTime},
-            vrijemePocetak: {[Op.lt]: trajnaDTO.endTime}
-          }
+          [Op.and]: {
+            vrijemeKraj: { [Op.gt]: trajnaDTO.endTime },
+            vrijemePocetak: { [Op.lt]: trajnaDTO.endTime },
+          },
         },
       },
     });
 
     for (const jednokratna of jednokratne) {
       if (
-        !await RezervacijaRepo.checkAvailability(
+        !(await RezervacijaRepo.checkAvailability(
           await JednokratnaMapper.toDTO(jednokratna)
-        )
+        ))
       ) {
         return false;
       }
     }
 
-    const trajne= await Trajna.findAll({
+    const trajne = await Trajna.findAll({
       where: {
         [Op.or]: {
           vrijemePocetak: {
@@ -149,19 +183,19 @@ export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
           vrijemeKraj: {
             [Op.between]: [trajnaDTO.startTime, trajnaDTO.endTime],
           },
-          [Op.and]:{
-            vrijemeKraj: {[Op.gt]: trajnaDTO.endTime},
-            vrijemePocetak: {[Op.lt]: trajnaDTO.endTime}
-          }
+          [Op.and]: {
+            vrijemeKraj: { [Op.gt]: trajnaDTO.endTime },
+            vrijemePocetak: { [Op.lt]: trajnaDTO.endTime },
+          },
         },
       },
     });
 
     for (const trajna of trajne) {
       if (
-        !await RezervacijaRepo.checkAvailability(
+        !(await RezervacijaRepo.checkAvailability(
           await TrajnaMapper.toDTO(trajna)
-        )
+        ))
       ) {
         return false;
       }
@@ -170,10 +204,16 @@ export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
     return true;
   }
 
-  public static async checkTime(startTime:Date, endTime:Date): Promise<Boolean>{
-    const currentDate=new Date();
-    if((startTime.getTime()-currentDate.getTime())/3600<0 || startTime>endTime)
-          return false;
+  public static async checkTime(
+    startTime: Date,
+    endTime: Date
+  ): Promise<Boolean> {
+    const currentDate = new Date();
+    if (
+      (startTime.getTime() - currentDate.getTime()) / 3600 < 0 ||
+      startTime > endTime
+    )
+      return false;
     return true;
   }
 }
