@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Box,
   Text,
+  Icon,
   Button,
   Heading,
   Link,
@@ -20,6 +21,7 @@ import { Link as ReactLink, useHistory } from 'react-router-dom';
 
 import { get, destroy } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
+import { ReactComponent as CarIcon } from '../../assets/icons/carIcon.svg';
 
 export function VehiclesList() {
   const history = useHistory();
@@ -73,13 +75,26 @@ export function VehiclesList() {
         <Box key={veh.idVozilo} h={10} marginBottom="4" marginTop="2" borderRadius="lg" background="white">
           <HStack h="inherit">
             <Box
-              bgColor={`${veh.color}`}
+              bgColor="primary.100"
+              className="car-icon-box"
               w="10%"
               h={10}
               borderBottomLeftRadius="base"
               borderTopLeftRadius="base"
               marginRight={4}
-            />
+              alignItems="center"
+              display="flex"
+            >
+              <Icon
+                className="car-icon"
+                as={CarIcon}
+                margin="0 auto"
+                h="inherit"
+                w="stretch"
+                padding={1}
+                style={{ color: `${veh.color}` }}
+              />
+            </Box>
             <Box w="30%" paddingLeft={1}>
               <Text fontSize="lg">{veh.carName}</Text>
             </Box>
