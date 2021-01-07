@@ -126,4 +126,14 @@ export class ParkiralisteRepo extends BaseRepo<ParkiralisteDTO> {
       },
     });
   }
+
+  public static async idValidationCheck(idParkiraliste: number): Promise<Boolean>{
+    const parking = await Parkiraliste.findOne({
+      where: {
+        idParkiraliste,
+      },
+    });
+
+    return Boolean(parking);
+  }
 }

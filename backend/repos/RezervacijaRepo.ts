@@ -57,6 +57,22 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
     return rezervacija;
   }
 
+  public static async updateRezervacija(
+    rezervacijaDTO: RezervacijaDTO
+  ): Promise<Rezervacija> {
+    const { idRezervacija, ...rezervacijaData } = RezervacijaMapper.toDomain(
+      rezervacijaDTO
+    );
+
+    await Rezervacija.update(rezervacijaData, {
+      where: {
+        idRezervacija,
+      },
+    });
+
+    return await this.getRezervacijaByIdRezervacija(idRezervacija);
+  }
+
   static async getRezervacijaByIdRezervacija(
     idRezervacija: number
   ): Promise<Rezervacija> {

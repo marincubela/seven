@@ -4,12 +4,14 @@ import { JednokratnaMapper } from '../../mappers/JednokratnaMapper';
 import { JednokratnaRepo } from '../../repos/JednokratnaRepo';
 import { JednokratnaDTO } from '../../dtos/JednokratnaDTO';
 import { JednokratnaValidator } from '../../utils/validators';
-export class UpdateResevationController extends BaseController {
+
+export class UpdateJednokratnaController extends BaseController {
   executeImpl = async (
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> => {
     const idRezervacija = Number(req.params.idRezervacija);
+    
     if (isNaN(idRezervacija)) {
       return this.clientError(res, ['Id nije broj']);
     }
@@ -17,6 +19,8 @@ export class UpdateResevationController extends BaseController {
     if (idRezervacija < 1) {
       return this.clientError(res, ['Id mora biti pozitivan broj']);
     }
+
+    // Jel prijavljen korisnik cija se rezervacija pokusava promijeniti
 
     const oldReservationData = await JednokratnaMapper.toDTO(
       await JednokratnaRepo.getJednokratnaByIdRezervacija(idRezervacija)
@@ -29,9 +33,12 @@ export class UpdateResevationController extends BaseController {
       ...req.body.data,
     } as JednokratnaDTO;
 
-    jednokratnaDTO.idJednokratna = idRezervacija;
+    jednokratnaDTO.idJednokratna = await JednokratnaRepo.getIdJednokratna(
+      idRezervacija
+    );
 
-    //nisam sigurna trebaju li mi ova provjera (34-43 linija)?
+    // jednokratnaDTO.idJednokratna = idRezervacija;
+
     const jednokratnaExits = await JednokratnaRepo.checkAvailability(
       jednokratnaDTO
     );
@@ -50,6 +57,7 @@ export class UpdateResevationController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
+    jednokratnaDTO.idRezervacija = idRezervacija;
     const rezervacija = await JednokratnaRepo.update(jednokratnaDTO);
 
     return this.ok(res, {
