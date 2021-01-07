@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
-import { add, isAfter, getHours, setHours, differenceInDays, format, setMinutes } from 'date-fns';
+import { add, isAfter, getHours, setHours, format, setMinutes, differenceInHours, sub } from 'date-fns';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -43,7 +43,9 @@ export function AddOnetimeReservationForm() {
   }
 
   // const minDate = addHours(new Date(), 6)
-  const minDate = add(setMinutes(new Date(), 0), { hours: 6 });
+  const minDate = add(setMinutes(new Date(), 0), { hours: 7 });
+
+  console.log(errors);
 
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
@@ -66,9 +68,9 @@ export function AddOnetimeReservationForm() {
                     selected={value}
                     onChange={(date) => onChange(date)}
                     showTimeSelect
-                    minDate={minDate}
+                    minDate={sub(minDate, { hours: 1 })}
                     timeIntervals={60}
-                    filterTime={(time) => isAfter(setHours(value, getHours(time)), minDate)}
+                    filterTime={(time) => isAfter(setHours(value, getHours(time)), sub(minDate, { hours: 1 }))}
                     timeFormat="HH:mm"
                     customInput={<Input />}
                     dateFormat="dd.MM.yyyy HH:mm"
@@ -80,14 +82,31 @@ export function AddOnetimeReservationForm() {
 
           <HStack align="stretch">
             <VStack flex="1" align="baseline">
-              <Text as="label">Kraj</Text>
-              <DatePicker
+              <Text as="label">Početak</Text>
+              <Controller
+                control={control}
                 name="reservation-endtime"
-                selected={new Date()}
-                showTimeSelect
-                timeFormat="HH:mm"
-                customInput={<Input />}
-                dateFormat="dd.MM.yyyy HH:mm"
+                defaultValue={add(minDate, { hours: 1 })}
+                rules={{
+                  validate: (value) =>
+                    (differenceInHours(value, watch('reservation-starttime')) <= 24 &&
+                      differenceInHours(value, watch('reservation-starttime')) > 0) ||
+                    'Krajnje vrijeme neispravno',
+                }}
+                render={({ onChange, value }) => (
+                  <DatePicker
+                    name="reservation-endtime"
+                    selected={value}
+                    onChange={(date) => onChange(date)}
+                    showTimeSelect
+                    minDate={minDate}
+                    timeIntervals={60}
+                    filterTime={(time) => isAfter(setHours(value, getHours(time)), minDate)}
+                    timeFormat="HH:mm"
+                    customInput={<Input />}
+                    dateFormat="dd.MM.yyyy HH:mm"
+                  />
+                )}
               />
             </VStack>
           </HStack>
