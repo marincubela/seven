@@ -144,6 +144,7 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
       await JednokratnaRepo.getJednokratnaByIdRezervacija(idRezervacija)
     );
   }
+
   public static async getIdJednokratna(idRezervacija: number): Promise<Number> {
     return (await JednokratnaRepo.getJednokratnaByIdRezervacija(idRezervacija))
       .idJednokratna;
@@ -155,6 +156,7 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
       await PonavljajucaRepo.getPonavljajucaByIdRezervacija(idRezervacija)
     );
   }
+
   public static async getIdPonavljajuca(
     idRezervacija: number
   ): Promise<Number> {
@@ -167,9 +169,84 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
   public static async isTrajna(idRezervacija: number): Promise<Boolean> {
     return Boolean(await TrajnaRepo.getTrajnaByIdRezervacija(idRezervacija));
   }
+
   public static async getIdTrajna(idRezervacija: number): Promise<Number> {
     return (await TrajnaRepo.getTrajnaByIdRezervacija(idRezervacija)).idTrajna;
   }
+
+  public static async isAvailable(
+    idVozilo: number,
+    start: Date,
+    end: Date
+  ): Promise<Boolean> {
+    if (
+      !(await TrajnaRepo.isAvailable({
+        idVozilo,
+        startTime: start,
+        endTime: end,
+      }))
+    ) {
+      return false;
+    }
+
+    if (
+      !(await JednokratnaRepo.isAvailable({
+        idVozilo,
+        startTime: start,
+        endTime: end,
+      }))
+    ) {
+      return false;
+    }
+
+    console.log({
+      idVozilo,
+      reservationDate: new Date(new Date(start).toDateString()),
+      reservationEndDate: new Date(new Date(end).toDateString()),
+      startTime: new Date(
+        new Date(start).toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        })
+      ),
+      endTime: new Date(
+        new Date(end).toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        })
+      ),
+      repeatDays: new Date(start).getDay().toString(),
+    });
+    if (
+      !(await PonavljajucaRepo.isAvailable({
+        idVozilo,
+        reservationDate: new Date(new Date(start).toDateString()),
+        reservationEndDate: new Date(new Date(end).toDateString()),
+        startTime: new Date(
+          new Date(start).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+          })
+        ),
+        endTime: new Date(
+          new Date(end).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+          })
+        ),
+        repeatDays: new Date(start).getDay().toString(),
+      }))
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
   public static async checkAvailability(
     rezervacijaDTO: RezervacijaDTO
   ): Promise<Boolean> {

@@ -8,6 +8,7 @@ import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 import { isAfter, isBefore, parseISO } from 'date-fns';
 import { TrajnaMapper } from '../../mappers/TrajnaMapper';
+import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 
 export class CreateTrajnaController extends BaseController {
   executeImpl = async (
@@ -15,6 +16,20 @@ export class CreateTrajnaController extends BaseController {
     res: IResponse
   ): Promise<void | IResponse> => {
     const trajnaDto = req.body.data as TrajnaDTO;
+
+    if (
+      !(await RezervacijaRepo.isAvailable(
+        trajnaDto.idVozilo,
+        trajnaDto.startTime,
+        trajnaDto.endTime
+      ))
+    ) {
+      console.log('u ifu sam');
+    }
+
+    if (1) {
+      return this.ok(res, {});
+    }
 
     //Provjeri rezervira li korisnik u svoje ime
     //Provjeri posjeduje li korisnik navedeni auto
