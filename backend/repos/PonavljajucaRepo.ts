@@ -5,7 +5,6 @@ import { PonavljajucaMapper } from '../mappers/PonavljajucaMapper';
 import { Ponavljajuca } from '../models/Ponavljajuca';
 import { BaseRepo } from './BaseRepo';
 import { RezervacijaRepo } from './RezervacijaRepo';
-import { Op } from 'sequelize';
 import {
   addDays,
   areIntervalsOverlapping,
@@ -15,9 +14,7 @@ import {
   isAfter,
   isBefore,
   parseISO,
-  toDate,
 } from 'date-fns';
-import { timeStamp } from 'console';
 
 export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
   async exists(ponavljajucaDTO: PonavljajucaDTO): Promise<boolean> {
@@ -171,10 +168,6 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
               }
             );
 
-            console.log(baseDates);
-            console.log(dates);
-            console.log(check);
-
             if (check) {
               return false;
             }
@@ -206,22 +199,31 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
     const dates = [];
     for (const dowString of dows) {
       const dow = Number(dowString);
-      var newDate = firstDate;
+      /* var newDate = firstDate;
 
       while (getDay(newDate) !== dow) {
         newDate = addDays(newDate, 1);
-      }
+      } */
 
       var eachWeek = eachWeekOfInterval({
-        start: newDate,
+        //start: newDate,
+        start: firstDate,
         end: lastDate,
       });
 
       for (var d of eachWeek) {
-        while (getDay(d) !== dow) {
+        while (getDay(d) !== dow || isBefore(d, firstDate)) {
+          if (isAfter(d, lastDate)) {
+            break;
+          }
           d = addDays(d, 1);
         }
-        if (isBefore(d, firstDate) || isBefore(d, new Date())) {
+
+        if (
+          isBefore(d, firstDate) ||
+          isBefore(d, new Date()) ||
+          isAfter(d, lastDate)
+        ) {
           continue;
         }
         var startTime = new Date(
@@ -260,10 +262,17 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
     const year = new Date(date).getFullYear();
     const month = new Date(date).getMonth();
     const day = new Date(date).getDate();
+    var hour, min, sec;
 
-    const hour = new Date('1970-1-1 ' + time.toString()).getHours();
-    const min = new Date('1970-1-1 ' + time.toString()).getMinutes();
-    const sec = new Date('1970-1-1 ' + time.toString()).getSeconds();
+    if (time.toString().indexOf('T') >= 0) {
+      hour = new Date(time.toString()).getHours();
+      min = new Date(time.toString()).getMinutes();
+      sec = new Date(time.toString()).getSeconds();
+    } else {
+      hour = new Date('1970-1-1 ' + time.toString()).getHours();
+      min = new Date('1970-1-1 ' + time.toString()).getMinutes();
+      sec = new Date('1970-1-1 ' + time.toString()).getSeconds();
+    }
 
     return new Date(year, month, day, hour, min, sec);
   }

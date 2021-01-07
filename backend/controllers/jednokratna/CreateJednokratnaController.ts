@@ -8,6 +8,7 @@ import { JednokratnaMapper } from '../../mappers/JednokratnaMapper';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 import { isAfter, isBefore, parseISO } from 'date-fns';
+import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 
 export class CreateJednokratnaController extends BaseController {
   executeImpl = async (
@@ -54,7 +55,13 @@ export class CreateJednokratnaController extends BaseController {
     }
 
     // Postoji li rezervacija s danim vozilom u to vrijeme
-    if (!(await JednokratnaRepo.isAvailable(jednokratnaDto))) {
+    if (
+      !(await RezervacijaRepo.isAvailable(
+        jednokratnaDto.idVozilo,
+        jednokratnaDto.startTime,
+        jednokratnaDto.endTime
+      ))
+    ) {
       return this.conflict(res, ['Nije moguće rezervirati u dano vrijeme']);
     }
 

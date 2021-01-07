@@ -9,6 +9,7 @@ import { ReservationsDTO } from '../dtos/ResponseDtos/ReservationsDTO';
 import { JednokratnaMapper } from '../mappers/JednokratnaMapper';
 import { PonavljajucaMapper } from '../mappers/PonavljajucaMapper';
 import { TrajnaMapper } from '../mappers/TrajnaMapper';
+import { addDays, subDays } from 'date-fns';
 
 export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
   async exists(rezervacijaDTO: RezervacijaDTO): Promise<boolean> {
@@ -199,45 +200,15 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
       return false;
     }
 
-    console.log({
-      idVozilo,
-      reservationDate: new Date(new Date(start).toDateString()),
-      reservationEndDate: new Date(new Date(end).toDateString()),
-      startTime: new Date(
-        new Date(start).toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: false,
-        })
-      ),
-      endTime: new Date(
-        new Date(end).toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: false,
-        })
-      ),
-      repeatDays: new Date(start).getDay().toString(),
-    });
     if (
       !(await PonavljajucaRepo.isAvailable({
         idVozilo,
-        reservationDate: new Date(new Date(start).toDateString()),
-        reservationEndDate: new Date(new Date(end).toDateString()),
-        startTime: new Date(
-          new Date(start).toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-          })
-        ),
-        endTime: new Date(
-          new Date(end).toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-          })
-        ),
+        //reservationDate: new Date(new Date(start).toDateString()),
+        //reservationEndDate: new Date(new Date(end).toDateString()),
+        reservationDate: subDays(new Date(start), 1),
+        reservationEndDate: addDays(new Date(end), 1),
+        startTime: new Date(start),
+        endTime: new Date(end),
         repeatDays: new Date(start).getDay().toString(),
       }))
     ) {
