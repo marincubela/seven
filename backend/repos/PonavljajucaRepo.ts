@@ -6,6 +6,7 @@ import { Ponavljajuca } from '../models/Ponavljajuca';
 import { BaseRepo } from './BaseRepo';
 import { RezervacijaRepo } from './RezervacijaRepo';
 import { Op } from 'sequelize';
+import { eachWeekOfInterval } from 'date-fns';
 
 export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
   async exists(ponavljajucaDTO: PonavljajucaDTO): Promise<boolean> {
@@ -57,7 +58,6 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
       ponavljajucaDTO
     );
 
-
     const { idPonavljajuca, ...ponavljajucaData } = PonavljajucaMapper.toDomain(
       ponavljajucaDTO
     );
@@ -106,7 +106,7 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
     const ponavljajucaData = PonavljajucaMapper.toDomain(ponavljajucaDTO);
 
     await RezervacijaRepo.updateRezervacija(ponavljajucaDTO);
-    
+
     await Ponavljajuca.update(ponavljajucaData, {
       where: {
         idPonavljajuca: ponavljajucaDTO.idPonavljajuca,
@@ -127,65 +127,133 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
     }
     return ponavljajuca.idPonavljajuca;
   }
-  public static checkOverlapForOnetime(jednokratnaDTO:JednokratnaDTO){
-        const timeClash=Ponavljajuca.findAll({
+
+  public static async isAvailable(
+    ponavljajucaDTO: PonavljajucaDTO
+  ): Promise<Boolean> {
+    const rezervacije = await Rezervacija.findAll({
+      where: {
+        idVozilo: ponavljajucaDTO.idVozilo,
+      },
+    });
+
+    for (const rezervacija of rezervacije) {
+      for (const dates of this.getAllDates(ponavljajucaDTO)) {
+        const ponavljajuce = await Ponavljajuca.findAll({
           where: {
+            idRezervacija: rezervacija.idRezervacija,
             [Op.or]: {
               vrijemePocetak: {
-                [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
+                [Op.between]: [dates.startTime, dates.endTime],
               },
               vrijemeKraj: {
-                [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
+                [Op.between]: [dates.startTime, dates.endTime],
               },
-              [Op.and]:{
-                vrijemeKraj: {[Op.gt]: jednokratnaDTO.endTime},
-                vrijemePocetak: {[Op.lt]: jednokratnaDTO.endTime}
-              }
+              [Op.and]: {
+                vrijemeKraj: { [Op.gt]: dates.endTime },
+                vrijemePocetak: { [Op.lt]: dates.endTime },
+              },
             },
           },
-        })
+        });
+        if (ponavljajuce.length) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
-  public static toDateFromHours(hours: Date): Date{
+
+  public static getAllDates(ponavljajucaDTO: PonavljajucaDTO): any {
+    const dates = [];
+    const s = eachWeekOfInterval({
+      start: ponavljajucaDTO.reservationDate,
+      end: ponavljajucaDTO.reservationEndDate,
+    });
+
+    console.log(s);
+
+    return dates;
+  }
+
+  public static checkOverlapForOnetime(jednokratnaDTO: JednokratnaDTO) {
+    const timeClash = Ponavljajuca.findAll({
+      where: {
+        [Op.or]: {
+          vrijemePocetak: {
+            [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
+          },
+          vrijemeKraj: {
+            [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
+          },
+          [Op.and]: {
+            vrijemeKraj: { [Op.gt]: jednokratnaDTO.endTime },
+            vrijemePocetak: { [Op.lt]: jednokratnaDTO.endTime },
+          },
+        },
+      },
+    });
+  }
+  public static toDateFromHours(hours: Date): Date {
     var t1 = new Date();
-    var parts = hours.toString().split(":");
-    t1.setHours(+parts[0],+parts[1],+parts[2],0);
+    var parts = hours.toString().split(':');
+    t1.setHours(+parts[0], +parts[1], +parts[2], 0);
     return t1;
   }
 
-  public static toDateFromMonths(months: Date):Date{
-    var field=months.toString().split("-");
+  public static toDateFromMonths(months: Date): Date {
+    var field = months.toString().split('-');
     return new Date(+field[0], +field[1], +field[2]);
   }
 
-  public static async checkTime(ponavljajucaDTO: PonavljajucaDTO): Promise<Boolean>{
-    const currentDate=new Date();
-    var start = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.startTime)
-    var end = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.endTime)
-  
-    if(start.getTime()> end.getTime() || start.getTime()>currentDate.getTime())
-          return false;
+  public static async checkTime(
+    ponavljajucaDTO: PonavljajucaDTO
+  ): Promise<Boolean> {
+    const currentDate = new Date();
+    var start = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.startTime);
+    var end = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.endTime);
+
+    if (
+      start.getTime() > end.getTime() ||
+      start.getTime() > currentDate.getTime()
+    )
+      return false;
     return true;
   }
 
-  public static async checkMinDuration(ponavljajucaDTO:PonavljajucaDTO):Promise<Boolean>{
-    var start = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.startTime)
-    var end = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.endTime)
-    if((end.getTime()-start.getTime())/3600<1)
-          return false;
+  public static async checkMinDuration(
+    ponavljajucaDTO: PonavljajucaDTO
+  ): Promise<Boolean> {
+    var start = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.startTime);
+    var end = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.endTime);
+    if ((end.getTime() - start.getTime()) / 3600 < 1) return false;
     return true;
   }
 
-  public static async checkRepeatDays(ponavljajucaDTO:PonavljajucaDTO):Promise<Boolean>{
-    if(!(ponavljajucaDTO.repeatDays.toString(ponavljajucaDTO.repeatDays).match(/^[1-7]+$/)))
-            return false;
+  public static async checkRepeatDays(
+    ponavljajucaDTO: PonavljajucaDTO
+  ): Promise<Boolean> {
+    if (
+      !ponavljajucaDTO.repeatDays
+        .toString(ponavljajucaDTO.repeatDays)
+        .match(/^[1-7]+$/)
+    )
+      return false;
     return true;
   }
 
-  public static async checkTimespan(ponavljajucaDTO:PonavljajucaDTO):Promise<Boolean>{
-    var resStart=PonavljajucaRepo.toDateFromMonths(ponavljajucaDTO.reservationDate);
-    var resEnd=PonavljajucaRepo.toDateFromMonths(ponavljajucaDTO.reservationEndDate);
-    if((resEnd.getTime()-resStart.getTime())/(3600*24)<30)
-            return false;
+  public static async checkTimespan(
+    ponavljajucaDTO: PonavljajucaDTO
+  ): Promise<Boolean> {
+    var resStart = PonavljajucaRepo.toDateFromMonths(
+      ponavljajucaDTO.reservationDate
+    );
+    var resEnd = PonavljajucaRepo.toDateFromMonths(
+      ponavljajucaDTO.reservationEndDate
+    );
+    if ((resEnd.getTime() - resStart.getTime()) / (3600 * 24) < 30)
+      return false;
     return true;
   }
 }

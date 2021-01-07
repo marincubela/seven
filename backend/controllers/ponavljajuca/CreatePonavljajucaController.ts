@@ -3,13 +3,11 @@ import { IRequest, IResponse } from '../../interfaces/network';
 import { PonavljajucaDTO } from '../../dtos/PonavljajucaDTO';
 import { PonavljajucaRepo } from '../../repos/PonavljajucaRepo';
 import { PonavljajucaValidator } from '../../utils/validators';
-import { RezervacijaMapper } from '../../mappers/RezervacijaMapper';
-import { ISessionUserDTO } from '../../dtos/SessionUserDTO';
 import { KlijentRepo } from '../../repos/KlijentRepo';
-import { PonavljajucaMapper } from '../../mappers/PonavljajucaMapper';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
-import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
+import { isAfter, isBefore, parseISO } from 'date-fns';
+import { PonavljajucaMapper } from '../../mappers/PonavljajucaMapper';
 
 export class CreatePonavljajucaController extends BaseController {
   executeImpl = async (
@@ -18,61 +16,99 @@ export class CreatePonavljajucaController extends BaseController {
   ): Promise<void | IResponse> => {
     const ponavljajucaDto = req.body.data as PonavljajucaDTO;
 
-
     //Provjeri rezervira li korisnik u svoje ime
-    if(!await KlijentRepo.idValidationCheck(ponavljajucaDto.idKlijent) || await KlijentRepo.getIdRacunByIdKlijent(ponavljajucaDto.idKlijent)!=req.session.user.idRacun){
+    //Provjeri posjeduje li korisnik navedeni auto
+    if (
+      !(await KlijentRepo.idValidationCheck(ponavljajucaDto.idKlijent)) ||
+      (await KlijentRepo.getIdRacunByIdKlijent(ponavljajucaDto.idKlijent)) !=
+        req.session.user.idRacun ||
+      !(await KlijentRepo.checkCarOwner(
+        ponavljajucaDto.idKlijent,
+        ponavljajucaDto.idVozilo
+      ))
+    ) {
       return this.forbidden(res, null);
     }
 
     //Provjeri postoje li auto i parkiraliste
-    if(!(await ParkiralisteRepo.idValidationCheck(ponavljajucaDto.idParkiraliste)&& await VoziloRepo.idValidationCheck(ponavljajucaDto.idVozilo))){
+    if (
+      !(
+        (await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
+          ponavljajucaDto.idParkiraliste
+        )) && (await VoziloRepo.getVoziloByIdVozilo(ponavljajucaDto.idVozilo))
+      )
+    ) {
+      return this.clientError(res, ['Neispravan id vozila ili parkiralista!']);
+    }
+
+    // Provjeri ispravnost vremena
+    if (
+      !this.checkTime2(
+        String(ponavljajucaDto.startTime),
+        String(ponavljajucaDto.endTime)
+      ) ||
+      !this.checkTime(
+        new Date(ponavljajucaDto.reservationDate).toISOString(),
+        new Date(ponavljajucaDto.reservationEndDate).toISOString()
+      )
+    ) {
       return this.clientError(res, [
-        'Neispravan id vozila ili parkiralista!',
+        'Početak i kraj rezervacije nisu ispravni',
       ]);
     }
-    //Provjeri posjeduje li korisnik navedeni auto
-   if(!await KlijentRepo.checkCarOwner(ponavljajucaDto.idKlijent, ponavljajucaDto.idVozilo)){
-        return this.forbidden(res, null);
+
+    // Postoji li rezervacija s danim vozilom u to vrijeme
+    if (!(await PonavljajucaRepo.isAvailable(ponavljajucaDto))) {
+      return this.conflict(res, ['Nije moguće rezervirati u dano vrijeme']);
     }
-  
+
+    if (1) {
+      return this.ok(res, {});
+    }
 
     const validationErrors = (
       await Promise.all([PonavljajucaValidator.validate(ponavljajucaDto)])
     ).reduce((errs, err) => [...errs, ...err], []);
 
-
     if (validationErrors.length) {
       return this.clientError(res, validationErrors);
     }
-    
 
-    /*if(!await PonavljajucaRepo.checkTime(ponavljajucaDto)){
-      return this.clientError(res,['Neispravno vrijeme!',]);
-    }
-
-    if(!await PonavljajucaRepo.checkMinDuration(ponavljajucaDto)){
-      return this.clientError(res,['Rezervacija mora trajati barem 1 sat!',]);
-    }
-
-    if(!await PonavljajucaRepo.checkRepeatDays(ponavljajucaDto)){
-      return this.clientError(res,['Rezervacija se mora ponavljati barem 1 tjedno',]);
-    }
-
-    if(!await PonavljajucaRepo.checkTimespan(ponavljajucaDto)){
-      return this.clientError(res,['Rezervacija mora biti na najmanje 30 dana!',]);
-    }
-    const ponavljajucaExits = await PonavljajucaRepo.checkAvailability(
+    const ponavljajuca = await PonavljajucaRepo.createPonavljajuca(
       ponavljajucaDto
     );
 
-    if (!jponavljajucaExits) {
-      return this.clientError(res, [
-        ('Rezervacija na to vozilo u to vrijeme već postoji!',
-      ]);
-    }*/
-
-    const ponavljajuca= await PonavljajucaRepo.createPonavljajuca(ponavljajucaDto);
-
-    return this.ok(res, { data: { reservation: ponavljajucaDto } });
+    return this.ok(res, {
+      data: {
+        reservation: await PonavljajucaMapper.toDTO(ponavljajuca),
+      },
+    });
   };
+
+  private checkTime(startTime: string, endTime: string): Boolean {
+    const start = parseISO(startTime);
+    const end = parseISO(endTime);
+    const now = parseISO(new Date().toISOString());
+
+    if (isAfter(start, end) || isBefore(start, new Date())) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private checkTime2(startTime: string, endTime: string): Boolean {
+    if (
+      startTime > endTime ||
+      new Date().toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      }) > startTime
+    ) {
+      return false;
+    }
+
+    return true;
+  }
 }
