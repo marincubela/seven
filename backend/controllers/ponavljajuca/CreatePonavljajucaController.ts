@@ -43,10 +43,7 @@ export class CreatePonavljajucaController extends BaseController {
 
     // Provjeri ispravnost vremena
     if (
-      !this.checkTime2(
-        String(ponavljajucaDto.startTime),
-        String(ponavljajucaDto.endTime)
-      ) ||
+      String(ponavljajucaDto.startTime) > String(ponavljajucaDto.endTime) ||
       !this.checkTime(
         new Date(ponavljajucaDto.reservationDate).toISOString(),
         new Date(ponavljajucaDto.reservationEndDate).toISOString()
@@ -60,10 +57,6 @@ export class CreatePonavljajucaController extends BaseController {
     // Postoji li rezervacija s danim vozilom u to vrijeme
     if (!(await PonavljajucaRepo.isAvailable(ponavljajucaDto))) {
       return this.conflict(res, ['Nije moguće rezervirati u dano vrijeme']);
-    }
-
-    if (1) {
-      return this.ok(res, {});
     }
 
     const validationErrors = (
@@ -91,21 +84,6 @@ export class CreatePonavljajucaController extends BaseController {
     const now = parseISO(new Date().toISOString());
 
     if (isAfter(start, end) || isBefore(start, new Date())) {
-      return false;
-    }
-
-    return true;
-  }
-
-  private checkTime2(startTime: string, endTime: string): Boolean {
-    if (
-      startTime > endTime ||
-      new Date().toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      }) > startTime
-    ) {
       return false;
     }
 

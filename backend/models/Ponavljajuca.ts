@@ -8,7 +8,7 @@ export interface IPonavljajucaAttributes {
   idPonavljajuca: number;
   datumRezervacije: Date;
   datumKrajaRez: Date;
-  daniPonavljanja: IntegerDataType;
+  daniPonavljanja: string;
   vrijemePocetka: Date;
   vrijemeKraja: Date;
   idRezervacija?: number;
@@ -21,7 +21,7 @@ export class Ponavljajuca extends Model<
   public idPonavljajuca!: number;
   public datumRezervacije!: Date;
   public datumKrajaRez!: Date;
-  public daniPonavljanja!: IntegerDataType;
+  public daniPonavljanja!: string;
   public vrijemePocetka!: Date;
   public vrijemeKraja!: Date;
   public idRezervacija!: number;
@@ -48,7 +48,7 @@ Ponavljajuca.init(
       allowNull: false,
     },
     daniPonavljanja: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: Sequelize.DataTypes.STRING,
       allowNull: false,
     },
     vrijemePocetka: {

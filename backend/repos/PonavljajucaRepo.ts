@@ -6,7 +6,18 @@ import { Ponavljajuca } from '../models/Ponavljajuca';
 import { BaseRepo } from './BaseRepo';
 import { RezervacijaRepo } from './RezervacijaRepo';
 import { Op } from 'sequelize';
-import { eachWeekOfInterval } from 'date-fns';
+import {
+  addDays,
+  areIntervalsOverlapping,
+  eachWeekOfInterval,
+  format,
+  getDay,
+  isAfter,
+  isBefore,
+  parseISO,
+  toDate,
+} from 'date-fns';
+import { timeStamp } from 'console';
 
 export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
   async exists(ponavljajucaDTO: PonavljajucaDTO): Promise<boolean> {
@@ -138,26 +149,36 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
     });
 
     for (const rezervacija of rezervacije) {
-      for (const dates of this.getAllDates(ponavljajucaDTO)) {
-        const ponavljajuce = await Ponavljajuca.findAll({
-          where: {
-            idRezervacija: rezervacija.idRezervacija,
-            [Op.or]: {
-              vrijemePocetak: {
-                [Op.between]: [dates.startTime, dates.endTime],
+      const ponavljajuce = await Ponavljajuca.findAll({
+        where: {
+          idRezervacija: rezervacija.idRezervacija,
+        },
+      });
+
+      for (const ponavljajuca of ponavljajuce) {
+        const ponavDTO = await PonavljajucaMapper.toDTO(ponavljajuca);
+
+        for (const baseDates of this.getAllDates(ponavDTO)) {
+          for (const dates of this.getAllDates(ponavljajucaDTO)) {
+            const check = areIntervalsOverlapping(
+              {
+                start: new Date(baseDates.startTime),
+                end: new Date(baseDates.endTime),
               },
-              vrijemeKraj: {
-                [Op.between]: [dates.startTime, dates.endTime],
-              },
-              [Op.and]: {
-                vrijemeKraj: { [Op.gt]: dates.endTime },
-                vrijemePocetak: { [Op.lt]: dates.endTime },
-              },
-            },
-          },
-        });
-        if (ponavljajuce.length) {
-          return false;
+              {
+                start: new Date(dates.startTime),
+                end: new Date(dates.endTime),
+              }
+            );
+
+            console.log(baseDates);
+            console.log(dates);
+            console.log(check);
+
+            if (check) {
+              return false;
+            }
+          }
         }
       }
     }
@@ -166,94 +187,96 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
   }
 
   public static getAllDates(ponavljajucaDTO: PonavljajucaDTO): any {
+    const dows = ponavljajucaDTO.repeatDays.toString().split('');
+
+    const firstDate = new Date(
+      this.timeAndDateToDate(
+        ponavljajucaDTO.reservationDate,
+        ponavljajucaDTO.startTime
+      )
+    );
+
+    const lastDate = new Date(
+      this.timeAndDateToDate(
+        ponavljajucaDTO.reservationEndDate,
+        ponavljajucaDTO.endTime
+      )
+    );
+
     const dates = [];
-    const s = eachWeekOfInterval({
-      start: ponavljajucaDTO.reservationDate,
-      end: ponavljajucaDTO.reservationEndDate,
-    });
+    for (const dowString of dows) {
+      const dow = Number(dowString);
+      var newDate = firstDate;
 
-    console.log(s);
+      while (getDay(newDate) !== dow) {
+        newDate = addDays(newDate, 1);
+      }
 
-    return dates;
+      var eachWeek = eachWeekOfInterval({
+        start: newDate,
+        end: lastDate,
+      });
+
+      for (var d of eachWeek) {
+        while (getDay(d) !== dow) {
+          d = addDays(d, 1);
+        }
+        if (isBefore(d, firstDate) || isBefore(d, new Date())) {
+          continue;
+        }
+        var startTime = new Date(
+          this.timeAndDateToDate(d, ponavljajucaDTO.startTime)
+        );
+
+        var endTime = new Date(
+          this.timeAndDateToDate(d, ponavljajucaDTO.endTime)
+        );
+
+        dates.push({ startTime, endTime });
+      }
+    }
+
+    return this.toSQLDates(dates);
   }
 
-  public static checkOverlapForOnetime(jednokratnaDTO: JednokratnaDTO) {
-    const timeClash = Ponavljajuca.findAll({
-      where: {
-        [Op.or]: {
-          vrijemePocetak: {
-            [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
-          },
-          vrijemeKraj: {
-            [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
-          },
-          [Op.and]: {
-            vrijemeKraj: { [Op.gt]: jednokratnaDTO.endTime },
-            vrijemePocetak: { [Op.lt]: jednokratnaDTO.endTime },
-          },
-        },
-      },
-    });
-  }
-  public static toDateFromHours(hours: Date): Date {
-    var t1 = new Date();
-    var parts = hours.toString().split(':');
-    t1.setHours(+parts[0], +parts[1], +parts[2], 0);
-    return t1;
+  public static toSQLDates(dates: any): any {
+    const newDates = [];
+
+    for (const date of dates) {
+      const startTime = this.toSQLDate(date.startTime);
+      const endTime = this.toSQLDate(date.endTime);
+
+      newDates.push({ startTime, endTime });
+    }
+
+    return newDates;
   }
 
-  public static toDateFromMonths(months: Date): Date {
-    var field = months.toString().split('-');
-    return new Date(+field[0], +field[1], +field[2]);
+  public static toSQLDate(date: Date): string {
+    return format(new Date(date), "yyyy-MM-dd' 'HH:mm:ss.SSSxxx");
   }
 
-  public static async checkTime(
-    ponavljajucaDTO: PonavljajucaDTO
-  ): Promise<Boolean> {
-    const currentDate = new Date();
-    var start = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.startTime);
-    var end = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.endTime);
+  public static timeAndDateToDate(date: Date, time: Date): Date {
+    const year = new Date(date).getFullYear();
+    const month = new Date(date).getMonth();
+    const day = new Date(date).getDate();
 
-    if (
-      start.getTime() > end.getTime() ||
-      start.getTime() > currentDate.getTime()
-    )
+    const hour = new Date('1970-1-1 ' + time.toString()).getHours();
+    const min = new Date('1970-1-1 ' + time.toString()).getMinutes();
+    const sec = new Date('1970-1-1 ' + time.toString()).getSeconds();
+
+    return new Date(year, month, day, hour, min, sec);
+  }
+
+  private static checkTime(startTime: string, endTime: string): Boolean {
+    const start = parseISO(startTime);
+    const end = parseISO(endTime);
+    const now = parseISO(new Date().toISOString());
+
+    if (isAfter(start, end) || isBefore(start, new Date())) {
       return false;
-    return true;
-  }
+    }
 
-  public static async checkMinDuration(
-    ponavljajucaDTO: PonavljajucaDTO
-  ): Promise<Boolean> {
-    var start = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.startTime);
-    var end = PonavljajucaRepo.toDateFromHours(ponavljajucaDTO.endTime);
-    if ((end.getTime() - start.getTime()) / 3600 < 1) return false;
-    return true;
-  }
-
-  public static async checkRepeatDays(
-    ponavljajucaDTO: PonavljajucaDTO
-  ): Promise<Boolean> {
-    if (
-      !ponavljajucaDTO.repeatDays
-        .toString(ponavljajucaDTO.repeatDays)
-        .match(/^[1-7]+$/)
-    )
-      return false;
-    return true;
-  }
-
-  public static async checkTimespan(
-    ponavljajucaDTO: PonavljajucaDTO
-  ): Promise<Boolean> {
-    var resStart = PonavljajucaRepo.toDateFromMonths(
-      ponavljajucaDTO.reservationDate
-    );
-    var resEnd = PonavljajucaRepo.toDateFromMonths(
-      ponavljajucaDTO.reservationEndDate
-    );
-    if ((resEnd.getTime() - resStart.getTime()) / (3600 * 24) < 30)
-      return false;
     return true;
   }
 }
