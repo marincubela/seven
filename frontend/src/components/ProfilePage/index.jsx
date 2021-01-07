@@ -2,7 +2,6 @@ import {
   Box,
   Heading,
   Text,
-  HStack,
   Button,
   Stack,
   AlertDialog,
@@ -17,12 +16,12 @@ import {
 import React, { Fragment, useState } from 'react';
 import { observer } from 'mobx-react';
 import { Link as ReactLink, useHistory, Link } from 'react-router-dom';
-import { DeleteIcon, EditIcon, AddIcon, CloseIcon } from '@chakra-ui/icons';
+import { DeleteIcon, CloseIcon } from '@chakra-ui/icons';
 import { destroy } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
 
 export const ProfilePage = observer(() => {
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const store = useStore();
   const history = useHistory();
