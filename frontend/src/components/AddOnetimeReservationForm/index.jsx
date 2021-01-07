@@ -1,9 +1,9 @@
-import { Box, Heading, VStack, Text, Input, HStack, Button, Link } from '@chakra-ui/react';
+import { Box, Heading, VStack, Text, Input, HStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { Link as ReactLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
-import { add, isAfter, differenceInDays } from 'date-fns';
+import { add, isAfter, getHours, setHours, differenceInDays, format, setMinutes } from 'date-fns';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -17,32 +17,33 @@ export function AddOnetimeReservationForm() {
   const history = useHistory();
 
   function onAddReservation(formData) {
-    const requestBody = {
-      data: {
-        // idParkiraliste: rezervacija.idParkiraliste,
-        // idVozilo: rezervacija.idVozilo,
-        startTime: formData['reservation-starttime'],
-        endTime: formData['reservation-endtime'],
-      },
-    };
+    console.log(format(formData['reservation-starttime'], 'yyyy-MM-dd hh:mm:ss'));
+    // const requestBody = {
+    //   data: {
+    //     // idParkiraliste: rezervacija.idParkiraliste,
+    //     // idVozilo: rezervacija.idVozilo,
+    //     startTime: formData['reservation-starttime'],
+    //     endTime: formData['reservation-endtime'],
+    //   },
+    // };
 
-    post('reservation/onetime', requestBody)
-      .then((res) => {
-        if (res.data && res.data.user) {
-          store.setCurrentUser(res.data.user);
+    // post('reservation/onetime', requestBody)
+    //   .then((res) => {
+    //     if (res.data && res.data.user) {
+    //       store.setCurrentUser(res.data.user);
 
-          history.replace('/');
-        }
-      })
-      .catch((res) => {
-        if (res.errors && res.errors[0] && res.errors[0].message) {
-          setErrorMessage(res.errors[0].message);
-        }
-      });
+    //       history.replace('/');
+    //     }
+    //   })
+    //   .catch((res) => {
+    //     if (res.errors && res.errors[0] && res.errors[0].message) {
+    //       setErrorMessage(res.errors[0].message);
+    //     }
+    //   });
   }
 
   // const minDate = addHours(new Date(), 6)
-  const minDate = add(new Date(), { hours: 6 });
+  const minDate = add(setMinutes(new Date(), 0), { hours: 6 });
 
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
@@ -66,10 +67,8 @@ export function AddOnetimeReservationForm() {
                     onChange={(date) => onChange(date)}
                     showTimeSelect
                     minDate={minDate}
-                    filterTime={(time) => {
-                      if (differenceInDays()) console.log({ time, minDate });
-                      return isAfter(new Date(time), minDate);
-                    }}
+                    timeIntervals={60}
+                    filterTime={(time) => isAfter(setHours(value, getHours(time)), minDate)}
                     timeFormat="HH:mm"
                     customInput={<Input />}
                     dateFormat="dd.MM.yyyy HH:mm"
@@ -93,6 +92,8 @@ export function AddOnetimeReservationForm() {
             </VStack>
           </HStack>
         </VStack>
+
+        <button>Submit</button>
       </form>
     </Box>
   );
