@@ -148,7 +148,13 @@ export function ParkingsEdit() {
           <VStack flex="1" align="stretch">
             <Text as="label">Koordinate parkirališta</Text>
             <Input
-              ref={register({ required: 'Koordinate su obavezne' })}
+              ref={register({
+                required: 'Koordinate su obavezne',
+                pattern: {
+                  value: /^\d+(.\d*)?, \d+(.\d*)?$/,
+                  message: 'Koordinate moraju biti u 12.34, 12.34 formatu',
+                },
+              })}
               isInvalid={errors['edit-parking-coordinates']}
               name="edit-parking-coordinates"
               placeholder="zemljopisna širina, zemljopisna dužina"

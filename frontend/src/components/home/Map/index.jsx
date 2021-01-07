@@ -28,7 +28,7 @@ export const Map = () => {
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
       {parkings.map((parking) => (
-        <Marker position={parking.coordinates.split(' ').map((c) => parseFloat(c))} key={parking.idParkiraliste}>
+        <Marker position={parking.coordinates.split(', ').map((c) => parseFloat(c))} key={parking.idParkiraliste}>
           <Popup>
             <MapPin parking={parking} />
           </Popup>
