@@ -30,7 +30,7 @@ export const MapPin = ({ parking }) => {
         </Box>
       )}
       <Stack align="center" color="white">
-        <Button aria-label="Add reservation" as={ReactLink} to={{ pathname: '/addReservation' }}>
+        <Button aria-label="Add reservation" as={ReactLink} to={{ pathname: '/addReservation', state: parking }}>
           Rezerviraj
         </Button>
       </Stack>
