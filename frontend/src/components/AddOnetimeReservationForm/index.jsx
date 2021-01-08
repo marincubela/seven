@@ -1,4 +1,4 @@
-import { Box, Heading, VStack, Text, Input, HStack, Button, Select, Spinner, Center, Link } from '@chakra-ui/react';
+import { Box, Heading, VStack, Text, Input, Button, Select, Spinner, Center, Link } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, Link as RouterLink } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
@@ -7,7 +7,7 @@ import { add, isAfter, getHours, setHours, format, setMinutes, differenceInHours
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { get } from '../../utils/network';
+import { get, post } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
 
 export function AddOnetimeReservationForm() {
@@ -23,7 +23,6 @@ export function AddOnetimeReservationForm() {
     if (store.currentUser && parking) {
       get(`vehicle?client=${store.currentUser.idRacun}`)
         .then((res) => {
-          console.log(res);
           if (res.data?.vehicles) {
             setVehicles(res.data.vehicles);
           }
@@ -36,36 +35,28 @@ export function AddOnetimeReservationForm() {
   }, []);
 
   function onAddReservation(formData) {
-    console.log(format(formData['reservation-starttime'], 'yyyy-MM-dd hh:mm:ss'));
+    const requestBody = {
+      data: {
+        idParkiraliste: parking.idParkiraliste,
+        idVozilo: formData['reservation-vehicle'],
+        startTime: format(formData['reservation-starttime'], 'yyyy-MM-dd hh:mm:ss'),
+        endTime: format(formData['reservation-endtime'], 'yyyy-MM-dd hh:mm:ss'),
+      },
+    };
 
-    // const requestBody = {
-    //   data: {
-    //     // idParkiraliste: rezervacija.idParkiraliste,
-    //     // idVozilo: rezervacija.idVozilo,
-    //     startTime: formData['reservation-starttime'],
-    //     endTime: formData['reservation-endtime'],
-    //   },
-    // };
-
-    // post('reservation/onetime', requestBody)
-    //   .then((res) => {
-    //     if (res.data && res.data.user) {
-    //       store.setCurrentUser(res.data.user);
-
-    //       history.replace('/');
-    //     }
-    //   })
-    //   .catch((res) => {
-    //     if (res.errors && res.errors[0] && res.errors[0].message) {
-    //       setErrorMessage(res.errors[0].message);
-    //     }
-    //   });
+    post('reservation/onetime', requestBody)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((res) => {
+        if (res.errors && res.errors[0] && res.errors[0].message) {
+          setErrorMessage(res.errors[0].message);
+        }
+      });
   }
 
   // const minDate = addHours(new Date(), 6)
   const minDate = add(setMinutes(new Date(), 0), { hours: 7 });
-
-  console.log(parking);
 
   if (!vehicles) {
     return (
@@ -177,7 +168,7 @@ export function AddOnetimeReservationForm() {
               defaultChecked={1}
             >
               {vehicles.map((v) => (
-                <option key={v.idVozilo}>
+                <option value={v.idVozilo} key={v.idVozilo}>
                   {v.carName} | {v.registration}
                 </option>
               ))}
