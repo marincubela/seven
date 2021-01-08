@@ -9,6 +9,7 @@ import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 import { intervalToDuration, isAfter, isBefore, parseISO } from 'date-fns';
 import { PonavljajucaMapper } from '../../mappers/PonavljajucaMapper';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
+import { RacunRepo } from '../../repos/RacunRepo';
 
 export class CreatePonavljajucaController extends BaseController {
   executeImpl = async (
@@ -17,12 +18,12 @@ export class CreatePonavljajucaController extends BaseController {
   ): Promise<void | IResponse> => {
     const ponavljajucaDto = req.body.data as PonavljajucaDTO;
 
-    //Provjeri rezervira li korisnik u svoje ime
+    ponavljajucaDto.idKlijent = await RacunRepo.getIdKlijent(
+      req.session.user.idRacun
+    );
+
     //Provjeri posjeduje li korisnik navedeni auto
     if (
-      !(await KlijentRepo.idValidationCheck(ponavljajucaDto.idKlijent)) ||
-      (await KlijentRepo.getIdRacunByIdKlijent(ponavljajucaDto.idKlijent)) !=
-        req.session.user.idRacun ||
       !(await KlijentRepo.checkCarOwner(
         ponavljajucaDto.idKlijent,
         ponavljajucaDto.idVozilo

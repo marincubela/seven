@@ -10,6 +10,7 @@ import { KlijentRepo } from '../../repos/KlijentRepo';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 import { VoziloRepo } from '../../repos/VoziloRepo';
+import { RacunRepo } from '../../repos/RacunRepo';
 
 export class UpdateTrajnaController extends BaseController {
   executeImpl = async (
@@ -33,13 +34,12 @@ export class UpdateTrajnaController extends BaseController {
 
     const trajnaDTO = { ...oldReservationData, ...req.body.data } as TrajnaDTO;
     trajnaDTO.idTrajna = await TrajnaRepo.getIdTrajna(idRezervacija);
+    trajnaDTO.idKlijent = await RacunRepo.getIdKlijent(
+      req.session.user.idRacun
+    );
 
-    //Provjeri rezervira li korisnik u svoje ime
     //Provjeri posjeduje li korisnik navedeni auto
     if (
-      !(await KlijentRepo.getKlijentByIdKlijent(trajnaDTO.idKlijent)) ||
-      (await KlijentRepo.getIdRacunByIdKlijent(trajnaDTO.idKlijent)) !=
-        req.session.user.idRacun ||
       !(await KlijentRepo.checkCarOwner(
         trajnaDTO.idKlijent,
         trajnaDTO.idVozilo

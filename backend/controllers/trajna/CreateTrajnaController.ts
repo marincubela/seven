@@ -9,6 +9,7 @@ import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 import { isAfter, isBefore, parseISO } from 'date-fns';
 import { TrajnaMapper } from '../../mappers/TrajnaMapper';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
+import { RacunRepo } from '../../repos/RacunRepo';
 
 export class CreateTrajnaController extends BaseController {
   executeImpl = async (
@@ -17,12 +18,12 @@ export class CreateTrajnaController extends BaseController {
   ): Promise<void | IResponse> => {
     const trajnaDto = req.body.data as TrajnaDTO;
 
-    //Provjeri rezervira li korisnik u svoje ime
+    trajnaDto.idKlijent = await RacunRepo.getIdKlijent(
+      req.session.user.idRacun
+    );
+
     //Provjeri posjeduje li korisnik navedeni auto
     if (
-      !(await KlijentRepo.getKlijentByIdKlijent(trajnaDto.idKlijent)) ||
-      (await KlijentRepo.getIdRacunByIdKlijent(trajnaDto.idKlijent)) !=
-        req.session.user.idRacun ||
       !(await KlijentRepo.checkCarOwner(
         trajnaDto.idKlijent,
         trajnaDto.idVozilo

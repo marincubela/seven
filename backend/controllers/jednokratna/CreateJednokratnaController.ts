@@ -7,6 +7,7 @@ import { KlijentRepo } from '../../repos/KlijentRepo';
 import { JednokratnaMapper } from '../../mappers/JednokratnaMapper';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
+import { RacunRepo } from '../../repos/RacunRepo';
 import {
   addHours,
   intervalToDuration,
@@ -23,12 +24,12 @@ export class CreateJednokratnaController extends BaseController {
   ): Promise<void | IResponse> => {
     const jednokratnaDto = req.body.data as JednokratnaDTO;
 
-    //Provjeri rezervira li korisnik u svoje ime
+    jednokratnaDto.idKlijent = await RacunRepo.getIdKlijent(
+      req.session.user.idRacun
+    );
+
     //Provjeri posjeduje li korisnik navedeni auto
     if (
-      !(await KlijentRepo.getKlijentByIdKlijent(jednokratnaDto.idKlijent)) ||
-      (await KlijentRepo.getIdRacunByIdKlijent(jednokratnaDto.idKlijent)) !=
-        req.session.user.idRacun ||
       !(await KlijentRepo.checkCarOwner(
         jednokratnaDto.idKlijent,
         jednokratnaDto.idVozilo

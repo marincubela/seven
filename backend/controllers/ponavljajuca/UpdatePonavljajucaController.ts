@@ -9,6 +9,7 @@ import { KlijentRepo } from '../../repos/KlijentRepo';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 import { VoziloRepo } from '../../repos/VoziloRepo';
+import { RacunRepo } from '../../repos/RacunRepo';
 import { intervalToDuration, isAfter, isBefore, parseISO } from 'date-fns';
 
 export class UpdatePonavljajucaController extends BaseController {
@@ -39,13 +40,12 @@ export class UpdatePonavljajucaController extends BaseController {
       idRezervacija
     );
     ponavljajucaDTO.idRezervacija = idRezervacija;
+    ponavljajucaDTO.idKlijent = await RacunRepo.getIdKlijent(
+      req.session.user.idRacun
+    );
 
-    //Provjeri rezervira li korisnik u svoje ime
     //Provjeri posjeduje li korisnik navedeni auto
     if (
-      !(await KlijentRepo.idValidationCheck(ponavljajucaDTO.idKlijent)) ||
-      (await KlijentRepo.getIdRacunByIdKlijent(ponavljajucaDTO.idKlijent)) !=
-        req.session.user.idRacun ||
       !(await KlijentRepo.checkCarOwner(
         ponavljajucaDTO.idKlijent,
         ponavljajucaDTO.idVozilo

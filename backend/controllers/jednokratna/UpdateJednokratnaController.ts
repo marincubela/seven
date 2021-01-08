@@ -8,6 +8,7 @@ import { KlijentRepo } from '../../repos/KlijentRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
+import { RacunRepo } from '../../repos/RacunRepo';
 import {
   addHours,
   intervalToDuration,
@@ -49,13 +50,12 @@ export class UpdateJednokratnaController extends BaseController {
     );
 
     jednokratnaDTO.idRezervacija = idRezervacija;
+    jednokratnaDTO.idKlijent = await RacunRepo.getIdKlijent(
+      req.session.user.idRacun
+    );
 
-    //Provjeri rezervira li korisnik u svoje ime
     //Provjeri posjeduje li korisnik navedeni auto
     if (
-      !(await KlijentRepo.getKlijentByIdKlijent(jednokratnaDTO.idKlijent)) ||
-      (await KlijentRepo.getIdRacunByIdKlijent(jednokratnaDTO.idKlijent)) !=
-        req.session.user.idRacun ||
       !(await KlijentRepo.checkCarOwner(
         jednokratnaDTO.idKlijent,
         jednokratnaDTO.idVozilo
