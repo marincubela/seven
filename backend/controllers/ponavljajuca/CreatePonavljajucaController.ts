@@ -8,6 +8,7 @@ import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 import { isAfter, isBefore, parseISO } from 'date-fns';
 import { PonavljajucaMapper } from '../../mappers/PonavljajucaMapper';
+import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 
 export class CreatePonavljajucaController extends BaseController {
   executeImpl = async (
@@ -57,8 +58,16 @@ export class CreatePonavljajucaController extends BaseController {
     // Postoji li rezervacija s danim vozilom u to vrijeme
 
     // Treba se promijeniti u RezervacijaRepo.isAvailable(), al treba prilagoditi... ima posla
-    if (!(await PonavljajucaRepo.isAvailable(ponavljajucaDto))) {
-      return this.conflict(res, ['Nije moguće rezervirati u dano vrijeme']);
+    for (const dates of PonavljajucaRepo.getAllDates(ponavljajucaDto)) {
+      if (
+        !(await RezervacijaRepo.isAvailable(
+          ponavljajucaDto.idVozilo,
+          dates.startTime,
+          dates.endTime
+        ))
+      ) {
+        return this.conflict(res, ['Nije moguće rezervirati u dano vrijeme']);
+      }
     }
 
     const validationErrors = (

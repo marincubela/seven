@@ -201,16 +201,16 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
     }
 
     if (
-      !(await PonavljajucaRepo.isAvailable({
+      !(await PonavljajucaRepo.isAvailable(
         idVozilo,
+        new Date(start),
+        new Date(end)
         //reservationDate: new Date(new Date(start).toDateString()),
         //reservationEndDate: new Date(new Date(end).toDateString()),
-        reservationDate: subDays(new Date(start), 1),
-        reservationEndDate: addDays(new Date(end), 1),
-        startTime: new Date(start),
-        endTime: new Date(end),
-        repeatDays: new Date(start).getDay().toString(),
-      }))
+        //reservationDate: subDays(new Date(start), 1),
+        //reservationEndDate: addDays(new Date(end), 1),
+        //repeatDays: new Date(start).getDay().toString(),
+      ))
     ) {
       return false;
     }

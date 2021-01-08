@@ -137,11 +137,13 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
   }
 
   public static async isAvailable(
-    ponavljajucaDTO: PonavljajucaDTO
+    idVozilo: number,
+    startTime: Date,
+    endTime: Date
   ): Promise<Boolean> {
     const rezervacije = await Rezervacija.findAll({
       where: {
-        idVozilo: ponavljajucaDTO.idVozilo,
+        idVozilo,
       },
     });
 
@@ -156,21 +158,19 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
         const ponavDTO = await PonavljajucaMapper.toDTO(ponavljajuca);
 
         for (const baseDates of this.getAllDates(ponavDTO)) {
-          for (const dates of this.getAllDates(ponavljajucaDTO)) {
-            const check = areIntervalsOverlapping(
-              {
-                start: new Date(baseDates.startTime),
-                end: new Date(baseDates.endTime),
-              },
-              {
-                start: new Date(dates.startTime),
-                end: new Date(dates.endTime),
-              }
-            );
-
-            if (check) {
-              return false;
+          const check = areIntervalsOverlapping(
+            {
+              start: new Date(baseDates.startTime),
+              end: new Date(baseDates.endTime),
+            },
+            {
+              start: new Date(startTime),
+              end: new Date(endTime),
             }
+          );
+
+          if (check) {
+            return false;
           }
         }
       }
@@ -226,6 +226,7 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
         ) {
           continue;
         }
+
         var startTime = new Date(
           this.timeAndDateToDate(d, ponavljajucaDTO.startTime)
         );
@@ -264,6 +265,7 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
     const day = new Date(date).getDate();
     var hour, min, sec;
 
+    // 2020-2-2T13:13:13
     if (time.toString().indexOf('T') >= 0) {
       hour = new Date(time.toString()).getHours();
       min = new Date(time.toString()).getMinutes();
