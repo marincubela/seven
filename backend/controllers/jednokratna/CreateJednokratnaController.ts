@@ -24,6 +24,10 @@ export class CreateJednokratnaController extends BaseController {
   ): Promise<void | IResponse> => {
     const jednokratnaDto = req.body.data as JednokratnaDTO;
 
+    if (!(await RacunRepo.isKlijent(req.session.user.idRacun))) {
+      return this.forbidden(res, null);
+    }
+
     jednokratnaDto.idKlijent = await RacunRepo.getIdKlijent(
       req.session.user.idRacun
     );

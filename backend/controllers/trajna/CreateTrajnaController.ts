@@ -18,6 +18,10 @@ export class CreateTrajnaController extends BaseController {
   ): Promise<void | IResponse> => {
     const trajnaDto = req.body.data as TrajnaDTO;
 
+    if (!(await RacunRepo.isKlijent(req.session.user.idRacun))) {
+      return this.forbidden(res, null);
+    }
+
     trajnaDto.idKlijent = await RacunRepo.getIdKlijent(
       req.session.user.idRacun
     );

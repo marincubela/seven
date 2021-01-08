@@ -24,6 +24,10 @@ export class UpdateJednokratnaController extends BaseController {
   ): Promise<void | IResponse> => {
     const idRezervacija = Number(req.params.idRezervacija);
 
+    if (!(await RacunRepo.isKlijent(req.session.user.idRacun))) {
+      return this.forbidden(res, null);
+    }
+
     if (isNaN(idRezervacija)) {
       return this.clientError(res, ['Id nije broj']);
     }

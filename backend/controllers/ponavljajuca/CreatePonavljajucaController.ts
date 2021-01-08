@@ -18,6 +18,10 @@ export class CreatePonavljajucaController extends BaseController {
   ): Promise<void | IResponse> => {
     const ponavljajucaDto = req.body.data as PonavljajucaDTO;
 
+    if (!(await RacunRepo.isKlijent(req.session.user.idRacun))) {
+      return this.forbidden(res, null);
+    }
+
     ponavljajucaDto.idKlijent = await RacunRepo.getIdKlijent(
       req.session.user.idRacun
     );
