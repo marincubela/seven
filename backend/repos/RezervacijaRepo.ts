@@ -9,7 +9,6 @@ import { ReservationsDTO } from '../dtos/ResponseDtos/ReservationsDTO';
 import { JednokratnaMapper } from '../mappers/JednokratnaMapper';
 import { PonavljajucaMapper } from '../mappers/PonavljajucaMapper';
 import { TrajnaMapper } from '../mappers/TrajnaMapper';
-import { addDays, subDays } from 'date-fns';
 
 export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
   async exists(rezervacijaDTO: RezervacijaDTO): Promise<boolean> {
@@ -202,6 +201,53 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
 
     if (
       !(await PonavljajucaRepo.isAvailable(
+        idVozilo,
+        new Date(start),
+        new Date(end)
+        //reservationDate: new Date(new Date(start).toDateString()),
+        //reservationEndDate: new Date(new Date(end).toDateString()),
+        //reservationDate: subDays(new Date(start), 1),
+        //reservationEndDate: addDays(new Date(end), 1),
+        //repeatDays: new Date(start).getDay().toString(),
+      ))
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
+  public static async isAvailableForUpdate(
+    idRezervacija: number,
+    idVozilo: number,
+    start: Date,
+    end: Date
+  ): Promise<Boolean> {
+    if (
+      !(await TrajnaRepo.isAvailableForUpdate({
+        idRezervacija,
+        idVozilo,
+        startTime: start,
+        endTime: end,
+      }))
+    ) {
+      return false;
+    }
+
+    if (
+      !(await JednokratnaRepo.isAvailableForUpdate({
+        idRezervacija,
+        idVozilo,
+        startTime: start,
+        endTime: end,
+      }))
+    ) {
+      return false;
+    }
+
+    if (
+      !(await PonavljajucaRepo.isAvailableForUpdate(
+        idRezervacija,
         idVozilo,
         new Date(start),
         new Date(end)

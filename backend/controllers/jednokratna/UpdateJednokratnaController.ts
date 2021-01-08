@@ -4,6 +4,17 @@ import { JednokratnaMapper } from '../../mappers/JednokratnaMapper';
 import { JednokratnaRepo } from '../../repos/JednokratnaRepo';
 import { JednokratnaDTO } from '../../dtos/JednokratnaDTO';
 import { JednokratnaValidator } from '../../utils/validators';
+import { KlijentRepo } from '../../repos/KlijentRepo';
+import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
+import { VoziloRepo } from '../../repos/VoziloRepo';
+import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
+import {
+  addHours,
+  intervalToDuration,
+  isAfter,
+  isBefore,
+  parseISO,
+} from 'date-fns';
 
 export class UpdateJednokratnaController extends BaseController {
   executeImpl = async (
@@ -11,7 +22,7 @@ export class UpdateJednokratnaController extends BaseController {
     res: IResponse
   ): Promise<void | IResponse> => {
     const idRezervacija = Number(req.params.idRezervacija);
-    
+
     if (isNaN(idRezervacija)) {
       return this.clientError(res, ['Id nije broj']);
     }
@@ -37,16 +48,54 @@ export class UpdateJednokratnaController extends BaseController {
       idRezervacija
     );
 
-    // jednokratnaDTO.idJednokratna = idRezervacija;
+    jednokratnaDTO.idRezervacija = idRezervacija;
 
-    const jednokratnaExits = await JednokratnaRepo.checkAvailability(
-      jednokratnaDTO
-    );
+    //Provjeri rezervira li korisnik u svoje ime
+    //Provjeri posjeduje li korisnik navedeni auto
+    if (
+      !(await KlijentRepo.getKlijentByIdKlijent(jednokratnaDTO.idKlijent)) ||
+      (await KlijentRepo.getIdRacunByIdKlijent(jednokratnaDTO.idKlijent)) !=
+        req.session.user.idRacun ||
+      !(await KlijentRepo.checkCarOwner(
+        jednokratnaDTO.idKlijent,
+        jednokratnaDTO.idVozilo
+      ))
+    ) {
+      return this.forbidden(res, null);
+    }
 
-    if (!jednokratnaExits) {
+    //Provjeri postoje li auto i parkiraliste
+    if (
+      !(
+        (await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
+          jednokratnaDTO.idParkiraliste
+        )) && (await VoziloRepo.getVoziloByIdVozilo(jednokratnaDTO.idVozilo))
+      )
+    ) {
+      return this.clientError(res, ['Neispravan id vozila ili parkirališta!']);
+    }
+
+    // Provjeri ispravnost vremena
+    if (
+      !this.checkTime(
+        new Date(jednokratnaDTO.startTime).toISOString(),
+        new Date(jednokratnaDTO.endTime).toISOString()
+      )
+    ) {
       return this.clientError(res, [
-        'Rezervacija na to vozilo u to vrijeme već postoji!',
+        'Početak i kraj rezervacije nisu ispravni',
       ]);
+    }
+
+    if (
+      !(await RezervacijaRepo.isAvailableForUpdate(
+        jednokratnaDTO.idRezervacija,
+        jednokratnaDTO.idVozilo,
+        jednokratnaDTO.startTime,
+        jednokratnaDTO.endTime
+      ))
+    ) {
+      return this.conflict(res, ['Nije moguće rezervirati u dano vrijeme']);
     }
 
     const validationErrors = (
@@ -57,7 +106,6 @@ export class UpdateJednokratnaController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
-    jednokratnaDTO.idRezervacija = idRezervacija;
     const rezervacija = await JednokratnaRepo.update(jednokratnaDTO);
 
     return this.ok(res, {
@@ -66,4 +114,24 @@ export class UpdateJednokratnaController extends BaseController {
       },
     });
   };
+
+  private checkTime(startTime: string, endTime: string): Boolean {
+    const start = parseISO(startTime);
+    const end = parseISO(endTime);
+
+    const interval = intervalToDuration({
+      start: new Date(startTime),
+      end: new Date(endTime),
+    });
+
+    if (interval.days || interval.months || interval.years) {
+      return false;
+    }
+
+    if (isAfter(start, end) || isBefore(start, addHours(new Date(), 6))) {
+      return false;
+    }
+
+    return true;
+  }
 }

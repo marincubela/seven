@@ -144,6 +144,43 @@ export class TrajnaRepo extends BaseRepo<TrajnaDTO> {
     return true;
   }
 
+  public static async isAvailableForUpdate(
+    trajnaDTO: TrajnaDTO
+  ): Promise<Boolean> {
+    const rezervacije = await Rezervacija.findAll({
+      where: {
+        idVozilo: trajnaDTO.idVozilo,
+        idRezervacija: { [Op.ne]: trajnaDTO.idRezervacija },
+      },
+    });
+
+    for (const rezervacija of rezervacije) {
+      const trajne = await Trajna.findAll({
+        where: {
+          idRezervacija: rezervacija.idRezervacija,
+          [Op.or]: {
+            vrijemePocetak: {
+              [Op.between]: [trajnaDTO.startTime, trajnaDTO.endTime],
+            },
+            vrijemeKraj: {
+              [Op.between]: [trajnaDTO.startTime, trajnaDTO.endTime],
+            },
+            [Op.and]: {
+              vrijemeKraj: { [Op.gt]: trajnaDTO.endTime },
+              vrijemePocetak: { [Op.lt]: trajnaDTO.endTime },
+            },
+          },
+        },
+      });
+
+      if (trajne.length) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   public static async checkAvailability(
     trajnaDTO: TrajnaDTO
   ): Promise<Boolean> {

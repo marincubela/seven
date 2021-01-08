@@ -143,6 +143,43 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
     return true;
   }
 
+  public static async isAvailableForUpdate(
+    jednokratnaDTO: JednokratnaDTO
+  ): Promise<Boolean> {
+    const rezervacije = await Rezervacija.findAll({
+      where: {
+        idVozilo: jednokratnaDTO.idVozilo,
+        idRezervacija: { [Op.ne]: jednokratnaDTO.idRezervacija },
+      },
+    });
+
+    for (const rezervacija of rezervacije) {
+      const jednokratne = await Jednokratna.findAll({
+        where: {
+          idRezervacija: rezervacija.idRezervacija,
+          [Op.or]: {
+            vrijemePocetak: {
+              [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
+            },
+            vrijemeKraj: {
+              [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
+            },
+            [Op.and]: {
+              vrijemeKraj: { [Op.gt]: jednokratnaDTO.endTime },
+              vrijemePocetak: { [Op.lt]: jednokratnaDTO.endTime },
+            },
+          },
+        },
+      });
+
+      if (jednokratne.length) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   public static async checkAvailability(
     jednokratnaDTO: JednokratnaDTO
   ): Promise<Boolean> {

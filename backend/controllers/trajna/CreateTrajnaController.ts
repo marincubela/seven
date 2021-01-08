@@ -85,7 +85,6 @@ export class CreateTrajnaController extends BaseController {
   private checkTime(startTime: string, endTime: string): Boolean {
     const start = parseISO(startTime);
     const end = parseISO(endTime);
-    const now = parseISO(new Date().toISOString());
 
     if (isAfter(start, end) || isBefore(start, new Date())) {
       return false;

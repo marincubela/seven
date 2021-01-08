@@ -64,10 +64,6 @@ export class CreatePonavljajucaController extends BaseController {
       ]);
     }
 
-    if (1) {
-      return this.ok(res, {});
-    }
-
     // Postoji li rezervacija s danim vozilom u to vrijeme
 
     // Treba se promijeniti u RezervacijaRepo.isAvailable(), al treba prilagoditi... ima posla

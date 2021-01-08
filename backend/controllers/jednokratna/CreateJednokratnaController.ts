@@ -26,7 +26,7 @@ export class CreateJednokratnaController extends BaseController {
     //Provjeri rezervira li korisnik u svoje ime
     //Provjeri posjeduje li korisnik navedeni auto
     if (
-      !(await KlijentRepo.idValidationCheck(jednokratnaDto.idKlijent)) ||
+      !(await KlijentRepo.getKlijentByIdKlijent(jednokratnaDto.idKlijent)) ||
       (await KlijentRepo.getIdRacunByIdKlijent(jednokratnaDto.idKlijent)) !=
         req.session.user.idRacun ||
       !(await KlijentRepo.checkCarOwner(
@@ -91,7 +91,6 @@ export class CreateJednokratnaController extends BaseController {
   private checkTime(startTime: string, endTime: string): Boolean {
     const start = parseISO(startTime);
     const end = parseISO(endTime);
-    const now = parseISO(new Date().toISOString());
 
     const interval = intervalToDuration({
       start: new Date(startTime),

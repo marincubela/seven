@@ -1,6 +1,5 @@
 import { Rezervacija } from '../models/Rezervacija';
 import { PonavljajucaDTO } from '../dtos/PonavljajucaDTO';
-import { JednokratnaDTO } from '../dtos/JednokratnaDTO';
 import { PonavljajucaMapper } from '../mappers/PonavljajucaMapper';
 import { Ponavljajuca } from '../models/Ponavljajuca';
 import { BaseRepo } from './BaseRepo';
@@ -15,6 +14,7 @@ import {
   isBefore,
   parseISO,
 } from 'date-fns';
+import { Op } from 'sequelize';
 
 export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
   async exists(ponavljajucaDTO: PonavljajucaDTO): Promise<boolean> {
@@ -144,6 +144,51 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
     const rezervacije = await Rezervacija.findAll({
       where: {
         idVozilo,
+      },
+    });
+
+    for (const rezervacija of rezervacije) {
+      const ponavljajuce = await Ponavljajuca.findAll({
+        where: {
+          idRezervacija: rezervacija.idRezervacija,
+        },
+      });
+
+      for (const ponavljajuca of ponavljajuce) {
+        const ponavDTO = await PonavljajucaMapper.toDTO(ponavljajuca);
+
+        for (const baseDates of this.getAllDates(ponavDTO)) {
+          const check = areIntervalsOverlapping(
+            {
+              start: new Date(baseDates.startTime),
+              end: new Date(baseDates.endTime),
+            },
+            {
+              start: new Date(startTime),
+              end: new Date(endTime),
+            }
+          );
+
+          if (check) {
+            return false;
+          }
+        }
+      }
+    }
+
+    return true;
+  }
+
+  public static async isAvailableForUpdate(
+    idRezervacija: number,
+    idVozilo: number,
+    startTime: Date,
+    endTime: Date
+  ): Promise<Boolean> {
+    const rezervacije = await Rezervacija.findAll({
+      where: {
+        idVozilo,
+        idRezervacija: { [Op.ne]: idRezervacija },
       },
     });
 
