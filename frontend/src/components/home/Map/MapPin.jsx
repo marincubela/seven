@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Box } from '@chakra-ui/react';
+import { Text, Box, Button, Link } from '@chakra-ui/react';
 
 export const MapPin = ({ parking }) => {
   return (
@@ -28,6 +28,15 @@ export const MapPin = ({ parking }) => {
           </Text>
         </Box>
       )}
+
+      <Button
+        variant="link"
+        as={Link}
+        href={`https://www.google.com/maps/search/?api=1&query=${parking.coordinates.replace(' ', '')}`}
+        target="_blank"
+      >
+        Upute za navigaciju
+      </Button>
     </Box>
   );
 };
