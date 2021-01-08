@@ -1,4 +1,22 @@
-import { Box, Heading, VStack, Text, Input, Button, Select, Spinner, Center, Link } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  VStack,
+  Text,
+  Input,
+  Button,
+  Select,
+  Spinner,
+  Center,
+  Link,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+  useDisclosure,
+} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, Link as RouterLink } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
@@ -7,17 +25,20 @@ import { add, isAfter, getHours, setHours, format, setMinutes, differenceInHours
 
 import 'react-datepicker/dist/react-datepicker.css';
 
+import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { get, post } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
 
 export function AddOnetimeReservationForm() {
   const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
-  const { register, errors, handleSubmit, watch, control } = useForm();
+  const { register, errors, trigger, handleSubmit, watch, control } = useForm();
   const history = useHistory();
   const location = useLocation();
   const [parking] = useState(location.state);
   const [vehicles, setVehicles] = useState();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
 
   useEffect(() => {
     if (store.currentUser && parking) {
@@ -28,7 +49,7 @@ export function AddOnetimeReservationForm() {
           }
         })
         .catch((res) => {
-          console.log('erorrrrrrr');
+          console.log('eror');
           console.log(res);
         });
     } else history.replace('/');
@@ -79,7 +100,7 @@ export function AddOnetimeReservationForm() {
         </Text>
       </VStack>
 
-      <form onSubmit={handleSubmit(onAddReservation)}>
+      <form onSubmit={handleSubmit(onAddReservation)} id="reservation">
         <VStack flex="1" align="stretch" marginY="8" spacing="4">
           <VStack
             flex="1"
@@ -186,7 +207,36 @@ export function AddOnetimeReservationForm() {
           </VStack>
         </VStack>
 
-        <Button type="submit">Submit</Button>
+        <Button
+          onClick={() => {
+            trigger().then((isValid) => {
+              if (isValid) onOpen();
+            });
+          }}
+        >
+          Rezerviraj
+        </Button>
+
+        <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Plati rezervaciju
+              </AlertDialogHeader>
+
+              <AlertDialogBody>Jeste li sigurni da želite izvršiti uplatu?</AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelRef} colorScheme="red" variant="outline" onClick={onClose}>
+                  Odustani
+                </Button>
+                <Button form="reservation" type="submit" ml="4" rightIcon={<ArrowForwardIcon />}>
+                  Potvrdi
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
       </form>
     </Box>
   );
