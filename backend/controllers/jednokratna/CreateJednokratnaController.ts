@@ -7,7 +7,13 @@ import { KlijentRepo } from '../../repos/KlijentRepo';
 import { JednokratnaMapper } from '../../mappers/JednokratnaMapper';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
-import { isAfter, isBefore, parseISO } from 'date-fns';
+import {
+  addHours,
+  intervalToDuration,
+  isAfter,
+  isBefore,
+  parseISO,
+} from 'date-fns';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 
 export class CreateJednokratnaController extends BaseController {
@@ -87,7 +93,16 @@ export class CreateJednokratnaController extends BaseController {
     const end = parseISO(endTime);
     const now = parseISO(new Date().toISOString());
 
-    if (isAfter(start, end) || isBefore(start, new Date())) {
+    const interval = intervalToDuration({
+      start: new Date(startTime),
+      end: new Date(endTime),
+    });
+
+    if (interval.days || interval.months || interval.years) {
+      return false;
+    }
+
+    if (isAfter(start, end) || isBefore(start, addHours(new Date(), 6))) {
       return false;
     }
 

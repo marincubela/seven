@@ -17,22 +17,6 @@ export class CreateTrajnaController extends BaseController {
   ): Promise<void | IResponse> => {
     const trajnaDto = req.body.data as TrajnaDTO;
 
-    /*  if (
-      !(await RezervacijaRepo.isAvailable(
-        trajnaDto.idVozilo,
-        trajnaDto.startTime,
-        trajnaDto.endTime
-      ))
-    ) {
-      console.log('Ne mozes rezervirati');
-    } else {
-      console.log('Mozes rezervirati');
-    }
-
-    if (1) {
-      return this.ok(res, {});
-    } */
-
     //Provjeri rezervira li korisnik u svoje ime
     //Provjeri posjeduje li korisnik navedeni auto
     if (

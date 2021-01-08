@@ -6,7 +6,7 @@ import { PonavljajucaValidator } from '../../utils/validators';
 import { KlijentRepo } from '../../repos/KlijentRepo';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
-import { isAfter, isBefore, parseISO } from 'date-fns';
+import { intervalToDuration, isAfter, isBefore, parseISO } from 'date-fns';
 import { PonavljajucaMapper } from '../../mappers/PonavljajucaMapper';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 
@@ -44,7 +44,16 @@ export class CreatePonavljajucaController extends BaseController {
 
     // Provjeri ispravnost vremena
     if (
-      String(ponavljajucaDto.startTime) > String(ponavljajucaDto.endTime) ||
+      !this.checkTime2(
+        PonavljajucaRepo.timeAndDateToDate(
+          ponavljajucaDto.reservationDate,
+          ponavljajucaDto.startTime
+        ).toISOString(),
+        PonavljajucaRepo.timeAndDateToDate(
+          ponavljajucaDto.reservationDate,
+          ponavljajucaDto.endTime
+        ).toISOString()
+      ) ||
       !this.checkTime(
         new Date(ponavljajucaDto.reservationDate).toISOString(),
         new Date(ponavljajucaDto.reservationEndDate).toISOString()
@@ -53,6 +62,10 @@ export class CreatePonavljajucaController extends BaseController {
       return this.clientError(res, [
         'Početak i kraj rezervacije nisu ispravni',
       ]);
+    }
+
+    if (1) {
+      return this.ok(res, {});
     }
 
     // Postoji li rezervacija s danim vozilom u to vrijeme
@@ -92,7 +105,31 @@ export class CreatePonavljajucaController extends BaseController {
   private checkTime(startTime: string, endTime: string): Boolean {
     const start = parseISO(startTime);
     const end = parseISO(endTime);
-    const now = parseISO(new Date().toISOString());
+
+    if (isAfter(start, end) || isBefore(start, new Date())) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private checkTime2(startTime: string, endTime: string): Boolean {
+    if (String(startTime) > String(endTime)) {
+      return false;
+    }
+    const start = parseISO(startTime);
+    const end = parseISO(endTime);
+
+    const interval = intervalToDuration({
+      start: new Date(start),
+      end: new Date(end),
+    });
+
+    console.log(interval);
+
+    if (interval.hours < 1) {
+      return false;
+    }
 
     if (isAfter(start, end) || isBefore(start, new Date())) {
       return false;
