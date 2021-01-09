@@ -18,7 +18,7 @@ import {
   useDisclosure,
   CheckboxGroup,
   Checkbox,
-  toast,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, Link as RouterLink } from 'react-router-dom';
@@ -42,6 +42,7 @@ export function AddRepetitiveReservationForm() {
   const [vehicles, setVehicles] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
+  const toast = useToast();
 
   useEffect(() => {
     if (store.currentUser && parking) {
@@ -66,8 +67,8 @@ export function AddRepetitiveReservationForm() {
         reservationDate: format(formData['reservation-startdate'], 'yyyy-MM-dd'),
         reservationEndDate: format(formData['reservation-enddate'], 'yyyy-MM-dd'),
         repeatDays: formData['reservation-days'],
-        startTime: format(formData['reservation-starthour'], 'hh:mm:ss'),
-        endTime: format(formData['reservation-endhour'], 'hh:mm:ss'),
+        startTime: format(formData['reservation-starthour'], 'HH:mm:ss'),
+        endTime: format(formData['reservation-endhour'], 'HH:mm:ss'),
       },
     };
 

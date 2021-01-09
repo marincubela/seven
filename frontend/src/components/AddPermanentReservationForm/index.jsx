@@ -16,7 +16,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   useDisclosure,
-  toast,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, Link as RouterLink } from 'react-router-dom';
@@ -33,13 +33,14 @@ import { useStore } from '../../store/StoreProvider';
 export function AddPermanentReservationForm() {
   const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
-  const { register, errors, trigger, handleSubmit, watch, control } = useForm();
+  const { register, errors, trigger, handleSubmit, control } = useForm();
   const history = useHistory();
   const location = useLocation();
   const [parking] = useState(location.state);
   const [vehicles, setVehicles] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
+  const toast = useToast();
 
   useEffect(() => {
     if (store.currentUser && parking) {
@@ -61,8 +62,8 @@ export function AddPermanentReservationForm() {
       data: {
         idParkiraliste: parking.idParkiraliste,
         idVozilo: formData['reservation-vehicle'],
-        startTime: format(formData['reservation-starttime'], 'yyyy-MM-dd hh:mm:ss'),
-        endTime: format(formData['reservation-endtime'], 'yyyy-MM-dd hh:mm:ss'),
+        startTime: format(formData['reservation-starttime'], 'yyyy-MM-dd HH:mm:ss'),
+        endTime: format(formData['reservation-endtime'], 'yyyy-MM-dd HH:mm:ss'),
       },
     };
 
@@ -73,8 +74,8 @@ export function AddPermanentReservationForm() {
           title: 'Rezervacija uspješna',
           description: `Napravljena je trajna rezervacija od ${format(
             formData['reservation-starttime'],
-            'dd.MM.yyyy HH:mm',
-          )} do ${format(formData['reservation-endtime'], 'dd.MM.yyyy HH:mm')}`,
+            'dd.MM.yyyy',
+          )} do ${format(formData['reservation-endtime'], 'dd.MM.yyyy')}.`,
           position: 'top-right',
           status: 'success',
         });

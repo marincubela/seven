@@ -62,8 +62,8 @@ export function AddOnetimeReservationForm() {
       data: {
         idParkiraliste: parking.idParkiraliste,
         idVozilo: formData['reservation-vehicle'],
-        startTime: format(formData['reservation-starttime'], 'yyyy-MM-dd hh:mm:ss'),
-        endTime: format(formData['reservation-endtime'], 'yyyy-MM-dd hh:mm:ss'),
+        startTime: format(formData['reservation-starttime'], 'yyyy-MM-dd HH:mm:ss'),
+        endTime: format(formData['reservation-endtime'], 'yyyy-MM-dd HH:mm:ss'),
       },
     };
 
