@@ -16,6 +16,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   useDisclosure,
+  toast,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, Link as RouterLink } from 'react-router-dom';
@@ -66,13 +67,23 @@ export function AddPermanentReservationForm() {
     };
 
     post('reservation/permanent', requestBody)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        history.push('/');
+        toast({
+          title: 'Rezervacija uspješna',
+          description: `Napravljena je trajna rezervacija od ${format(
+            formData['reservation-starttime'],
+            'dd.MM.yyyy HH:mm',
+          )} do ${format(formData['reservation-endtime'], 'dd.MM.yyyy HH:mm')}`,
+          position: 'top-right',
+          status: 'success',
+        });
       })
       .catch((res) => {
         if (res.errors && res.errors[0] && res.errors[0].message) {
           setErrorMessage(res.errors[0].message);
         }
+        onClose();
       });
   }
 
@@ -193,6 +204,7 @@ export function AddPermanentReservationForm() {
             ) : null}
           </VStack>
         </VStack>
+
         <Box padding="2">
           <Text color="error.500">{errorMessage}</Text>
         </Box>

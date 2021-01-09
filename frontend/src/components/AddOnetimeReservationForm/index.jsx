@@ -75,7 +75,7 @@ export function AddOnetimeReservationForm() {
           description: `Napravljena je jednokratna rezervacija od ${format(
             formData['reservation-starttime'],
             'dd.MM.yyyy HH:mm',
-          )} do ${format(formData['reservation-endtime'], 'dd.MM.yyyy HH:mm')}`,
+          )} do ${format(formData['reservation-endtime'], 'dd.MM.yyyy HH:mm')}.`,
           position: 'top-right',
           status: 'success',
         });
@@ -219,7 +219,9 @@ export function AddOnetimeReservationForm() {
           </VStack>
         </VStack>
 
-        <Text color="error.500">{errorMessage}</Text>
+        <Box padding="2">
+          <Text color="error.500">{errorMessage}</Text>
+        </Box>
 
         <Button
           onClick={() => {
