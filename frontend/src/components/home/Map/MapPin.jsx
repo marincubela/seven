@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, Box, Button, Link } from '@chakra-ui/react';
+import { Text, Box, Button, Stack, Link, HStack } from '@chakra-ui/react';
+import { Link as ReactLink } from 'react-router-dom';
 
 export const MapPin = ({ parking }) => {
   return (
@@ -10,33 +11,40 @@ export const MapPin = ({ parking }) => {
         </Text>
       </Box>
       <Box>
-        <Text size="lg" fontWeight="bold">
-          Ukupni broj mjesta: {parking.capacity}
+        <Text fontSize="sm">
+          Ukupni broj mjesta: <b>{parking.capacity}</b>
         </Text>
       </Box>
       {parking.freeCapacity <= 10 && (
         <Box>
-          <Text size="lg" fontWeight="bold" color="red.500">
-            Broj slobodnih mjesta: {parking.freeCapacity}
+          <Text fontSize="sm" color="red.500">
+            Broj slobodnih mjesta: <b>{parking.freeCapacity}</b>
           </Text>
         </Box>
       )}
       {parking.freeCapacity > 10 && (
         <Box>
-          <Text size="lg" fontWeight="bold" color="green.500">
-            Broj slobodnih mjesta: {parking.freeCapacity}
+          <Text fontSize="sm" color="green.500">
+            Broj slobodnih mjesta: <b>{parking.freeCapacity}</b>
           </Text>
         </Box>
       )}
 
-      <Button
-        variant="link"
-        as={Link}
-        href={`https://www.google.com/maps/search/?api=1&query=${parking.coordinates.replace(' ', '')}`}
-        target="_blank"
-      >
-        Upute za navigaciju
-      </Button>
+      <HStack color="white">
+        <Button
+          as={Link}
+          href={`https://www.google.com/maps/search/?api=1&query=${parking.coordinates.replace(' ', '')}`}
+          target="_blank"
+        >
+          Pokaži put
+        </Button>
+
+        <Stack align="center">
+          <Button aria-label="Add reservation" as={ReactLink} to={{ pathname: '/addReservation', state: parking }}>
+            Rezerviraj
+          </Button>
+        </Stack>
+      </HStack>
     </Box>
   );
 };
