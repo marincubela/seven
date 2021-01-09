@@ -16,6 +16,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, Link as RouterLink } from 'react-router-dom';
@@ -39,6 +40,7 @@ export function AddOnetimeReservationForm() {
   const [vehicles, setVehicles] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
+  const toast = useToast();
 
   useEffect(() => {
     if (store.currentUser && parking) {
@@ -66,13 +68,23 @@ export function AddOnetimeReservationForm() {
     };
 
     post('reservation/onetime', requestBody)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        history.push('/');
+        toast({
+          title: 'Rezervacija uspješna',
+          description: `Napravljena je jednokratna rezervacija od ${format(
+            formData['reservation-starttime'],
+            'dd.MM.yyyy HH:mm',
+          )} do ${format(formData['reservation-endtime'], 'dd.MM.yyyy HH:mm')}`,
+          position: 'top-right',
+          status: 'success',
+        });
       })
       .catch((res) => {
         if (res.errors && res.errors[0] && res.errors[0].message) {
           setErrorMessage(res.errors[0].message);
         }
+        onClose();
       });
   }
 
@@ -100,7 +112,7 @@ export function AddOnetimeReservationForm() {
         </Text>
       </VStack>
 
-      <form onSubmit={handleSubmit(onAddReservation)} id="reservation">
+      <form onSubmit={handleSubmit(onAddReservation)} id="reservation" autoComplete="off">
         <VStack flex="1" align="stretch" marginY="8" spacing="4">
           <VStack
             flex="1"
@@ -179,6 +191,7 @@ export function AddOnetimeReservationForm() {
           >
             <Text as="label">Vozilo</Text>
             <Select
+              defaultValue={vehicles[0]?.idVozilo}
               variant="filled"
               placeholder="Odaberi vozilo"
               ref={register({
@@ -186,7 +199,6 @@ export function AddOnetimeReservationForm() {
               })}
               isInvalid={errors['reservation-vehicle']}
               name="reservation-vehicle"
-              defaultChecked={1}
             >
               {vehicles.map((v) => (
                 <option value={v.idVozilo} key={v.idVozilo}>
