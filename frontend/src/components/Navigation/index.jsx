@@ -1,10 +1,11 @@
 import { Box, Button, HStack, Link } from '@chakra-ui/react';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link as ReactLink, useHistory, useLocation } from 'react-router-dom';
 
 import { useStore } from '../../store/StoreProvider';
 import { destroy } from '../../utils/network';
+import { MobileNavigation } from './MobileNavigation';
 
 export const Navigation = observer(() => {
   const { pathname } = useLocation();
@@ -25,55 +26,59 @@ export const Navigation = observer(() => {
   };
 
   return (
-    <Box color="secondary.700">
-      <HStack spacing="5">
-        <Link as={ReactLink} to="/" variant="nav" aria-current={pathname === '/' ? '' : undefined}>
-          Karta
-        </Link>
+    <Fragment>
+      <MobileNavigation display={[null, null, 'none']} />
 
-        {isUserLoggedIn && (
-          <Link as={ReactLink} to="/profile" variant="nav" aria-current={pathname === '/profile' ? '' : undefined}>
-            Profil
+      <Box color="secondary.700" display={['none', null, 'block']}>
+        <HStack spacing="5">
+          <Link as={ReactLink} to="/" variant="nav" aria-current={pathname === '/' ? '' : undefined}>
+            Karta
           </Link>
-        )}
 
-        {isClientLoggedIn && (
-          <Link as={ReactLink} to="/vehicles" variant="nav" aria-current={pathname === '/vehicles' ? '' : undefined}>
-            Vozila
-          </Link>
-        )}
+          {isUserLoggedIn && (
+            <Link as={ReactLink} to="/profile" variant="nav" aria-current={pathname === '/profile' ? '' : undefined}>
+              Profil
+            </Link>
+          )}
 
-        {isCompanyLoggedIn && (
-          <Link as={ReactLink} to="/parkings" variant="nav" aria-current={pathname === '/parkings' ? '' : undefined}>
-            Parkirališta
-          </Link>
-        )}
+          {isClientLoggedIn && (
+            <Link as={ReactLink} to="/vehicles" variant="nav" aria-current={pathname === '/vehicles' ? '' : undefined}>
+              Vozila
+            </Link>
+          )}
 
-        {isUserLoggedIn && <Button onClick={handleLogout}>Odjava</Button>}
+          {isCompanyLoggedIn && (
+            <Link as={ReactLink} to="/parkings" variant="nav" aria-current={pathname === '/parkings' ? '' : undefined}>
+              Parkirališta
+            </Link>
+          )}
 
-        {!isUserLoggedIn && (
-          <Link as={ReactLink} to="/login" variant="nav" aria-current={pathname === '/login' ? '' : undefined}>
-            Prijava
-          </Link>
-        )}
+          {isUserLoggedIn && <Button onClick={handleLogout}>Odjava</Button>}
 
-        {!isUserLoggedIn && (
-          <Link
-            as={ReactLink}
-            to="/registration"
-            variant="nav"
-            aria-current={
-              pathname === '/registration' ||
-              pathname === '/registration/company' ||
-              pathname === '/registration/person'
-                ? ''
-                : undefined
-            }
-          >
-            Registracija
-          </Link>
-        )}
-      </HStack>
-    </Box>
+          {!isUserLoggedIn && (
+            <Link as={ReactLink} to="/login" variant="nav" aria-current={pathname === '/login' ? '' : undefined}>
+              Prijava
+            </Link>
+          )}
+
+          {!isUserLoggedIn && (
+            <Link
+              as={ReactLink}
+              to="/registration"
+              variant="nav"
+              aria-current={
+                pathname === '/registration' ||
+                pathname === '/registration/company' ||
+                pathname === '/registration/person'
+                  ? ''
+                  : undefined
+              }
+            >
+              Registracija
+            </Link>
+          )}
+        </HStack>
+      </Box>
+    </Fragment>
   );
 });
