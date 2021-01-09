@@ -78,9 +78,9 @@ export function AddRepetitiveReservationForm() {
         toast({
           title: 'Rezervacija uspješna',
           description: `Napravljena je ponavljajuća rezervacija od ${format(
-            formData['reservation-starttime'],
+            formData['reservation-startdate'],
             'dd.MM.yyyy',
-          )} do ${format(formData['reservation-endtime'], 'dd.MM.yyyy')}.`,
+          )} do ${format(formData['reservation-enddate'], 'dd.MM.yyyy')}.`,
           position: 'top-right',
           status: 'success',
         });
