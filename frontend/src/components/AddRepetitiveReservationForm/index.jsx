@@ -23,7 +23,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, Link as RouterLink } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
-import { add, format, setMinutes, differenceInHours, sub } from 'date-fns';
+import { add, setMinutes, differenceInHours, sub, format } from 'date-fns';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -75,6 +75,7 @@ export function AddRepetitiveReservationForm() {
         if (res.errors && res.errors[0] && res.errors[0].message) {
           setErrorMessage(res.errors[0].message);
         }
+        onClose();
       });
   }
 
@@ -164,19 +165,28 @@ export function AddRepetitiveReservationForm() {
             Period ponavljanja rezervacije
           </Text>
           <Box>
-            <CheckboxGroup colorScheme="green">
-              <VStack align="stretch">
-                <Checkbox name="monday" value="monday">
-                  ponedjeljak
-                </Checkbox>
-                <Checkbox value="tuesday">utorak</Checkbox>
-                <Checkbox value="wednesdey">srijeda</Checkbox>
-                <Checkbox value="thursday">četvrtak</Checkbox>
-                <Checkbox value="friday">petak</Checkbox>
-                <Checkbox value="saturday">subota</Checkbox>
-                <Checkbox value="sunday">nedjelja</Checkbox>
-              </VStack>
-            </CheckboxGroup>
+            <Controller
+              control={control}
+              name="reservation-days"
+              defaultValue=""
+              render={({ onChange, value }) => (
+                <CheckboxGroup
+                  colorScheme="green"
+                  value={value.split('')}
+                  onChange={(newValue) => onChange(newValue.join(''))}
+                >
+                  <VStack align="stretch">
+                    <Checkbox value="1">ponedjeljak</Checkbox>
+                    <Checkbox value="2">utorak</Checkbox>
+                    <Checkbox value="3">srijeda</Checkbox>
+                    <Checkbox value="4">četvrtak</Checkbox>
+                    <Checkbox value="5">petak</Checkbox>
+                    <Checkbox value="6">subota</Checkbox>
+                    <Checkbox value="0">nedjelja</Checkbox>
+                  </VStack>
+                </CheckboxGroup>
+              )}
+            />
           </Box>
 
           <VStack
@@ -199,6 +209,7 @@ export function AddRepetitiveReservationForm() {
                   timeCaption="Time"
                   minDate={minDate}
                   timeFormat="HH:mm"
+                  dateFormat="HH:mm"
                   customInput={<Input width="full" />}
                 />
               )}
@@ -221,9 +232,7 @@ export function AddRepetitiveReservationForm() {
               name="reservation-endHour"
               rules={{
                 validate: (value) =>
-                  (differenceInHours(value, watch('reservation-starttime')) <= 24 &&
-                    differenceInHours(value, watch('reservation-starttime')) >= 1) ||
-                  'Krajnje vrijeme neispravno',
+                  differenceInHours(value, watch('reservation-startHour')) > 0 || 'Krajnje vrijeme neispravno',
               }}
               render={({ onChange, value }) => (
                 <DatePicker
@@ -236,6 +245,7 @@ export function AddRepetitiveReservationForm() {
                   timeCaption="Time"
                   minDate={minDate}
                   timeFormat="HH:mm"
+                  dateFormat="HH:mm"
                   customInput={<Input width="full" />}
                 />
               )}
