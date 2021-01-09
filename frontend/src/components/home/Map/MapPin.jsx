@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Box, Button, Stack } from '@chakra-ui/react';
+import { Text, Box, Button, Stack, Link } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 
 export const MapPin = ({ parking }) => {
@@ -29,6 +29,15 @@ export const MapPin = ({ parking }) => {
           </Text>
         </Box>
       )}
+      <Button
+        variant="link"
+        as={Link}
+        href={`https://www.google.com/maps/search/?api=1&query=${parking.coordinates.replace(' ', '')}`}
+        target="_blank"
+      >
+        Upute za navigaciju
+      </Button>
+
       <Stack align="center" color="white">
         <Button aria-label="Add reservation" as={ReactLink} to={{ pathname: '/addReservation', state: parking }}>
           Rezerviraj

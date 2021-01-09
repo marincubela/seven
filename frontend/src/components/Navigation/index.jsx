@@ -1,13 +1,14 @@
 import { Box, Button, HStack, Link } from '@chakra-ui/react';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Link as ReactLink, useLocation } from 'react-router-dom';
+import { Link as ReactLink, useHistory, useLocation } from 'react-router-dom';
 
 import { useStore } from '../../store/StoreProvider';
 import { destroy } from '../../utils/network';
 
 export const Navigation = observer(() => {
   const { pathname } = useLocation();
+  const history = useHistory();
   const store = useStore();
 
   const isClientLoggedIn = Boolean(store.currentUser?.klijent);
@@ -18,6 +19,7 @@ export const Navigation = observer(() => {
     destroy('session')
       .then(() => {
         store.setCurrentUser(null);
+        history.push('/');
       })
       .catch(() => {});
   };
