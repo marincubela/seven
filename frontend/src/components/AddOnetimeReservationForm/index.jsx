@@ -207,6 +207,8 @@ export function AddOnetimeReservationForm() {
           </VStack>
         </VStack>
 
+        <Text color="error.500">{errorMessage}</Text>
+
         <Button
           onClick={() => {
             trigger().then((isValid) => {
