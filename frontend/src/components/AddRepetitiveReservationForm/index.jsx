@@ -17,14 +17,13 @@ import {
   AlertDialogFooter,
   useDisclosure,
   CheckboxGroup,
-  HStack,
   Checkbox,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, Link as RouterLink } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
-import { add, isAfter, getHours, setHours, format, setMinutes, differenceInHours, sub } from 'date-fns';
+import { add, format, setMinutes, differenceInHours, sub } from 'date-fns';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -103,7 +102,7 @@ export function AddRepetitiveReservationForm() {
         </Text>
       </VStack>
 
-      <form onSubmit={handleSubmit(onAddReservation)} id="reservation">
+      <form onSubmit={handleSubmit(onAddReservation)} id="reservation" autoComplete="off">
         <VStack flex="1" align="stretch" marginY="8" spacing="4">
           <VStack
             flex="1"

@@ -97,7 +97,7 @@ export function AddPermanentReservationForm() {
         </Text>
       </VStack>
 
-      <form onSubmit={handleSubmit(onAddReservation)} id="reservation">
+      <form onSubmit={handleSubmit(onAddReservation)} id="reservation" autoComplete="off">
         <VStack flex="1" align="stretch" marginY="8" spacing="4">
           <VStack
             flex="1"
