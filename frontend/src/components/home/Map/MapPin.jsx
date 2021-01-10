@@ -2,7 +2,14 @@ import React from 'react';
 import { Text, Box, Button, Stack, Link, HStack } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 
+import { useStore } from '../../../store/StoreProvider';
+
 export const MapPin = ({ parking }) => {
+  const store = useStore();
+
+  const isKlijentLoggedIn = store.currentUser?.klijent;
+  const isLoggedInTvrtkaOwner = store.currentUser?.tvrtka && store.currentUser?.idRacun === parking.idRacun;
+
   return (
     <Box position="relative">
       <Box>
@@ -35,15 +42,32 @@ export const MapPin = ({ parking }) => {
           as={Link}
           href={`https://www.google.com/maps/search/?api=1&query=${parking.coordinates.replace(' ', '')}`}
           target="_blank"
+          flex={1}
         >
           Pokaži put
         </Button>
 
-        <Stack align="center">
-          <Button aria-label="Add reservation" as={ReactLink} to={{ pathname: '/addReservation', state: parking }}>
+        {isKlijentLoggedIn && (
+          <Button
+            aria-label="Add reservation"
+            as={ReactLink}
+            flex={1}
+            to={{ pathname: '/addReservation', state: parking }}
+          >
             Rezerviraj
           </Button>
-        </Stack>
+        )}
+
+        {isLoggedInTvrtkaOwner && (
+          <Button
+            aria-label="Add reservation"
+            as={ReactLink}
+            flex={1}
+            to={{ pathname: '/parkings/edit', state: parking }}
+          >
+            Uredi
+          </Button>
+        )}
       </HStack>
     </Box>
   );
