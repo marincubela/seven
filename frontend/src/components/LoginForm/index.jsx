@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { post } from '../../utils/network';
 import { EMAIL_REGEX } from '../../utils/constants';
 import { useStore } from '../../store/StoreProvider';
+import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
 export function LoginForm() {
   const store = useStore();
@@ -14,6 +15,8 @@ export function LoginForm() {
     mode: 'onBlur',
   });
   const history = useHistory();
+
+  const { currentUser } = usePrivateRoute({ redirectIfFound: true, redirectPath: '/' });
 
   function onLoginAction(formData) {
     const requestBody = {
@@ -36,6 +39,10 @@ export function LoginForm() {
           setErrorMessage(res.errors[0].message);
         }
       });
+  }
+
+  if (currentUser) {
+    return null;
   }
 
   return (

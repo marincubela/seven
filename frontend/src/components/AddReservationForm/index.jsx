@@ -1,9 +1,19 @@
 import { Box, Heading, Text, HStack, Button, Center } from '@chakra-ui/react';
-import React from 'react';
-import { Link as ReactLink, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link as ReactLink, useHistory, useLocation } from 'react-router-dom';
+
+import { useStore } from '../../store/StoreProvider';
 
 export function AddReservationForm() {
-  const { state } = useLocation();
+  const { state: parking } = useLocation();
+  const store = useStore();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!store.currentUser || !parking) {
+      history.replace('/');
+    }
+  }, []);
 
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
@@ -15,19 +25,19 @@ export function AddReservationForm() {
 
       <Center>
         <HStack align="stretch">
-          <Button as={ReactLink} variant="solid" px={2} to={{ pathname: '/addOneTimeReservation', state }}>
+          <Button as={ReactLink} variant="solid" px={2} to={{ pathname: '/addOneTimeReservation', state: parking }}>
             <HStack spacing={6}>
               <Text>Jednokratna</Text>
             </HStack>
           </Button>
 
-          <Button as={ReactLink} variant="solid" px={2} to={{ pathname: '/addRepetitiveReservation', state }}>
+          <Button as={ReactLink} variant="solid" px={2} to={{ pathname: '/addRepetitiveReservation', state: parking }}>
             <HStack spacing={6}>
               <Text>Ponavljajuća</Text>
             </HStack>
           </Button>
 
-          <Button as={ReactLink} variant="solid" px={2} to={{ pathname: '/addPermanentReservation', state }}>
+          <Button as={ReactLink} variant="solid" px={2} to={{ pathname: '/addPermanentReservation', state: parking }}>
             <HStack spacing={6}>
               <Text>Trajna</Text>
             </HStack>

@@ -29,6 +29,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { get, post } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
+import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
 export function AddPermanentReservationForm() {
   const store = useStore();
@@ -42,6 +43,8 @@ export function AddPermanentReservationForm() {
   const cancelRef = React.useRef();
   const toast = useToast();
 
+  const { currentUser } = usePrivateRoute();
+
   useEffect(() => {
     if (store.currentUser && parking) {
       get(`vehicle?client=${store.currentUser.idRacun}`)
@@ -54,8 +57,12 @@ export function AddPermanentReservationForm() {
           console.log('eror');
           console.log(res);
         });
-    } else history.replace('/');
+    }
   }, []);
+
+  if (!currentUser) {
+    return null;
+  }
 
   function onAddReservation(formData) {
     const requestBody = {

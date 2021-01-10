@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { update, get } from '../../utils/network';
+import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
 export function ParkingsEdit() {
   const location = useLocation();
@@ -53,6 +54,13 @@ export function ParkingsEdit() {
         }
       });
   }
+
+  const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.tvrtka });
+
+  if (!currentUser) {
+    return null;
+  }
+
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
       <Heading as="h2" size="xl" marginY="4">

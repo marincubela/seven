@@ -23,12 +23,13 @@ import { useHistory, useLocation, Link as RouterLink } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
 import { add, isAfter, getHours, setHours, format, setMinutes, differenceInHours, sub } from 'date-fns';
+import { ArrowForwardIcon } from '@chakra-ui/icons';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { get, post } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
+import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
 export function AddOnetimeReservationForm() {
   const store = useStore();
@@ -42,6 +43,8 @@ export function AddOnetimeReservationForm() {
   const cancelRef = React.useRef();
   const toast = useToast();
 
+  const { currentUser } = usePrivateRoute();
+
   useEffect(() => {
     if (store.currentUser && parking) {
       get(`vehicle?client=${store.currentUser.idRacun}`)
@@ -54,8 +57,12 @@ export function AddOnetimeReservationForm() {
           console.log('eror');
           console.log(res);
         });
-    } else history.replace('/');
+    }
   }, []);
+
+  if (!currentUser) {
+    return null;
+  }
 
   function onAddReservation(formData) {
     const requestBody = {

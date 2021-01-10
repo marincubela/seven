@@ -5,11 +5,18 @@ import { useHistory } from 'react-router-dom';
 import { TwitterPicker } from 'react-color';
 
 import { post } from '../../utils/network';
+import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
 export function VehiclesAdd() {
   const { handleSubmit, register, errors } = useForm();
   const [carColor, setCarColor] = useState({ hex: '#FFFFFF' });
   const history = useHistory();
+
+  const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.klijent });
+
+  if (!currentUser) {
+    return null;
+  }
 
   function onVehicleInput(formData) {
     const requestBody = {

@@ -24,6 +24,7 @@ import { DeleteIcon, EditIcon, AddIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
 import { destroy, get } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
+import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
 export function ParkingsList() {
   const [parkings, setParkings] = useState([]);
@@ -66,6 +67,12 @@ export function ParkingsList() {
         console.log('eror');
         console.log(err);
       });
+  }
+
+  const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.tvrtka });
+
+  if (!currentUser) {
+    return null;
   }
 
   return (

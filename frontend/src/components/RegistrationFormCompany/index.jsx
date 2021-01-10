@@ -2,6 +2,7 @@ import { Box, Heading, VStack, Text, Input, HStack, Button, Link, Checkbox } fro
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
+import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
 import { useStore } from '../../store/StoreProvider';
 import { EMAIL_REGEX } from '../../utils/constants';
@@ -37,6 +38,12 @@ export function RegistrationFormCompany() {
           setErrorMessage(res.errors[0].message);
         }
       });
+  }
+
+  const { currentUser } = usePrivateRoute({ redirectIfFound: true });
+
+  if (currentUser) {
+    return null;
   }
 
   return (

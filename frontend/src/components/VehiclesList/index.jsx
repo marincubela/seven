@@ -25,6 +25,7 @@ import { useMediaQuery } from 'react-responsive';
 import { get, destroy } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
 import { ReactComponent as CarIcon } from '../../assets/icons/carIcon.svg';
+import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
 export function VehiclesList() {
   const history = useHistory();
@@ -67,6 +68,13 @@ export function VehiclesList() {
   const onClose = () => setIsOpen(false);
   const cancelRef = React.useRef();
   const [deleteVehicle, setdeleteVehicle] = useState([]);
+  const isDesktop = useMediaQuery({ maxDeviceWidth: 500 });
+
+  const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.klijent });
+
+  if (!currentUser) {
+    return null;
+  }
 
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
@@ -74,7 +82,7 @@ export function VehiclesList() {
         Vaša vozila
       </Heading>
 
-      {!useMediaQuery({ maxDeviceWidth: 500 }) ? (
+      {!isDesktop ? (
         vehicles.map((veh) => (
           <Box key={veh.idVozilo} h={10} marginBottom="4" marginTop="2" borderRadius="lg" background="white">
             <HStack h="inherit">

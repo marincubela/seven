@@ -6,6 +6,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { EMAIL_REGEX } from '../../utils/constants';
 import { update, get } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
+import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
 export function ProfileEditPersonPage() {
   const store = useStore();
@@ -15,10 +16,10 @@ export function ProfileEditPersonPage() {
   const { register, errors, handleSubmit, control } = useForm({
     defaultValues: {
       'edit-user-email': user.email,
-      'edit-user-firstname': user.klijent.firstName,
-      'edit-user-lastname': user.klijent.lastName,
+      'edit-user-firstname': user.klijent?.firstName,
+      'edit-user-lastname': user.klijent?.lastName,
       'edit-user-oib': user.OIB,
-      'edit-user-credit-card': user.klijent.cardNumber,
+      'edit-user-credit-card': user.klijent?.cardNumber,
     },
   });
 
@@ -49,6 +50,13 @@ export function ProfileEditPersonPage() {
         }
       });
   }
+
+  const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.klijent });
+
+  if (!currentUser) {
+    return null;
+  }
+
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
       <Heading as="h2" size="xl" marginY="4">

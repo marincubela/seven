@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, Box, Button, Stack, Link, HStack } from '@chakra-ui/react';
+import { Text, Box, Button, Link, HStack } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
+import { observer } from 'mobx-react';
 
 import { useStore } from '../../../store/StoreProvider';
 
-export const MapPin = ({ parking }) => {
+export const MapPin = observer(({ parking }) => {
   const store = useStore();
 
   const isKlijentLoggedIn = store.currentUser?.klijent;
@@ -71,4 +72,4 @@ export const MapPin = ({ parking }) => {
       </HStack>
     </Box>
   );
-};
+});

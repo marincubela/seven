@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX } from '../../utils/constants';
 import { update, get } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
+import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
 export function ProfileEditCompanyPage() {
   const store = useStore();
@@ -16,8 +17,8 @@ export function ProfileEditCompanyPage() {
     defaultValues: {
       'edit-company-email': user.email,
       'edit-company-oib': user.OIB,
-      'edit-company-name': user.tvrtka.name,
-      'edit-company-address': user.tvrtka.address,
+      'edit-company-name': user.tvrtka?.name,
+      'edit-company-address': user.tvrtka?.address,
     },
   });
 
@@ -47,6 +48,13 @@ export function ProfileEditCompanyPage() {
         }
       });
   }
+
+  const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.tvrtka });
+
+  if (!currentUser) {
+    return null;
+  }
+
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
       <Heading as="h2" size="xl" marginY="4">
