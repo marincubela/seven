@@ -84,6 +84,15 @@ export class CreateJednokratnaController extends BaseController {
       return this.clientError(res, validationErrors);
     }
 
+    // Vraća true ako je placanje uspjesno
+    if (!(await KlijentRepo.chargeKlijent())) {
+      // 402 status je payment required
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402
+      return CreateJednokratnaController.jsonResponse(res, 402, [
+        'Nije moguće provesti plaćanje: nedovoljno sredstava na kartici ',
+      ]);
+    }
+
     const jednokratna = await JednokratnaRepo.createJednokratna(jednokratnaDto);
 
     return this.ok(res, {

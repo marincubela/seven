@@ -127,16 +127,18 @@ export class KlijentRepo extends BaseRepo<KlijentDTO> {
     );
   }
 
-  public static async checkCarOwner(idKlijent:number, idVozilo: number): Promise<Boolean>{
+  public static async checkCarOwner(
+    idKlijent: number,
+    idVozilo: number
+  ): Promise<Boolean> {
     const vozila = await VoziloRepo.getVoziloFromClient(idKlijent);
-    for(const vozilo of vozila){
-      if (vozilo.idVozilo==idVozilo)
-        return true;
+    for (const vozilo of vozila) {
+      if (vozilo.idVozilo == idVozilo) return true;
     }
     return false;
   }
 
-  public static async idValidationCheck(idKlijent: number): Promise<Boolean>{
+  public static async idValidationCheck(idKlijent: number): Promise<Boolean> {
     const klijent = await Klijent.findOne({
       where: {
         idKlijent,
@@ -144,5 +146,11 @@ export class KlijentRepo extends BaseRepo<KlijentDTO> {
     });
 
     return Boolean(klijent);
+  }
+
+  public static async chargeKlijent(): Promise<Boolean> {
+    const isPaymentSuccessful = Math.random() > 0.12;
+
+    return isPaymentSuccessful;
   }
 }
