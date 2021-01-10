@@ -27,6 +27,7 @@ import { ParkingEdit } from './routes/parkingsEdit';
 import { ProfileEditPerson } from './routes/profileEditPerson';
 import { ProfileEditCompany } from './routes/profileEditCompany';
 import { AdminRouter } from './Admin';
+import { ReservationList } from './routes/reservationList';
 import { AddReservation } from './routes/addReservation';
 import { AddOnetimeReservation } from './routes/addOnetimeReservation';
 import { AddRepetitiveReservation } from './routes/addRepetitiveReservation';
@@ -107,6 +108,10 @@ const App = () => {
 
             <Route path="/profile">
               <Profile />
+            </Route>
+
+            <Route path="/reservationList">
+              <ReservationList />
             </Route>
 
             <Route path="/addReservation">
