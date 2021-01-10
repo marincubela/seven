@@ -110,7 +110,7 @@ const App = () => {
               <Profile />
             </Route>
 
-            <Route path="/reservationList">
+            <Route path="/reservations">
               <ReservationList />
             </Route>
 

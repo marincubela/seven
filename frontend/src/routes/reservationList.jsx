@@ -10,7 +10,7 @@ export const ReservationList = observer(() => {
     <Fragment>
       <Header />
 
-      <Box as="main" marginX="auto" maxWidth="500px" paddingX="2">
+      <Box as="main" marginX="15" paddingX="2">
         <ReservationListPage />
       </Box>
     </Fragment>
