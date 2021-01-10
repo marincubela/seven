@@ -14,7 +14,7 @@ export function VehiclesAdd() {
 
   const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.klijent });
 
-  if (!currentUser) {
+  if (!currentUser?.klijent) {
     return null;
   }
 
