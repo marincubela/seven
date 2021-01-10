@@ -18,9 +18,9 @@ import {
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
+import Moment from 'moment';
 import { destroy, get } from '../../../utils/network';
 import { useStore } from '../../../store/StoreProvider';
-import Moment from 'moment';
 
 export const RepetitiveReservationRow = ({ reservation }) => {
   const store = useStore();
@@ -30,6 +30,7 @@ export const RepetitiveReservationRow = ({ reservation }) => {
   const history = useHistory();
   const days = Array.from(reservation.repeatDays.toString());
   var daysOfReservation = '';
+
   days.map((d) => {
     if (d == '0') daysOfReservation += 'ned ';
     if (d == '1') daysOfReservation += 'pon ';
@@ -101,7 +102,7 @@ export const RepetitiveReservationRow = ({ reservation }) => {
             aria-label="Edit reservation"
             leftIcon={<EditIcon />}
             as={ReactLink}
-            to={{ pathname: '/reservations/edit', state: reservation }}
+            to={{ pathname: '/reservations/repetitive/edit', state: reservation }}
           >
             Uredi
           </Button>

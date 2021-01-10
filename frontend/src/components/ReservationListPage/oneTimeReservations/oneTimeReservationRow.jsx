@@ -14,8 +14,8 @@ import {
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
-import { destroy, get } from '../../../utils/network';
 import Moment from 'moment';
+import { destroy, get } from '../../../utils/network';
 
 export const OneTimeReservationRow = ({ reservation }) => {
   const [errorMessage, setErrorMessage] = useState('');
@@ -77,7 +77,7 @@ export const OneTimeReservationRow = ({ reservation }) => {
             aria-label="Edit reservation"
             leftIcon={<EditIcon />}
             as={ReactLink}
-            to={{ pathname: '/reservations/edit', state: reservation }}
+            to={{ pathname: '/reservations/onetime/edit', state: reservation }}
           >
             Uredi
           </Button>
