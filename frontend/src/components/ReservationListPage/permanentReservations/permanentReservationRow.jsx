@@ -8,22 +8,16 @@ import {
   AlertDialogOverlay,
   HStack,
   Button,
-  Table,
-  Tbody,
   Td,
-  Th,
-  Thead,
   Tr,
   Text,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
 import { destroy, get } from '../../../utils/network';
-import { useStore } from '../../../store/StoreProvider';
 import Moment from 'moment';
 
 export const PermanentReservationRow = ({ reservation }) => {
-  const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
   const [vehicle, setVehicle] = useState([]);
   const [parking, setParking] = useState([]);
@@ -74,8 +68,8 @@ export const PermanentReservationRow = ({ reservation }) => {
     <Tr key={reservation.idRezervacija}>
       <Td>{parking.parkingName}</Td>
       <Td>{vehicle.carName}</Td>
-      <Td>{Moment(reservation.startTime).format('DD.MM.YYYY. HH:MM')}</Td>
-      <Td>{Moment(reservation.endTime).format('DD.MM.YYYY. HH:MM')}</Td>
+      <Td>{Moment(reservation.startTime).format('DD.MM.YYYY. HH')}h</Td>
+      <Td>{Moment(reservation.endTime).format('DD.MM.YYYY. HH')}h</Td>
 
       <Td>
         <HStack align="center">
