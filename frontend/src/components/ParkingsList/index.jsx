@@ -36,7 +36,7 @@ export function ParkingsList() {
   const [isOpen, setIsOpen] = React.useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef = React.useRef();
-  const [deleteParking, setdeleteParkingking] = useState([]);
+  const [deleteParking, setdeleteParking] = useState([]);
 
   useEffect(() => {
     if (store.currentUser) {
@@ -85,7 +85,7 @@ export function ParkingsList() {
         </Button>
       </Flex>
 
-      <Table variant="simple">
+      <Table variant="striped">
         <Thead>
           <Tr>
             <Th>Naziv</Th>
@@ -119,11 +119,12 @@ export function ParkingsList() {
                   </Button>
 
                   <Button
+                    colorScheme="red"
                     aria-label="Delete parking"
                     leftIcon={<DeleteIcon />}
                     onClick={() => {
                       setIsOpen(true);
-                      setdeleteParkingking(p);
+                      setdeleteParking(p);
                     }}
                   >
                     Izbriši
