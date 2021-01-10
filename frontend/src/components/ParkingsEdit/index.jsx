@@ -57,7 +57,7 @@ export function ParkingsEdit() {
 
   const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.tvrtka });
 
-  if (!currentUser) {
+  if (!currentUser?.tvrtka) {
     return null;
   }
 

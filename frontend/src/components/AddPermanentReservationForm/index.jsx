@@ -43,8 +43,6 @@ export function AddPermanentReservationForm() {
   const cancelRef = React.useRef();
   const toast = useToast();
 
-  const { currentUser } = usePrivateRoute();
-
   useEffect(() => {
     if (store.currentUser && parking) {
       get(`vehicle?client=${store.currentUser.idRacun}`)
@@ -60,7 +58,15 @@ export function AddPermanentReservationForm() {
     }
   }, []);
 
-  if (!currentUser) {
+  useEffect(() => {
+    if (!parking) {
+      history.replace('/');
+    }
+  }, []);
+
+  const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.klijent });
+
+  if (!currentUser?.klijent || !parking) {
     return null;
   }
 

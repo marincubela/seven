@@ -45,8 +45,6 @@ export function AddRepetitiveReservationForm() {
   const cancelRef = React.useRef();
   const toast = useToast();
 
-  const { currentUser } = usePrivateRoute();
-
   useEffect(() => {
     if (store.currentUser && parking) {
       get(`vehicle?client=${store.currentUser.idRacun}`)
@@ -62,7 +60,15 @@ export function AddRepetitiveReservationForm() {
     }
   }, []);
 
-  if (!currentUser) {
+  useEffect(() => {
+    if (!parking) {
+      history.replace('/');
+    }
+  }, []);
+
+  const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.klijent });
+
+  if (!currentUser?.klijent || !parking) {
     return null;
   }
 

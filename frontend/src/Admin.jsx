@@ -1,21 +1,19 @@
 import { Divider } from '@chakra-ui/react';
 import { observer } from 'mobx-react';
 import React, { Fragment } from 'react';
-import { Redirect, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import { AdminContainer } from './components/admin/Container';
 import { AdminNavigation } from './components/admin/Navigation';
 import { Users } from './components/admin/Users';
-import { useStore } from './store/StoreProvider';
+import { usePrivateRoute } from './hooks/usePrivateRoute';
 
 export const AdminRouter = observer(() => {
   const { path } = useRouteMatch();
-  const history = useHistory();
-  const store = useStore();
 
-  if (!store.currentUser?.admin) {
-    history.push('/');
+  const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.admin });
 
+  if (!currentUser?.admin) {
     return null;
   }
 
