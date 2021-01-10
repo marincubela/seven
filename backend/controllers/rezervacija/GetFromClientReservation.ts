@@ -2,32 +2,33 @@ import { BaseController } from '../BaseController';
 import { IResponse } from '../../interfaces/network';
 import { IRequest } from '../../interfaces/network';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
-import { KlijentRepo } from '../../repos/KlijentRepo';
+import { RacunRepo } from '../../repos/RacunRepo';
 
 export class GetFromClientReservation extends BaseController {
   executeImpl = async (
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> => {
-    const idKlijent = Number(req.query.client);
+    const idRacun = Number(req.query.user);
 
-    if (isNaN(idKlijent)) {
+    if (isNaN(idRacun)) {
       return this.clientError(res, ['Id nije broj']);
     }
 
-    if (idKlijent < 1) {
+    if (idRacun < 1) {
       return this.clientError(res, ['Id mora biti pozitivan broj']);
     }
 
-    if (
-      (await KlijentRepo.getIdRacunByIdKlijent(idKlijent)) !=
-      req.session.user.idRacun
-    ) {
+    if (!(await RacunRepo.isKlijent(idRacun))) {
+      return this.forbidden(res, null);
+    }
+
+    if (idRacun != req.session.user.idRacun) {
       return this.forbidden(res, null);
     }
 
     const reservations = await RezervacijaRepo.getReservationsFromClient(
-      idKlijent
+      await RacunRepo.getIdKlijent(idRacun)
     );
 
     return this.ok(res, {
