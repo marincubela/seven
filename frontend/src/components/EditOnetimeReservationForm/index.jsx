@@ -36,24 +36,39 @@ export function EditOnetimeReservationForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const user = store.currentUser;
   const location = useLocation();
-  const [parking] = useState(location.state);
-  const [vehicles] = useState();
+  const [reservation] = useState(location.state);
+  const [vehicles, setVehicles] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const toast = useToast();
 
+  useEffect(() => {
+    if (store.currentUser && reservation) {
+      get(`vehicle?client=${store.currentUser.idRacun}`)
+        .then((res) => {
+          if (res.data?.vehicles) {
+            setVehicles(res.data.vehicles);
+          }
+        })
+        .catch((res) => {
+          console.log('eror');
+          console.log(res);
+        });
+    }
+  }, []);
+
   const { register, errors, trigger, handleSubmit, watch, control } = useForm({
     defaultValues: {
-      'edit-reservation-vehicle': user.idVozilo,
-      'edit-reservation-starttime': format(user.startTime, 'dd.MM.yyyy HH:mm'),
-      'edit-reservation-endtime': format(user.endTime, 'dd.MM.yyyy HH:mm'),
+      'edit-reservation-vehicle': reservation.idVozilo,
+      'edit-reservation-starttime': format(new Date(reservation.startTime), 'dd.MM.yyyy HH:mm'),
+      'edit-reservation-endtime': format(new Date(reservation.endTime), 'dd.MM.yyyy HH:mm'),
     },
   });
 
   const history = useHistory();
 
   useEffect(() => {
-    if (!parking) {
+    if (!reservation) {
       history.replace('/');
     }
   }, []);
@@ -94,20 +109,12 @@ export function EditOnetimeReservationForm() {
 
   const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.klijent });
 
-  if (!currentUser?.klijent || !parking) {
+  if (!currentUser?.klijent || !reservation) {
     return null;
   }
 
   // const minDate = addHours(new Date(), 6)
   const minDate = add(setMinutes(new Date(), 0), { hours: 7 });
-
-  if (!vehicles) {
-    return (
-      <Center>
-        <Spinner />
-      </Center>
-    );
-  }
 
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
@@ -118,7 +125,7 @@ export function EditOnetimeReservationForm() {
       <VStack align="flex-start">
         <Text>Odabrano parkiralište</Text>
         <Text fontWeight="bold" fontSize="lg">
-          {parking.parkingName}
+          {reservation.parkingName}
         </Text>
       </VStack>
 
@@ -201,7 +208,6 @@ export function EditOnetimeReservationForm() {
           >
             <Text as="label">Vozilo</Text>
             <Select
-              defaultValue={vehicles[0]?.idVozilo}
               variant="filled"
               placeholder="Odaberi vozilo"
               ref={register({

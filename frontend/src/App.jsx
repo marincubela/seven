@@ -32,6 +32,9 @@ import { AddReservation } from './routes/addReservation';
 import { AddOnetimeReservation } from './routes/addOnetimeReservation';
 import { AddRepetitiveReservation } from './routes/addRepetitiveReservation';
 import { AddPermanentReservation } from './routes/addPermanentReservation';
+import { EditOnetimeReservation } from './routes/editOnetimeReservation';
+import { EditPermanentReservation } from './routes/editPermanentReservation';
+import { EditRepetitiveReservation } from './routes/editRepetitiveReservation';
 
 const App = () => {
   const [store] = useState(() => getOrInitializeStore());
@@ -108,6 +111,18 @@ const App = () => {
 
             <Route path="/profile">
               <Profile />
+            </Route>
+
+            <Route path="/reservations/onetime/edit">
+              <EditOnetimeReservation />
+            </Route>
+
+            <Route path="/reservations/permanent/edit">
+              <EditPermanentReservation />
+            </Route>
+
+            <Route path="/reservations/repetitive/edit">
+              <EditRepetitiveReservation />
             </Route>
 
             <Route path="/reservations">

@@ -33,7 +33,7 @@ import { get, update } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
 import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
-export function AddRepetitiveReservationForm() {
+export function EditRepetitiveReservationForm() {
   const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
   const location = useLocation();
