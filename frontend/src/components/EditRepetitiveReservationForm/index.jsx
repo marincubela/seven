@@ -24,7 +24,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, Link as RouterLink } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
-import { add, setMinutes, differenceInHours, sub, format } from 'date-fns';
+import { add, setMinutes, differenceInHours, sub, format, parse } from 'date-fns';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -37,8 +37,8 @@ export function EditRepetitiveReservationForm() {
   const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
   const location = useLocation();
-  const [parking] = useState(location.state);
-  const [vehicles] = useState();
+  const [reservation] = useState(location.state);
+  const [vehicles, setVehicles] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const toast = useToast();
@@ -46,19 +46,34 @@ export function EditRepetitiveReservationForm() {
 
   const { register, errors, trigger, handleSubmit, watch, control } = useForm({
     defaultValues: {
-      'edit-reservation-vehicle': user.idVozilo,
-      'edit-reservation-startdate': format(user.reservationDate, 'dd.MM.yyyy'),
-      'edit-reservation-enddate': format(user.reservationEndDate, 'dd.MM.yyyy'),
-      'edit-reservation-days': user.repeatDays,
-      'edit-reservation-starthour': user.startTime,
-      'edit-reservation-endhour': user.endTime,
+      'edit-reservation-vehicle': reservation.idVozilo,
+      'edit-reservation-startdate': new Date(reservation.reservationDate),
+      'edit-reservation-enddate': new Date(reservation.reservationEndDate),
+      'edit-reservation-days': reservation.repeatDays.toString(),
+      'edit-reservation-starthour': parse(reservation.startTime, 'HH:mm:ss', new Date()),
+      'edit-reservation-endhour': parse(reservation.endTime, 'HH:mm:ss', new Date()),
     },
   });
 
   const history = useHistory();
 
   useEffect(() => {
-    if (!parking) {
+    if (store.currentUser && reservation) {
+      get(`vehicle?client=${store.currentUser.idRacun}`)
+        .then((res) => {
+          if (res.data?.vehicles) {
+            setVehicles(res.data.vehicles);
+          }
+        })
+        .catch((res) => {
+          console.log('eror');
+          console.log(res);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!reservation) {
       history.replace('/');
     }
   }, []);
@@ -80,9 +95,9 @@ export function EditRepetitiveReservationForm() {
         toast({
           title: 'Rezervacija uspješna',
           description: `Napravljena je ponavljajuća rezervacija od ${format(
-            formData['reservation-startdate'],
+            formData['edit-reservation-startdate'],
             'dd.MM.yyyy',
-          )} do ${format(formData['reservation-enddate'], 'dd.MM.yyyy')}.`,
+          )} do ${format(formData['edit-reservation-enddate'], 'dd.MM.yyyy')}.`,
           position: 'top-right',
           status: 'success',
         });
@@ -102,7 +117,7 @@ export function EditRepetitiveReservationForm() {
 
   const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.klijent });
 
-  if (!currentUser?.klijent || !parking) {
+  if (!currentUser?.klijent || !reservation) {
     return null;
   }
 
@@ -126,11 +141,11 @@ export function EditRepetitiveReservationForm() {
       <VStack align="flex-start">
         <Text>Odabrano parkiralište</Text>
         <Text fontWeight="bold" fontSize="lg">
-          {parking.parkingName}
+          {reservation.parkingName}
         </Text>
       </VStack>
 
-      <form onSubmit={handleSubmit(onEdit)} id="reservation" autoComplete="off">
+      <form onSubmit={handleSubmit(onEdit)} id="edit-reservation" autoComplete="off">
         <VStack flex="1" align="stretch" marginY="8" spacing="4">
           <VStack
             flex="1"
@@ -140,11 +155,11 @@ export function EditRepetitiveReservationForm() {
             <Text as="label">Datum početka rezervacije</Text>
             <Controller
               control={control}
-              name="reservation-startdate"
+              name="edit-reservation-startdate"
               defaultValue={minDate}
               render={({ onChange, value }) => (
                 <DatePicker
-                  name="reservation-startdate"
+                  name="edit-reservation-startdate"
                   selected={value}
                   onChange={(date) => onChange(date)}
                   minDate={sub(minDate, { hours: 1 })}
@@ -153,9 +168,9 @@ export function EditRepetitiveReservationForm() {
                 />
               )}
             />
-            {errors['reservation-startdate'] ? (
+            {errors['edit-reservation-startdate'] ? (
               <Text color="error.500" fontSize="sm">
-                {errors['reservation-startdate'].message}
+                {errors['edit-reservation-startdate'].message}
               </Text>
             ) : null}
           </VStack>
@@ -168,11 +183,11 @@ export function EditRepetitiveReservationForm() {
             <Text as="label">Datum kraja rezervacije</Text>
             <Controller
               control={control}
-              name="reservation-enddate"
+              name="edit-reservation-enddate"
               defaultValue={minDate}
               render={({ onChange, value }) => (
                 <DatePicker
-                  name="reservation-enddate"
+                  name="edit-reservation-enddate"
                   selected={value}
                   onChange={(date) => onChange(date)}
                   minDate={sub(minDate, { hours: 1 })}
@@ -181,9 +196,9 @@ export function EditRepetitiveReservationForm() {
                 />
               )}
             />
-            {errors['reservation-enddate'] ? (
+            {errors['edit-reservation-enddate'] ? (
               <Text color="error.500" fontSize="sm">
-                {errors['reservation-enddate'].message}
+                {errors['edit-reservation-enddate'].message}
               </Text>
             ) : null}
           </VStack>
@@ -194,7 +209,7 @@ export function EditRepetitiveReservationForm() {
           <Box>
             <Controller
               control={control}
-              name="reservation-days"
+              name="edit-reservation-days"
               defaultValue=""
               render={({ onChange, value }) => (
                 <CheckboxGroup
@@ -224,10 +239,10 @@ export function EditRepetitiveReservationForm() {
             <Text as="label">Početak rezervacije (sat)</Text>
             <Controller
               control={control}
-              name="reservation-starthour"
+              name="edit-reservation-starthour"
               render={({ onChange, value }) => (
                 <DatePicker
-                  name="reservation-starthour"
+                  name="edit-reservation-starthour"
                   selected={value}
                   onChange={(date) => onChange(date)}
                   showTimeSelect
@@ -241,9 +256,9 @@ export function EditRepetitiveReservationForm() {
                 />
               )}
             />
-            {errors['reservation-starthour'] ? (
+            {errors['edit-reservation-starthour'] ? (
               <Text color="error.500" fontSize="sm">
-                {errors['reservation-starthour'].message}
+                {errors['edit-reservation-starthour'].message}
               </Text>
             ) : null}
           </VStack>
@@ -256,14 +271,14 @@ export function EditRepetitiveReservationForm() {
             <Text as="label">Kraj rezervacije (sat)</Text>
             <Controller
               control={control}
-              name="reservation-endhour"
+              name="edit-reservation-endhour"
               rules={{
                 validate: (value) =>
-                  differenceInHours(value, watch('reservation-starthour')) > 0 || 'Krajnje vrijeme neispravno',
+                  differenceInHours(value, watch('edit-reservation-starthour')) > 0 || 'Krajnje vrijeme neispravno',
               }}
               render={({ onChange, value }) => (
                 <DatePicker
-                  name="reservation-endhour"
+                  name="edit-reservation-endhour"
                   selected={value}
                   onChange={(date) => onChange(date)}
                   showTimeSelect
@@ -277,9 +292,9 @@ export function EditRepetitiveReservationForm() {
                 />
               )}
             />
-            {errors['reservation-endhour'] ? (
+            {errors['edit-reservation-endhour'] ? (
               <Text color="error.500" fontSize="sm">
-                {errors['reservation-endhour'].message}
+                {errors['edit-reservation-endhour'].message}
               </Text>
             ) : null}
           </VStack>
@@ -296,8 +311,8 @@ export function EditRepetitiveReservationForm() {
               ref={register({
                 required: 'Vozilo je obvezno',
               })}
-              isInvalid={errors['reservation-vehicle']}
-              name="reservation-vehicle"
+              isInvalid={errors['edit-reservation-vehicle']}
+              name="edit-reservation-vehicle"
               defaultChecked={1}
             >
               {vehicles.map((v) => (
@@ -311,9 +326,9 @@ export function EditRepetitiveReservationForm() {
                 Nema vozila. Dodaj Vozilo
               </Link>
             )}
-            {errors['reservation-vehicle'] ? (
+            {errors['edit-reservation-vehicle'] ? (
               <Text color="error.500" fontSize="sm">
-                {errors['reservation-vehicle'].message}
+                {errors['edit-reservation-vehicle'].message}
               </Text>
             ) : null}
           </VStack>
@@ -346,7 +361,7 @@ export function EditRepetitiveReservationForm() {
                 <Button ref={cancelRef} colorScheme="red" variant="outline" onClick={onClose}>
                   Odustani
                 </Button>
-                <Button form="reservation" type="submit" ml="4" rightIcon={<ArrowForwardIcon />}>
+                <Button form="edit-reservation" type="submit" ml="4" rightIcon={<ArrowForwardIcon />}>
                   Potvrdi
                 </Button>
               </AlertDialogFooter>

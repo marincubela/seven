@@ -1,25 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  HStack,
-  Button,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-  Text,
-} from '@chakra-ui/react';
-import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
-import { Link as ReactLink, useHistory } from 'react-router-dom';
-import { destroy } from '../../../utils/network';
-import { useStore } from '../../../store/StoreProvider';
+import React from 'react';
+import { Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+
 import { OneTimeReservationRow } from './oneTimeReservationRow';
 
 export const OneTimeReservation = ({ singleUse }) => {
@@ -36,7 +17,7 @@ export const OneTimeReservation = ({ singleUse }) => {
       </Thead>
       <Tbody>
         {singleUse?.map((r) => (
-          <OneTimeReservationRow reservation={r} />
+          <OneTimeReservationRow key={r.idRezervacija} reservation={r} />
         ))}
       </Tbody>
     </Table>

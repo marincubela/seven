@@ -1,25 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  HStack,
-  Button,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-  Text,
-} from '@chakra-ui/react';
-import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
-import { Link as ReactLink, useHistory } from 'react-router-dom';
-import { destroy, get } from '../../../utils/network';
-import { useStore } from '../../../store/StoreProvider';
+import React from 'react';
+import { Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+
 import { PermanentReservationRow } from './permanentReservationRow';
 
 export const PermanentReservation = ({ permanent }) => {
@@ -39,7 +20,7 @@ export const PermanentReservation = ({ permanent }) => {
 
       <Tbody>
         {permanent?.map((r) => (
-          <PermanentReservationRow reservation={r} />
+          <PermanentReservationRow key={r.idRezervacija} reservation={r} />
         ))}
       </Tbody>
     </Table>

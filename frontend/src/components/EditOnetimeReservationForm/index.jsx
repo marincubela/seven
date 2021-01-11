@@ -60,8 +60,8 @@ export function EditOnetimeReservationForm() {
   const { register, errors, trigger, handleSubmit, watch, control } = useForm({
     defaultValues: {
       'edit-reservation-vehicle': reservation.idVozilo,
-      'edit-reservation-starttime': format(new Date(reservation.startTime), 'dd.MM.yyyy HH:mm'),
-      'edit-reservation-endtime': format(new Date(reservation.endTime), 'dd.MM.yyyy HH:mm'),
+      'edit-reservation-starttime': new Date(reservation.startTime),
+      'edit-reservation-endtime': new Date(reservation.endTime),
     },
   });
 
@@ -113,6 +113,14 @@ export function EditOnetimeReservationForm() {
     return null;
   }
 
+  if (!vehicles) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
+
   // const minDate = addHours(new Date(), 6)
   const minDate = add(setMinutes(new Date(), 0), { hours: 7 });
 
@@ -139,11 +147,11 @@ export function EditOnetimeReservationForm() {
             <Text as="label">Početak</Text>
             <Controller
               control={control}
-              name="reservation-starttime"
+              name="edit-reservation-starttime"
               defaultValue={minDate}
               render={({ onChange, value }) => (
                 <DatePicker
-                  name="reservation-starttime"
+                  name="edit-reservation-starttime"
                   selected={value}
                   onChange={(date) => onChange(date)}
                   showTimeSelect
@@ -156,9 +164,9 @@ export function EditOnetimeReservationForm() {
                 />
               )}
             />
-            {errors['reservation-starttime'] ? (
+            {errors['edit-reservation-starttime'] ? (
               <Text color="error.500" fontSize="sm">
-                {errors['reservation-starttime'].message}
+                {errors['edit-reservation-starttime'].message}
               </Text>
             ) : null}
           </VStack>
@@ -171,17 +179,17 @@ export function EditOnetimeReservationForm() {
             <Text as="label">Kraj</Text>
             <Controller
               control={control}
-              name="reservation-endtime"
+              name="edit-reservation-endtime"
               defaultValue={add(minDate, { hours: 1 })}
               rules={{
                 validate: (value) =>
-                  (differenceInHours(value, watch('reservation-starttime')) <= 24 &&
-                    differenceInHours(value, watch('reservation-starttime')) >= 0) ||
+                  (differenceInHours(value, watch('edit-reservation-starttime')) <= 24 &&
+                    differenceInHours(value, watch('edit-reservation-starttime')) >= 0) ||
                   'Krajnje vrijeme neispravno',
               }}
               render={({ onChange, value }) => (
                 <DatePicker
-                  name="reservation-endtime"
+                  name="edit-reservation-endtime"
                   selected={value}
                   onChange={(date) => onChange(date)}
                   showTimeSelect
@@ -194,9 +202,9 @@ export function EditOnetimeReservationForm() {
                 />
               )}
             />
-            {errors['reservation-endtime'] ? (
+            {errors['edit-reservation-endtime'] ? (
               <Text color="error.500" fontSize="sm">
-                {errors['reservation-endtime'].message}
+                {errors['edit-reservation-endtime'].message}
               </Text>
             ) : null}
           </VStack>
@@ -213,8 +221,8 @@ export function EditOnetimeReservationForm() {
               ref={register({
                 required: 'Vozilo je obvezno',
               })}
-              isInvalid={errors['reservation-vehicle']}
-              name="reservation-vehicle"
+              isInvalid={errors['edit-reservation-vehicle']}
+              name="edit-reservation-vehicle"
             >
               {vehicles.map((v) => (
                 <option value={v.idVozilo} key={v.idVozilo}>
@@ -227,9 +235,9 @@ export function EditOnetimeReservationForm() {
                 Nema vozila. Dodaj Vozilo
               </Link>
             )}
-            {errors['reservation-vehicle'] ? (
+            {errors['edit-reservation-vehicle'] ? (
               <Text color="error.500" fontSize="sm">
-                {errors['reservation-vehicle'].message}
+                {errors['edit-reservation-vehicle'].message}
               </Text>
             ) : null}
           </VStack>
@@ -262,7 +270,7 @@ export function EditOnetimeReservationForm() {
                 <Button ref={cancelRef} colorScheme="red" variant="outline" onClick={onClose}>
                   Odustani
                 </Button>
-                <Button form="reservation" type="submit" ml="4" rightIcon={<ArrowForwardIcon />}>
+                <Button form="edit-reservation" type="submit" ml="4" rightIcon={<ArrowForwardIcon />}>
                   Potvrdi
                 </Button>
               </AlertDialogFooter>

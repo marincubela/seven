@@ -27,7 +27,7 @@ import { format } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { ArrowForwardIcon } from '@chakra-ui/icons';
-import { get, post, update } from '../../utils/network';
+import { get, update } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
 import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 
@@ -35,7 +35,7 @@ export function EditPermanentReservationForm() {
   const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
   const location = useLocation();
-  const [parking] = useState(location.state);
+  const [reservation] = useState(location.state);
   const [vehicles, setVehicles] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
@@ -44,16 +44,31 @@ export function EditPermanentReservationForm() {
 
   const { register, errors, trigger, handleSubmit, control } = useForm({
     defaultValues: {
-      'edit-reservation-vehicle': user.idVozilo,
-      'edit-reservation-starttime': format(user.startTime, 'dd.MM.yyyy HH:mm'),
-      'edit-reservation-endtime': format(user.endTime, 'dd.MM.yyyy HH:mm'),
+      'edit-reservation-vehicle': reservation.idVozilo,
+      'edit-reservation-starttime': new Date(reservation.startTime),
+      'edit-reservation-endtime': new Date(reservation.endTime),
     },
   });
 
   const history = useHistory();
 
   useEffect(() => {
-    if (!parking) {
+    if (store.currentUser && reservation) {
+      get(`vehicle?client=${store.currentUser.idRacun}`)
+        .then((res) => {
+          if (res.data?.vehicles) {
+            setVehicles(res.data.vehicles);
+          }
+        })
+        .catch((res) => {
+          console.log('eror');
+          console.log(res);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!reservation) {
       history.replace('/');
     }
   }, []);
@@ -92,6 +107,12 @@ export function EditPermanentReservationForm() {
       });
   }
 
+  const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.klijent });
+
+  if (!currentUser?.klijent || !reservation) {
+    return null;
+  }
+
   if (!vehicles) {
     return (
       <Center>
@@ -109,7 +130,7 @@ export function EditPermanentReservationForm() {
       <VStack align="flex-start">
         <Text>Odabrano parkiralište</Text>
         <Text fontWeight="bold" fontSize="lg">
-          {parking.parkingName}
+          {reservation.parkingName}
         </Text>
       </VStack>
 
@@ -123,10 +144,9 @@ export function EditPermanentReservationForm() {
             <Text as="label">Početak</Text>
             <Controller
               control={control}
-              name="reservation-starttime"
+              name="edit-reservation-starttime"
               render={({ onChange, value }) => (
                 <DatePicker
-                  name="reservation-starttime"
                   showTimeSelect
                   selected={value}
                   onChange={(date) => onChange(date)}
@@ -138,9 +158,9 @@ export function EditPermanentReservationForm() {
                 />
               )}
             />
-            {errors['reservation-starttime'] ? (
+            {errors['edit-reservation-starttime'] ? (
               <Text color="error.500" fontSize="sm">
-                {errors['reservation-starttime'].message}
+                {errors['edit-reservation-starttime'].message}
               </Text>
             ) : null}
           </VStack>
@@ -153,10 +173,10 @@ export function EditPermanentReservationForm() {
             <Text as="label">Kraj</Text>
             <Controller
               control={control}
-              name="reservation-endtime"
+              name="edit-reservation-endtime"
               render={({ onChange, value }) => (
                 <DatePicker
-                  name="reservation-endtime"
+                  name="edit-reservation-endtime"
                   selected={value}
                   onChange={(date) => onChange(date)}
                   showTimeSelect
@@ -168,9 +188,9 @@ export function EditPermanentReservationForm() {
                 />
               )}
             />
-            {errors['reservation-endtime'] ? (
+            {errors['edit-reservation-endtime'] ? (
               <Text color="error.500" fontSize="sm">
-                {errors['reservation-endtime'].message}
+                {errors['edit-reservation-endtime'].message}
               </Text>
             ) : null}
           </VStack>
@@ -187,9 +207,8 @@ export function EditPermanentReservationForm() {
               ref={register({
                 required: 'Vozilo je obvezno',
               })}
-              isInvalid={errors['reservation-vehicle']}
-              name="reservation-vehicle"
-              defaultChecked={1}
+              isInvalid={errors['edit-reservation-vehicle']}
+              name="edit-reservation-vehicle"
             >
               {vehicles.map((v) => (
                 <option value={v.idVozilo} key={v.idVozilo}>
@@ -197,14 +216,16 @@ export function EditPermanentReservationForm() {
                 </option>
               ))}
             </Select>
+
             {!vehicles.length && (
               <Link as={RouterLink} variant="link" to="/vehicles/add">
                 Nema vozila. Dodaj Vozilo
               </Link>
             )}
-            {errors['reservation-vehicle'] ? (
+
+            {errors['edit-reservation-vehicle'] ? (
               <Text color="error.500" fontSize="sm">
-                {errors['reservation-vehicle'].message}
+                {errors['edit-reservation-vehicle'].message}
               </Text>
             ) : null}
           </VStack>
@@ -221,7 +242,7 @@ export function EditPermanentReservationForm() {
             });
           }}
         >
-          Rezerviraj
+          Uredi
         </Button>
 
         <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
