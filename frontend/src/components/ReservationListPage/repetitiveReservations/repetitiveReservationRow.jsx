@@ -8,28 +8,26 @@ import {
   AlertDialogOverlay,
   HStack,
   Button,
-  Table,
-  Tbody,
   Td,
-  Th,
-  Thead,
   Tr,
-  Text,
+  useToast,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
+import { format } from 'date-fns';
+
 import { destroy, get } from '../../../utils/network';
-import { useStore } from '../../../store/StoreProvider';
-import Moment from 'moment';
 
 export const RepetitiveReservationRow = ({ reservation }) => {
-  const store = useStore();
-  const [errorMessage, setErrorMessage] = useState('');
   const [vehicles, setVehicles] = useState([]);
   const [parking, setParking] = useState([]);
   const history = useHistory();
+  const toast = useToast();
+
   const days = Array.from(reservation.repeatDays.toString());
+
   var daysOfReservation = '';
+
   days.map((d) => {
     if (d == '0') daysOfReservation += 'ned ';
     if (d == '1') daysOfReservation += 'pon ';
@@ -78,10 +76,22 @@ export const RepetitiveReservationRow = ({ reservation }) => {
         setIsOpen(false);
         history.replace('/');
         setTimeout(() => history.push('/reservations'), 1);
+
+        toast({
+          message: 'Rezervacija izbrisana',
+          status: 'success',
+          position: 'top-right',
+        });
       })
       .catch((err) => {
         console.log('eror');
         console.log(err);
+
+        toast({
+          message: 'Problem prilikom brisanja rezervacije',
+          status: 'error',
+          position: 'top-right',
+        });
       });
   }
 
@@ -89,8 +99,8 @@ export const RepetitiveReservationRow = ({ reservation }) => {
     <Tr key={reservation.idRezervacija}>
       <Td>{parking.parkingName}</Td>
       <Td>{vehicles.carName}</Td>
-      <Td>{Moment(reservation.reservationDate).format('DD.MM.YYYY.')}</Td>
-      <Td>{Moment(reservation.reservationEndDate).format('DD.MM.YYYY.')}</Td>
+      <Td>{format(reservation.reservationDate, 'dd.MM.yyyy.')}</Td>
+      <Td>{format(reservation.reservationEndDate, 'dd.MM.yyyy.')}</Td>
       <Td>{reservation.startTime}</Td>
       <Td>{reservation.endTime}</Td>
       <Td>{daysOfReservation}</Td>
@@ -119,8 +129,6 @@ export const RepetitiveReservationRow = ({ reservation }) => {
           </Button>
         </HStack>
       </Td>
-
-      <Text color="error.500">{errorMessage}</Text>
 
       <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
         <AlertDialogOverlay>
