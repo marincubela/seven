@@ -38,7 +38,7 @@ export class GetVoziloController extends BaseController {
 
     return this.ok(res, {
       data: {
-        vozilo: voziloDTO,
+        vehicle: voziloDTO,
       },
     });
   };
