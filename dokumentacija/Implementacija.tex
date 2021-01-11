@@ -1,12 +1,21 @@
 \chapter{Implementacija i korisničko sučelje}
-		
+
 		
 		\section{Korištene tehnologije i alati}
 		
-			\textbf{\textit{dio 2. revizije}}
+			Komunikacija u timu realizirana je korištenjem aplikacije \underline{WhatsApp} \footnote{\href{https://www.whatsapp.com/}{Whatsapp}} za manje i kraće dogovore, a za dulje i veće dogovore komunikacija je realizirana korištenjem aplikacije \underline{Microsoft Teams} \footnote{\href{https://www.microsoft.com/hr-hr/microsoft-365/microsoft-teams/group-chat-software}{Microsoft Teams}}. Za izradu UML dijagrama korišten je alat \underline{Astah UML} \footnote{\href{https://astah.net/products/astah-uml/}{Astah UML}}. Kao sustav za upravljanje izvornim kodom Git \footnote{\href{https://git-scm.com/}{Git}}. Udaljeni repozitorij projekta je dostupan na web platformi \underline{GitLab} \footnote{\href{https://www.gitlab.com}{Gitlab}}.
+
+			Kao razvojno okruženje korišten je \underline{Microsoft Visual Studio Code} \footnote{\href{https://code.visualstudio.com/}{Microsoft Visual Studio Code}}. Microsoft Visual Studio Code trenutno je \underline{najpopularnije} \footnote{\href{https://pypl.github.io/IDE.html}{Deset najraširenijih razvojnih okruženja}} razvojno okruženje, iznimno je prilagodljiv raznim potrebama programera i potrebama samog programskog jezika.
 			
-			 \textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
+			Aplikacija je izrađena u dva dijela. Backend dio je napisan koristeći radni okvir \underline{Express.js} \footnote{\href{https://expressjs.com/}{Express.js}} u programskom jeziku \underline{TypeScript} \footnote{\href{https://www.typescriptlang.org/}{TypeScript}}, a frontend dio je napisan koristeći biblioteku \underline{React.js} \footnote{\href{https://reactjs.org/}{React.js}} u programskom jeziku \underline{JavaScript} \footnote{\href{https://www.javascript.com/}{JavaScript}}.
 			
+			Express.js radni okvir je javno dostupan, besplatan te otvorenog izvora pružen od strane \underline{OpenJS Foundation-a} \footnote{\href{https://openjsf.org/}{OpenJS Foundation}}. Express.js je jednostavna i prilagodljiv \underline{Node.js}\footnote{\href{https://nodejs.org/en/}{Node.js}} radni okvir koja pruža izdržljiv skup značajki za web i mobilne aplikacije.
+			
+			React.js je JavaScript biblioteka za izradu interaktivnih sučelja unutar web aplikacija. Održavana je od strane Facebooka, a najčešće je korišten kao osnova u razvoju web aplikacija.
+			
+			Korištena baza podataka je \underline{PostgreSQL} \footnote{\href{https://www.postgresql.org/}{PostgreSQL}}. PostgreSQL je besplatna, objektno-relacijska baza podataka sa više od 30 godina aktivnog razvoja.
+			
+			Cijela aplikacija poslužena je na \underline{Heroku} \footnote{\href{https://www.heroku.com/home}{Heroku}}. Heroku je platforma koja omogućuje jednostavno i sigurno puštanje  u pogon i nadziranje aplikacija. Konkretno, koristimo dvije Heroku aplikacije, jednu za backend i jednu za frontend te u sklopu backend aplikacije koristimo i jednu instancu PostrgeSQL baze podataka.
 			
 			\eject 
 		
