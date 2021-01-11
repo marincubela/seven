@@ -314,37 +314,36 @@
 			\caption{Dijagram razreda za mapere}
 			\label{fig:Dijagram razreda - Maperri} 
 		\end{figure}
-		
-			
-			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
-			
-			\textbf{\textit{dio 2. revizije}}\\			
-			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
-			
 			
 			
 			\eject
 		
 		\section{Dijagram stanja}
 			
+			Dijagram stanja pokazuje stanje objekata te prijelaze iz jednog stanja u drugo temeljene na događajima. Na slici 4.8 prikazan je dijagram stanja za klijenta. Nakon prijave, klijentu se prikazuje karta na kojoj su prikazana sva prijavljena parkirališta. Sa strane se nalazi izbornik u kojem može odabrati neke mogućnosti. Odabirom na "Moj profil" klijentu se prikazuju korisnički podaci koje može urediti ili može obrisati račun. Odabirom na "Moje rezervacije" otvara se popis vlastitih rezervacija koje klijent može urediti ili obrisati. Odabirom na "Moja vozila" otvara se popis osobnih prijavljenih vozila, klijent može urediti podatke o vozilu, može izbrisati vozilo ili dodati novo. Odabirom oznake parkirališta na karti klijentu se nudi opcija "Pokaži put" koja omogućava navigaciju do odabranom parkirališta i "Rezerviraj" koja omogućava stvaranje rezervacije parkirališnog mjesta.
 			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
+			\begin{figure}[H]
+    			\includegraphics[width=1\linewidth]{dokumentacija/dijagrami/Dijagram stanja - Klijent.png}
+    			\caption{Dijagram stanja}
+    			\label{fig:Dijagram razreda - Maperri} 
+    		\end{figure}
 			
 			
 			\eject 
 		
 		\section{Dijagram aktivnosti}
 			
-			\textbf{\textit{dio 2. revizije}}\\
+			Dijagram aktivnosti primjenjuje se za opis modela toka upravljanja ili toka podataka. U modeliranju toka upravljanja novi korak izvršava se nakon završenog prethodnog. Na slici 4.9 prikazan je dijagram aktivnosti rezervacije parkirališnog mjesta. Klijent se prijavi u sustav, bira parkiralište na kojem želi napraviti rezervaciju, nakon čega bira tip rezervacije. Prikazuje mu se forma za unos podataka o rezervaciji koju klijent ispunjava te odabire opciju dodavanja rezervacije nakon čega slijedi plaćanje. Ukoliko su svi podaci ispravni, ima slobodnih mjesta i plaćanje je uspješno rezervacija se dodaje u sustav.
 			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+			 \begin{figure}[H]
+    			\includegraphics[width=1\linewidth]{dokumentacija/dijagrami/Dijagram aktivnosti - Rezervacija parkirališnog mjesta.png}
+    			\caption{Dijagram aktivnosti}
+    			\label{fig:Dijagram razreda - Maperri} 
+    		\end{figure}
 			
 			\eject
 		\section{Dijagram komponenti}
 		
 			\textbf{\textit{dio 2. revizije}}\\
 		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.
