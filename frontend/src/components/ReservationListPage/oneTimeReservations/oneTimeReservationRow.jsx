@@ -32,8 +32,8 @@ export const OneTimeReservationRow = ({ reservation }) => {
   useEffect(() => {
     get(`vehicle/${reservation.idVozilo}`)
       .then((res) => {
-        if (res.data?.vozilo) {
-          setVehicle(res.data.vozilo);
+        if (res.data?.vehicle) {
+          setVehicle(res.data.vehicle);
         }
       })
       .catch((res) => {
