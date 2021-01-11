@@ -99,8 +99,8 @@ export const RepetitiveReservationRow = ({ reservation }) => {
     <Tr key={reservation.idRezervacija}>
       <Td>{parking.parkingName}</Td>
       <Td>{vehicles.carName}</Td>
-      <Td>{format(reservation.reservationDate, 'dd.MM.yyyy.')}</Td>
-      <Td>{format(reservation.reservationEndDate, 'dd.MM.yyyy.')}</Td>
+      <Td>{format(new Date(reservation.reservationDate), 'dd.MM.yyyy.')}</Td>
+      <Td>{format(new Date(reservation.reservationEndDate), 'dd.MM.yyyy.')}</Td>
       <Td>{reservation.startTime}</Td>
       <Td>{reservation.endTime}</Td>
       <Td>{daysOfReservation}</Td>

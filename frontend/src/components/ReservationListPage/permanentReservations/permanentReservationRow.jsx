@@ -83,8 +83,8 @@ export const PermanentReservationRow = ({ reservation }) => {
     <Tr key={reservation.idRezervacija}>
       <Td>{parking.parkingName}</Td>
       <Td>{vehicle.carName}</Td>
-      <Td>{format(reservation.startTime, 'dd.MM.yyyy. HH')}h</Td>
-      <Td>{format(reservation.endTime, 'dd.MM.yyyy. HH')}h</Td>
+      <Td>{format(new Date(reservation.startTime), 'dd.MM.yyyy. HH')}h</Td>
+      <Td>{format(new Date(reservation.endTime), 'dd.MM.yyyy. HH')}h</Td>
 
       <Td>
         <HStack align="center">
