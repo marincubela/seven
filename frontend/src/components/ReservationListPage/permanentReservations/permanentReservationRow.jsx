@@ -11,10 +11,12 @@ import {
   Td,
   Tr,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
-import Moment from 'moment';
+import { format } from 'date-fns';
+
 import { destroy, get } from '../../../utils/network';
 
 export const PermanentReservationRow = ({ reservation }) => {
@@ -22,6 +24,7 @@ export const PermanentReservationRow = ({ reservation }) => {
   const [vehicle, setVehicle] = useState([]);
   const [parking, setParking] = useState([]);
   const history = useHistory();
+  const toast = useToast();
 
   const [isOpen, setIsOpen] = React.useState(false);
   const onClose = () => setIsOpen(false);
@@ -57,10 +60,22 @@ export const PermanentReservationRow = ({ reservation }) => {
         setIsOpen(false);
         history.replace('/');
         setTimeout(() => history.push('/reservations'), 1);
+
+        toast({
+          message: 'Rezervacija izbrisana',
+          status: 'success',
+          position: 'top-right',
+        });
       })
       .catch((err) => {
         console.log('eror');
         console.log(err);
+
+        toast({
+          message: 'Problem prilikom brisanja rezervacije',
+          status: 'error',
+          position: 'top-right',
+        });
       });
   }
 
@@ -68,8 +83,8 @@ export const PermanentReservationRow = ({ reservation }) => {
     <Tr key={reservation.idRezervacija}>
       <Td>{parking.parkingName}</Td>
       <Td>{vehicle.carName}</Td>
-      <Td>{Moment(reservation.startTime).format('DD.MM.YYYY. HH')}h</Td>
-      <Td>{Moment(reservation.endTime).format('DD.MM.YYYY. HH')}h</Td>
+      <Td>{format(new Date(reservation.startTime), 'dd.MM.yyyy. HH')}h</Td>
+      <Td>{format(new Date(reservation.endTime), 'dd.MM.yyyy. HH')}h</Td>
 
       <Td>
         <HStack align="center">

@@ -10,18 +10,19 @@ import {
   Button,
   Td,
   Tr,
-  Text,
+  useToast,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
-import Moment from 'moment';
+import { format } from 'date-fns';
+
 import { destroy, get } from '../../../utils/network';
 
 export const OneTimeReservationRow = ({ reservation }) => {
-  const [errorMessage, setErrorMessage] = useState('');
   const [vehicle, setVehicle] = useState([]);
   const [parking, setParking] = useState([]);
   const history = useHistory();
+  const toast = useToast();
 
   const [isOpen, setIsOpen] = React.useState(false);
   const onClose = () => setIsOpen(false);
@@ -57,10 +58,22 @@ export const OneTimeReservationRow = ({ reservation }) => {
         setIsOpen(false);
         history.replace('/');
         setTimeout(() => history.push('/reservations'), 1);
+
+        toast({
+          message: 'Rezervacija izbrisana',
+          status: 'success',
+          position: 'top-right',
+        });
       })
       .catch((err) => {
         console.log('eror');
         console.log(err);
+
+        toast({
+          message: 'Problem prilikom brisanja rezervacije',
+          status: 'error',
+          position: 'top-right',
+        });
       });
   }
 
@@ -68,8 +81,8 @@ export const OneTimeReservationRow = ({ reservation }) => {
     <Tr key={reservation.idRezervacija}>
       <Td>{parking.parkingName}</Td>
       <Td>{vehicle.carName}</Td>
-      <Td>{Moment(reservation.startTime).format('DD.MM.YYYY. HH')}h</Td>
-      <Td>{Moment(reservation.endTime).format('DD.MM.YYYY. HH')}h</Td>
+      <Td>{format(new Date(reservation.startTime), 'dd.MM.yyyy. HH')}h</Td>
+      <Td>{format(new Date(reservation.endTime), 'dd.MM.yyyy. HH')}h</Td>
 
       <Td>
         <HStack align="center">
@@ -95,8 +108,6 @@ export const OneTimeReservationRow = ({ reservation }) => {
           </Button>
         </HStack>
       </Td>
-
-      <Text color="error.500">{errorMessage}</Text>
 
       <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
         <AlertDialogOverlay>

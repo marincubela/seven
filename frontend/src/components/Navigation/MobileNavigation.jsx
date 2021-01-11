@@ -73,6 +73,17 @@ export const MobileNavigation = ({ sx, ...rest }) => {
                   </Link>
                 )}
 
+                {isClientLoggedIn && (
+                  <Link
+                    as={ReactLink}
+                    to="/reservations"
+                    variant="nav"
+                    aria-current={pathname.startsWith('/reservations') ? '' : undefined}
+                  >
+                    Rezervacije
+                  </Link>
+                )}
+
                 {isCompanyLoggedIn && (
                   <Link
                     as={ReactLink}
