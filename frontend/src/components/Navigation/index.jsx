@@ -47,6 +47,17 @@ export const Navigation = observer(() => {
             </Link>
           )}
 
+          {isClientLoggedIn && (
+            <Link
+              as={ReactLink}
+              to="/reservations"
+              variant="nav"
+              aria-current={pathname === '/vehicles' ? '' : undefined}
+            >
+              Rezervacije
+            </Link>
+          )}
+
           {isCompanyLoggedIn && (
             <Link as={ReactLink} to="/parkings" variant="nav" aria-current={pathname === '/parkings' ? '' : undefined}>
               Parkirališta
