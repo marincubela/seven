@@ -78,7 +78,7 @@ export const MobileNavigation = ({ sx, ...rest }) => {
                     as={ReactLink}
                     to="/reservations"
                     variant="nav"
-                    aria-current={pathname === '/vehicles' ? '' : undefined}
+                    aria-current={pathname.startsWith('/reservations') ? '' : undefined}
                   >
                     Rezervacije
                   </Link>
