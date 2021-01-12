@@ -55,12 +55,3 @@ Tvrtka.init(
     tableName: 'Tvrtka',
   }
 );
-
-Tvrtka.belongsTo(Racun, {
-  foreignKey: 'idRacun',
-  as: 'Racun',
-});
-
-Tvrtka.sync().then(() => {
-  console.log('Napravljena tvrtka');
-});

@@ -2,6 +2,7 @@ import { VoziloMapper } from '../mappers/VoziloMapper';
 import { Vozilo } from '../models/Vozilo';
 import { VoziloDTO } from '../dtos/VoziloDTO';
 import { BaseRepo } from './BaseRepo';
+
 export class VoziloRepo extends BaseRepo<VoziloDTO> {
   async exists(voziloDTO: VoziloDTO): Promise<boolean> {
     /*const { idKlijent } = VoziloMapper.toDomain(voziloDTO);
@@ -121,7 +122,7 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
     });
   }
 
-  public static async idValidationCheck(idVozilo: number): Promise<Boolean>{
+  public static async idValidationCheck(idVozilo: number): Promise<Boolean> {
     const vozilo = await Vozilo.findOne({
       where: {
         idVozilo,

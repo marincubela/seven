@@ -91,12 +91,3 @@ Parkiraliste.init(
     tableName: 'Parkiraliste',
   }
 );
-
-Parkiraliste.belongsTo(Tvrtka, {
-  foreignKey: 'idTvrtka',
-  as: 'Tvrtka',
-});
-
-Parkiraliste.sync().then(() => {
-  console.log('Napravljeno parkiraliste');
-});

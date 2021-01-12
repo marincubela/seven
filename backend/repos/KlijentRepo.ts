@@ -6,7 +6,6 @@ import { BaseRepo } from './BaseRepo';
 import { RacunRepo } from './RacunRepo';
 import { VoziloRepo } from './VoziloRepo';
 import { Op } from 'sequelize';
-import { exists } from 'fs';
 
 export class KlijentRepo extends BaseRepo<KlijentDTO> {
   async exists(klijentDTO: KlijentDTO): Promise<boolean> {

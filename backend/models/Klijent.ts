@@ -36,7 +36,6 @@ export class Klijent extends Model<
     vozilo: Association<Klijent, Vozilo>;
     rezervacija: Association<Klijent, Rezervacija>;
   };
-
 }
 
 Klijent.init(
@@ -64,12 +63,3 @@ Klijent.init(
     tableName: 'Klijent',
   }
 );
-
-Klijent.belongsTo(Racun, {
-  foreignKey: 'idRacun',
-  as: 'Racun',
-});
-
-Klijent.sync().then(() => {
-  console.log('Napravljen Klijent');
-});

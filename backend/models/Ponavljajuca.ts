@@ -65,12 +65,3 @@ Ponavljajuca.init(
     tableName: 'Ponavljajuca',
   }
 );
-
-Ponavljajuca.belongsTo(Rezervacija, {
-  foreignKey: 'idRezervacija',
-  as: 'Rezervacija',
-});
-
-Ponavljajuca.sync().then(() => {
-  console.log('Napravljena Ponavljajuca');
-});
