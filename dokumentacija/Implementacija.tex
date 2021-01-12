@@ -55,13 +55,89 @@
 			\eject 
 		
 		\section{Upute za puštanje u pogon}
+				
+			\subsection{Frontend aplikacija}
+			
+			
+			
+			\subsection{Backend aplikacija}
 		
-			\textbf{\textit{dio 2. revizije}}\\
 		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
-			
-			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
-			
-			
-			\eject 
+			\subsection{Baza podataka}
+		
+		    \subsubsection*{Lokalna instalacija}
+		    
+		        Potrebno je preuzeti pgAdmin aplikaciju uz koju standardno dolazi i PostgreSQL server. Pokrenuti instalaciju te uz pgAdmin klijenta odabrati i PostgreSQL server za instalaciju. Nakon instalacije potrebno je postaviti korisnika. Nakon instalacije pgAdmin klijent i sam PostgreSQL server su pokrenuti.
+		        
+		    \subsubsection*{Lokalna konfiguracija}
+		        
+		        Nakon instalacije, potrebno je napraviti novu lokalnu bazu.
+		        
+		        \begin{enumerate}
+		            \item Proširiti \textit{Servers} te, ovisno o preuzetoj verziji PostgreSQL servera, proširiti  \textit{PostgreSQL XX}
+		            \item Desni klik na \textit{Databases} te \textit{Create} te \textit{Database...}
+		            \item Otvara se modal te kao \textit{Database} vrijednost stavljamo proizvoljni naziv
+		            \item Odabiremo \textit{Spremi} te time stvaramo novu bazu
+		        \end{enumerate}
+		        
+		        Nakon stvorene baze potrebno je stvoriti konekcijski \textit{connection string}. Njega ćemo stvoriti što ćemo vrijednosti u vitičastim zagradama zamijeniti s pravim vrijednostima.
+		        
+		        \begin{lstlisting}
+postgres://{username}:{password}@{hostname}:{port}/{database}
+		        \end{lstlisting}
+		        
+		        \begin{enumerate}
+		            \item username - inicijalni username je \textit{postgres}
+		            \item password - lozinka postavljena prilikom instalacije
+		            \item hostname - pošto je server lokalni, hostname će biti \textit{localhost}
+		            \item port - inicijalni priključak PostgreSQL servera je \textit{5432}
+		            \item database - ime novo-napravljene baze
+		        \end{enumerate}
+		        
+		        Nakon generiranog \textit{connection stringa}, kreirat ćemo \textit{.env} datoteku u korijenskom direktoriju backend aplikacije te u njoj napraviti zapis:
+		        
+		        \begin{verbatim}
+		            DATABASE_URL={connectionString}
+		        \end{verbatim}
+		        
+		        Sada će prilikom pokretanja backend aplikacije, prije samog spajanja s bazom, aplikacija pročitati sadržaj \textit{.env} datoteke i učitati te vrijednosti kao sistemske varijable. U Node.js aplikaciji tim varijablama imamo pristup preko
+		        
+		        \begin{verbatim}
+		            proccess.env.\${imeVarijable}
+		        \end{verbatim}
+		
+		    \subsubsection*{Heroku instalacija}
+		    
+		         \begin{enumerate}
+		            \item Otići na Heroku Dashboard
+		            \item Odabrati kreiranu backend aplikaciju
+		            \item Odabrati karticu \textit{Resources}
+		            \item Unutar \textit{Add-ons} tražilice tražiti \textbf{Heroku Postgres}
+		            \item Kada se otvori modal, odabrati \textbf{Submit Order Form}
+		        \end{enumerate}
+		        
+		        I to je to! Server sada ima svoju bazu. Ukoliko se želimo spojiti na tu bazu preko pgAdmin klijenta tada slijedimo sljedeće korake:
+		        
+		         \begin{enumerate}
+		            \item Sa \textit{Resources} zaslona odaberemo naš \textit{Heroku Postgres} server
+		            \item Nakon malo duljeg učitavanja, odabiremo karticu \textit{Settings}
+		            \item Odabiremo gumb \textit{View Credentials...}
+		        \end{enumerate}
+		        
+		        Sada na su nam na ekranu prikazani svi potrebni podaci za spajanje na PostgreSQL server. Sljedeći korak je otići u pgAdmin klijent te kreirati novu konekciju.
+		        
+		         \begin{enumerate}
+		            \item Otvoriti pgAdmin
+		            \item Desnim klikom kliknuti na \textit{Servers} te odabrati \textit{Create} \textit{Server...}
+		            \item Postaviti proizvoljno ime (ne utječe na samu konekciju)
+		            \item Odabrati karticu \textit{Connection} te tu popuniti potrebne podatke (\textit{Hostname/address}, \textit{Maintenece database}, \textit{Username}, \textit{Password})
+		            \item Nakon popunjenih podataka potrebno je kliknuti na gumb \textit{Save}
+		        \end{enumerate}
+		        
+		        Sada smo stvorili novu konekciju te iz popisa servera možemo odabrati novo-kreirani te manipulirati s tablicama.
+		        
+		
+		    \subsubsection*{Heroku konfiguracija}
+		        
+		        Slično kao u lokalnoj konfiguraciji potrebno je igrati se s varijablamo. Jedina i vrlo bitna razlika je ta da sve već posloženo te na Heroku serveru već postoji varijabla \textit{DATABASE\_URL}. Potrebno je samo pustiti backend aplikaciju u pogon.
+		    
