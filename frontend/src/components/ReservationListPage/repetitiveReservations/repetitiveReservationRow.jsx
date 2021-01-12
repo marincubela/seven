@@ -47,8 +47,8 @@ export const RepetitiveReservationRow = ({ reservation }) => {
     if (reservation) {
       get(`vehicle/${reservation.idVozilo}`)
         .then((res) => {
-          if (res.data?.vozilo) {
-            setVehicles(res.data.vozilo);
+          if (res.data?.vehicle) {
+            setVehicles(res.data.vehicle);
           }
         })
         .catch((res) => {
