@@ -33,23 +33,42 @@ export class CreatePonavljajucaController extends BaseController {
         ponavljajucaDto.idVozilo
       ))
     ) {
-      return this.forbidden(res, null);
+      return this.forbidden(res, ['Traženo vozilo nije u Vašoj listi vozila.']);
     }
 
     //Provjeri postoje li auto i parkiraliste
     if (
-      !(
-        (await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
-          ponavljajucaDto.idParkiraliste
-        )) && (await VoziloRepo.getVoziloByIdVozilo(ponavljajucaDto.idVozilo))
-      )
+      !(await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
+        ponavljajucaDto.idParkiraliste
+      ))
     ) {
-      return this.clientError(res, ['Neispravan id vozila ili parkiralista!']);
+      return this.notFound(res, ['Traženo parkiralište nije pronađeno.']);
+    }
+
+    if (!(await VoziloRepo.getVoziloByIdVozilo(ponavljajucaDto.idVozilo))) {
+      return this.notFound(res, ['Traženo vozilo nije pronađeno.']);
     }
 
     // Provjeri ispravnost vremena
     if (
-      !this.checkTime2(
+      !this.checkIsOneHourLong(
+        PonavljajucaRepo.timeAndDateToDate(
+          ponavljajucaDto.reservationDate,
+          ponavljajucaDto.startTime
+        ).toISOString(),
+        PonavljajucaRepo.timeAndDateToDate(
+          ponavljajucaDto.reservationDate,
+          ponavljajucaDto.endTime
+        ).toISOString()
+      )
+    ) {
+      return this.clientError(res, [
+        'Rezervacija mora trajati najmanje sat vremena.',
+      ]);
+    }
+
+    if (
+      !this.checkIsStartBeforeEnd(
         PonavljajucaRepo.timeAndDateToDate(
           ponavljajucaDto.reservationDate,
           ponavljajucaDto.startTime
@@ -59,19 +78,40 @@ export class CreatePonavljajucaController extends BaseController {
           ponavljajucaDto.endTime
         ).toISOString()
       ) ||
-      !this.checkTime(
+      !this.checkIsStartBeforeEnd(
+        PonavljajucaRepo.timeAndDateToDate(
+          ponavljajucaDto.reservationDate,
+          ponavljajucaDto.startTime
+        ).toISOString(),
+        PonavljajucaRepo.timeAndDateToDate(
+          ponavljajucaDto.reservationEndDate,
+          ponavljajucaDto.endTime
+        ).toISOString()
+      ) ||
+      !this.checkIsStartBeforeEnd(
         new Date(ponavljajucaDto.reservationDate).toISOString(),
         new Date(ponavljajucaDto.reservationEndDate).toISOString()
       )
     ) {
       return this.clientError(res, [
-        'Početak i kraj rezervacije nisu ispravni',
+        'Početak rezervacije mora biti prije kraja rezervacije.',
+      ]);
+    }
+
+    if (
+      !this.checkIsStartBeforeNow(
+        PonavljajucaRepo.timeAndDateToDate(
+          ponavljajucaDto.reservationDate,
+          ponavljajucaDto.startTime
+        ).toISOString()
+      )
+    ) {
+      return this.clientError(res, [
+        'Početak rezervacije mora biti u budućnosti.',
       ]);
     }
 
     // Postoji li rezervacija s danim vozilom u to vrijeme
-
-    // Treba se promijeniti u RezervacijaRepo.isAvailable(), al treba prilagoditi... ima posla
     for (const dates of PonavljajucaRepo.getAllDates(ponavljajucaDto)) {
       if (
         !(await RezervacijaRepo.isAvailable(
@@ -80,7 +120,9 @@ export class CreatePonavljajucaController extends BaseController {
           dates.endTime
         ))
       ) {
-        return this.conflict(res, ['Nije moguće rezervirati u dano vrijeme']);
+        return this.conflict(res, [
+          'Već postoji rezervacija s odabranim u vozilom u odabranom vremenu.',
+        ]);
       }
     }
 
@@ -112,18 +154,20 @@ export class CreatePonavljajucaController extends BaseController {
     });
   };
 
-  private checkTime(startTime: string, endTime: string): Boolean {
+  private checkIsStartBeforeNow(startTime: string): Boolean {
+    const start = parseISO(startTime);
+
+    return !isBefore(start, new Date());
+  }
+
+  private checkIsStartBeforeEnd(startTime: string, endTime: string): Boolean {
     const start = parseISO(startTime);
     const end = parseISO(endTime);
 
-    if (isAfter(start, end) || isBefore(start, new Date())) {
-      return false;
-    }
-
-    return true;
+    return !isAfter(start, end);
   }
 
-  private checkTime2(startTime: string, endTime: string): Boolean {
+  private checkIsOneHourLong(startTime: string, endTime: string): Boolean {
     if (String(startTime) > String(endTime)) {
       return false;
     }
@@ -135,16 +179,6 @@ export class CreatePonavljajucaController extends BaseController {
       end: new Date(end),
     });
 
-    console.log(interval);
-
-    if (interval.hours < 1) {
-      return false;
-    }
-
-    if (isAfter(start, end) || isBefore(start, new Date())) {
-      return false;
-    }
-
-    return true;
+    return interval.hours >= 1;
   }
 }
