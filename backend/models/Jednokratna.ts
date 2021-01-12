@@ -44,12 +44,3 @@ Jednokratna.init(
     tableName: 'Jednokratna',
   }
 );
-
-Jednokratna.belongsTo(Rezervacija, {
-  foreignKey: 'idRezervacija',
-  as: 'Rezervacija',
-});
-
-Jednokratna.sync().then(() => {
-  console.log('Napravljena jednokratna rezervacija');
-});

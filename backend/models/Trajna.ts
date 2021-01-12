@@ -46,12 +46,3 @@ Trajna.init(
     tableName: 'Trajna',
   }
 );
-
-Trajna.belongsTo(Rezervacija, {
-  foreignKey: 'idRezervacija',
-  as: 'Rezervacija',
-});
-
-Trajna.sync().then(() => {
-  console.log('Napravljena trajna rezervacija');
-});

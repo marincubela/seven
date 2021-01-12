@@ -5,7 +5,6 @@ import { Klijent } from './Klijent';
 import { Parkiraliste } from './Parkiraliste';
 import { Vozilo } from './Vozilo';
 
-
 export interface IRezervacijaAttributes {
   idRezervacija: number;
   idKlijent?: number;
@@ -43,22 +42,3 @@ Rezervacija.init(
     tableName: 'Rezervacija',
   }
 );
-
-Rezervacija.belongsTo(Klijent, {
-  foreignKey: 'idKlijent',
-  as: 'Klijent',
-});
-
-Rezervacija.belongsTo(Vozilo, {
-  foreignKey: 'idVozilo',
-  as: 'Vozilo',
-});
-
-Rezervacija.belongsTo(Parkiraliste, {
-  foreignKey: 'idParkiraliste',
-  as: 'Parkiraliste',
-});
-
-Rezervacija.sync().then(() => {
-  console.log('Napravljena rezervacija');
-});

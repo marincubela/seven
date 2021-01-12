@@ -1,4 +1,9 @@
-import { Model, DataTypes, HasOneGetAssociationMixin, Association } from 'sequelize';
+import {
+  Model,
+  DataTypes,
+  HasOneGetAssociationMixin,
+  Association,
+} from 'sequelize';
 
 import { db } from '../db/connect';
 import { Klijent } from './Klijent';
@@ -30,7 +35,6 @@ export class Vozilo extends Model<
   public static associations: {
     rezervacija: Association<Vozilo, Rezervacija>;
   };
-  
 }
 
 Vozilo.init(
@@ -58,12 +62,3 @@ Vozilo.init(
     tableName: 'Vozilo',
   }
 );
-
-Vozilo.belongsTo(Klijent, {
-  foreignKey: 'idKlijent',
-  as: 'Klijent',
-});
-
-Vozilo.sync().then(() => {
-  console.log('Napravljeno vozilo');
-});

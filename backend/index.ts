@@ -2,6 +2,8 @@ require('dotenv-flow').config();
 
 import express from 'express';
 
+import { initModels } from './db/connectModels';
+
 // Routers
 import { sessionRouter } from './routes/session.router';
 import { userRouter } from './routes/user.router';
@@ -13,6 +15,10 @@ import { reservationRouter } from './routes/reservation.router';
 // Middlewares
 import { sessionMiddleware } from './middlewares/session';
 import { corsMiddleware } from './middlewares/cors';
+
+initModels().then(() => {
+  console.log('Baza spojena');
+});
 
 const app = express();
 
