@@ -70,16 +70,16 @@
 	        
 						\subsubsection*{Lokalna instalacija}
 	        
-	          		Da bismo pokrenulni lokalnu frontend aplikaciju potrebno je unutar terminala pozicionirati se u frontend mapu. 
+	          		Da bismo pokrenulni lokalnu frontend aplikaciju potrebno je unutar terminala pozicionirati se u frontend mapu unutar korijenskog direktorija. 
 	            
 								\begin{center}
-											\texttt{cd frontend}
+										\texttt{cd frontend}
 								\end{center}
 								
 								Sada je potrebno instalirati potrebne pakete za uspješan rad aplikacije. To činimo pokretanjem naredbe
 								
 								\begin{center}
-											\texttt{npm install}
+										\texttt{npm install}
 								\end{center}
 								
 								Nakon instalacije paketa, potrebno je podesiti i lokalni \textit{host} file. Da bismo uredili \textit{host} file prvo ga je potrebno locirati, a sama lokacija ovisi o operacijskom sustavu. Ukoliko koristimo operacijski sustav na bazi \textit{Linuxa} \textit{host} file se nalazi na lokaciji \texttt{/etc/hosts}, dok se na \textit{Windows} operacijskom sustavu ta datoteka nalazi na \texttt{C:\Windows\System32\drivers\etc\hosts}
@@ -87,19 +87,19 @@
 								Jednom kada smo je locirali, potrebno je na kraj datoteke dodati redak
 
 								\begin{center}
-											\texttt{127.0.0.1	frontend-local.parkirajme.xyz}
+										\texttt{127.0.0.1	frontend-local.parkirajme.xyz}
 								\end{center}
 								
 								Dodavanjem ovog retka, završili smo lokalnu instalaciju servera te server možemo pokrenuti naredbom
 								
 								\begin{center}
-											\texttt{npm run dev}
+										\texttt{npm run dev}
 								\end{center}
 								
 								Kako bi sve ispravno radilo lokalnom serveru ćemo pristupiti sa sljedeće adrese
 
 								\begin{center}
-											\href{http://frontend-local.parkirajme.xyz:3000/}{\texttt{frontend-local.parkirajme.xyz:3000}}
+										\href{http://frontend-local.parkirajme.xyz:3000/}{\texttt{frontend-local.parkirajme.xyz:3000}}
 								\end{center}
 		             
 						\pagebreak
@@ -126,7 +126,7 @@
 								te umjesto \texttt{\{imeHerokuAplikacije\}} potrebno je umetnuti ime novostvorene aplikacije. Kada smo podesili \texttt{config} datoteku sve što je potrebno napraviti je pozicionirati se u direktorij frontend aplikacije te iz terminala pokrenuti 
 
 								\begin{center}
-											\texttt{npm run deploy}
+										\texttt{npm run deploy}
 								\end{center}
 								
 								Nakon par minuta aplikacija će biti puštena u pogon.
@@ -134,6 +134,57 @@
 						\pagebreak
 						
 						\subsection{Backend aplikacija}
+	        
+						\subsubsection*{Lokalna instalacija}
+	        
+	          		Da bismo pokrenulni lokalnu backend aplikaciju potrebno je unutar terminala pozicionirati se u backend mapu unutar korijenskog direktorija. 
+	            
+								\begin{center}
+										\texttt{cd backend}
+								\end{center}
+								
+								Sada je potrebno instalirati potrebne pakete za uspješan rad aplikacije. To činimo pokretanjem naredbe
+								
+								\begin{center}
+										\texttt{npm install}
+								\end{center}
+								
+								Nakon instalacije paketa, završili smo lokalnu instalaciju servera te server možemo pokrenuti naredbom
+								
+								\begin{center}
+										\texttt{npm run dev}
+								\end{center}
+								
+								Sada je server pokrenut te mu možemo pristupiti koristeći naredbeni redak i naredbu \texttt{curl} ili pak neki drugi alat za kreiranje HTTP zahtjeve poput alata \underline{Postman} \footnote{\href{https://www.postman.com/}{Postman}}.
+		             
+						\pagebreak
+		    
+						\subsubsection*{Heroku instalacija}
+	        
+								Kako bismo backend aplikaciju pustili u pogon, potrebne je kreirati novu aplikaciji na Heroku platformi.
+								
+								\begin{enumerate}
+									\item Otvoriti \href{https://dashboard.heroku.com/apps}{heroku.com} stranicu i prijaviti se ukoliko to već nismo prethodno učinili.
+									\item U gornjem desnom kutu možemo vidjeti gumb \textit{New} te kada ga pritisnemo otvara nam se padajuća lista i u njoj odabiremo \textit{Create new app}
+									\item Otvara nam se forma za kreiranje nove aplikacije te tu navodimo ime aplikacije koje može biti proizvoljno. Također na tom koraku odabiremo i regiju servera i tu je poželjno postaviti server koji je nama najbliži, a to je Europa.
+									\item Pritiskom na \textit{Create app} stvaramo aplikaciju
+		        		\end{enumerate}
+		        
+		        		Sada kada je Heroku aplikacija napravljena potrebno je otvoriti \texttt{.git/config} datoteku unutar korijenskog direktorija aplikacije te na kraj te datoteke potrebno je dodati
+
+                \begin{verbatim}
+    [remote "heroku-backend"]
+        	url = https://git.heroku.com/${imeHerokuAplikacije}.git
+        	fetch = +refs/heads/*:refs/remotes/heroku-backend/*
+								\end{verbatim}
+								
+								te umjesto \texttt{\{imeHerokuAplikacije\}} potrebno je umetnuti ime novostvorene aplikacije. Kada smo podesili \texttt{config} datoteku sve što je potrebno napraviti je pozicionirati se u direktorij backend aplikacije te iz terminala pokrenuti 
+
+								\begin{center}
+										\texttt{npm run deploy}
+								\end{center}
+								
+								Nakon par minuta aplikacija će biti puštena u pogon.
 						
 						\pagebreak
 		    
@@ -171,13 +222,13 @@
 								Nakon generiranog \textit{connection stringa}, kreirat ćemo \textit{.env} datoteku u korijenskom direktoriju backend aplikacije te u njoj napraviti zapis:
 
 								\begin{center}
-											\texttt{DATABASE\_URL={connectionString}}
+										\texttt{DATABASE\_URL={connectionString}}
 								\end{center}
 								
 								Sada će prilikom pokretanja backend aplikacije, prije samog spajanja s bazom, aplikacija pročitati sadržaj \textit{.env} datoteke i učitati te vrijednosti kao sistemske varijable. U \textit{Node.js} aplikaciji tim varijablama imamo pristup preko
 
 								\begin{center}
-											\texttt{proccess.env.\{imeVarijable\}}
+										\texttt{proccess.env.\{imeVarijable\}}
 								\end{center}
 				
 				
