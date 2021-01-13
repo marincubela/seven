@@ -56,10 +56,10 @@
 	
 	\begin{packed_enum}
 		
+		\item vidjeti kartu s parkiralištima
+		\item pregledavati, uređivati i izbrisati korisnički račun
 		\item vidjeti popis svih registriranih korisnika i osnovnih podataka
-		\item pregledavati rezervacije
 		\item brisati i mijenjati razinu pristupa aplikaciji drugim korisnicima
-		\item dodavati ili brisati parkirališta
 		
 	\end{packed_enum}
 	
@@ -169,10 +169,10 @@
 	
 	\item[] \begin{packed_enum}
 		
-		\item Korisnik odabire opciju za registraciju korisnika
+		\item Korisnik odabire opciju za registraciju
 		\item Otvara se forma za popunjavanje korisničkih podataka
-		\item Korisnik otvara novi račun i prikazuje mu se poruka da je račun uspješno stvoren
-		\item Korisnik je automatski prijavljen u sustav
+		\item Korisnik otvara novi račun 
+		\item Korisnik je automatski prijavljen u sustav i preusmjeren na početni zaslon aplikacije
 
 	\end{packed_enum}
 
@@ -180,7 +180,7 @@
 	
 	\item[] \begin{packed_item}
 	
-		\item[3.a] Nevažeći podaci prilikom registracije korisnika
+		\item[2.a] Nevažeći podaci prilikom registracije korisnika
 		\item[] \begin{packed_enum}
 			
 			\item Korisnik se obavještava o neuspjeloj registraciji
@@ -305,13 +305,10 @@
 			
 		\end{packed_enum}
 		
-		\item[5.a] Nevažeći podaci o plaćanju ili nedovoljno sredstava na kartici
+		\item[5.a] Nedovoljno sredstava na kartici
 		\item[] \begin{packed_enum}
 			
 			\item Klijenta se obavještava porukom o neuspjelom plaćanju
-			\item Klijenta se preusmjerava na podatke o računu
-			\item Klijent ažurira podatke o kartici
-			\item Klijenta se preusmjerava na kartu
 			
 		\end{packed_enum}
 		
@@ -443,7 +440,8 @@
 		\item Klijent otvara formu za dodavanje vozila
 		\item Unose se svi potrebni podaci
 		\item Klijent odabire akciju za dodavanje vozila
-		\item Vozilo se dodaje
+		\item Vozilo se dodaje 
+		\item Klijenta se preusmjerava na popis ažurirani popis vozila
 
 	\end{packed_enum}
 	
@@ -513,8 +511,8 @@
 	\item[] \begin{packed_enum}
 		
 		\item Klijent odabire akciju uklanjanja vozila
-		\item Vozilo se uklanja
-		\item Klijenta se preusmjerava na popis ažurirani popis vozila
+		\item Vozilo se uklanja zajedno sa svim rezervacijama napravljenim s tim vozilom
+		\item Klijenta se preusmjerava na ažurirani popis vozila
 
 	\end{packed_enum}
 \end{packed_item}
@@ -621,7 +619,7 @@
 	\item[] \begin{packed_enum}
 		
 		\item Tvrtka odabire opciju za uklanjanja parkirališta
-		\item Parkiralište se uklanja
+		\item Parkiralište se uklanja zajedno sa svim rezervacijama napravljenim na tom parkiralištu
 		\item Tvrtka se preusmjerava na ažurirani popis parkirališta
 
 	\end{packed_enum}
