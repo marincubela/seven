@@ -325,7 +325,7 @@
 			\begin{figure}[H]
     			\includegraphics[width=1\linewidth]{dokumentacija/dijagrami/Dijagram stanja - Klijent.png}
     			\caption{Dijagram stanja}
-    			\label{fig:Dijagram razreda - Maperri} 
+    			\label{fig:Dijagram stanja} 
     		\end{figure}
 			
 			
@@ -338,12 +338,16 @@
 			 \begin{figure}[H]
     			\includegraphics[width=1\linewidth]{dokumentacija/dijagrami/Dijagram aktivnosti - Rezervacija parkirališnog mjesta.png}
     			\caption{Dijagram aktivnosti}
-    			\label{fig:Dijagram razreda - Maperri} 
+    			\label{fig:Dijagram aktivnosti} 
     		\end{figure}
 			
 			\eject
 		\section{Dijagram komponenti}
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.
+			   Dijagram komponenti je strukturni, statički dijagram koji služi za vizualizaciju organizacije i međuovisnosti između implementacijskih komponenata te odnos programske potpore prema okolini. Sve Javascript datoteke u frontend dijelu aplikacije ovise o React knjižnici iz koje dohvaćaju gotove komponente poput gumba, izbornika i svega ostalog čime netko komunicira s aplikacijom. Router je komponenta koja na upit iz url-a određuje koja će se datoteka poslužiti na aplikaciji. Frontend dio aplikacije sastoji se od Javascript datoteka koje su logički raspoređene u cjeline te su nazvane po tipovima aktora i njihovim akcijama. REST API poslužuje podatke koji pripadaju backend dijelu aplikacije. Sequelize je zadužen za dohvaćanje tablica iz baze podataka. Za rad s bazom backend dio aplikacije koristi Repo koji je povezan Modelima i Mapperima. Model je apstrakcija koja predstavlja tablice u bazi, a Mapper ovisno o zahtjevu pretvara podatke u potrebni oblik. Podaci koji su pristigli iz baze šalju se u obliku DTO-a MVC arhitekturi. Controller prima zahtjev, obrađuje ga i šalje dalje.
+			   
+			   \begin{figure}[H]
+    			\includegraphics[width=1\linewidth]{dokumentacija/dijagrami/Dijagram komponenti.png}
+    			\caption{Dijagram komponenti}
+    			\label{fig:Dijagram komponenti} 
+    		\end{figure}
