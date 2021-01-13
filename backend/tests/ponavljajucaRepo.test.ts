@@ -20,10 +20,6 @@ describe('Provjera sinkronih metoda u klasi PonavljajucaRepo', () => {
 
     const expected = [
       {
-        startTime: new Date('2021-01-07T12:00:00+01:00'),
-        endTime: new Date('2021-01-07T13:00:00+01:00'),
-      },
-      {
         startTime: new Date('2021-01-14T12:00:00+01:00'),
         endTime: new Date('2021-01-14T13:00:00+01:00'),
       },
@@ -41,7 +37,7 @@ describe('Provjera sinkronih metoda u klasi PonavljajucaRepo', () => {
 
     for (let i = 0; i < actual.length; i++) {
       console.log(parseISO(actual[i].startTime), expected[i].startTime);
-      if (isEqual(parseISO(actual[i].startTime), expected[i].startTime)) {
+      if (!isEqual(parseISO(actual[i].startTime), expected[i].startTime)) {
         actualB = false;
       }
     }
