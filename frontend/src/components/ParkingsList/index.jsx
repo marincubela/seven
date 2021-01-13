@@ -19,6 +19,7 @@ import {
   Thead,
   Tr,
   Text,
+  IconButton,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, AddIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
@@ -109,26 +110,22 @@ export function ParkingsList() {
               <Td isNumeric>{p.permanentPrice} kn</Td>
               <Td>
                 <HStack align="center">
-                  <Button
+                  <IconButton
                     aria-label="Edit parking"
-                    leftIcon={<EditIcon />}
+                    icon={<EditIcon />}
                     as={ReactLink}
                     to={{ pathname: '/parkings/edit', state: p }}
-                  >
-                    Uredi
-                  </Button>
+                  />
 
-                  <Button
+                  <IconButton
                     colorScheme="red"
                     aria-label="Delete parking"
-                    leftIcon={<DeleteIcon />}
+                    icon={<DeleteIcon />}
                     onClick={() => {
                       setIsOpen(true);
                       setdeleteParking(p);
                     }}
-                  >
-                    Izbriši
-                  </Button>
+                  />
                 </HStack>
               </Td>
             </Tr>
