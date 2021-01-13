@@ -33,6 +33,7 @@ export function VehiclesAdd() {
       .then(() => {
         toast({
           title: 'Vozilo dodano',
+          // eslint-disable-next-line max-len
           description: `Dodano je vozilo ${formData['add-vehicle-name']} registracije ${formData['add-vehicle-registration']}.`,
           position: 'top-right',
           status: 'success',
