@@ -97,7 +97,7 @@ export function EditPermanentReservationForm() {
       .then(() => {
         toast({
           title: 'Rezervacija uspješno promijenjena',
-          description: `Promijenjena je jednokratna rezervacija od ${format(
+          description: `Promijenjena je trajna rezervacija od ${format(
             formData['edit-reservation-starttime'],
             'dd.MM.yyyy HH:mm',
           )} do ${format(formData['edit-reservation-endtime'], 'dd.MM.yyyy HH:mm')}.`,
