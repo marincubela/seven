@@ -79,7 +79,7 @@ export const RepetitiveReservationRow = ({ reservation }) => {
         setTimeout(() => history.push('/reservations'), 1);
 
         toast({
-          message: 'Rezervacija izbrisana',
+          title: 'Rezervacija izbrisana',
           status: 'success',
           position: 'top-right',
         });
@@ -89,7 +89,7 @@ export const RepetitiveReservationRow = ({ reservation }) => {
         console.log(err);
 
         toast({
-          message: 'Problem prilikom brisanja rezervacije',
+          title: 'Problem prilikom brisanja rezervacije',
           status: 'error',
           position: 'top-right',
         });

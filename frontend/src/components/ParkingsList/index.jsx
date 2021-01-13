@@ -20,6 +20,7 @@ import {
   Tr,
   Text,
   IconButton,
+  useToast,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, AddIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
@@ -33,6 +34,7 @@ export function ParkingsList() {
   const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
+  const toast = useToast();
 
   const [isOpen, setIsOpen] = React.useState(false);
   const onClose = () => setIsOpen(false);
@@ -63,10 +65,21 @@ export function ParkingsList() {
         setIsOpen(false);
         history.replace('/');
         setTimeout(() => history.push('/parkings'), 1);
+        toast({
+          title: 'Parkiralište obrisano',
+          status: 'success',
+          position: 'top-right',
+        });
       })
       .catch((err) => {
         console.log('eror');
         console.log(err);
+
+        toast({
+          title: 'Problem prilikom brisanja parkirališta',
+          status: 'error',
+          position: 'top-right',
+        });
       });
   }
 

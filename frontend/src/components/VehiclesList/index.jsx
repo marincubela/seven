@@ -16,7 +16,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  // Divider,
+  useToast,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
@@ -32,6 +32,7 @@ export function VehiclesList() {
   const [vehicles, setVehicles] = useState([]);
 
   const store = useStore();
+  const toast = useToast();
 
   useEffect(() => {
     if (store.currentUser) {
@@ -57,10 +58,22 @@ export function VehiclesList() {
         setTimeout(() => {
           history.replace('/vehicles');
         }, 5);
+
+        toast({
+          title: 'Vozilo obrisano',
+          status: 'success',
+          position: 'top-right',
+        });
       })
       .catch((err) => {
         console.log('error');
         console.log(err);
+
+        toast({
+          title: 'Problem prilikom brisanja vozila',
+          status: 'error',
+          position: 'top-right',
+        });
       });
   }
 
