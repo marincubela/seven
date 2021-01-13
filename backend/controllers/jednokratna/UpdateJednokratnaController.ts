@@ -9,13 +9,7 @@ import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 import { RacunRepo } from '../../repos/RacunRepo';
-import {
-  addHours,
-  intervalToDuration,
-  isAfter,
-  isBefore,
-  parseISO,
-} from 'date-fns';
+import { ValidatorFunctions } from '../../utils/validators/ValidatorFunctions';
 
 export class UpdateJednokratnaController extends BaseController {
   executeImpl = async (
@@ -36,8 +30,6 @@ export class UpdateJednokratnaController extends BaseController {
       return this.clientError(res, ['Id mora biti pozitivan broj']);
     }
 
-    // Jel prijavljen korisnik cija se rezervacija pokusava promijeniti
-
     const oldReservationData = await JednokratnaMapper.toDTO(
       await JednokratnaRepo.getJednokratnaByIdRezervacija(idRezervacija)
     );
@@ -52,7 +44,6 @@ export class UpdateJednokratnaController extends BaseController {
     jednokratnaDTO.idJednokratna = await JednokratnaRepo.getIdJednokratna(
       idRezervacija
     );
-
     jednokratnaDTO.idRezervacija = idRezervacija;
     jednokratnaDTO.idKlijent = await RacunRepo.getIdKlijent(
       req.session.user.idRacun
@@ -65,29 +56,52 @@ export class UpdateJednokratnaController extends BaseController {
         jednokratnaDTO.idVozilo
       ))
     ) {
-      return this.forbidden(res, null);
+      return this.forbidden(res, ['Traženo vozilo nije u Vašoj listi vozila.']);
     }
 
     //Provjeri postoje li auto i parkiraliste
     if (
-      !(
-        (await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
-          jednokratnaDTO.idParkiraliste
-        )) && (await VoziloRepo.getVoziloByIdVozilo(jednokratnaDTO.idVozilo))
-      )
+      !(await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
+        jednokratnaDTO.idParkiraliste
+      ))
     ) {
-      return this.clientError(res, ['Neispravan id vozila ili parkirališta!']);
+      return this.notFound(res, ['Traženo parkiralište nije pronađeno.']);
+    }
+
+    if (!(await VoziloRepo.getVoziloByIdVozilo(jednokratnaDTO.idVozilo))) {
+      return this.notFound(res, ['Traženo vozilo nije pronađeno.']);
     }
 
     // Provjeri ispravnost vremena
     if (
-      !this.checkTime(
+      ValidatorFunctions.checkIsOneDayLong(
         new Date(jednokratnaDTO.startTime).toISOString(),
         new Date(jednokratnaDTO.endTime).toISOString()
       )
     ) {
       return this.clientError(res, [
-        'Početak i kraj rezervacije nisu ispravni',
+        'Jednokratna rezervacija ne smije trajati dulje od jednog dana.',
+      ]);
+    }
+
+    if (
+      !ValidatorFunctions.checkIsStartBeforeEnd(
+        new Date(jednokratnaDTO.startTime).toISOString(),
+        new Date(jednokratnaDTO.endTime).toISOString()
+      )
+    ) {
+      return this.clientError(res, [
+        'Početak rezervacije mora biti prije kraja rezervacije.',
+      ]);
+    }
+
+    if (
+      !ValidatorFunctions.checkIsStartBeforeNow6Hours(
+        new Date(jednokratnaDTO.startTime).toISOString()
+      )
+    ) {
+      return this.clientError(res, [
+        'Jednokratna rezervacija mora biti obavljena najmanje 6 sati unaprijed.',
       ]);
     }
 
@@ -99,7 +113,9 @@ export class UpdateJednokratnaController extends BaseController {
         jednokratnaDTO.endTime
       ))
     ) {
-      return this.conflict(res, ['Nije moguće rezervirati u dano vrijeme']);
+      return this.conflict(res, [
+        'Već postoji rezervacija s odabranim u vozilom u odabranom vremenu.',
+      ]);
     }
 
     const validationErrors = (
@@ -118,24 +134,4 @@ export class UpdateJednokratnaController extends BaseController {
       },
     });
   };
-
-  private checkTime(startTime: string, endTime: string): Boolean {
-    const start = parseISO(startTime);
-    const end = parseISO(endTime);
-
-    const interval = intervalToDuration({
-      start: new Date(startTime),
-      end: new Date(endTime),
-    });
-
-    if (interval.days || interval.months || interval.years) {
-      return false;
-    }
-
-    if (isAfter(start, end) || isBefore(start, addHours(new Date(), 6))) {
-      return false;
-    }
-
-    return true;
-  }
 }

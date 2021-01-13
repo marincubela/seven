@@ -6,72 +6,86 @@ import { TrajnaValidator } from '../../utils/validators';
 import { KlijentRepo } from '../../repos/KlijentRepo';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
-import { isAfter, isBefore, parseISO } from 'date-fns';
 import { TrajnaMapper } from '../../mappers/TrajnaMapper';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 import { RacunRepo } from '../../repos/RacunRepo';
+import { ValidatorFunctions } from '../../utils/validators/ValidatorFunctions';
 
 export class CreateTrajnaController extends BaseController {
   executeImpl = async (
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> => {
-    const trajnaDto = req.body.data as TrajnaDTO;
+    const trajnaDTO = req.body.data as TrajnaDTO;
 
     if (!(await RacunRepo.isKlijent(req.session.user.idRacun))) {
       return this.forbidden(res, null);
     }
 
-    trajnaDto.idKlijent = await RacunRepo.getIdKlijent(
+    trajnaDTO.idKlijent = await RacunRepo.getIdKlijent(
       req.session.user.idRacun
     );
 
     //Provjeri posjeduje li korisnik navedeni auto
     if (
       !(await KlijentRepo.checkCarOwner(
-        trajnaDto.idKlijent,
-        trajnaDto.idVozilo
+        trajnaDTO.idKlijent,
+        trajnaDTO.idVozilo
       ))
     ) {
-      return this.forbidden(res, null);
+      return this.forbidden(res, ['Traženo vozilo nije u Vašoj listi vozila.']);
     }
 
     //Provjeri postoje li auto i parkiraliste
     if (
-      !(
-        (await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
-          trajnaDto.idParkiraliste
-        )) && (await VoziloRepo.getVoziloByIdVozilo(trajnaDto.idVozilo))
-      )
+      !(await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
+        trajnaDTO.idParkiraliste
+      ))
     ) {
-      return this.clientError(res, ['Neispravan id vozila ili parkirališta!']);
+      return this.notFound(res, ['Traženo parkiralište nije pronađeno.']);
+    }
+
+    if (!(await VoziloRepo.getVoziloByIdVozilo(trajnaDTO.idVozilo))) {
+      return this.notFound(res, ['Traženo vozilo nije pronađeno.']);
     }
 
     // Provjeri ispravnost vremena
     if (
-      !this.checkTime(
-        new Date(trajnaDto.startTime).toISOString(),
-        new Date(trajnaDto.endTime).toISOString()
+      !ValidatorFunctions.checkIsStartBeforeEnd(
+        new Date(trajnaDTO.startTime).toISOString(),
+        new Date(trajnaDTO.endTime).toISOString()
       )
     ) {
       return this.clientError(res, [
-        'Početak i kraj rezervacije nisu ispravni',
+        'Početak rezervacije mora biti prije kraja rezervacije.',
+      ]);
+    }
+
+    if (
+      !ValidatorFunctions.checkIsStartBeforeNow(
+        new Date(trajnaDTO.startTime).toISOString()
+      )
+    ) {
+      return this.clientError(res, [
+        'Početak rezervacije mora biti u budućnosti.',
       ]);
     }
 
     // Postoji li rezervacija s danim vozilom u to vrijeme
     if (
       !(await RezervacijaRepo.isAvailable(
-        trajnaDto.idVozilo,
-        trajnaDto.startTime,
-        trajnaDto.endTime
+        trajnaDTO.idVozilo,
+        trajnaDTO.startTime,
+        trajnaDTO.endTime
       ))
     ) {
-      return this.conflict(res, ['Nije moguće rezervirati u dano vrijeme']);
+      return this.conflict(res, [
+        'Već postoji rezervacija s odabranim u vozilom u odabranom vremenu.',
+      ]);
     }
 
     const validationErrors = (
-      await Promise.all([TrajnaValidator.validate(trajnaDto)])
+      await Promise.all([TrajnaValidator.validate(trajnaDTO)])
     ).reduce((errs, err) => [...errs, ...err], []);
 
     if (validationErrors.length) {
@@ -87,7 +101,7 @@ export class CreateTrajnaController extends BaseController {
       ]);
     }
 
-    const trajna = await TrajnaRepo.createTrajna(trajnaDto);
+    const trajna = await TrajnaRepo.createTrajna(trajnaDTO);
 
     return this.ok(res, {
       data: {
@@ -95,15 +109,4 @@ export class CreateTrajnaController extends BaseController {
       },
     });
   };
-
-  private checkTime(startTime: string, endTime: string): Boolean {
-    const start = parseISO(startTime);
-    const end = parseISO(endTime);
-
-    if (isAfter(start, end) || isBefore(start, new Date())) {
-      return false;
-    }
-
-    return true;
-  }
 }

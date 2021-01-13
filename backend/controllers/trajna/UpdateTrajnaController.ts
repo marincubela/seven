@@ -5,12 +5,12 @@ import { BaseController } from '../BaseController';
 import { TrajnaRepo } from '../../repos/TrajnaRepo';
 import { TrajnaDTO } from '../../dtos/TrajnaDTO';
 import { TrajnaValidator } from '../../utils/validators/TrajnaValidator';
-import { isAfter, isBefore, parseISO } from 'date-fns';
 import { KlijentRepo } from '../../repos/KlijentRepo';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { RacunRepo } from '../../repos/RacunRepo';
+import { ValidatorFunctions } from '../../utils/validators/ValidatorFunctions';
 
 export class UpdateTrajnaController extends BaseController {
   executeImpl = async (
@@ -49,41 +49,56 @@ export class UpdateTrajnaController extends BaseController {
         trajnaDTO.idVozilo
       ))
     ) {
-      return this.forbidden(res, null);
+      return this.forbidden(res, ['Traženo vozilo nije u Vašoj listi vozila.']);
     }
 
     //Provjeri postoje li auto i parkiraliste
     if (
-      !(
-        (await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
-          trajnaDTO.idParkiraliste
-        )) && (await VoziloRepo.getVoziloByIdVozilo(trajnaDTO.idVozilo))
-      )
+      !(await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
+        trajnaDTO.idParkiraliste
+      ))
     ) {
-      return this.clientError(res, ['Neispravan id vozila ili parkirališta!']);
+      return this.notFound(res, ['Traženo parkiralište nije pronađeno.']);
+    }
+
+    if (!(await VoziloRepo.getVoziloByIdVozilo(trajnaDTO.idVozilo))) {
+      return this.notFound(res, ['Traženo vozilo nije pronađeno.']);
     }
 
     // Provjeri ispravnost vremena
     if (
-      !this.checkTime(
+      !ValidatorFunctions.checkIsStartBeforeEnd(
         new Date(trajnaDTO.startTime).toISOString(),
         new Date(trajnaDTO.endTime).toISOString()
       )
     ) {
       return this.clientError(res, [
-        'Početak i kraj rezervacije nisu ispravni',
+        'Početak rezervacije mora biti prije kraja rezervacije.',
+      ]);
+    }
+
+    if (
+      !ValidatorFunctions.checkIsStartBeforeNow(
+        new Date(trajnaDTO.startTime).toISOString()
+      )
+    ) {
+      return this.clientError(res, [
+        'Početak rezervacije mora biti u budućnosti.',
       ]);
     }
 
     // Postoji li rezervacija s danim vozilom u to vrijeme
     if (
-      !(await RezervacijaRepo.isAvailable(
+      !(await RezervacijaRepo.isAvailableForUpdate(
+        trajnaDTO.idRezervacija,
         trajnaDTO.idVozilo,
         trajnaDTO.startTime,
         trajnaDTO.endTime
       ))
     ) {
-      return this.conflict(res, ['Nije moguće rezervirati u dano vrijeme']);
+      return this.conflict(res, [
+        'Već postoji rezervacija s odabranim u vozilom u odabranom vremenu.',
+      ]);
     }
 
     const validationErrors = (
@@ -103,15 +118,4 @@ export class UpdateTrajnaController extends BaseController {
       },
     });
   };
-
-  private checkTime(startTime: string, endTime: string): Boolean {
-    const start = parseISO(startTime);
-    const end = parseISO(endTime);
-
-    if (isAfter(start, end) || isBefore(start, new Date())) {
-      return false;
-    }
-
-    return true;
-  }
 }

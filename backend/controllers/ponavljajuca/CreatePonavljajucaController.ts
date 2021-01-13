@@ -6,31 +6,31 @@ import { PonavljajucaValidator } from '../../utils/validators';
 import { KlijentRepo } from '../../repos/KlijentRepo';
 import { VoziloRepo } from '../../repos/VoziloRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
-import { intervalToDuration, isAfter, isBefore, parseISO } from 'date-fns';
 import { PonavljajucaMapper } from '../../mappers/PonavljajucaMapper';
 import { RezervacijaRepo } from '../../repos/RezervacijaRepo';
 import { RacunRepo } from '../../repos/RacunRepo';
+import { ValidatorFunctions } from '../../utils/validators/ValidatorFunctions';
 
 export class CreatePonavljajucaController extends BaseController {
   executeImpl = async (
     req: IRequest,
     res: IResponse
   ): Promise<void | IResponse> => {
-    const ponavljajucaDto = req.body.data as PonavljajucaDTO;
+    const ponavljajucaDTO = req.body.data as PonavljajucaDTO;
 
     if (!(await RacunRepo.isKlijent(req.session.user.idRacun))) {
       return this.forbidden(res, null);
     }
 
-    ponavljajucaDto.idKlijent = await RacunRepo.getIdKlijent(
+    ponavljajucaDTO.idKlijent = await RacunRepo.getIdKlijent(
       req.session.user.idRacun
     );
 
     //Provjeri posjeduje li korisnik navedeni auto
     if (
       !(await KlijentRepo.checkCarOwner(
-        ponavljajucaDto.idKlijent,
-        ponavljajucaDto.idVozilo
+        ponavljajucaDTO.idKlijent,
+        ponavljajucaDTO.idVozilo
       ))
     ) {
       return this.forbidden(res, ['Traženo vozilo nije u Vašoj listi vozila.']);
@@ -39,58 +39,58 @@ export class CreatePonavljajucaController extends BaseController {
     //Provjeri postoje li auto i parkiraliste
     if (
       !(await ParkiralisteRepo.getParkiralisteByIdParkiraliste(
-        ponavljajucaDto.idParkiraliste
+        ponavljajucaDTO.idParkiraliste
       ))
     ) {
       return this.notFound(res, ['Traženo parkiralište nije pronađeno.']);
     }
 
-    if (!(await VoziloRepo.getVoziloByIdVozilo(ponavljajucaDto.idVozilo))) {
+    if (!(await VoziloRepo.getVoziloByIdVozilo(ponavljajucaDTO.idVozilo))) {
       return this.notFound(res, ['Traženo vozilo nije pronađeno.']);
     }
 
     // Provjeri ispravnost vremena
     if (
-      !this.checkIsOneHourLong(
+      !ValidatorFunctions.checkIsOneHourLong(
         PonavljajucaRepo.timeAndDateToDate(
-          ponavljajucaDto.reservationDate,
-          ponavljajucaDto.startTime
+          ponavljajucaDTO.reservationDate,
+          ponavljajucaDTO.startTime
         ).toISOString(),
         PonavljajucaRepo.timeAndDateToDate(
-          ponavljajucaDto.reservationDate,
-          ponavljajucaDto.endTime
+          ponavljajucaDTO.reservationDate,
+          ponavljajucaDTO.endTime
         ).toISOString()
       )
     ) {
       return this.clientError(res, [
-        'Rezervacija mora trajati najmanje sat vremena.',
+        'Ponavljajuća rezervacija mora trajati najmanje sat vremena.',
       ]);
     }
 
     if (
-      !this.checkIsStartBeforeEnd(
+      !ValidatorFunctions.checkIsStartBeforeEnd(
         PonavljajucaRepo.timeAndDateToDate(
-          ponavljajucaDto.reservationDate,
-          ponavljajucaDto.startTime
+          ponavljajucaDTO.reservationDate,
+          ponavljajucaDTO.startTime
         ).toISOString(),
         PonavljajucaRepo.timeAndDateToDate(
-          ponavljajucaDto.reservationDate,
-          ponavljajucaDto.endTime
+          ponavljajucaDTO.reservationDate,
+          ponavljajucaDTO.endTime
         ).toISOString()
       ) ||
-      !this.checkIsStartBeforeEnd(
+      !ValidatorFunctions.checkIsStartBeforeEnd(
         PonavljajucaRepo.timeAndDateToDate(
-          ponavljajucaDto.reservationDate,
-          ponavljajucaDto.startTime
+          ponavljajucaDTO.reservationDate,
+          ponavljajucaDTO.startTime
         ).toISOString(),
         PonavljajucaRepo.timeAndDateToDate(
-          ponavljajucaDto.reservationEndDate,
-          ponavljajucaDto.endTime
+          ponavljajucaDTO.reservationEndDate,
+          ponavljajucaDTO.endTime
         ).toISOString()
       ) ||
-      !this.checkIsStartBeforeEnd(
-        new Date(ponavljajucaDto.reservationDate).toISOString(),
-        new Date(ponavljajucaDto.reservationEndDate).toISOString()
+      !ValidatorFunctions.checkIsStartBeforeEnd(
+        new Date(ponavljajucaDTO.reservationDate).toISOString(),
+        new Date(ponavljajucaDTO.reservationEndDate).toISOString()
       )
     ) {
       return this.clientError(res, [
@@ -99,10 +99,10 @@ export class CreatePonavljajucaController extends BaseController {
     }
 
     if (
-      !this.checkIsStartBeforeNow(
+      !ValidatorFunctions.checkIsStartBeforeNow(
         PonavljajucaRepo.timeAndDateToDate(
-          ponavljajucaDto.reservationDate,
-          ponavljajucaDto.startTime
+          ponavljajucaDTO.reservationDate,
+          ponavljajucaDTO.startTime
         ).toISOString()
       )
     ) {
@@ -112,10 +112,10 @@ export class CreatePonavljajucaController extends BaseController {
     }
 
     // Postoji li rezervacija s danim vozilom u to vrijeme
-    for (const dates of PonavljajucaRepo.getAllDates(ponavljajucaDto)) {
+    for (const dates of PonavljajucaRepo.getAllDates(ponavljajucaDTO)) {
       if (
         !(await RezervacijaRepo.isAvailable(
-          ponavljajucaDto.idVozilo,
+          ponavljajucaDTO.idVozilo,
           dates.startTime,
           dates.endTime
         ))
@@ -127,7 +127,7 @@ export class CreatePonavljajucaController extends BaseController {
     }
 
     const validationErrors = (
-      await Promise.all([PonavljajucaValidator.validate(ponavljajucaDto)])
+      await Promise.all([PonavljajucaValidator.validate(ponavljajucaDTO)])
     ).reduce((errs, err) => [...errs, ...err], []);
 
     if (validationErrors.length) {
@@ -144,7 +144,7 @@ export class CreatePonavljajucaController extends BaseController {
     }
 
     const ponavljajuca = await PonavljajucaRepo.createPonavljajuca(
-      ponavljajucaDto
+      ponavljajucaDTO
     );
 
     return this.ok(res, {
@@ -153,32 +153,4 @@ export class CreatePonavljajucaController extends BaseController {
       },
     });
   };
-
-  private checkIsStartBeforeNow(startTime: string): Boolean {
-    const start = parseISO(startTime);
-
-    return !isBefore(start, new Date());
-  }
-
-  private checkIsStartBeforeEnd(startTime: string, endTime: string): Boolean {
-    const start = parseISO(startTime);
-    const end = parseISO(endTime);
-
-    return !isAfter(start, end);
-  }
-
-  private checkIsOneHourLong(startTime: string, endTime: string): Boolean {
-    if (String(startTime) > String(endTime)) {
-      return false;
-    }
-    const start = parseISO(startTime);
-    const end = parseISO(endTime);
-
-    const interval = intervalToDuration({
-      start: new Date(start),
-      end: new Date(end),
-    });
-
-    return interval.hours >= 1;
-  }
 }
