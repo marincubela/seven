@@ -10,10 +10,8 @@ export const RepetitiveReservation = ({ repeated }) => {
         <Tr>
           <Th>Parkiralište</Th>
           <Th>Vozilo</Th>
-          <Th>Datum početka</Th>
-          <Th>Datum kraja</Th>
-          <Th>Vrijeme početka</Th>
-          <Th>Vrijeme kraja</Th>
+          <Th>Datum trajanja</Th>
+          <Th>Vrijeme trajanja</Th>
           <Th>Dani ponavljanja</Th>
           <Th />
         </Tr>

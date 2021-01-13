@@ -11,10 +11,11 @@ import {
   Td,
   Tr,
   useToast,
+  IconButton,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
-import { format } from 'date-fns';
+import { format, parse, isAfter } from 'date-fns';
 
 import { destroy, get } from '../../../utils/network';
 
@@ -29,13 +30,13 @@ export const RepetitiveReservationRow = ({ reservation }) => {
   var daysOfReservation = '';
 
   days.map((d) => {
-    if (d == '0') daysOfReservation += 'ned ';
-    if (d == '1') daysOfReservation += 'pon ';
-    if (d == '2') daysOfReservation += 'uto ';
-    if (d == '3') daysOfReservation += 'sri ';
-    if (d == '4') daysOfReservation += 'čet ';
-    if (d == '5') daysOfReservation += 'pet ';
-    if (d == '6') daysOfReservation += 'sub ';
+    if (d === '0') daysOfReservation += 'ned ';
+    if (d === '1') daysOfReservation += 'pon ';
+    if (d === '2') daysOfReservation += 'uto ';
+    if (d === '3') daysOfReservation += 'sri ';
+    if (d === '4') daysOfReservation += 'čet ';
+    if (d === '5') daysOfReservation += 'pet ';
+    if (d === '6') daysOfReservation += 'sub ';
   });
 
   const [isOpen, setIsOpen] = React.useState(false);
@@ -99,34 +100,36 @@ export const RepetitiveReservationRow = ({ reservation }) => {
     <Tr key={reservation.idRezervacija}>
       <Td>{parking.parkingName}</Td>
       <Td>{vehicles.carName}</Td>
-      <Td>{format(new Date(reservation.reservationDate), 'dd.MM.yyyy.')}</Td>
-      <Td>{format(new Date(reservation.reservationEndDate), 'dd.MM.yyyy.')}</Td>
-      <Td>{reservation.startTime}</Td>
-      <Td>{reservation.endTime}</Td>
+      <Td>
+        {format(new Date(reservation.reservationDate), 'dd.MM.yyyy.')} -{' '}
+        {format(new Date(reservation.reservationEndDate), 'dd.MM.yyyy.')}
+      </Td>
+      <Td>
+        {format(parse(reservation.startTime, 'HH:mm:ss', new Date()), 'HH')}h -{' '}
+        {format(parse(reservation.endTime, 'HH:mm:ss', new Date()), 'HH')}h
+      </Td>
       <Td>{daysOfReservation}</Td>
 
       <Td>
         <HStack align="center">
-          <Button
-            aria-label="Edit reservation"
-            leftIcon={<EditIcon />}
-            as={ReactLink}
-            to={{ pathname: '/reservations/repetitive/edit', state: reservation }}
-          >
-            Uredi
-          </Button>
+          {isAfter(new Date(reservation.reservationDate), new Date()) && (
+            <IconButton
+              aria-label="Edit reservation"
+              icon={<EditIcon />}
+              as={ReactLink}
+              to={{ pathname: '/reservations/repetitive/edit', state: reservation }}
+            />
+          )}
 
-          <Button
+          <IconButton
             colorScheme="red"
             aria-label="Delete reservation"
-            leftIcon={<DeleteIcon />}
+            icon={<DeleteIcon />}
             onClick={() => {
               setIsOpen(true);
               setdeleteReservation(reservation);
             }}
-          >
-            Izbriši
-          </Button>
+          />
         </HStack>
       </Td>
 

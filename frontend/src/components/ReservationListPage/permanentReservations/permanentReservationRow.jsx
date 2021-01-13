@@ -12,10 +12,11 @@ import {
   Tr,
   Text,
   useToast,
+  IconButton,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReactLink, useHistory } from 'react-router-dom';
-import { format } from 'date-fns';
+import { format, isAfter } from 'date-fns';
 
 import { destroy, get } from '../../../utils/network';
 
@@ -83,31 +84,31 @@ export const PermanentReservationRow = ({ reservation }) => {
     <Tr key={reservation.idRezervacija}>
       <Td>{parking.parkingName}</Td>
       <Td>{vehicle.carName}</Td>
-      <Td>{format(new Date(reservation.startTime), 'dd.MM.yyyy. HH')}h</Td>
-      <Td>{format(new Date(reservation.endTime), 'dd.MM.yyyy. HH')}h</Td>
+      <Td>
+        {format(new Date(reservation.startTime), 'dd.MM.yyyy. HH')}h -{' '}
+        {format(new Date(reservation.endTime), 'dd.MM.yyyy. HH')}h
+      </Td>
 
       <Td>
         <HStack align="center">
-          <Button
-            aria-label="Edit reservation"
-            leftIcon={<EditIcon />}
-            as={ReactLink}
-            to={{ pathname: '/reservations/permanent/edit', state: reservation }}
-          >
-            Uredi
-          </Button>
+          {isAfter(new Date(reservation.startTime), new Date()) && (
+            <IconButton
+              aria-label="Edit reservation"
+              icon={<EditIcon />}
+              as={ReactLink}
+              to={{ pathname: '/reservations/permanent/edit', state: reservation }}
+            />
+          )}
 
-          <Button
+          <IconButton
             colorScheme="red"
             aria-label="Delete reservation"
-            leftIcon={<DeleteIcon />}
+            icon={<DeleteIcon />}
             onClick={() => {
               setIsOpen(true);
               setdeleteReservation(reservation);
             }}
-          >
-            Izbriši
-          </Button>
+          />
         </HStack>
       </Td>
 

@@ -12,8 +12,7 @@ export const PermanentReservation = ({ permanent }) => {
         <Tr>
           <Th>Parkiralište</Th>
           <Th>Vozilo</Th>
-          <Th>Vrijeme početka</Th>
-          <Th>Vrijeme kraja</Th>
+          <Th>Vrijeme trajanja</Th>
           <Th />
         </Tr>
       </Thead>
