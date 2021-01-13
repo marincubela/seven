@@ -4,8 +4,6 @@ import { JednokratnaMapper } from '../mappers/JednokratnaMapper';
 import { Jednokratna } from '../models/Jednokratna';
 import { BaseRepo } from './BaseRepo';
 import { RezervacijaRepo } from './RezervacijaRepo';
-import { Trajna } from '../models/Trajna';
-import { TrajnaMapper } from '../mappers/TrajnaMapper';
 import { Op } from 'sequelize';
 
 export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
@@ -180,66 +178,6 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
     return true;
   }
 
-  public static async checkAvailability(
-    jednokratnaDTO: JednokratnaDTO
-  ): Promise<Boolean> {
-    const jednokratne = await Jednokratna.findAll({
-      where: {
-        [Op.or]: {
-          vrijemePocetak: {
-            [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
-          },
-          vrijemeKraj: {
-            [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
-          },
-          [Op.and]: {
-            vrijemeKraj: { [Op.gt]: jednokratnaDTO.endTime },
-            vrijemePocetak: { [Op.lt]: jednokratnaDTO.endTime },
-          },
-        },
-      },
-    });
-
-    for (const jednokratna of jednokratne) {
-      if (
-        !(await RezervacijaRepo.checkAvailability(
-          await JednokratnaMapper.toDTO(jednokratna)
-        ))
-      ) {
-        return false;
-      }
-    }
-
-    const trajne = await Trajna.findAll({
-      where: {
-        [Op.or]: {
-          vrijemePocetak: {
-            [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
-          },
-          vrijemeKraj: {
-            [Op.between]: [jednokratnaDTO.startTime, jednokratnaDTO.endTime],
-          },
-          [Op.and]: {
-            vrijemeKraj: { [Op.gt]: jednokratnaDTO.endTime },
-            vrijemePocetak: { [Op.lt]: jednokratnaDTO.endTime },
-          },
-        },
-      },
-    });
-
-    for (const trajna of trajne) {
-      if (
-        !(await RezervacijaRepo.checkAvailability(
-          await TrajnaMapper.toDTO(trajna)
-        ))
-      ) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
   public static async update(
     jednokratnaDTO: JednokratnaDTO
   ): Promise<Jednokratna> {
@@ -256,19 +194,5 @@ export class JednokratnaRepo extends BaseRepo<JednokratnaDTO> {
     return await this.getJednokratnaByIdJednokratna(
       jednokratnaDTO.idJednokratna
     );
-  }
-
-  public static async checkTime(
-    startTime: Date,
-    endTime: Date
-  ): Promise<Boolean> {
-    const currentDate = new Date();
-    if (
-      (startTime.getTime() - currentDate.getTime()) / 3600 < 6 ||
-      startTime > endTime ||
-      (startTime.getTime() - endTime.getTime()) / 3600 > 24
-    )
-      return false;
-    return true;
   }
 }
