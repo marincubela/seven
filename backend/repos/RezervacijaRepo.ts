@@ -5,7 +5,7 @@ import { BaseRepo } from './BaseRepo';
 import { JednokratnaRepo } from './JednokratnaRepo';
 import { TrajnaRepo } from './TrajnaRepo';
 import { PonavljajucaRepo } from './PonavljajucaRepo';
-import { ReservationsDTO } from '../dtos/ResponseDtos/ReservationsDTO';
+import { AllReservationsDTO } from '../dtos/ResponseDtos/AllReservationsDTO';
 import { JednokratnaMapper } from '../mappers/JednokratnaMapper';
 import { PonavljajucaMapper } from '../mappers/PonavljajucaMapper';
 import { TrajnaMapper } from '../mappers/TrajnaMapper';
@@ -93,7 +93,7 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
 
   static async getReservationsFromClient(
     idKlijent: number
-  ): Promise<ReservationsDTO> {
+  ): Promise<AllReservationsDTO> {
     const reservations = await Rezervacija.findAll({
       where: {
         idKlijent,
@@ -102,7 +102,7 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
 
     //sta ako nema rezervacija?
 
-    const reservationsDTO: ReservationsDTO = {
+    const reservationsDTO: AllReservationsDTO = {
       singleUse: [],
       repeated: [],
       permanent: [],
