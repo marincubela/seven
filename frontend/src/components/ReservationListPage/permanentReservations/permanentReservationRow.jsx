@@ -21,7 +21,6 @@ import { format, isAfter } from 'date-fns';
 import { destroy, get } from '../../../utils/network';
 
 export const PermanentReservationRow = ({ reservation }) => {
-  const [errorMessage, setErrorMessage] = useState('');
   const [vehicle, setVehicle] = useState([]);
   const [parking, setParking] = useState([]);
   const history = useHistory();
@@ -111,8 +110,6 @@ export const PermanentReservationRow = ({ reservation }) => {
           />
         </HStack>
       </Td>
-
-      <Text color="error.500">{errorMessage}</Text>
 
       <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
         <AlertDialogOverlay>

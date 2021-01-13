@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Tabs, TabList, Tab, TabPanels, TabPanel, Center, Spinner, Box } from '@chakra-ui/react';
-import { Link as ReactLink, useHistory } from 'react-router-dom';
+import { Tabs, TabList, Tab, TabPanels, TabPanel, Center, Spinner } from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
 import { get } from '../../utils/network';
 import { useStore } from '../../store/StoreProvider';
 import { OneTimeReservation } from './oneTimeReservations';
