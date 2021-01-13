@@ -100,8 +100,6 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
       },
     });
 
-    //sta ako nema rezervacija?
-
     const reservationsDTO: AllReservationsDTO = {
       singleUse: [],
       repeated: [],
@@ -138,7 +136,7 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
     }
     return reservationsDTO;
   }
-  //jednokratna
+
   public static async isJednokratna(idRezervacija: number): Promise<Boolean> {
     return Boolean(
       await JednokratnaRepo.getJednokratnaByIdRezervacija(idRezervacija)
@@ -150,7 +148,6 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
       .idJednokratna;
   }
 
-  //ponavaljajuca
   public static async isPonavljajuca(idRezervacija: number): Promise<Boolean> {
     return Boolean(
       await PonavljajucaRepo.getPonavljajucaByIdRezervacija(idRezervacija)
@@ -165,7 +162,6 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
     ).idPonavljajuca;
   }
 
-  //trajna
   public static async isTrajna(idRezervacija: number): Promise<Boolean> {
     return Boolean(await TrajnaRepo.getTrajnaByIdRezervacija(idRezervacija));
   }
@@ -204,11 +200,6 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
         idVozilo,
         new Date(start),
         new Date(end)
-        //reservationDate: new Date(new Date(start).toDateString()),
-        //reservationEndDate: new Date(new Date(end).toDateString()),
-        //reservationDate: subDays(new Date(start), 1),
-        //reservationEndDate: addDays(new Date(end), 1),
-        //repeatDays: new Date(start).getDay().toString(),
       ))
     ) {
       return false;
@@ -251,28 +242,11 @@ export class RezervacijaRepo extends BaseRepo<RezervacijaDTO> {
         idVozilo,
         new Date(start),
         new Date(end)
-        //reservationDate: new Date(new Date(start).toDateString()),
-        //reservationEndDate: new Date(new Date(end).toDateString()),
-        //reservationDate: subDays(new Date(start), 1),
-        //reservationEndDate: addDays(new Date(end), 1),
-        //repeatDays: new Date(start).getDay().toString(),
       ))
     ) {
       return false;
     }
 
     return true;
-  }
-
-  public static async checkAvailability(
-    rezervacijaDTO: RezervacijaDTO
-  ): Promise<Boolean> {
-    const rezervacije = await Rezervacija.findAll({
-      where: {
-        idVozilo: rezervacijaDTO.idVozilo,
-      },
-    });
-
-    return rezervacije.length === 0;
   }
 }
