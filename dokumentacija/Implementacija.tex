@@ -1,21 +1,21 @@
-\chapter{Implementacija i korisničko sučelje}
-
+\chapter{Implementacija i korisničko sučelje}s
 		
 		\section{Korištene tehnologije i alati}
 		
-			Komunikacija u timu realizirana je korištenjem aplikacije \underline{WhatsApp} \footnote{\href{https://www.whatsapp.com/}{Whatsapp}} za manje i kraće dogovore, a za dulje i veće dogovore komunikacija je realizirana korištenjem aplikacije \underline{Microsoft Teams} \footnote{\href{https://www.microsoft.com/hr-hr/microsoft-365/microsoft-teams/group-chat-software}{Microsoft Teams}}. Za izradu UML dijagrama korišten je alat \underline{Astah UML} \footnote{\href{https://astah.net/products/astah-uml/}{Astah UML}}. Kao sustav za upravljanje izvornim kodom Git \footnote{\href{https://git-scm.com/}{Git}}. Udaljeni repozitorij projekta je dostupan na web platformi \underline{GitLab} \footnote{\href{https://www.gitlab.com}{Gitlab}}.
+			Komunikacija u timu realizirana je korištenjem aplikacije \underline{WhatsApp} \footnote{\href{https://www.whatsapp.com/}{Whatsapp}} za manje i
+			kraće dogovore, a za dulje i veće dogovore komunikacija je realizirana korištenjem aplikacije \underline{Microsoft Teams} \footnote{\href{https://www.microsoft.com/hr-hr/microsoft-365/microsoft-teams/group-chat-software}{Microsoft Teams}}. Za izradu UML dijagrama korišten je alat \underline{Astah UML} \footnote{\href{https://astah.net/products/astah-uml/}{Astah UML}}. Kao sustav za upravljanje izvornim kodom Git \footnote{\href{https://git-scm.com/}{Git}}. Udaljeni repozitorij projekta je dostupan na web platformi \underline{GitLab} \footnote{\href{https://www.gitlab.com}{Gitlab}}.
 
-			Kao razvojno okruženje korišten je \underline{Microsoft Visual Studio Code} \footnote{\href{https://code.visualstudio.com/}{Microsoft Visual Studio Code}}. Microsoft Visual Studio Code trenutno je \underline{najpopularnije} \footnote{\href{https://pypl.github.io/IDE.html}{Deset najraširenijih razvojnih okruženja}} razvojno okruženje, iznimno je prilagodljiv raznim potrebama programera i potrebama samog programskog jezika.
-			
-			Aplikacija je izrađena u dva dijela. Backend dio je napisan koristeći radni okvir \underline{Express.js} \footnote{\href{https://expressjs.com/}{Express.js}} u programskom jeziku \underline{TypeScript} \footnote{\href{https://www.typescriptlang.org/}{TypeScript}}, a frontend dio je napisan koristeći biblioteku \underline{React.js} \footnote{\href{https://reactjs.org/}{React.js}} u programskom jeziku \underline{JavaScript} \footnote{\href{https://www.javascript.com/}{JavaScript}}.
-			
-			Express.js radni okvir je javno dostupan, besplatan te otvorenog izvora pružen od strane \underline{OpenJS Foundation-a} \footnote{\href{https://openjsf.org/}{OpenJS Foundation}}. Express.js je jednostavna i prilagodljiv \underline{Node.js}\footnote{\href{https://nodejs.org/en/}{Node.js}} radni okvir koja pruža izdržljiv skup značajki za web i mobilne aplikacije.
-			
-			React.js je JavaScript biblioteka za izradu interaktivnih sučelja unutar web aplikacija. Održavana je od strane Facebooka, a najčešće je korišten kao osnova u razvoju web aplikacija.
-			
-			Korištena baza podataka je \underline{PostgreSQL} \footnote{\href{https://www.postgresql.org/}{PostgreSQL}}. PostgreSQL je besplatna, objektno-relacijska baza podataka sa više od 30 godina aktivnog razvoja.
-			
-			Cijela aplikacija poslužena je na \underline{Heroku} \footnote{\href{https://www.heroku.com/home}{Heroku}}. Heroku je platforma koja omogućuje jednostavno i sigurno puštanje  u pogon i nadziranje aplikacija. Konkretno, koristimo dvije Heroku aplikacije, jednu za backend i jednu za frontend te u sklopu backend aplikacije koristimo i jednu instancu PostrgeSQL baze podataka.
+            Kao razvojno okruženje korišten je \underline{Microsoft Visual Studio Code} \footnote{\href{https://code.visualstudio.com/}{Microsoft Visual Studio Code}}. Microsoft Visual Studio Code trenutno je \underline{najpopularnije} \footnote{\href{https://pypl.github.io/IDE.html}{Deset najraširenijih razvojnih okruženja}} razvojno okruženje, iznimno je prilagodljiv raznim potrebama programera i potrebama samog programskog jezika.
+            
+            Aplikacija je izrađena u dva dijela. Backend dio je napisan koristeći radni okvir \underline{Express.js} \footnote{\href{https://expressjs.com/}{Express.js}} u programskom jeziku \underline{TypeScript} \footnote{\href{https://www.typescriptlang.org/}{TypeScript}}, a frontend dio je napisan koristeći biblioteku \underline{React.js} \footnote{\href{https://reactjs.org/}{React.js}} u programskom jeziku \underline{JavaScript} \footnote{\href{https://www.javascript.com/}{JavaScript}}.
+            
+            Express.js radni okvir je javno dostupan, besplatan te otvorenog izvora pružen od strane \underline{OpenJS Foundation-a} \footnote{\href{https://openjsf.org/}{OpenJS Foundation}}. Express.js je jednostavna i prilagodljiv \underline{Node.js}\footnote{\href{https://nodejs.org/en/}{Node.js}} radni okvir koja pruža izdržljiv skup značajki za web i mobilne aplikacije.
+            
+            React.js je JavaScript biblioteka za izradu interaktivnih sučelja unutar web aplikacija. Održavana je od strane Facebooka, a najčešće je korišten kao osnova u razvoju web aplikacija.
+            
+            Korištena baza podataka je \underline{PostgreSQL} \footnote{\href{https://www.postgresql.org/}{PostgreSQL}}. PostgreSQL je besplatna, objektno-relacijska baza podataka sa više od 30 godina aktivnog razvoja.
+            
+            Cijela aplikacija poslužena je na \underline{Heroku} \footnote{\href{https://www.heroku.com/home}{Heroku}}. Heroku je platforma koja omogućuje jednostavno i sigurno puštanje  u pogon i nadziranje aplikacija. Konkretno, koristimo dvije Heroku aplikacije, jednu za backend i jednu za frontend te u sklopu backend aplikacije koristimo i jednu instancu PostrgeSQL baze podataka.
 			
 			\eject 
 		
@@ -55,26 +55,70 @@
 			\eject 
 		
 		\section{Upute za puštanje u pogon}
-				
-			\subsection{Frontend aplikacija}
-			
-			
-			
-			\subsection{Backend aplikacija}
 		
+		    Prije ikakve radnje, potrebno je klonirati \textit{GitLab} repozitorij sa kodom te otvoriti terminal (i opcionalno sistemski preglednik) u tom direktoriju. Udaljeni \textit{GitLab} repozitorij možete pronaći na  \underline{\href{https://gitlab.com/Cubi5/seven}{ovoj poveznici}}
+		    
+		    Kako bi kloniranje bilo moguće potrebno je imati instalirani \textit{Git} klijent na računalu. \textit{Git} klijent moguće je preuzeti na \underline{\href{https://git-scm.com/downloads}{ovoj poveznici}}.
+		    
+		    Još jedan uvjet kako bi aplikacija radila lokalno jest instaliran \textit{Node.js}. \textit{Node.js} moguće je preuzeti na \underline{\href{https://nodejs.org/en/download/}{ovoj poveznici}}. Sa instalacijom \textit{Node.js} aplikacije, instalirat će vam se i \textit{\underline{npm}} \footnote{\href{https://www.npmjs.com/}{npm}} koji je zaprao abrevijacija od \textit{Node Package Manager}. Samo ime govori da je to alat za upravljanje \textit{Node.js} paketima.
+
+		        
+		    \pagebreak
 		
-			\subsection{Baza podataka}
+	        \subsection{Frontend aplikacija}
+	        
+	        \subsubsection*{Lokalna instalacija}
+	        
+	            Da bismo pokrenulni lokalnu frontend aplikaciju potrebno je unutar terminala pozicionirati se u frontend mapu. 
+	            
+		        \begin{center}
+	                \texttt{cd frontend}
+		        \end{center}
+		        
+		        Sada je potrebno instalirati potrebne pakete za uspješan rad aplikacije. To činimo pokretanjem naredbe
+		        
+		        \begin{center}
+	                \texttt{npm install}
+		        \end{center}
+		        
+		        Nakon instalacije paketa, potrebno je podesiti i lokalni \textit{host} file. Da bismo uredili \textit{host} file prvo ga je potrebno locirati, a sama lokacija ovisi o operacijskom sustavu. Ukoliko koristimo operacijski sustav na bazi \textit{Linuxa} \textit{host} file se nalazi na lokaciji \texttt{/etc/hosts}, dok se na \textit{Windows} operacijskom sustavu ta datoteka nalazi na \texttt{C:\Windows\System32\drivers\etc\hosts}
+		        
+		        Jednom kada smo je locirali, potrebno je na kraj datoteke dodati redak
+
+		        \begin{center}
+	                \texttt{127.0.0.1	frontend-local.parkirajme.xyz}
+		        \end{center}
+		        
+		        Dodavanjem ovog retka, završili smo lokalnu instalaciju servera te server možemo pokrenuti naredbom
+		        
+		        \begin{center}
+	                \texttt{npm run dev}
+		        \end{center}
+		        
+		        Kako bi sve ispravno radilo lokalnom serveru ćemo pristupiti sa sljedeće adrese
+
+		        \begin{center}
+	                \href{http://frontend-local.parkirajme.xyz:3000/}{\texttt{frontend-local.parkirajme.xyz:3000}}
+		        \end{center}
+		        
+		    \pagebreak
+		    
+	        \subsection{Backend aplikacija}
+		    
+		    \pagebreak
+		    
+	        \subsection{Baza podataka}
 		
 		    \subsubsection*{Lokalna instalacija}
 		    
-		        Potrebno je preuzeti pgAdmin aplikaciju uz koju standardno dolazi i PostgreSQL server. Pokrenuti instalaciju te uz pgAdmin klijenta odabrati i PostgreSQL server za instalaciju. Nakon instalacije potrebno je postaviti korisnika. Nakon instalacije pgAdmin klijent i sam PostgreSQL server su pokrenuti.
+		        Potrebno je preuzeti \textit{pgAdmin} aplikaciju uz koju standardno dolazi i \textit{PostgreSQL} server. Pokrenuti instalaciju te uz \textit{pgAdmin} klijenta odabrati i \textit{PostgreSQL} server za instalaciju. Nakon instalacije potrebno je postaviti korisnika. Nakon instalacije \textit{pgAdmin} klijent i sam \textit{PostgreSQL} server su pokrenuti.
 		        
 		    \subsubsection*{Lokalna konfiguracija}
 		        
 		        Nakon instalacije, potrebno je napraviti novu lokalnu bazu.
 		        
 		        \begin{enumerate}
-		            \item Proširiti \textit{Servers} te, ovisno o preuzetoj verziji PostgreSQL servera, proširiti  \textit{PostgreSQL XX}
+		            \item Proširiti \textit{Servers} te, ovisno o preuzetoj verziji \textit{PostgreSQL} servera, proširiti  \textit{PostgreSQL XX}
 		            \item Desni klik na \textit{Databases} te \textit{Create} te \textit{Database...}
 		            \item Otvara se modal te kao \textit{Database} vrijednost stavljamo proizvoljni naziv
 		            \item Odabiremo \textit{Spremi} te time stvaramo novu bazu
@@ -82,9 +126,9 @@
 		        
 		        Nakon stvorene baze potrebno je stvoriti konekcijski \textit{connection string}. Njega ćemo stvoriti što ćemo vrijednosti u vitičastim zagradama zamijeniti s pravim vrijednostima.
 		        
-		        \begin{lstlisting}
-postgres://{username}:{password}@{hostname}:{port}/{database}
-		        \end{lstlisting}
+		        \begin{center}
+	               \texttt{postgres://{username}:{password}@{hostname}:{port}/{database}}
+		        \end{center}
 		        
 		        \begin{enumerate}
 		            \item username - inicijalni username je \textit{postgres}
@@ -95,16 +139,17 @@ postgres://{username}:{password}@{hostname}:{port}/{database}
 		        \end{enumerate}
 		        
 		        Nakon generiranog \textit{connection stringa}, kreirat ćemo \textit{.env} datoteku u korijenskom direktoriju backend aplikacije te u njoj napraviti zapis:
+
+		        \begin{center}
+	                \texttt{DATABASE\_URL={connectionString}}
+		        \end{center}
 		        
-		        \begin{verbatim}
-		            DATABASE_URL={connectionString}
-		        \end{verbatim}
-		        
-		        Sada će prilikom pokretanja backend aplikacije, prije samog spajanja s bazom, aplikacija pročitati sadržaj \textit{.env} datoteke i učitati te vrijednosti kao sistemske varijable. U Node.js aplikaciji tim varijablama imamo pristup preko
-		        
-		        \begin{verbatim}
-		            proccess.env.\${imeVarijable}
-		        \end{verbatim}
+		        Sada će prilikom pokretanja backend aplikacije, prije samog spajanja s bazom, aplikacija pročitati sadržaj \textit{.env} datoteke i učitati te vrijednosti kao sistemske varijable. U \textit{Node.js} aplikaciji tim varijablama imamo pristup preko
+
+		        \begin{center}
+	                \texttt{proccess.env.\{imeVarijable\}}
+		        \end{center}
+		
 		
 		    \subsubsection*{Heroku instalacija}
 		    
@@ -141,3 +186,4 @@ postgres://{username}:{password}@{hostname}:{port}/{database}
 		        
 		        Slično kao u lokalnoj konfiguraciji potrebno je igrati se s varijablamo. Jedina i vrlo bitna razlika je ta da sve već posloženo te na Heroku serveru već postoji varijabla \textit{DATABASE\_URL}. Potrebno je samo pustiti backend aplikaciju u pogon.
 		    
+			\eject
