@@ -1,4 +1,16 @@
-import { Box, Heading, VStack, Text, Input, HStack, Button, Divider, PinInput, PinInputField } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  VStack,
+  Text,
+  Input,
+  HStack,
+  Button,
+  Divider,
+  PinInput,
+  PinInputField,
+  useToast,
+} from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
@@ -12,6 +24,7 @@ export function ProfileEditPersonPage() {
   const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
   const user = store.currentUser;
+  const toast = useToast();
 
   const { register, errors, handleSubmit, control } = useForm({
     defaultValues: {
@@ -38,6 +51,12 @@ export function ProfileEditPersonPage() {
 
     update(`user/client/${user.idRacun}`, requestBody)
       .then(() => {
+        toast({
+          title: 'Profil ažuriran',
+          description: `Ažuriran profil ${formData['edit-user-firstname']} ${formData['edit-user-lastname']}.`,
+          position: 'top-right',
+          status: 'success',
+        });
         return get('session');
       })
       .then((res) => {

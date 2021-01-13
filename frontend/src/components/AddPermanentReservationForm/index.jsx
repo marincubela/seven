@@ -84,7 +84,7 @@ export function AddPermanentReservationForm() {
       .then(() => {
         history.push('/');
         toast({
-          title: 'Rezervacija uspješna',
+          title: 'Rezervacija dodana',
           description: `Napravljena je trajna rezervacija od ${format(
             formData['reservation-starttime'],
             'dd.MM.yyyy',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Heading, VStack, Text, Input, Button } from '@chakra-ui/react';
+import { Box, Heading, VStack, Text, Input, Button, useToast } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { TwitterPicker } from 'react-color';
@@ -11,6 +11,7 @@ export function VehiclesAdd() {
   const { handleSubmit, register, errors } = useForm();
   const [carColor, setCarColor] = useState({ hex: '#FFFFFF' });
   const history = useHistory();
+  const toast = useToast();
 
   const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.klijent });
 
@@ -30,6 +31,12 @@ export function VehiclesAdd() {
 
     post('vehicle', requestBody)
       .then(() => {
+        toast({
+          title: 'Vozilo dodano',
+          description: `Dodano je vozilo ${formData['add-vehicle-name']} registracije ${formData['add-vehicle-registration']}.`,
+          position: 'top-right',
+          status: 'success',
+        });
         history.replace('/vehicles');
       })
 

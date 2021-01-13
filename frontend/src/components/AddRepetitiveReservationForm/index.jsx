@@ -89,7 +89,7 @@ export function AddRepetitiveReservationForm() {
       .then(() => {
         history.push('/');
         toast({
-          title: 'Rezervacija uspješna',
+          title: 'Rezervacija dodana',
           description: `Napravljena je ponavljajuća rezervacija od ${format(
             formData['reservation-startdate'],
             'dd.MM.yyyy',

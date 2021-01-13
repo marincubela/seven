@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Heading, VStack, Text, Input, Button } from '@chakra-ui/react';
+import { Box, Heading, VStack, Text, Input, Button, useToast } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import { TwitterPicker } from 'react-color';
@@ -12,7 +12,7 @@ export function VehicleUpdate() {
   const history = useHistory();
   const { handleSubmit, register, errors } = useForm();
   const [carColor, setCarColor] = useState(location.state.color);
-  // const [carColor, setCarColor] = useState(null);
+  const toast = useToast();
 
   const { currentUser } = usePrivateRoute({ redirectOn: (user) => !user?.klijent });
 
@@ -30,8 +30,13 @@ export function VehicleUpdate() {
     };
 
     update(`vehicle/${location.state.idVozilo}`, requestBody)
-      .then((res) => {
-        console.log('odgovor je: ' + res);
+      .then(() => {
+        toast({
+          title: 'Vozilo uspješno promijenjeno',
+          description: `Promijenjeno je vozilo ${formData['add-vehicle-name']} registracije ${formData['add-vehicle-registration']}.`,
+          position: 'top-right',
+          status: 'success',
+        });
         history.replace('/vehicles');
       })
       .catch((res) => {

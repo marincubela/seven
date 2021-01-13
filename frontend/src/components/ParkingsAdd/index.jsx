@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Heading, VStack, HStack, Text, Input, Button, Select } from '@chakra-ui/react';
+import { Box, Heading, VStack, HStack, Text, Input, Button, Select, useToast } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ export function ParkingsAdd() {
   const { handleSubmit, register, errors } = useForm();
   const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
+  const toast = useToast();
 
   function onParkingInput(formData) {
     const requestBody = {
@@ -26,8 +27,13 @@ export function ParkingsAdd() {
     };
 
     post('parking', requestBody)
-      .then((res) => {
-        console.log('odgovor je: ' + res);
+      .then(() => {
+        toast({
+          title: 'Parkiralište dodano',
+          description: `Dodano je parkiralište ${formData['add-parking-name']}.`,
+          position: 'top-right',
+          status: 'success',
+        });
         history.replace('/parkings');
       })
 

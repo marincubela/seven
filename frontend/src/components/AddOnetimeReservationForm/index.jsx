@@ -84,7 +84,7 @@ export function AddOnetimeReservationForm() {
       .then(() => {
         history.push('/');
         toast({
-          title: 'Rezervacija uspješna',
+          title: 'Rezervacija dodana',
           description: `Napravljena je jednokratna rezervacija od ${format(
             formData['reservation-starttime'],
             'dd.MM.yyyy HH:mm',

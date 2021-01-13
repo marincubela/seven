@@ -1,4 +1,4 @@
-import { Box, Heading, VStack, Text, Input, HStack, Button } from '@chakra-ui/react';
+import { Box, Heading, VStack, Text, Input, HStack, Button, useToast } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -12,6 +12,7 @@ export function ProfileEditCompanyPage() {
   const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
   const user = store.currentUser;
+  const toast = useToast();
 
   const { register, errors, handleSubmit } = useForm({
     defaultValues: {
@@ -36,6 +37,12 @@ export function ProfileEditCompanyPage() {
 
     update(`user/company/${user.idRacun}`, requestBody)
       .then(() => {
+        toast({
+          title: 'Profil ažuriran',
+          description: `Ažuriran profil ${formData['edit-company-name']}.`,
+          position: 'top-right',
+          status: 'success',
+        });
         return get('session');
       })
       .then((res) => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Heading, VStack, HStack, Text, Input, Button, Select } from '@chakra-ui/react';
+import { Box, Heading, VStack, HStack, Text, Input, Button, Select, useToast } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ export function ParkingsEdit() {
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState('');
   const [parking] = useState(location.state);
+  const toast = useToast();
 
   const { register, errors, handleSubmit } = useForm({
     defaultValues: {
@@ -44,8 +45,13 @@ export function ParkingsEdit() {
       .then(() => {
         return get('session');
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        toast({
+          title: 'Parkiralište uspješno promijenjeno',
+          description: `Promijenjeno parkiralište ${formData['edit-parking-name']}.`,
+          position: 'top-right',
+          status: 'success',
+        });
         history.replace('/parkings');
       })
       .catch((res) => {
