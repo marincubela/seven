@@ -191,6 +191,7 @@ export function AddPermanentReservationForm() {
           >
             <Text as="label">Vozilo</Text>
             <Select
+              defaultValue={vehicles[0]?.idVozilo}
               variant="filled"
               placeholder="Odaberi vozilo"
               ref={register({
