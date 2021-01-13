@@ -120,7 +120,7 @@ export function AddRepetitiveReservationForm() {
   return (
     <Box bgColor="primary.200" marginY="8" padding="6" borderRadius="lg">
       <Heading as="h2" size="xl" marginY="4">
-        Napravi trajnu rezervaciju
+        Napravi ponavljajuću rezervaciju
       </Heading>
 
       <VStack align="flex-start">
