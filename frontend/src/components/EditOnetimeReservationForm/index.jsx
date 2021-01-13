@@ -34,10 +34,10 @@ import { usePrivateRoute } from '../../hooks/usePrivateRoute';
 export function EditOnetimeReservationForm() {
   const store = useStore();
   const [errorMessage, setErrorMessage] = useState('');
-  const user = store.currentUser;
   const location = useLocation();
   const [reservation] = useState(location.state);
   const [vehicles, setVehicles] = useState();
+  const [parking, setParking] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const toast = useToast();
@@ -53,6 +53,17 @@ export function EditOnetimeReservationForm() {
         .catch((res) => {
           console.log('eror');
           console.log(res);
+        });
+      get(`parking/${reservation.idParkiraliste}`)
+        .then((res) => {
+          if (res.data && res.data.parking) {
+            setParking(res.data.parking);
+          }
+        })
+        .catch((res) => {
+          if (res.errors && res.errors[0] && res.errors[0].message) {
+            setErrorMessage(res.errors[0].message);
+          }
         });
     }
   }, []);
@@ -82,11 +93,11 @@ export function EditOnetimeReservationForm() {
       },
     };
 
-    update(`reservation/onetime/${user.idRezervacija}`, requestBody)
+    update(`reservation/onetime/${reservation.idRezervacija}`, requestBody)
       .then(() => {
         toast({
-          title: 'Rezervacija uspješna',
-          description: `Napravljena je jednokratna rezervacija od ${format(
+          title: 'Rezervacija uspješno promijenjena',
+          description: `Promijenjena je jednokratna rezervacija od ${format(
             formData['edit-reservation-starttime'],
             'dd.MM.yyyy HH:mm',
           )} do ${format(formData['edit-reservation-endtime'], 'dd.MM.yyyy HH:mm')}.`,
@@ -96,8 +107,8 @@ export function EditOnetimeReservationForm() {
         return get('session');
       })
       .then((res) => {
-        store.setCurrentUser(res.data.user);
-        history.push('/');
+        console.log(res);
+        history.replace('/reservations');
       })
       .catch((res) => {
         if (res.errors && res.errors[0] && res.errors[0].message) {
@@ -133,11 +144,11 @@ export function EditOnetimeReservationForm() {
       <VStack align="flex-start">
         <Text>Odabrano parkiralište</Text>
         <Text fontWeight="bold" fontSize="lg">
-          {reservation.parkingName}
+          {parking?.parkingName}
         </Text>
       </VStack>
 
-      <form onSubmit={handleSubmit(onEdit)} id="editOnetime" autoComplete="off">
+      <form onSubmit={handleSubmit(onEdit)} id="edit-reservation" autoComplete="off">
         <VStack flex="1" align="stretch" marginY="8" spacing="4">
           <VStack
             flex="1"
@@ -254,17 +265,17 @@ export function EditOnetimeReservationForm() {
             });
           }}
         >
-          Rezerviraj
+          Spremi
         </Button>
 
         <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
           <AlertDialogOverlay>
             <AlertDialogContent>
               <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Plati rezervaciju
+                Uredi rezervaciju
               </AlertDialogHeader>
 
-              <AlertDialogBody>Jeste li sigurni da želite izvršiti uplatu?</AlertDialogBody>
+              <AlertDialogBody>Jeste li sigurni da želite promijeniti rezervaciju?</AlertDialogBody>
 
               <AlertDialogFooter>
                 <Button ref={cancelRef} colorScheme="red" variant="outline" onClick={onClose}>

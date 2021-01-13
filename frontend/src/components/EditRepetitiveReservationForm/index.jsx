@@ -39,10 +39,10 @@ export function EditRepetitiveReservationForm() {
   const location = useLocation();
   const [reservation] = useState(location.state);
   const [vehicles, setVehicles] = useState();
+  const [parking, setParking] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const toast = useToast();
-  const user = store.currentUser;
 
   const { register, errors, trigger, handleSubmit, watch, control } = useForm({
     defaultValues: {
@@ -69,6 +69,17 @@ export function EditRepetitiveReservationForm() {
           console.log('eror');
           console.log(res);
         });
+      get(`parking/${reservation.idParkiraliste}`)
+        .then((res) => {
+          if (res.data && res.data.parking) {
+            setParking(res.data.parking);
+          }
+        })
+        .catch((res) => {
+          if (res.errors && res.errors[0] && res.errors[0].message) {
+            setErrorMessage(res.errors[0].message);
+          }
+        });
     }
   }, []);
 
@@ -90,11 +101,11 @@ export function EditRepetitiveReservationForm() {
       },
     };
 
-    update(`reservation/repetitive/${user.idRezervacija}`, requestBody)
+    update(`reservation/repetitive/${reservation.idRezervacija}`, requestBody)
       .then(() => {
         toast({
-          title: 'Rezervacija uspješna',
-          description: `Napravljena je ponavljajuća rezervacija od ${format(
+          title: 'Rezervacija uspješno promijenjena',
+          description: `Promijenjena je ponavljajuća rezervacija od ${format(
             formData['edit-reservation-startdate'],
             'dd.MM.yyyy',
           )} do ${format(formData['edit-reservation-enddate'], 'dd.MM.yyyy')}.`,
@@ -104,8 +115,8 @@ export function EditRepetitiveReservationForm() {
         return get('session');
       })
       .then((res) => {
-        store.setCurrentUser(res.data.user);
-        history.push('/');
+        console.log(res);
+        history.replace('/reservations');
       })
       .catch((res) => {
         if (res.errors && res.errors[0] && res.errors[0].message) {
@@ -141,7 +152,7 @@ export function EditRepetitiveReservationForm() {
       <VStack align="flex-start">
         <Text>Odabrano parkiralište</Text>
         <Text fontWeight="bold" fontSize="lg">
-          {reservation.parkingName}
+          {parking?.parkingName}
         </Text>
       </VStack>
 
@@ -345,17 +356,17 @@ export function EditRepetitiveReservationForm() {
             });
           }}
         >
-          Rezerviraj
+          Spremi
         </Button>
 
         <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
           <AlertDialogOverlay>
             <AlertDialogContent>
               <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Plati rezervaciju
+                Uredi rezervaciju
               </AlertDialogHeader>
 
-              <AlertDialogBody>Jeste li sigurni da želite izvršiti uplatu?</AlertDialogBody>
+              <AlertDialogBody>Jeste li sigurni da želite promijeniti rezervaciju?</AlertDialogBody>
 
               <AlertDialogFooter>
                 <Button ref={cancelRef} colorScheme="red" variant="outline" onClick={onClose}>
