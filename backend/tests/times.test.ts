@@ -17,15 +17,15 @@ describe('Provjera funkcija u ValidatorFunctions', () => {
 
     expect(actual).toBe(false);
   });
-  
-  it('Provjera 3 - checkIsStartBeforeNow6Hours', () =>{
+
+  it('Provjera 3 - checkIsStartBeforeNow6Hours', () => {
     const actual = ValidatorFunctions.checkIsStartBeforeNow6Hours(
       new Date('2021-09-09').toISOString()
     );
     expect(actual).toBe(true);
   });
 
-  it('Provjera 4 - checkIsOneHourLongTrue', () =>{
+  it('Provjera 4 - checkIsOneHourLongTrue', () => {
     const actual = ValidatorFunctions.checkIsOneHourLong(
       new Date('2021-09-09 09:33:00').toISOString(),
       new Date('2021-09-09 10:33:00').toISOString()
@@ -33,7 +33,7 @@ describe('Provjera funkcija u ValidatorFunctions', () => {
     expect(actual).toBe(true);
   });
 
-  it('Provjera 5 - checkIsOneHourLongFalse', () =>{
+  it('Provjera 5 - checkIsOneHourLongFalse', () => {
     const actual = ValidatorFunctions.checkIsOneHourLong(
       new Date('2021-09-09 09:33:00').toISOString(),
       new Date('2021-09-09 10:32:59').toISOString()
@@ -41,7 +41,7 @@ describe('Provjera funkcija u ValidatorFunctions', () => {
     expect(actual).toBe(false);
   });
 
-  it('Provjera 6 - checkIsOneDayLongTrue', () =>{
+  it('Provjera 6 - checkIsOneDayLongTrue', () => {
     const actual = ValidatorFunctions.checkIsOneDayLong(
       new Date('2021-09-09 09:33:00').toISOString(),
       new Date('2021-10-09 10:33:00').toISOString()
@@ -49,7 +49,7 @@ describe('Provjera funkcija u ValidatorFunctions', () => {
     expect(actual).toBe(true);
   });
 
-  it( 'Provjera 7 - checkIsOneDayLongFalse', () =>{
+  it('Provjera 7 - checkIsOneDayLongFalse', () => {
     const actual = ValidatorFunctions.checkIsOneDayLong(
       new Date('2021-09-09 09:33:00').toISOString(),
       new Date('2021-09-10 02:32:59').toISOString()
