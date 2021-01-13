@@ -1,4 +1,4 @@
-import { Box, useToast } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
@@ -18,7 +18,6 @@ L.Icon.Default.mergeOptions({
 
 export const Map = () => {
   const [parkings, setParking] = useState([]);
-  const toast = useToast();
 
   useEffect(() => {
     get('parking/all')
@@ -26,14 +25,7 @@ export const Map = () => {
       .catch(() => {});
   }, []);
 
-  const [currLocation] = useCurrentLocation({
-    onError: (err) =>
-      toast({
-        title: err,
-        status: 'error',
-        position: 'top-right',
-      }),
-  });
+  const [currLocation] = useCurrentLocation();
 
   return (
     <Fragment>
