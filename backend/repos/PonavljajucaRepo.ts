@@ -4,6 +4,7 @@ import { PonavljajucaMapper } from '../mappers/PonavljajucaMapper';
 import { Ponavljajuca } from '../models/Ponavljajuca';
 import { BaseRepo } from './BaseRepo';
 import { RezervacijaRepo } from './RezervacijaRepo';
+import { Op } from 'sequelize';
 import {
   addDays,
   areIntervalsOverlapping,
@@ -12,9 +13,7 @@ import {
   getDay,
   isAfter,
   isBefore,
-  parseISO,
 } from 'date-fns';
-import { Op } from 'sequelize';
 
 export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
   async exists(ponavljajucaDTO: PonavljajucaDTO): Promise<boolean> {
@@ -310,7 +309,7 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
     const day = new Date(date).getDate();
     var hour, min, sec;
 
-    // 2020-2-2T13:13:13
+    // 2020-02-02T13:13:13
     if (time.toString().indexOf('T') >= 0) {
       hour = new Date(time.toString()).getHours();
       min = new Date(time.toString()).getMinutes();
@@ -322,17 +321,5 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
     }
 
     return new Date(year, month, day, hour, min, sec);
-  }
-
-  private static checkTime(startTime: string, endTime: string): Boolean {
-    const start = parseISO(startTime);
-    const end = parseISO(endTime);
-    const now = parseISO(new Date().toISOString());
-
-    if (isAfter(start, end) || isBefore(start, new Date())) {
-      return false;
-    }
-
-    return true;
   }
 }
