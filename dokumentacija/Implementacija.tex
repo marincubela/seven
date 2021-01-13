@@ -63,127 +63,157 @@
 		    Još jedan uvjet kako bi aplikacija radila lokalno jest instaliran \textit{Node.js}. \textit{Node.js} moguće je preuzeti na \underline{\href{https://nodejs.org/en/download/}{ovoj poveznici}}. Sa instalacijom \textit{Node.js} aplikacije, instalirat će vam se i \textit{\underline{npm}} \footnote{\href{https://www.npmjs.com/}{npm}} koji je zaprao abrevijacija od \textit{Node Package Manager}. Samo ime govori da je to alat za upravljanje \textit{Node.js} paketima.
 
 		        
-		    \pagebreak
+				\pagebreak
 		
-	        \subsection{Frontend aplikacija}
+
+				\subsection{Frontend aplikacija}
 	        
-	        \subsubsection*{Lokalna instalacija}
+						\subsubsection*{Lokalna instalacija}
 	        
-	            Da bismo pokrenulni lokalnu frontend aplikaciju potrebno je unutar terminala pozicionirati se u frontend mapu. 
+	          		Da bismo pokrenulni lokalnu frontend aplikaciju potrebno je unutar terminala pozicionirati se u frontend mapu. 
 	            
-		        \begin{center}
-	                \texttt{cd frontend}
-		        \end{center}
-		        
-		        Sada je potrebno instalirati potrebne pakete za uspješan rad aplikacije. To činimo pokretanjem naredbe
-		        
-		        \begin{center}
-	                \texttt{npm install}
-		        \end{center}
-		        
-		        Nakon instalacije paketa, potrebno je podesiti i lokalni \textit{host} file. Da bismo uredili \textit{host} file prvo ga je potrebno locirati, a sama lokacija ovisi o operacijskom sustavu. Ukoliko koristimo operacijski sustav na bazi \textit{Linuxa} \textit{host} file se nalazi na lokaciji \texttt{/etc/hosts}, dok se na \textit{Windows} operacijskom sustavu ta datoteka nalazi na \texttt{C:\Windows\System32\drivers\etc\hosts}
-		        
-		        Jednom kada smo je locirali, potrebno je na kraj datoteke dodati redak
+								\begin{center}
+											\texttt{cd frontend}
+								\end{center}
+								
+								Sada je potrebno instalirati potrebne pakete za uspješan rad aplikacije. To činimo pokretanjem naredbe
+								
+								\begin{center}
+											\texttt{npm install}
+								\end{center}
+								
+								Nakon instalacije paketa, potrebno je podesiti i lokalni \textit{host} file. Da bismo uredili \textit{host} file prvo ga je potrebno locirati, a sama lokacija ovisi o operacijskom sustavu. Ukoliko koristimo operacijski sustav na bazi \textit{Linuxa} \textit{host} file se nalazi na lokaciji \texttt{/etc/hosts}, dok se na \textit{Windows} operacijskom sustavu ta datoteka nalazi na \texttt{C:\Windows\System32\drivers\etc\hosts}
+								
+								Jednom kada smo je locirali, potrebno je na kraj datoteke dodati redak
 
-		        \begin{center}
-	                \texttt{127.0.0.1	frontend-local.parkirajme.xyz}
-		        \end{center}
-		        
-		        Dodavanjem ovog retka, završili smo lokalnu instalaciju servera te server možemo pokrenuti naredbom
-		        
-		        \begin{center}
-	                \texttt{npm run dev}
-		        \end{center}
-		        
-		        Kako bi sve ispravno radilo lokalnom serveru ćemo pristupiti sa sljedeće adrese
+								\begin{center}
+											\texttt{127.0.0.1	frontend-local.parkirajme.xyz}
+								\end{center}
+								
+								Dodavanjem ovog retka, završili smo lokalnu instalaciju servera te server možemo pokrenuti naredbom
+								
+								\begin{center}
+											\texttt{npm run dev}
+								\end{center}
+								
+								Kako bi sve ispravno radilo lokalnom serveru ćemo pristupiti sa sljedeće adrese
 
-		        \begin{center}
-	                \href{http://frontend-local.parkirajme.xyz:3000/}{\texttt{frontend-local.parkirajme.xyz:3000}}
-		        \end{center}
-		        
-		    \pagebreak
+								\begin{center}
+											\href{http://frontend-local.parkirajme.xyz:3000/}{\texttt{frontend-local.parkirajme.xyz:3000}}
+								\end{center}
+		             
+						\pagebreak
 		    
-	        \subsection{Backend aplikacija}
-		    
-		    \pagebreak
-		    
-	        \subsection{Baza podataka}
-		
-		    \subsubsection*{Lokalna instalacija}
-		    
-		        Potrebno je preuzeti \textit{pgAdmin} aplikaciju uz koju standardno dolazi i \textit{PostgreSQL} server. Pokrenuti instalaciju te uz \textit{pgAdmin} klijenta odabrati i \textit{PostgreSQL} server za instalaciju. Nakon instalacije potrebno je postaviti korisnika. Nakon instalacije \textit{pgAdmin} klijent i sam \textit{PostgreSQL} server su pokrenuti.
+						\subsubsection*{Heroku instalacija}
+	        
+								Kako bismo frontend aplikaciju pustili u pogon, potrebne je kreirati novu aplikaciji na Heroku platformi.
+								
+								\begin{enumerate}
+									\item Otvoriti \href{https://dashboard.heroku.com/apps}{heroku.com} stranicu i prijaviti se ukoliko to već nismo prethodno učinili.
+									\item U gornjem desnom kutu možemo vidjeti gumb \textit{New} te kada ga pritisnemo otvara nam se padajuća lista i u njoj odabiremo \textit{Create new app}
+									\item Otvara nam se forma za kreiranje nove aplikacije te tu navodimo ime aplikacije koje može biti proizvoljno. Također na tom koraku odabiremo i regiju servera i tu je poželjno postaviti server koji je nama najbliži, a to je Europa.
+									\item Pritiskom na \textit{Create app} stvaramo aplikaciju
+		        		\end{enumerate}
 		        
-		    \subsubsection*{Lokalna konfiguracija}
-		        
-		        Nakon instalacije, potrebno je napraviti novu lokalnu bazu.
-		        
-		        \begin{enumerate}
-		            \item Proširiti \textit{Servers} te, ovisno o preuzetoj verziji \textit{PostgreSQL} servera, proširiti  \textit{PostgreSQL XX}
-		            \item Desni klik na \textit{Databases} te \textit{Create} te \textit{Database...}
-		            \item Otvara se modal te kao \textit{Database} vrijednost stavljamo proizvoljni naziv
-		            \item Odabiremo \textit{Spremi} te time stvaramo novu bazu
-		        \end{enumerate}
-		        
-		        Nakon stvorene baze potrebno je stvoriti konekcijski \textit{connection string}. Njega ćemo stvoriti što ćemo vrijednosti u vitičastim zagradama zamijeniti s pravim vrijednostima.
-		        
-		        \begin{center}
-	               \texttt{postgres://{username}:{password}@{hostname}:{port}/{database}}
-		        \end{center}
-		        
-		        \begin{enumerate}
-		            \item username - inicijalni username je \textit{postgres}
-		            \item password - lozinka postavljena prilikom instalacije
-		            \item hostname - pošto je server lokalni, hostname će biti \textit{localhost}
-		            \item port - inicijalni priključak PostgreSQL servera je \textit{5432}
-		            \item database - ime novo-napravljene baze
-		        \end{enumerate}
-		        
-		        Nakon generiranog \textit{connection stringa}, kreirat ćemo \textit{.env} datoteku u korijenskom direktoriju backend aplikacije te u njoj napraviti zapis:
+		        		Sada kada je Heroku aplikacija napravljena potrebno je otvoriti \texttt{.git/config} datoteku unutar korijenskog direktorija aplikacije te na kraj te datoteke potrebno je dodati
 
-		        \begin{center}
-	                \texttt{DATABASE\_URL={connectionString}}
-		        \end{center}
-		        
-		        Sada će prilikom pokretanja backend aplikacije, prije samog spajanja s bazom, aplikacija pročitati sadržaj \textit{.env} datoteke i učitati te vrijednosti kao sistemske varijable. U \textit{Node.js} aplikaciji tim varijablama imamo pristup preko
+                \begin{verbatim}
+    [remote "heroku-frontend"]
+        	url = https://git.heroku.com/${imeHerokuAplikacije}.git
+        	fetch = +refs/heads/*:refs/remotes/heroku-frontend/*
+								\end{verbatim}
+								
+								te umjesto \texttt{\{imeHerokuAplikacije\}} potrebno je umetnuti ime novostvorene aplikacije. Kada smo podesili \texttt{config} datoteku sve što je potrebno napraviti je pozicionirati se u direktorij frontend aplikacije te iz terminala pokrenuti 
 
-		        \begin{center}
-	                \texttt{proccess.env.\{imeVarijable\}}
-		        \end{center}
-		
-		
-		    \subsubsection*{Heroku instalacija}
+								\begin{center}
+											\texttt{npm run deploy}
+								\end{center}
+								
+								Nakon par minuta aplikacija će biti puštena u pogon.
+
+						\pagebreak
+						
+						\subsection{Backend aplikacija}
+						
+						\pagebreak
 		    
-		         \begin{enumerate}
-		            \item Otići na Heroku Dashboard
-		            \item Odabrati kreiranu backend aplikaciju
-		            \item Odabrati karticu \textit{Resources}
-		            \item Unutar \textit{Add-ons} tražilice tražiti \textbf{Heroku Postgres}
-		            \item Kada se otvori modal, odabrati \textbf{Submit Order Form}
-		        \end{enumerate}
-		        
-		        I to je to! Server sada ima svoju bazu. Ukoliko se želimo spojiti na tu bazu preko pgAdmin klijenta tada slijedimo sljedeće korake:
-		        
-		         \begin{enumerate}
-		            \item Sa \textit{Resources} zaslona odaberemo naš \textit{Heroku Postgres} server
-		            \item Nakon malo duljeg učitavanja, odabiremo karticu \textit{Settings}
-		            \item Odabiremo gumb \textit{View Credentials...}
-		        \end{enumerate}
-		        
-		        Sada na su nam na ekranu prikazani svi potrebni podaci za spajanje na PostgreSQL server. Sljedeći korak je otići u pgAdmin klijent te kreirati novu konekciju.
-		        
-		         \begin{enumerate}
-		            \item Otvoriti pgAdmin
-		            \item Desnim klikom kliknuti na \textit{Servers} te odabrati \textit{Create} \textit{Server...}
-		            \item Postaviti proizvoljno ime (ne utječe na samu konekciju)
-		            \item Odabrati karticu \textit{Connection} te tu popuniti potrebne podatke (\textit{Hostname/address}, \textit{Maintenece database}, \textit{Username}, \textit{Password})
-		            \item Nakon popunjenih podataka potrebno je kliknuti na gumb \textit{Save}
-		        \end{enumerate}
-		        
-		        Sada smo stvorili novu konekciju te iz popisa servera možemo odabrati novo-kreirani te manipulirati s tablicama.
-		        
-		
-		    \subsubsection*{Heroku konfiguracija}
-		        
-		        Slično kao u lokalnoj konfiguraciji potrebno je igrati se s varijablamo. Jedina i vrlo bitna razlika je ta da sve već posloženo te na Heroku serveru već postoji varijabla \textit{DATABASE\_URL}. Potrebno je samo pustiti backend aplikaciju u pogon.
-		    
+				\subsection{Baza podataka}
+			
+						\subsubsection*{Lokalna instalacija}
+						
+								Potrebno je preuzeti \textit{pgAdmin} aplikaciju uz koju standardno dolazi i \textit{PostgreSQL} server. Pokrenuti instalaciju te uz \textit{pgAdmin} klijenta odabrati i \textit{PostgreSQL} server za instalaciju. Nakon instalacije potrebno je postaviti korisnika. Nakon instalacije \textit{pgAdmin} klijent i sam \textit{PostgreSQL} server su pokrenuti.
+								
+						\subsubsection*{Lokalna konfiguracija}
+								
+								Nakon instalacije, potrebno je napraviti novu lokalnu bazu.
+								
+								\begin{enumerate}
+										\item Proširiti \textit{Servers} te, ovisno o preuzetoj verziji \textit{PostgreSQL} servera, proširiti  \textit{PostgreSQL XX}
+										\item Desni klik na \textit{Databases} te \textit{Create} te \textit{Database...}
+										\item Otvara se modal te kao \textit{Database} vrijednost stavljamo proizvoljni naziv
+										\item Odabiremo \textit{Spremi} te time stvaramo novu bazu
+								\end{enumerate}
+								
+								Nakon stvorene baze potrebno je stvoriti konekcijski \textit{connection string}. Njega ćemo stvoriti što ćemo vrijednosti u vitičastim zagradama zamijeniti s pravim vrijednostima.
+								
+								\begin{center}
+										\texttt{postgres://{username}:{password}@{hostname}:{port}/{database}}
+								\end{center}
+								
+								\begin{enumerate}
+										\item username - inicijalni username je \textit{postgres}
+										\item password - lozinka postavljena prilikom instalacije
+										\item hostname - pošto je server lokalni, hostname će biti \textit{localhost}
+										\item port - inicijalni priključak PostgreSQL servera je \textit{5432}
+										\item database - ime novo-napravljene baze
+								\end{enumerate}
+								
+								Nakon generiranog \textit{connection stringa}, kreirat ćemo \textit{.env} datoteku u korijenskom direktoriju backend aplikacije te u njoj napraviti zapis:
+
+								\begin{center}
+											\texttt{DATABASE\_URL={connectionString}}
+								\end{center}
+								
+								Sada će prilikom pokretanja backend aplikacije, prije samog spajanja s bazom, aplikacija pročitati sadržaj \textit{.env} datoteke i učitati te vrijednosti kao sistemske varijable. U \textit{Node.js} aplikaciji tim varijablama imamo pristup preko
+
+								\begin{center}
+											\texttt{proccess.env.\{imeVarijable\}}
+								\end{center}
+				
+				
+						\subsubsection*{Heroku instalacija}
+						
+								\begin{enumerate}
+										\item Otići na Heroku Dashboard
+										\item Odabrati kreiranu backend aplikaciju
+										\item Odabrati karticu \textit{Resources}
+										\item Unutar \textit{Add-ons} tražilice tražiti \textbf{Heroku Postgres}
+										\item Kada se otvori modal, odabrati \textbf{Submit Order Form}
+								\end{enumerate}
+								
+								I to je to! Server sada ima svoju bazu. Ukoliko se želimo spojiti na tu bazu preko pgAdmin klijenta tada slijedimo sljedeće korake:
+								
+								\begin{enumerate}
+										\item Sa \textit{Resources} zaslona odaberemo naš \textit{Heroku Postgres} server
+										\item Nakon malo duljeg učitavanja, odabiremo karticu \textit{Settings}
+										\item Odabiremo gumb \textit{View Credentials...}
+								\end{enumerate}
+								
+								Sada na su nam na ekranu prikazani svi potrebni podaci za spajanje na PostgreSQL server. Sljedeći korak je otići u pgAdmin klijent te kreirati novu konekciju.
+								
+								\begin{enumerate}
+										\item Otvoriti pgAdmin
+										\item Desnim klikom kliknuti na \textit{Servers} te odabrati \textit{Create} \textit{Server...}
+										\item Postaviti proizvoljno ime (ne utječe na samu konekciju)
+										\item Odabrati karticu \textit{Connection} te tu popuniti potrebne podatke (\textit{Hostname/address}, \textit{Maintenece database}, \textit{Username}, \textit{Password})
+										\item Nakon popunjenih podataka potrebno je kliknuti na gumb \textit{Save}
+								\end{enumerate}
+								
+								Sada smo stvorili novu konekciju te iz popisa servera možemo odabrati novo-kreirani te manipulirati s tablicama.
+								
+				
+						\subsubsection*{Heroku konfiguracija}
+							
+							Slično kao u lokalnoj konfiguraciji potrebno je igrati se s varijablamo. Jedina i vrlo bitna razlika je ta da sve već posloženo te na Heroku serveru već postoji varijabla \textit{DATABASE\_URL}. Potrebno je samo pustiti backend aplikaciju u pogon.
+					
 			\eject
