@@ -1,6 +1,17 @@
 \chapter{Arhitektura i dizajn sustava}
 		
-		 Arhitektura sustava zasnivat će se na MVC (Model-View-Controller)
+		  Dijelovi arhitekture našeg sustava su web aplikacija, web poslužitelj i baza podataka.
+	    
+        Web preglednik služi kao posrednik između klijenta i internetske stranice kojoj se pristupa. On dohvaća podatke te ih prevodi u korisniku razumljiv jezik.
+        Web poslužitelj obrađuje zahtjeve klijenta i šalje odgovore. Komunikacija se odvija putem HTTP protokola. On pohranjuje i omogućuje pristup web stranicama.
+        Baza podataka pohranjuje sve potrebne informacije o registriranim korisnicima te interne podatke o modelima aplikacije.
+        
+        Sama aplikacija sastoji se od \textit{frontend} i \textit{backend} dijela koji se izvršavaju u \href{https://nodejs.org/}{\textit{\textcolor{blue}{Node.js}}} okolini na cloud platformi.
+        \newline
+        
+        
+        
+		 Arhitektura sustava zasniva se na MVC (Model-View-Controller)
 		načelu. Temeljno obilježje ovog obrasca jest podjela aplikacije u 3 međusobno povezane komponente:
 		
 		\begin{figure}[h]
@@ -19,15 +30,12 @@
 		
 		\paragraph{}
 		
-		Za razvoj web aplikacije, koristit ćemo programski jezik JavaScript na \textit{frontendu}, te TypeScript na \textit{backendu}. Za implementaciju \textit{backenda} služit ćemo se Node.js okruženjem, a u \textit{frontend} dijelu JavaScript knjižnicom React. Za pohranu podataka u bazu, odlučili smo se za PostgreSQL te ćemo koristiti tehniku ORM (\textit{Object-relational mapping}).
-		Kao platformu uspostave aplikacije na udaljenom serveru, koristit ćemo cloud platformu \textit{Heroku} koja podržava jezik Node.js.
+		Za razvoj web aplikacije, koristitimo programski jezik JavaScript na \textit{frontendu}, te TypeScript na \textit{backendu}. Za implementaciju \textit{backenda} koristimo Node.js okruženjem, a u \textit{frontend} dijelu JavaScript knjižnicom React. Za pohranu podataka u bazu, odlučili smo se za PostgreSQL te koristimo tehniku ORM (\textit{Object-relational mapping}).
+		Kao platformu uspostave aplikacije na udaljenom serveru, koristitimo cloud platformu \href{https://dashboard.heroku.com/apps}{\textit{\textcolor{blue}{Heroku}}} koja podržava jezik Node.js.
 		
 		\paragraph{}
 		
-		Komunikacija aplikacije i klijenta na aplikacijskom sloju odvija se protokolom HTTP. Web aplikacija potom obrađuje njegov zahtjev te posreduje između njega i baze podataka služeći se ORM sequelize Node.js tehnologijom.
-
-	
-		
+		Komunikacija aplikacije i klijenta na aplikacijskom sloju odvija se protokolom HTTP. Web aplikacija potom obrađuje njegov zahtjev te posreduje između njega i baze podataka služeći se \href{https://sequelize.org/}{\textit{\textcolor{blue}{ORM sequelize}}} Node.js tehnologijom.
 
 		
 
@@ -326,7 +334,7 @@
 		
 		\begin{figure}[H]
 			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - JednokratnaController.png}
-			\caption{Dijagram razreda za Jednokratna Controller (1.dio)}
+			\caption{Dijagram razreda za Jednokratna Controller}
 			\label{fig:Dijagram razreda - JednokratnaController} 
 		\end{figure}
 		
