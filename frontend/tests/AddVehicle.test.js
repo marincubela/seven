@@ -1,8 +1,7 @@
 const { Builder, By, until, Key } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
-chrome.setDefaultService(new chrome.ServiceBuilder(`${process.env.HOME}/chromedriver/bin/chromedriver`).build());
-// chrome.setDefaultService(new chrome.ServiceBuilder('C:/Program Files (x86)/ChromeDriver/bin/chromedriver.exe').build());
+chrome.setDefaultService(new chrome.ServiceBuilder('C:/Program Files (x86)/ChromeDriver/bin/chromedriver.exe').build());
 
 describe('Add vehicle test', () => {
   test('Vehicle successfully added', async () => {
