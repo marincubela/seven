@@ -1,30 +1,35 @@
-import Sequelize, { IntegerDataType, Model } from 'sequelize';
+import Sequelize, { IntegerDataType } from 'sequelize';
+import { HasOneGetAssociationMixin, Model } from 'sequelize';
 
 import { db } from '../db/connect';
-import { Rezervacija } from './Rezervacija.js';
+import { Rezervacija } from './Rezervacija';
 
-interface IPonavljajucaAttributes {
+export interface IPonavljajucaAttributes {
   idPonavljajuca: number;
   datumRezervacije: Date;
   datumKrajaRez: Date;
-  daniPonavljanja: IntegerDataType;
+  daniPonavljanja: string;
   vrijemePocetka: Date;
   vrijemeKraja: Date;
+  idRezervacija?: number;
 }
 
 export class Ponavljajuca extends Model<
   IPonavljajucaAttributes,
-  Omit<IPonavljajucaAttributes, 'idPonavljajuce'>
+  Omit<IPonavljajucaAttributes, 'idPonavljajuca'>
 > {
-  idPonavljajuca!: number;
-  datumRezervacije!: Date;
-  datumKrajaRez!: Date;
-  daniPonavljanja!: IntegerDataType;
-  vrijemePocetka!: Date;
-  vrijemeKraja!: Date;
+  public idPonavljajuca!: number;
+  public datumRezervacije!: Date;
+  public datumKrajaRez!: Date;
+  public daniPonavljanja!: string;
+  public vrijemePocetka!: Date;
+  public vrijemeKraja!: Date;
+  public idRezervacija!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getRezervacija!: HasOneGetAssociationMixin<Rezervacija>;
 }
 
 Ponavljajuca.init(
@@ -43,7 +48,7 @@ Ponavljajuca.init(
       allowNull: false,
     },
     daniPonavljanja: {
-      type: Sequelize.DataTypes.INTEGER,
+      type: Sequelize.DataTypes.STRING,
       allowNull: false,
     },
     vrijemePocetka: {
@@ -60,11 +65,3 @@ Ponavljajuca.init(
     tableName: 'Ponavljajuca',
   }
 );
-
-Ponavljajuca.belongsTo(Rezervacija, {
-  foreignKey: 'rezervacijaId',
-});
-
-Ponavljajuca.sync().then(() => {
-  console.log('Napravljena Ponavljajuca');
-});

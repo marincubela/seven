@@ -1,24 +1,28 @@
-import Sequelize, { Model } from 'sequelize';
+import Sequelize, { HasOneGetAssociationMixin, Model } from 'sequelize';
 
 import { db } from '../db/connect';
-import { Rezervacija } from './Rezervacija.js';
+import { Rezervacija } from './Rezervacija';
 
-interface IJednokratnaAtrributes {
+export interface IJednokratnaAttributes {
   idJednokratna: number;
   vrijemePocetak: Date;
   vrijemeKraj: Date;
+  idRezervacija?: number;
 }
 
 export class Jednokratna extends Model<
-  IJednokratnaAtrributes,
-  Omit<IJednokratnaAtrributes, 'idJednokratna'>
+  IJednokratnaAttributes,
+  Omit<IJednokratnaAttributes, 'idJednokratna'>
 > {
   public idJednokratna!: number;
   public vrijemePocetak!: Date;
   public vrijemeKraj!: Date;
+  public idRezervacija!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getRezervacija!: HasOneGetAssociationMixin<Rezervacija>;
 }
 
 Jednokratna.init(
@@ -40,11 +44,3 @@ Jednokratna.init(
     tableName: 'Jednokratna',
   }
 );
-
-Jednokratna.belongsTo(Rezervacija, {
-  foreignKey: 'idRezervacija',
-});
-
-Jednokratna.sync().then(() => {
-  console.log('Napravljena jednokratna rezervacija');
-});

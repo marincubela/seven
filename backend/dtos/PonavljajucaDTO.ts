@@ -4,7 +4,7 @@ export interface PonavljajucaDTO extends RezervacijaDTO {
   idPonavljajuca?: number;
   reservationDate: Date;
   reservationEndDate: Date;
-  repeatDays: number;
+  repeatDays: string;
   startTime: Date;
   endTime: Date;
 }

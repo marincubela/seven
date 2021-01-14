@@ -1,26 +1,40 @@
-import { Model, DataTypes } from 'sequelize';
+import {
+  Model,
+  DataTypes,
+  HasOneGetAssociationMixin,
+  Association,
+} from 'sequelize';
 
 import { db } from '../db/connect';
-import { Klijent } from './Klijent.js';
+import { Klijent } from './Klijent';
+import { Rezervacija } from './Rezervacija';
 
-interface IVoziloAttributes {
+export interface IVoziloAttributes {
   idVozilo: number;
   registracija: string;
   nazivVozila: string;
-  boja: boolean;
+  boja: string;
+  idKlijent?: number;
 }
 
 export class Vozilo extends Model<
   IVoziloAttributes,
-  Omit<IVoziloAttributes, 'id'>
+  Omit<IVoziloAttributes, 'idVozilo'>
 > {
   public idVozilo!: number;
   public registracija!: string;
   public nazivVozila!: string;
-  public boja: boolean;
+  public boja: string;
+  public idKlijent!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getKlijent!: HasOneGetAssociationMixin<Klijent>;
+
+  public static associations: {
+    rezervacija: Association<Vozilo, Rezervacija>;
+  };
 }
 
 Vozilo.init(
@@ -48,11 +62,3 @@ Vozilo.init(
     tableName: 'Vozilo',
   }
 );
-
-Vozilo.belongsTo(Klijent, {
-  foreignKey: 'idKlijent',
-});
-
-Vozilo.sync().then(() => {
-  console.log('Napravljeno vozilo');
-});

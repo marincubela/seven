@@ -1,12 +1,12 @@
 import { DataStore } from '../store/DataStore';
 
-export const getOrInitializeStore = () => {
-  let store = window.store;
+const __STORE__ = 'store';
 
-  if (!store) {
-    store = new DataStore();
-    window.store = store;
+export const getOrInitializeStore = () => {
+  // This will be true if the page constructor is called on the client
+  if (!window[__STORE__]) {
+    window[__STORE__] = new DataStore();
   }
 
-  return store;
+  return window[__STORE__];
 };

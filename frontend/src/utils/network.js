@@ -1,5 +1,5 @@
 const BASE_URL =
-  process.env.NODE_ENV === 'production' ? 'https://pi-parkiraj-me.herokuapp.com/' : 'http://localhost:5000/';
+  process.env.NODE_ENV === 'production' ? 'http://backend.parkirajme.xyz/' : 'http://backend-test.parkirajme.xyz/';
 
 const defaultHeaders = {
   'Content-Type': 'application/json',
@@ -30,6 +30,16 @@ export const get = (endpoint, fetchOptions = {}) => {
 export const post = (endpoint, body = {}, fetchOptions = {}) => {
   const reqOptions = Object.assign({}, fetchOptions, {
     method: 'POST',
+    headers: Object.assign({}, defaultHeaders, fetchOptions.headers),
+    body: JSON.stringify(body),
+  });
+
+  return baseFetch(endpoint, reqOptions);
+};
+
+export const update = (endpoint, body = {}, fetchOptions = {}) => {
+  const reqOptions = Object.assign({}, fetchOptions, {
+    method: 'PATCH',
     headers: Object.assign({}, defaultHeaders, fetchOptions.headers),
     body: JSON.stringify(body),
   });

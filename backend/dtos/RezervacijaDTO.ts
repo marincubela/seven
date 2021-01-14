@@ -1,7 +1,6 @@
-import { KlijentDTO } from './KlijentDTO';
-import { ParkiralisteDTO } from './ParkiralisteDTO';
-import { VoziloDTO } from './VoziloDTO';
-
-export interface RezervacijaDTO extends KlijentDTO, VoziloDTO, ParkiralisteDTO {
+export interface RezervacijaDTO {
   idRezervacija?: number;
+  idKlijent?: number;
+  idVozilo?: number;
+  idParkiraliste?: number;
 }

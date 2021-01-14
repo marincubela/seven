@@ -6,7 +6,7 @@ export const useStore = () => {
   const storeContext = useContext(StoreContext);
 
   if (!storeContext) {
-    throw new Error();
+    throw new Error('useStore must be used within a StoreProvider.');
   }
 
   window.store = storeContext.store;
