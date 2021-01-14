@@ -12,6 +12,9 @@ const allowedOrigins = [
 
   'http://frontend-local.parkirajme.xyz:3000',
   'http://frontend-local.parkirajme.xyz:3000/',
+
+  'https://frontend-local.parkirajme.xyz:3000',
+  'https://frontend-local.parkirajme.xyz:3000/',
 ];
 
 export const corsMiddleware = cors({
