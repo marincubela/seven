@@ -26,26 +26,139 @@
 	
 			
 			\subsection{Ispitivanje komponenti}
-			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+						
+			Ispitivanje komponenti provedeno je pomoću
+			Jest\footnote{\href{https://jestjs.io/}{Jest}} testnog radnog okvira. Ispitivali smo metode na \textit{backend} dijelu aplikacije. Očekivani izlaz usporedili smo s povratnim vrijednostima metoda koje testiramo. Svi su testovi prošli.
 			
-			Ispitivanje komponenti provedeno je pomoću Jest testnog radnog okvira. Ispitivali smo metode na \textit{backend} dijelu aplikacije.
+			
+			\begin{figure}[H]
+				\includegraphics[width=1\linewidth]{images/UnitTests.png}
+				\caption{Unit testovi}
+				\label{fig:Unit tests} 
+			\end{figure}
 			
 			
+			\begin{figure}[H]
+				\includegraphics[width=1\linewidth]{images/Mapper1.png}
+				\caption{Kod za test mappera 1}
+				\label{fig:Mapper test - kod1} 
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[width=1\linewidth]{images/Mapper2.png}
+				\caption{Kod za test mappera 2}
+				\label{fig:Mapper test - kod2} 
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[width=1\linewidth]{images/RacunValidator1.png}
+				\caption{Kod za test validacije računa 1}
+				\label{fig:RacunValidator - kod1} 
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[width=1\linewidth]{images/RacunValidator2.png}
+				\caption{Kod za test validacije računa 2}
+				\label{fig:RacunValidator - kod2} 
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[width=1\linewidth]{images/RacunValidator3.png}
+				\caption{Kod za test validacije računa 3}
+				\label{fig:RacunValidator - kod3} 
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[width=1\linewidth]{images/Times1.png}
+				\caption{Kod za test metoda s datumima 1}
+				\label{fig:Times - kod1} 
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[width=1\linewidth]{images/Times2.png}
+				\caption{Kod za test metoda s datumima 2}
+				\label{fig:Times - kod2} 
+			\end{figure}
 			
 			\subsection{Ispitivanje sustava}
 			
 			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
 			
-			Ispitivanjem sustava želimo provjeriti osnovne funkcionalnosti aplikacije koje korisnik susreće.
+			Ispitivanjem sustava želimo provjeriti osnovne funkcionalnosti aplikacije koje korisnik susreće. Svi su pokrenuti testovi prošli.
+			
+				\begin{figure}[H]
+				\includegraphics[width=1\linewidth]{images/SeleniumTests.png}
+				\caption{Selenium testovi}
+				\label{fig:Selenium tests} 
+			\end{figure}
 			
 			Prvi test ispituje prijavu korisnika na aplikaciju. Nakon uspješne prijave korisnik je preusmjeren na početnu stranicu i prijavljen je.
 			
+			\begin{figure}[H]
+				\includegraphics[width=1\linewidth]{images/LoginClient.png}
+				\caption{Kod za test prijave klijenta}
+				\label{fig:LoginClient test - kod} 
+			\end{figure}
 			
 			
 			Drugi test provjerava neispravnu registraciju tvrtke kad korisnik unese pogrešan OIB. Na zaslon se ispiše poruka i korisnik ostaje na istoj stranici i omogućava mu se ponovni unos podataka. Ako je registracija uspješna, korisnik se preusmjeri na početnu stranicu aplikacije.
 			
+			\begin{figure}[H]
+				\includegraphics[width=1\linewidth]{images/RegistrationCompany1.png}
+				\caption{Kod za test registracije tvrtka 1}
+				\label{fig:RegistrationCompany test - kod1} 
+			\end{figure}
+			
+			
+			\begin{figure}[H]
+				\includegraphics[width=1\linewidth]{images/RegistrationCompany2.png}
+				\caption{Kod za test registracije tvrtka 2}
+				\label{fig:RegistrationCompany test - kod2} 
+			\end{figure}
+			
 			
 			Treći test provjerava dodavanje vozila. Korisnik se prijavi, odabere stranicu 'Moja vozila', klikne na opciju 'Dodaj', popuni podatke i pošalje zahtjev. Nakon što je vozilo uspješno dodano, korisnika se preusmjerava na stranicu s njegovim vozilima.
+						
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{images/AddVehicle1.png}
+			\caption{Kod za test dodavanja vozila 1}
+			\label{fig:AddVehicle test - kod 1} 
+		\end{figure}
+	
+	\begin{figure}[H]
+		\includegraphics[width=1\linewidth]{images/AddVehicle2.png}
+		\caption{Kod za test dodavanja vozila 2}
+		\label{fig:AddVehicle test - kod 2} 
+	\end{figure}
+
+			
+			Četvrti test provjerava dodavanje parkirališta. Tvrtka se prijavi, odabere stranicu 'Moja parkirališta', klikne na opciju 'Dodaj', popuni podatke i pošalje zahtjev. Nakon što je parkiralište uspješno dodano, tvrtku se preusmjerava na stranicu s njegovim parkiralištima.
+
+\begin{figure}[H]
+	\includegraphics[width=1\linewidth]{images/AddParking1.png}
+	\caption{Kod za test dodavanja parkinga 1}
+	\label{fig:AddParking test - kod 1} 
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=1\linewidth]{images/AddParking2.png}
+	\caption{Kod za test dodavanja parkinga 2}
+	\label{fig:AddParking test - kod 2} 
+\end{figure}
+
+			Peti test provjerava dodavanje jednokratne rezervacije. Prijavljeni klijent odabire željeno parkiralište, klikne na gumb rezerviraj i opciju 'Jednokratna' za jednokratnu rezervaciju. Potom ispuni tražene podatke i odabere opciju 'Rezerviraj'. Opcijom 'Potvrdi' klijent plaća navedenu rezervaciju. Nakon uspješne rezervacije korisnika se preusmjeri na početnu stranicu s kartom.
+
+\begin{figure}[H]
+	\includegraphics[width=1\linewidth]{images/OneTimeReservation1.png}
+	\caption{Kod za test rezervacije 1}
+	\label{fig:OneTimeReservation test - kod1} 
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=1\linewidth]{images/OneTimeReservation2.png}
+	\caption{Kod za test rezervacije 2}
+	\label{fig:OneTimeReservation test - kod2} 
+\end{figure}
 			
 			\eject 
 		
