@@ -3,13 +3,11 @@ const chrome = require('selenium-webdriver/chrome');
 
 chrome.setDefaultService(new chrome.ServiceBuilder('C:/Program Files (x86)/ChromeDriver/bin/chromedriver.exe').build());
 
-describe('Registration company test', () => {
-  it('Wrong registration', async () => {
+describe('Add parking test', () => {
+  it('Parking added successfully', async () => {
     let driver = await new Builder().forBrowser('chrome').build();
 
     await driver.get('http://app.parkirajme.xyz/login');
-
-    console.log('Dohvaćena stranica ' + (await driver.getCurrentUrl()));
 
     // Prijava tvrtka
     await driver.wait(until.elementLocated(By.css('input[name="login-email"]')));
