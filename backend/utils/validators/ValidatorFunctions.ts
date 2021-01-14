@@ -1,10 +1,4 @@
-import {
-  addHours,
-  intervalToDuration,
-  isAfter,
-  isBefore,
-  parseISO,
-} from 'date-fns';
+import { addHours, intervalToDuration, isBefore, parseISO } from 'date-fns';
 
 export class ValidatorFunctions {
   public static checkIsStartBeforeNow(startTime: string): Boolean {

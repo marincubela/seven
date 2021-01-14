@@ -243,14 +243,8 @@ export class PonavljajucaRepo extends BaseRepo<PonavljajucaDTO> {
     const dates = [];
     for (const dowString of dows) {
       const dow = Number(dowString);
-      /* var newDate = firstDate;
-
-      while (getDay(newDate) !== dow) {
-        newDate = addDays(newDate, 1);
-      } */
 
       var eachWeek = eachWeekOfInterval({
-        //start: newDate,
         start: firstDate,
         end: lastDate,
       });
