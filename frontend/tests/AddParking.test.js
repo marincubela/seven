@@ -1,8 +1,7 @@
 const { Builder, By, until, Key } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
-chrome.setDefaultService(new chrome.ServiceBuilder(`${process.env.HOME}/chromedriver/bin/chromedriver`).build());
-// chrome.setDefaultService(new chrome.ServiceBuilder('C:/Program Files (x86)/ChromeDriver/bin/chromedriver.exe').build());
+chrome.setDefaultService(new chrome.ServiceBuilder('C:/Program Files (x86)/ChromeDriver/bin/chromedriver.exe').build());
 
 describe('Add parking test', () => {
   it('Parking not added', async () => {
@@ -22,7 +21,7 @@ describe('Add parking test', () => {
     await driver.wait(until.elementLocated(By.css('button[type="submit"]')));
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
-    // Dodavanje vozila
+    // Dodavanje parkinga
     await driver.wait(until.elementLocated(By.css('a[href="/parkings"]')));
     await (await driver.findElement(By.css('a[href="/parkings"]'))).click();
 
