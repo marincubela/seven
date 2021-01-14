@@ -1,7 +1,8 @@
 const { Builder, By, until, Key } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
-chrome.setDefaultService(new chrome.ServiceBuilder('C:/Program Files (x86)/ChromeDriver/bin/chromedriver.exe').build());
+chrome.setDefaultService(new chrome.ServiceBuilder(`${process.env.HOME}/chromedriver/bin/chromedriver`).build());
+// chrome.setDefaultService(new chrome.ServiceBuilder('C:/Program Files (x86)/ChromeDriver/bin/chromedriver.exe').build());
 
 describe('Add parking test', () => {
   it('Parking added successfully', async () => {
@@ -38,7 +39,7 @@ describe('Add parking test', () => {
     await (await driver.findElement(By.css('input[name="add-parking-disabledCapacity"]'))).sendKeys(
       '10',
       Key.TAB,
-      Key.ENTER,
+      Key.SPACE,
       Key.DOWN,
       Key.ENTER,
     ); // Cheat to parkingtype
@@ -60,7 +61,7 @@ describe('Add parking test', () => {
     await driver.wait(until.elementLocated(By.css('button[type="submit"]')));
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
-    const actual = (await driver.getCurrentUrl()).includes('app.parkirajme.xyz/parkings');
+    const actual = !(await driver.getCurrentUrl()).includes('app.parkirajme.xyz/parkings/add');
 
     await driver.quit();
 
