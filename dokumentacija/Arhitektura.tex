@@ -286,11 +286,7 @@
 		
 		Na  slikama 4.3, 4.4, 4.5, 4.6, 4.7 prikazani su razredi koji pripadaju \textit{backend} dijelu MVC arhitekture. Razredi na slici 4.3 oponašaju tablice iz baze podataka kojima se pristupa preko ORM-a i pomoću njih se komunicira s bazom podataka. Slika 4.4 prikazuje DTO (\textit{Data transfer object}) razrede koji spremaju podatke kojima kontroleri komuniciraju s \textit{frontend} dijelom aplikacije i modelima. Na slici 4.5 nalaze se razredi koji komuniciraju s bazom podataka i izvršavaju upite koje kontroleri zatraže. Kontroleri su prikazani na slici 4.6. Svi kontroleri nasljeđuju osnovni kontroler koji sadrži metode za slanje odgovora, dok ostali kontroleri nude metode za izvršavanje određenog zahtjeva na određenoj putanji. Slika 4.7 prikazuje jednu vrstu pomoćnih razreda koje smo koristili za prebacivanje podataka iz domene modela u domenu koja se koristi na \textit{frontend} dijelu aplikacije.
 		
-		\begin{figure}[H]
-	        \includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - Models.png}
-        	\caption{Dijagram razreda za modele}
-        	\label{fig:Dijagram razreda - modeli}
-        \end{figure}
+		
     
     	\begin{figure}[H]
 	    	\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - DTO_1.png}
@@ -315,6 +311,12 @@
 			\caption{Dijagram razreda za repo (2.dio)}
 			\label{fig:Dijagram razreda - Repo2} 
 		\end{figure}
+
+		\begin{figure}[H]
+	        \includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - BaseController.png}
+        	\caption{Dijagram razreda za BaseController}
+        	\label{fig:Dijagram razreda - BaseController}
+        \end{figure}
 		
 		\begin{figure}[H]
 			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - RezervacijaController.png}
