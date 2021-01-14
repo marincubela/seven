@@ -5,7 +5,7 @@ chrome.setDefaultService(new chrome.ServiceBuilder(`${process.env.HOME}/chromedr
 // chrome.setDefaultService(new chrome.ServiceBuilder('C:/Program Files (x86)/ChromeDriver/bin/chromedriver.exe').build());
 
 describe('Add parking test', () => {
-  it('Parking added successfully', async () => {
+  it('Parking not added', async () => {
     let driver = await new Builder().forBrowser('chrome').build();
 
     await driver.get('http://app.parkirajme.xyz/login');
@@ -36,13 +36,7 @@ describe('Add parking test', () => {
     await (await driver.findElement(By.css('input[name="add-parking-capacity"]'))).sendKeys('100');
 
     await driver.wait(until.elementLocated(By.css('input[name="add-parking-disabledCapacity"]')));
-    await (await driver.findElement(By.css('input[name="add-parking-disabledCapacity"]'))).sendKeys(
-      '10',
-      Key.TAB,
-      Key.ENTER,
-      Key.DOWN,
-      Key.ENTER,
-    ); // Cheat to parkingtype
+    await (await driver.findElement(By.css('input[name="add-parking-disabledCapacity"]'))).sendKeys('10');
 
     await driver.wait(until.elementLocated(By.css('input[name="add-parking-coordinates"]')));
     await (await driver.findElement(By.css('input[name="add-parking-coordinates"]'))).sendKeys(
@@ -61,9 +55,7 @@ describe('Add parking test', () => {
     await driver.wait(until.elementLocated(By.css('button[type="submit"]')));
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
-    await driver.wait(until.elementLocated(By.css('table')));
-
-    expect(await driver.getCurrentUrl()).toBe('http://app.parkirajme.xyz/parkings');
+    expect(await driver.getCurrentUrl()).toBe('http://app.parkirajme.xyz/parkings/add');
 
     await driver.quit();
   });

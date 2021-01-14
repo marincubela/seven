@@ -39,9 +39,9 @@ describe('Reservation test', () => {
     await driver.wait(until.elementLocated(By.css('button[type="submit"]')));
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
-    await driver.wait(until.elementLocated(By.css('table')));
+    await driver.wait(until.elementLocated(By.css('.chakra-toast')));
 
-    expect(await driver.getCurrentUrl()).toBe('http://app.parkirajme.xyz/reservations');
+    expect(await driver.getCurrentUrl()).toBe('http://app.parkirajme.xyz/');
 
     await driver.quit();
   });
