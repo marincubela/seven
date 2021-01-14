@@ -11,7 +11,6 @@ Za klijenta potrebni podaci za registraciju su:
     \item Ime i prezime
     \item E-mail adresa
     \item Lozinka
-    \item Registracija vozila
     \item Broj kreditne kartice
 \end{itemize}
 Za tvrtku potrebni podaci za registraciju su:
@@ -26,9 +25,6 @@ Za tvrtku potrebni podaci za registraciju su:
 \textit{\underbar{Klijent}} je registrirani korisnik stariji od 18 godina, koji ima pravo rezervirati parkirno mjesto. Klijent na karti odabire parkiralište na kojem želi rezervirati mjesto i dobiva informaciju o broju slobodnih mjesta. Druga mogućnost je da na temelju trenutne lokacije aplikacija daje prijedlog najbližih parkirališta sa slobodnim parkirnim mjestima (prednost imaju parkirališta s brojem slobodnih mjesta većim od 10). Ukoliko odabrano parkiralište ima slobodnih mjesta odabire mogućnost rezervacije. Nakon toga klijent bira tip rezervacije koju želi i odabire vozilo za koje želi izvršiti rezervaciju. Rezervacija se naplaćuje izravnim terećenjem njegove kreditne kartice. Potvrdom plaćanja aktivira se rezervacija u sustavu. 
 
 Klijent istovremeno može imati više različitih tipova rezervacija, na različitim parkiralištima s različitim vozilima.
-
-Klijent ima mogućnost ostavljanja recenzije za sva parkirališta.
-\newline
 
 \textit{\underbar{Tvrtka}} je korisnik kojeg prijavljuje ovlašteni zaposlenik tvrtke. Ovlašteni zaposlenik nakon registracije svoje tvrtke unosi podatke o parkiralištima koje nudi ta tvrtka. Odabirom opcije za dodavanje parkirališta unosi se:
 \begin{itemize}
@@ -50,7 +46,7 @@ Korisnici imaju mogućnost upravljanja svojim računima, pregledavanjem, uređiv
 
 Klijent ima pregled svih svojih prijavljenih vozila. Svako vozilo ima svoju registraciju, ime i boju. Vozilo klijent može uređivati (promjenom registracije, imena ili boje vozila). Može dodavati nova vozila ili postojeća obrisati. 
 
-Klijent ima pregled svih svojih kreditnih kartica. Svaka kartica ima svoj broj, datum valjanosti, ime vlasnika kartice i CVV. Kartice se mogu uređivati u slučaju pogrešnog unosa, mogu se dodavati nove ili brisati postojeće.
+Klijent ima prijavljenu kreditnu karticu. Karticu može uređivati u slučaju pogrešnog unosa i postojeću zamijeniti novom, dakle izbrisati staru i stvoriti novu. Klijent uvijek treba imati prijavljenu jednu karticu.
 
 Tvrtka ima pregled vlastitih parkirališta. Svako parkiralište može uređivati, može dodavati nova parkirališta ili brisati postojeća. 
 \newline
@@ -68,6 +64,7 @@ Parkirno mjesto se može rezervirati jednokratno, kao ponavljajuća rezervacija 
 \newline
 \textit{Dodatno:}
 
-Ukoliko se briše korisnički račun neke tvrtke, brišu se sva njena parkirališta, a za sve korisnike ukida se rezervacija ako postoji na tim parkiralištima. Ukoliko ima preostalog neiskorištenog rezerviranog vremena korisniku se vraća novac.
+Ukoliko se izbriše korisnički račun neke tvrtke, brišu se sva njena parkirališta i ukidaju se rezervacije na tim parkiralištima. Ukoliko se izbriše korisnički račun klijenta, brišu se i sva njegova vozila i sve njegove rezervacije. Ukoliko tvrtka izbriše neko parkiralište, brišu se i sve rezervacije napravljene na tom parkiralištu.
+Ukoliko klijent izbriše vozilo, brišu se i sve rezervacije napravljene s tim vozilom.
 
 Sustav treba podržavati rad više korisnika u stvarnom vremenu.
