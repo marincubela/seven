@@ -7,14 +7,11 @@ describe('Registration company test', () => {
   it('Wrong registration', async () => {
     let driver = await new Builder().forBrowser('chrome').build();
 
-    await driver.get('http://app.parkirajme.xyz');
+    await driver.get('http://app.parkirajme.xyz/login');
 
     console.log('Dohvaćena stranica ' + (await driver.getCurrentUrl()));
 
     // Prijava tvrtka
-    await driver.wait(until.elementLocated(By.css('a[href="/login"]')));
-    await (await driver.findElement(By.css('a[href="/login"]'))).click();
-
     await driver.wait(until.elementLocated(By.css('input[name="login-email"]')));
     const emailInput = driver.findElement(By.css('input[name="login-email"]'));
 
@@ -65,11 +62,9 @@ describe('Registration company test', () => {
     await driver.wait(until.elementLocated(By.css('button[type="submit"]')));
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
-    const expected = await driver.getCurrentUrl();
+    const actual = (await driver.getCurrentUrl()).includes('app.parkirajme.xyz/parkings');
 
     await driver.quit();
-
-    const actual = expected.includes('app.parkirajme.xyz/parkings');
 
     expect(actual).toBe(true);
   });

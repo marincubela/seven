@@ -4,17 +4,14 @@ const chrome = require('selenium-webdriver/chrome');
 chrome.setDefaultService(new chrome.ServiceBuilder('C:/Program Files (x86)/ChromeDriver/bin/chromedriver.exe').build());
 
 describe('Registration company test', () => {
-  it('Wrong registration', async () => {
+  test('Wrong registration', async () => {
     let driver = await new Builder().forBrowser('chrome').build();
 
-    await driver.get('http://app.parkirajme.xyz');
+    await driver.get('http://app.parkirajme.xyz/login');
 
     console.log('Dohvaćena stranica ' + (await driver.getCurrentUrl()));
 
     // Prijava klijenta
-    await driver.wait(until.elementLocated(By.css('a[href="/login"]')));
-    await (await driver.findElement(By.css('a[href="/login"]'))).click();
-
     await driver.wait(until.elementLocated(By.css('input[name="login-email"]')));
     const emailInput = driver.findElement(By.css('input[name="login-email"]'));
 

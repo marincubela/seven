@@ -3,18 +3,13 @@ const chrome = require('selenium-webdriver/chrome');
 
 chrome.setDefaultService(new chrome.ServiceBuilder('C:/Program Files (x86)/ChromeDriver/bin/chromedriver.exe').build());
 
-describe('Registration company test', () => {
-  it('Wrong registration', async () => {
+describe('Reservation test', () => {
+  it('Create one time reservation', async () => {
     let driver = await new Builder().forBrowser('chrome').build();
 
-    await driver.get('http://app.parkirajme.xyz');
-
-    console.log('Dohvaćena stranica ' + (await driver.getCurrentUrl()));
+    await driver.get('http://app.parkirajme.xyz/login');
 
     // Prijava klijenta
-    await driver.wait(until.elementLocated(By.css('a[href="/login"]')));
-    await (await driver.findElement(By.css('a[href="/login"]'))).click();
-
     await driver.wait(until.elementLocated(By.css('input[name="login-email"]')));
     const emailInput = driver.findElement(By.css('input[name="login-email"]'));
 
@@ -27,9 +22,8 @@ describe('Registration company test', () => {
     await driver.wait(until.elementLocated(By.css('button[type="submit"]')));
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
-    // Dodavanje vozila
     await driver.wait(until.elementLocated(By.css('img.leaflet-marker-icon.leaflet-interactive')));
-    await (await driver.findElements(By.css('img.leaflet-marker-icon.leaflet-interactive'))[0]).click();
+    await (await driver.findElements(By.css('img.leaflet-marker-icon.leaflet-interactive')))[0].click();
 
     await driver.wait(until.elementLocated(By.css('a[href="/addReservation"]')));
     await (await driver.findElement(By.css('a[href="/addReservation"]'))).click();
@@ -38,11 +32,13 @@ describe('Registration company test', () => {
     await (await driver.findElement(By.css('a[href="/addOneTimeReservation"]'))).click();
 
     // TODO: add input values
+    await driver.wait(until.elementLocated(By.css('button[type="button"]')));
+    await (await driver.findElement(By.css('button[type="button"]'))).click();
 
     await driver.wait(until.elementLocated(By.css('button[type="submit"]')));
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
-    const actual = (await driver.getCurrentUrl()).includes('app.parkirajme.xyz/vehicles');
+    const actual = (await driver.getCurrentUrl()).includes('app.parkirajme.xyz/reservations');
 
     await driver.quit();
 

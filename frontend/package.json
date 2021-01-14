@@ -65,7 +65,7 @@
     "build": "react-scripts build",
     "start": "serve -s build",
     "test": "react-scripts test",
-    "test-selenium": "jest",
+    "test-selenium": "jest --runInBand",
     "eject": "react-scripts eject",
     "deploy": "cd ../ && git subtree push --prefix frontend heroku-frontend master && cd frontend"
   },

@@ -9,8 +9,6 @@ describe('Login client test', () => {
 
     await driver.get('http://app.parkirajme.xyz');
 
-    console.log('Dohvaćena stranica ' + (await driver.getCurrentUrl()));
-
     await driver.wait(until.elementLocated(By.css('a[href="/login"]')));
 
     await (await driver.findElement(By.css('a[href="/login"]'))).click();
@@ -29,10 +27,10 @@ describe('Login client test', () => {
 
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
-    const actual = (await driver.getCurrentUrl()).includes('app.parkirajme.xyz/login');
+    const actual = !(await driver.getCurrentUrl()).includes('app.parkirajme.xyz/login');
 
     await driver.quit();
 
-    expect(actual).toBe(false);
+    expect(actual).toBe(true);
   });
 });

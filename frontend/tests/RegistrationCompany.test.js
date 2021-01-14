@@ -8,7 +8,6 @@ describe('Registration company test', () => {
     let driver = await new Builder().forBrowser('chrome').build();
 
     await driver.get('http://app.parkirajme.xyz');
-    console.log('Dohvaćena stranica ' + (await driver.getCurrentUrl()));
 
     await driver.wait(until.elementLocated(By.css('a[href="/registration"]')));
 
@@ -44,12 +43,10 @@ describe('Registration company test', () => {
     await driver.wait(until.elementLocated(By.css('button[type="submit"]')));
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
-    const expected = await driver.getCurrentUrl();
+    const actual = (await driver.getCurrentUrl()).includes('app.parkirajme.xyz/registration/company');
 
     await driver.quit();
 
-    const actual = expected.includes('app.parkirajme.xyz/registration/company');
-
     expect(actual).toBe(true);
-  }, 10000);
+  });
 });
