@@ -1,4 +1,4 @@
-const { Builder, By, until, Key } = require('selenium-webdriver');
+const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
 chrome.setDefaultService(new chrome.ServiceBuilder('C:/Program Files (x86)/ChromeDriver/bin/chromedriver.exe').build());
@@ -28,17 +28,16 @@ describe('Registration company test', () => {
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
     // Dodavanje vozila
-    await driver.wait(until.elementLocated(By.css('a[href="/vehicles"]')));
-    await (await driver.findElement(By.css('a[href="/vehicles"]'))).click();
+    await driver.wait(until.elementLocated(By.css('img.leaflet-marker-icon.leaflet-interactive')));
+    await (await driver.findElements(By.css('img.leaflet-marker-icon.leaflet-interactive'))[0]).click();
 
-    await driver.wait(until.elementLocated(By.css('a[href="/vehicles/add"]')));
-    await (await driver.findElement(By.css('a[href="/vehicles/add"]'))).click();
+    await driver.wait(until.elementLocated(By.css('a[href="/addReservation"]')));
+    await (await driver.findElement(By.css('a[href="/addReservation"]'))).click();
 
-    await driver.wait(until.elementLocated(By.css('input[name="add-vehicle-name"]')));
-    await (await driver.findElement(By.css('input[name="add-vehicle-name"]'))).sendKeys('Auto');
+    await driver.wait(until.elementLocated(By.css('a[href="/addOneTimeReservation"]')));
+    await (await driver.findElement(By.css('a[href="/addOneTimeReservation"]'))).click();
 
-    await driver.wait(until.elementLocated(By.css('input[name="add-vehicle-registration"]')));
-    await (await driver.findElement(By.css('input[name="add-vehicle-registration"]'))).sendKeys('1234 ZG');
+    // TODO: add input values
 
     await driver.wait(until.elementLocated(By.css('button[type="submit"]')));
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
