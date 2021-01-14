@@ -94,8 +94,14 @@
 								\begin{center}
 										\texttt{127.0.0.1	frontend-local.parkirajme.xyz}
 								\end{center}
+
+								Također, potrebno je unutar \textit{frontend} direktrorija kreirati datoteku \textit{.env} te u nju dodati sljedeći zapis
+
+								\begin{center}
+										\texttt{HOST=frontend-local.parkirajme.xyz}
+								\end{center}
 								
-								Dodavanjem ovog retka, završili smo lokalnu instalaciju servera te server možemo pokrenuti naredbom
+								Dodavanjem ovih zapisa, završili smo lokalnu instalaciju servera te server možemo pokrenuti naredbom
 								
 								\begin{center}
 										\texttt{npm run dev}
@@ -137,7 +143,19 @@
 								Nakon par minuta aplikacija će biti puštena u pogon.
 
 						\pagebreak
-						
+
+						\subsubsection*{HTTPS lokalna instalacija}
+
+								Kako bi lokalno pokrenuli aplikaciju sa HTTPS protokolom potrebno je u datoteku \textit{frontend/.env} dodati sljedeći zapis
+
+								\begin{center}
+										\texttt{HTTPS=true}
+								\end{center}
+
+								Sada, prilikom sljedećeg pokretanja lokalnog servera, aplikacija će se pokrenuti na HTTPS protokolu te će browser moći pročitati našu trenutnu lokaciju.
+
+						\pagebreak
+
 						\subsection{Backend aplikacija}
 	        
 						\subsubsection*{Lokalna instalacija}
