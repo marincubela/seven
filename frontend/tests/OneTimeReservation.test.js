@@ -39,12 +39,10 @@ describe('Reservation test', () => {
     await driver.wait(until.elementLocated(By.css('button[type="submit"]')));
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
-    await driver.wait(until.elementLocated(By.css('.chakra-toast')));
+    await driver.wait(until.elementLocated(By.css('table')));
 
-    const actual = !(await driver.getCurrentUrl()).includes('app.parkirajme.xyz/addOneTimeReservation');
+    expect(await driver.getCurrentUrl()).toBe('http://app.parkirajme.xyz/reservations');
 
     await driver.quit();
-
-    expect(actual).toBe(true);
   });
 });

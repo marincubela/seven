@@ -44,10 +44,10 @@ describe('Registration company test', () => {
     await driver.wait(until.elementLocated(By.css('button[type="submit"]')));
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
-    const actual = (await driver.getCurrentUrl()).includes('app.parkirajme.xyz/registration/company');
+    await driver.wait(until.elementLocated(By.css('.leaflet-container')));
+
+    expect(await driver.getCurrentUrl()).toBe('http://app.parkirajme.xyz/');
 
     await driver.quit();
-
-    expect(actual).toBe(true);
   });
 });

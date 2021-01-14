@@ -30,10 +30,8 @@ describe('Login client test', () => {
 
     await driver.wait(until.elementLocated(By.css('.leaflet-container')));
 
-    const actual = !(await driver.getCurrentUrl()).includes('app.parkirajme.xyz/login');
+    expect(await driver.getCurrentUrl()).toBe('http://app.parkirajme.xyz/');
 
     await driver.quit();
-
-    expect(actual).toBe(true);
   });
 });

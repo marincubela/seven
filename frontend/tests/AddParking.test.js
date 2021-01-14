@@ -39,7 +39,7 @@ describe('Add parking test', () => {
     await (await driver.findElement(By.css('input[name="add-parking-disabledCapacity"]'))).sendKeys(
       '10',
       Key.TAB,
-      Key.SPACE,
+      Key.ENTER,
       Key.DOWN,
       Key.ENTER,
     ); // Cheat to parkingtype
@@ -61,10 +61,10 @@ describe('Add parking test', () => {
     await driver.wait(until.elementLocated(By.css('button[type="submit"]')));
     await (await driver.findElement(By.css('button[type="submit"]'))).click();
 
-    const actual = !(await driver.getCurrentUrl()).includes('app.parkirajme.xyz/parkings/add');
+    await driver.wait(until.elementLocated(By.css('table')));
+
+    expect(await driver.getCurrentUrl()).toBe('http://app.parkirajme.xyz/parkings');
 
     await driver.quit();
-
-    expect(actual).toBe(true);
   });
 });
