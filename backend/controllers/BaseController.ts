@@ -35,7 +35,7 @@ export abstract class BaseController {
     });
   }
 
-  public ok = (res: IResponse, dto?: any) => {
+  public ok = (res: IResponse, dto: any) => {
     if (!!dto) {
       res.type('application/json');
 

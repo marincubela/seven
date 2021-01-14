@@ -5,16 +5,11 @@ import { BaseRepo } from './BaseRepo';
 import { hashPassword } from '../utils/password';
 import { KlijentRepo } from './KlijentRepo';
 import { TvrtkaRepo } from './TvrtkaRepo';
-import { Klijent } from '../models/Klijent';
 import { UsersDTO } from '../dtos/ResponseDtos/UsersDTO';
 import { KlijentMapper } from '../mappers/KlijentMapper';
 import { TvrtkaMapper } from '../mappers/TvrtkaMapper';
+import { Op } from 'sequelize';
 
-/*
-export abstract class IRacunRepo extends BaseRepo<RacunDTO> {
-  public abstract createRacun(racunDTO: RacunDTO): Promise<Racun>;
-}
-*/
 export class RacunRepo implements BaseRepo<RacunDTO> {
   async exists(racunDTO: RacunDTO): Promise<boolean> {
     const { idRacun } = RacunMapper.toDomain(racunDTO);
@@ -60,6 +55,16 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
     return await RacunRepo.createRacun(racunDTO);
   }
 
+  public static async exists(idRacun: number): Promise<Boolean> {
+    return Boolean(
+      await Racun.findOne({
+        where: {
+          idRacun,
+        },
+      })
+    );
+  }
+
   public static async createRacun(racunDTO: RacunDTO): Promise<Racun> {
     const { idRacun, lozinka, ...racunData } = RacunMapper.toDomain(racunDTO);
 
@@ -100,12 +105,14 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
     const users: UsersDTO = { clients: [], companies: [] };
 
     for (const racun of accounts) {
-      if (await this.isKlijent(racun.idRacun)) {
+      if (await RacunRepo.isKlijent(racun.idRacun)) {
         const klijent = await KlijentRepo.getKlijentByIdRacun(racun.idRacun);
         users.clients.push(await KlijentMapper.toDTO(klijent));
-      } else {
+      } else if (await RacunRepo.isTvrtka(racun.idRacun)) {
         const tvrtka = await TvrtkaRepo.getTvrtkaByIdRacun(racun.idRacun);
         users.companies.push(await TvrtkaMapper.toDTO(tvrtka));
+      } else {
+        throw new Error('Račun nije ni tvrtka ni klijent, greška u bazi');
       }
     }
 
@@ -126,5 +133,19 @@ export class RacunRepo implements BaseRepo<RacunDTO> {
 
   public static async getIdTvrtka(idRacun: number): Promise<number> {
     return (await TvrtkaRepo.getTvrtkaByIdRacun(idRacun)).idTvrtka;
+  }
+
+  public static async checkUniqueForUpdate(
+    racunDTO: RacunDTO,
+    idRacun: number
+  ): Promise<Boolean> {
+    const racun = await Racun.findAll({
+      where: {
+        [Op.or]: [{ OIB: racunDTO.OIB }, { email: racunDTO.email }],
+        idRacun: { [Op.ne]: idRacun },
+      },
+    });
+
+    return !racun.length;
   }
 }

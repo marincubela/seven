@@ -2,6 +2,7 @@ import { BaseController } from '../BaseController';
 import { IRequest, IResponse } from '../../interfaces/network';
 import { RacunRepo } from '../../repos/RacunRepo';
 import { ParkiralisteRepo } from '../../repos/ParkiralisteRepo';
+import { TvrtkaRepo } from '../../repos/TvrtkaRepo';
 
 export class GetFromCompanyParkiralisteController extends BaseController {
   executeImpl = async (
@@ -20,6 +21,10 @@ export class GetFromCompanyParkiralisteController extends BaseController {
 
     if (idRacun != req.session.user.idRacun && !req.session.user.admin) {
       return this.forbidden(res, null);
+    }
+
+    if (req.session.user.admin && !(await RacunRepo.exists(idRacun))) {
+      return this.notFound(res, ['Tražena tvrtka ne postoji']);
     }
 
     if (!(await RacunRepo.isTvrtka(idRacun))) {

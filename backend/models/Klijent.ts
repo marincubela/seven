@@ -6,6 +6,7 @@ import Sequelize, {
 
 import { db } from '../db/connect';
 import { Racun } from './Racun';
+import { Rezervacija } from './Rezervacija';
 import { Vozilo } from './Vozilo';
 
 export interface IKlijentAtrributes {
@@ -33,6 +34,7 @@ export class Klijent extends Model<
 
   public static associations: {
     vozilo: Association<Klijent, Vozilo>;
+    rezervacija: Association<Klijent, Rezervacija>;
   };
 }
 
@@ -61,12 +63,3 @@ Klijent.init(
     tableName: 'Klijent',
   }
 );
-
-Klijent.belongsTo(Racun, {
-  foreignKey: 'idRacun',
-  as: 'Racun',
-});
-
-Klijent.sync().then(() => {
-  console.log('Napravljen Klijent');
-});

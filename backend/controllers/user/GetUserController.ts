@@ -12,12 +12,21 @@ export class GetUserController extends BaseController {
     res: IResponse
   ): Promise<void | IResponse> => {
     const idRacun = Number(req.params.idRacun);
+
+    if (isNaN(idRacun)) {
+      return this.clientError(res, ['Id nije broj']);
+    }
+
     if (idRacun < 1) {
       return this.clientError(res, ['Id mora biti pozitivan broj']);
     }
 
     if (idRacun != req.session.user.idRacun && !req.session.user.admin) {
       return this.forbidden(res, null);
+    }
+
+    if (req.session.user.admin && !(await RacunRepo.exists(idRacun))) {
+      return this.notFound(res, ['Traženi korisnik ne postoji']);
     }
 
     // Izvaditi dohvat racuna iz mappera i to elegantno rijesiti

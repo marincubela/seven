@@ -26,16 +26,11 @@ export class GetParkiralisteController extends BaseController {
       return this.notFound(res, ['Traženo parkiralište ne postoji']);
     }
 
-    const {
-      name,
-      address,
-      email,
-      ...parkiralisteData
-    } = await ParkiralisteMapper.toDTO(parkiraliste);
+    const parkiralisteDTO = await ParkiralisteMapper.toDTO(parkiraliste);
 
     return this.ok(res, {
       data: {
-        parking: parkiralisteData,
+        parking: parkiralisteDTO,
       },
     });
   };

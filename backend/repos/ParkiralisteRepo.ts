@@ -49,6 +49,20 @@ export class ParkiralisteRepo extends BaseRepo<ParkiralisteDTO> {
     return parkiraliste;
   }
 
+  public static async update(parkiralisteDTO: ParkiralisteDTO) {
+    const parkiralisteData = ParkiralisteMapper.toDomain(parkiralisteDTO);
+
+    await Parkiraliste.update(parkiralisteData, {
+      where: {
+        idParkiraliste: parkiralisteDTO.idParkiraliste,
+      },
+    });
+
+    return await this.getParkiralisteByIdParkiraliste(
+      parkiralisteDTO.idParkiraliste
+    );
+  }
+
   static async getParkiralisteByIdParkiraliste(
     idParkiraliste: number
   ): Promise<Parkiraliste> {
@@ -89,6 +103,20 @@ export class ParkiralisteRepo extends BaseRepo<ParkiralisteDTO> {
     }
 
     return parkingsDTO;
+  }
+
+  public static async getIdTvrtkaFromIdParkiraliste(
+    idParkiraliste: number
+  ): Promise<number> {
+    const parkiraliste = await Parkiraliste.findOne({
+      where: { idParkiraliste },
+    });
+
+    if (parkiraliste) {
+      return parkiraliste.idTvrtka;
+    } else {
+      return null;
+    }
   }
 
   static async deleteByIdParkiraliste(idParkiraliste: number): Promise<any> {

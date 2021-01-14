@@ -2,6 +2,7 @@ import { VoziloMapper } from '../mappers/VoziloMapper';
 import { Vozilo } from '../models/Vozilo';
 import { VoziloDTO } from '../dtos/VoziloDTO';
 import { BaseRepo } from './BaseRepo';
+
 export class VoziloRepo extends BaseRepo<VoziloDTO> {
   async exists(voziloDTO: VoziloDTO): Promise<boolean> {
     /*const { idKlijent } = VoziloMapper.toDomain(voziloDTO);
@@ -52,6 +53,19 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
 
     return vozilo;
   }
+
+  public static async update(voziloDTO: VoziloDTO): Promise<Vozilo> {
+    const voziloData = VoziloMapper.toDomain(voziloDTO);
+
+    await Vozilo.update(voziloData, {
+      where: {
+        idVozilo: voziloDTO.idVozilo,
+      },
+    });
+
+    return await this.getVoziloByIdVozilo(voziloDTO.idVozilo);
+  }
+
   static async getVoziloByIdVozilo(idVozilo: number): Promise<Vozilo> {
     return await Vozilo.findOne({
       where: {
@@ -91,8 +105,13 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
   }
 
   static async getIdKlijentFromIdVozilo(idVozilo: number): Promise<number> {
-    return (await (await this.getVoziloByIdVozilo(idVozilo)).getKlijent())
-      .idKlijent;
+    const vozilo = await this.getVoziloByIdVozilo(idVozilo);
+
+    if (vozilo) {
+      return (await vozilo.getKlijent()).idKlijent;
+    }
+
+    return null;
   }
 
   static async deleteByIdVozilo(idVozilo: number): Promise<any> {
@@ -101,5 +120,15 @@ export class VoziloRepo extends BaseRepo<VoziloDTO> {
         idVozilo,
       },
     });
+  }
+
+  public static async idValidationCheck(idVozilo: number): Promise<Boolean> {
+    const vozilo = await Vozilo.findOne({
+      where: {
+        idVozilo,
+      },
+    });
+
+    return Boolean(vozilo);
   }
 }

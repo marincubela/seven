@@ -4,11 +4,8 @@ import { KlijentMapper } from '../mappers/KlijentMapper';
 import { Klijent } from '../models/Klijent';
 import { BaseRepo } from './BaseRepo';
 import { RacunRepo } from './RacunRepo';
-
-/*
-export interface IKlijentRepo extends BaseRepo<Klijent> {
-  createKlijent(klijentDTO: KlijentDTO): Promise<Klijent>;
-} */
+import { VoziloRepo } from './VoziloRepo';
+import { Op } from 'sequelize';
 
 export class KlijentRepo extends BaseRepo<KlijentDTO> {
   async exists(klijentDTO: KlijentDTO): Promise<boolean> {
@@ -81,10 +78,78 @@ export class KlijentRepo extends BaseRepo<KlijentDTO> {
     });
   }
 
+  public static async getKlijentByCardNumber(
+    brojKartice: string
+  ): Promise<Klijent> {
+    return await Klijent.findOne({
+      where: {
+        brojKartice,
+      },
+    });
+  }
+
   public static async getIdRacunByIdKlijent(
     idKlijent: number
   ): Promise<number> {
     return (await (await this.getKlijentByIdKlijent(idKlijent)).getRacun())
       .idRacun;
+  }
+
+  public static async update(klijentDTO: KlijentDTO): Promise<Klijent> {
+    const { idRacun, ...klijentData } = KlijentMapper.toDomain(klijentDTO);
+
+    await new RacunRepo().save(klijentDTO);
+
+    await Klijent.update(klijentData, {
+      where: {
+        idRacun,
+      },
+    });
+
+    return this.getKlijentByIdRacun(idRacun);
+  }
+
+  public static async checkUniqueForUpdate(
+    klijentDTO: KlijentDTO,
+    idRacun: number
+  ): Promise<Boolean> {
+    const klijent = await Klijent.findAll({
+      where: {
+        brojKartice: klijentDTO.cardNumber,
+        idRacun: { [Op.ne]: idRacun },
+      },
+    });
+
+    return (
+      !klijent.length &&
+      (await RacunRepo.checkUniqueForUpdate(klijentDTO, idRacun))
+    );
+  }
+
+  public static async checkCarOwner(
+    idKlijent: number,
+    idVozilo: number
+  ): Promise<Boolean> {
+    const vozila = await VoziloRepo.getVoziloFromClient(idKlijent);
+    for (const vozilo of vozila) {
+      if (vozilo.idVozilo == idVozilo) return true;
+    }
+    return false;
+  }
+
+  public static async idValidationCheck(idKlijent: number): Promise<Boolean> {
+    const klijent = await Klijent.findOne({
+      where: {
+        idKlijent,
+      },
+    });
+
+    return Boolean(klijent);
+  }
+
+  public static async chargeKlijent(): Promise<Boolean> {
+    const isPaymentSuccessful = Math.random() > 0.12;
+
+    return isPaymentSuccessful;
   }
 }

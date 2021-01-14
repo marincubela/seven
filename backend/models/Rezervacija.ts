@@ -1,12 +1,15 @@
-import Sequelize, { Model } from 'sequelize';
+import Sequelize, { HasOneGetAssociationMixin, Model } from 'sequelize';
 
 import { db } from '../db/connect';
-import { Klijent } from './Klijent.js';
-import { Parkiraliste } from './Parkiraliste.js';
-import { Vozilo } from './Vozilo.js';
+import { Klijent } from './Klijent';
+import { Parkiraliste } from './Parkiraliste';
+import { Vozilo } from './Vozilo';
 
-interface IRezervacijaAttributes {
+export interface IRezervacijaAttributes {
   idRezervacija: number;
+  idKlijent?: number;
+  idParkiraliste?: number;
+  idVozilo?: number;
 }
 
 export class Rezervacija extends Model<
@@ -14,8 +17,16 @@ export class Rezervacija extends Model<
   Omit<IRezervacijaAttributes, 'idRezervacija'>
 > {
   public idRezervacija!: number;
+  public idKlijent!: number;
+  public idParkiraliste!: number;
+  public idVozilo!: number;
+
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public getKlijent!: HasOneGetAssociationMixin<Klijent>;
+  public getParkiraliste!: HasOneGetAssociationMixin<Parkiraliste>;
+  public getVozilo!: HasOneGetAssociationMixin<Vozilo>;
 }
 
 Rezervacija.init(
@@ -31,19 +42,3 @@ Rezervacija.init(
     tableName: 'Rezervacija',
   }
 );
-
-Rezervacija.belongsTo(Klijent, {
-  foreignKey: 'klijentId',
-});
-
-Rezervacija.belongsTo(Vozilo, {
-  foreignKey: 'voziloId',
-});
-
-Rezervacija.belongsTo(Parkiraliste, {
-  foreignKey: 'parkiralisteId',
-});
-
-Rezervacija.sync().then(() => {
-  console.log('Napravljena rezervacija');
-});

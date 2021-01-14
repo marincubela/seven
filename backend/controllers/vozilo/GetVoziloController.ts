@@ -34,18 +34,11 @@ export class GetVoziloController extends BaseController {
       return this.forbidden(res, null);
     }
 
-    const {
-      idRacun,
-      firstName,
-      lastName,
-      cardNumber,
-      email,
-      ...voziloData
-    } = await VoziloMapper.toDTO(vozilo);
+    const voziloDTO = await VoziloMapper.toDTO(vozilo);
 
     return this.ok(res, {
       data: {
-        vozilo: voziloData,
+        vehicle: voziloDTO,
       },
     });
   };

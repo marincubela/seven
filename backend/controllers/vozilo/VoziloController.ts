@@ -3,6 +3,7 @@ import { DeleteVoziloController } from './DeleteVoziloController';
 import { GetVoziloController } from './GetVoziloController';
 import { GetAllVoziloController } from './GetAllVoziloController';
 import { GetFromClientVoziloController } from './GetFromClientVoziloController';
+import { UpdateVoziloController } from './UpdateVoziloController';
 
 export class VoziloController {
   public static create = new CreateVoziloController().execute;
@@ -14,4 +15,6 @@ export class VoziloController {
   public static getAll = new GetAllVoziloController().execute;
 
   public static getFromCompany = new GetFromClientVoziloController().execute;
+
+  public static update = new UpdateVoziloController().execute;
 }

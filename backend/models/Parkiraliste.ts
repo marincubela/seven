@@ -1,6 +1,11 @@
-import Sequelize, { Model, HasOneGetAssociationMixin } from 'sequelize';
+import Sequelize, {
+  Model,
+  HasOneGetAssociationMixin,
+  Association,
+} from 'sequelize';
 
 import { db } from '../db/connect';
+import { Rezervacija } from './Rezervacija';
 import { Tvrtka } from './Tvrtka';
 
 export interface IParkiralisteAttributes {
@@ -35,6 +40,10 @@ export class Parkiraliste extends Model<
   public readonly updatedAt!: Date;
 
   public getTvrtka!: HasOneGetAssociationMixin<Tvrtka>;
+
+  public static associations: {
+    rezervacija: Association<Parkiraliste, Rezervacija>;
+  };
 }
 
 Parkiraliste.init(
@@ -82,12 +91,3 @@ Parkiraliste.init(
     tableName: 'Parkiraliste',
   }
 );
-
-Parkiraliste.belongsTo(Tvrtka, {
-  foreignKey: 'idTvrtka',
-  as: 'Tvrtka',
-});
-
-Parkiraliste.sync().then(() => {
-  console.log('Napravljeno parkiraliste');
-});
