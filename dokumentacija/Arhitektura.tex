@@ -287,32 +287,99 @@
 		Na  slikama 4.3, 4.4, 4.5, 4.6, 4.7 prikazani su razredi koji pripadaju \textit{backend} dijelu MVC arhitekture. Razredi na slici 4.3 oponašaju tablice iz baze podataka kojima se pristupa preko ORM-a i pomoću njih se komunicira s bazom podataka. Slika 4.4 prikazuje DTO (\textit{Data transfer object}) razrede koji spremaju podatke kojima kontroleri komuniciraju s \textit{frontend} dijelom aplikacije i modelima. Na slici 4.5 nalaze se razredi koji komuniciraju s bazom podataka i izvršavaju upite koje kontroleri zatraže. Kontroleri su prikazani na slici 4.6. Svi kontroleri nasljeđuju osnovni kontroler koji sadrži metode za slanje odgovora, dok ostali kontroleri nude metode za izvršavanje određenog zahtjeva na određenoj putanji. Slika 4.7 prikazuje jednu vrstu pomoćnih razreda koje smo koristili za prebacivanje podataka iz domene modela u domenu koja se koristi na \textit{frontend} dijelu aplikacije. Postoje još dodatni razredi koji su nebitni za opisivanje rada aplikacije jer služe samo kao pomoćni razredi.
 		
 		\begin{figure}[H]
-	        \includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - Modeli.png}
+	        \includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - Models.png}
         	\caption{Dijagram razreda za modele}
         	\label{fig:Dijagram razreda - modeli}
         \end{figure}
     
     	\begin{figure}[H]
-	    	\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - DTO.png}
-	    	\caption{Dijagram razreda za DTO}
-	    	\label{fig:Dijagram razreda - DTO} 
+	    	\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - DTO_1.png}
+	    	\caption{Dijagram razreda za DTO (1.dio)}
+	    	\label{fig:Dijagram razreda - DTO1} 
+	   	 \end{figure}
+	   	 
+	   	 \begin{figure}[H]
+	    	\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - DTO_2.png}
+	    	\caption{Dijagram razreda za DTO (2.dio)}
+	    	\label{fig:Dijagram razreda - DTO2} 
 	   	 \end{figure}
     
 		\begin{figure}[H]
-			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - Repo.png}
-			\caption{Dijagram razreda za repo}
-			\label{fig:Dijagram razreda - Repo} 
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - Repo_1.png}
+			\caption{Dijagram razreda za repo (1.dio)}
+			\label{fig:Dijagram razreda - Repo1} 
 		\end{figure}
-	
+		
 		\begin{figure}[H]
-			\includegraphics[width=1\linewidth]{dijagrami/Class Diagram - controllers.png}
-			\caption{Dijagram razreda za kontrolere}
-			\label{fig:Dijagram razreda - Kontroleri} 
-		\end{figure}	
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - Repo_2.png}
+			\caption{Dijagram razreda za repo (2.dio)}
+			\label{fig:Dijagram razreda - Repo2} 
+		\end{figure}
+		
 		\begin{figure}[H]
-			\includegraphics[width=1\linewidth]{dijagrami/Class Diagram - mappers.png}
-			\caption{Dijagram razreda za mapere}
-			\label{fig:Dijagram razreda - Maperri} 
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - RezervacijaController.png}
+			\caption{Dijagram razreda za Rezervacija Controller}
+			\label{fig:Dijagram razreda - RezervacijaController} 
+		\end{figure}
+		
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - JednokratnaController.png}
+			\caption{Dijagram razreda za Jednokratna Controller (1.dio)}
+			\label{fig:Dijagram razreda - JednokratnaController} 
+		\end{figure}
+		
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - PonavljajucaController.png}
+			\caption{Dijagram razreda za Ponavljajuca Controller}
+			\label{fig:Dijagram razreda - PonavljajucaController} 
+		\end{figure}
+		
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - TrajnaController.png}
+			\caption{Dijagram razreda za Trajna Controller}
+			\label{fig:Dijagram razreda - TrajnaController} 
+		\end{figure}
+		
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - SessionController.png}
+			\caption{Dijagram razreda za Session Controller}
+			\label{fig:Dijagram razreda - SessionController} 
+		\end{figure}
+		
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - UserController.png}
+			\caption{Dijagram razreda za User Controller}
+			\label{fig:Dijagram razreda - UserController} 
+		\end{figure}
+		
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - TvrtkaController.png}
+			\caption{Dijagram razreda za Tvrtka Controller}
+			\label{fig:Dijagram razreda - TvrtkaController} 
+		\end{figure}
+		
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - KlijentController.png}
+			\caption{Dijagram razreda za Klijent Controller}
+			\label{fig:Dijagram razreda - KlijentController} 
+		\end{figure}
+		
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - ParkiralisteController.png}
+			\caption{Dijagram razreda za Parkiraliste Controller}
+			\label{fig:Dijagram razreda - ParkiralisteController} 
+		\end{figure}
+			
+		\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - Mappers.png}
+			\caption{Dijagram razreda za Mappers}
+			\label{fig:Dijagram razreda - Mappers} 
+		\end{figure}
+		
+			\begin{figure}[H]
+			\includegraphics[width=1\linewidth]{dijagrami/Dijagram razreda - VoziloController.png}
+			\caption{Dijagram razreda za Vozilo Controller}
+			\label{fig:Dijagram razreda - VoziloController} 
 		\end{figure}
 			
 			
@@ -323,7 +390,7 @@
 			Dijagram stanja pokazuje stanje objekata te prijelaze iz jednog stanja u drugo temeljene na događajima. Na slici 4.8 prikazan je dijagram stanja za klijenta. Nakon prijave, klijentu se prikazuje karta na kojoj su prikazana sva prijavljena parkirališta. Sa strane se nalazi izbornik u kojem može odabrati neke mogućnosti. Odabirom na "Moj profil" klijentu se prikazuju korisnički podaci koje može urediti ili može obrisati račun. Odabirom na "Moje rezervacije" otvara se popis vlastitih rezervacija koje klijent može urediti ili obrisati. Odabirom na "Moja vozila" otvara se popis osobnih prijavljenih vozila, klijent može urediti podatke o vozilu, može izbrisati vozilo ili dodati novo. Odabirom oznake parkirališta na karti klijentu se nudi opcija "Pokaži put" koja omogućava navigaciju do odabranom parkirališta i "Rezerviraj" koja omogućava stvaranje rezervacije parkirališnog mjesta.
 			
 			\begin{figure}[H]
-    			\includegraphics[width=1\linewidth]{dokumentacija/dijagrami/Dijagram stanja - Klijent.png}
+    			\includegraphics[width=1\linewidth]{dijagrami/Dijagram stanja - Klijent.png}
     			\caption{Dijagram stanja}
     			\label{fig:Dijagram stanja} 
     		\end{figure}
@@ -336,7 +403,7 @@
 			Dijagram aktivnosti primjenjuje se za opis modela toka upravljanja ili toka podataka. U modeliranju toka upravljanja novi korak izvršava se nakon završenog prethodnog. Na slici 4.9 prikazan je dijagram aktivnosti rezervacije parkirališnog mjesta. Klijent se prijavi u sustav, bira parkiralište na kojem želi napraviti rezervaciju, nakon čega bira tip rezervacije. Prikazuje mu se forma za unos podataka o rezervaciji koju klijent ispunjava te odabire opciju dodavanja rezervacije nakon čega slijedi plaćanje. Ukoliko su svi podaci ispravni, ima slobodnih mjesta i plaćanje je uspješno rezervacija se dodaje u sustav.
 			
 			 \begin{figure}[H]
-    			\includegraphics[width=1\linewidth]{dokumentacija/dijagrami/Dijagram aktivnosti - Rezervacija parkirališnog mjesta.png}
+    			\includegraphics[width=1\linewidth]{dijagrami/Dijagram aktivnosti - Rezervacija parkirališnog mjesta.png}
     			\caption{Dijagram aktivnosti}
     			\label{fig:Dijagram aktivnosti} 
     		\end{figure}
@@ -347,7 +414,7 @@
 			   Dijagram komponenti je strukturni, statički dijagram koji služi za vizualizaciju organizacije i međuovisnosti između implementacijskih komponenata te odnos programske potpore prema okolini. Sve Javascript datoteke u frontend dijelu aplikacije ovise o React knjižnici iz koje dohvaćaju gotove komponente poput gumba, izbornika i svega ostalog čime netko komunicira s aplikacijom. Router je komponenta koja na upit iz url-a određuje koja će se datoteka poslužiti na aplikaciji. Frontend dio aplikacije sastoji se od Javascript datoteka koje su logički raspoređene u cjeline te su nazvane po tipovima aktora i njihovim akcijama. REST API poslužuje podatke koji pripadaju backend dijelu aplikacije. Sequelize je zadužen za dohvaćanje tablica iz baze podataka. Za rad s bazom backend dio aplikacije koristi Repo koji je povezan Modelima i Mapperima. Model je apstrakcija koja predstavlja tablice u bazi, a Mapper ovisno o zahtjevu pretvara podatke u potrebni oblik. Podaci koji su pristigli iz baze šalju se u obliku DTO-a MVC arhitekturi. Controller prima zahtjev, obrađuje ga i šalje dalje.
 			   
 			   \begin{figure}[H]
-    			\includegraphics[width=1\linewidth]{dokumentacija/dijagrami/Dijagram komponenti.png}
+    			\includegraphics[width=1\linewidth]{dijagrami/Dijagram komponenti.png}
     			\caption{Dijagram komponenti}
     			\label{fig:Dijagram komponenti} 
     		\end{figure}
